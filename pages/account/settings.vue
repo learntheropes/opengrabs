@@ -74,8 +74,7 @@ export default {
     this.$Tawk.$updateChatUser(user)
 
     const attribute = {
-        key: 'user-sub',
-        value: this.$store.$auth.user.sub
+        'user-sub': this.$store.$auth.user.sub
     }
     this.$Tawk.$setAttribute(attribute)
   },
