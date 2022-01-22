@@ -69,7 +69,7 @@ export default {
     }
 
     const { data: { hash }} = await this.$axios.get(`/api/crypto/sha256/${user.email}`)
-    user.hash = hash
+    // user.hash = hash
 
     this.$Tawk.$updateChatUser(user)
 
