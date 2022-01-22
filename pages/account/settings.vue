@@ -56,14 +56,14 @@ export default {
         user = {
             email: this.$store.$auth.user.email,
             name: this.$store.$auth.user.name,
-            hash: null
+            // hash: null
         }
         break
     case 'vkontakte':
         user = {
             email: this.$store.$auth.user.email,
             name: `${this.$store.$auth.user.given_name} ${this.$store.$auth.user.family_name}`.replace('-', ' '),
-            hash: null                           
+            // hash: null                           
         }
         break
     }
