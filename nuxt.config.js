@@ -123,10 +123,7 @@ export default {
   },
   auth: {
     redirect: {
-      login: '/',
-      // logout: '/logout',
       callback: '/cb/',
-      home: '/account/'
     },
     strategies: {
       auth0: {
@@ -138,7 +135,7 @@ export default {
         responseType: 'code',
         grantType: 'authorization_code',
         codeChallengeMethod: 'S256',
-        logoutRedirectUri: (process.env.URL) ? `${process.env.URL}/logout` : 'https://localhost:3000/logout'
+        logoutRedirectUri: (process.env.URL) ? `${process.env.URL}` : 'https://localhost:3000'
       }
     }
   },
