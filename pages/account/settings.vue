@@ -4,13 +4,13 @@
       <div class="column is-one-third">
         <h2 class="title is-2">{{ data.name }}</h2>
         <div class="field">
-          <label class="label">Communication Email</label>
+          <label class="label">{{ $t('communicationEmail') }}</label>
           <div class="control">
             <input v-model="email" class="input" type="email" :readonly="readOnly" />
           </div>
         </div >
-        <b-field label="Communication Language">
-          <b-select v-model="selectedLenguage" placeholder="Select a language for the email communication" expanded>
+        <b-field :label="$t('communicationLanguage')">
+          <b-select v-model="selectedLenguage" :placeholder="$t('selectLanguage')" expanded>
             <option v-for="lang in emailLanguages" :key="lang.slug" :value="lang.slug">
               {{ lang.name }}
             </option>
@@ -18,7 +18,7 @@
         </b-field>
         <div class="field">
           <div class="control">
-            <button class="button is-link" @click="updateProfile">Update</button>
+            <button class="button is-link" @click="updateProfile">{{ $t('update') }}</button>
           </div>
         </div>
       </div>

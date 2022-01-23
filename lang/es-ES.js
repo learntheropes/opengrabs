@@ -80,7 +80,12 @@ export default {
     youCanPublish: "You can publish a new one",
     expired: "Expired",
     published: "Published",
-    underpaid: "Underpaid",      
+    underpaid: "Underpaid", 
+    // pages/account/settings
+    communicationEmail: "Communication Email",
+    communicationLanguage: "Communication Language",
+    selectLanguage: "Select a language for the email communication",
+    update: "Update",         
     // components/account/adv/order
     countryLabel: "Pais",
     countryPlaceholder: "Selecione un Pais",
