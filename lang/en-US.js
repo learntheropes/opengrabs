@@ -21,8 +21,19 @@ export default {
     currency: "CURRENCY",
     buy: "BUY",
     sell: "SELL",
+    // components/layout/nav-bar
+    orders: "Orders",
+    travels: "Travels",
+    exchangeRate: "Exchange rates",
+    settings: "Settings",
+    newAdvertisement: "New Advertisement",
+    myOrders: "My Orders",
+    myDeliveries: "My Deliveries",
+    myTravels: "My Travels",
+    login: "Login",
+    logout: "Logout",
     // components/layout/footer
-    privacyPolicy: "Privact policy",
+    privacyPolicy: "Privacy policy",
     termsOfService: "Terms of service",
     // components/account/adv/order
     countryLabel: "Country",

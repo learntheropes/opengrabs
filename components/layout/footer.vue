@@ -21,7 +21,7 @@
           <nuxt-link :to="localePath({ name: 'legal-privacy-policy'})">{{ $t('privacyPolicy') }}</nuxt-link>
         </div>
         <div class="level-item">
-          <nuxt-link :to="localePath({ name: 'legal-terms-of-service'})">{{ $t('privacyPolicy') }}</nuxt-link>
+          <nuxt-link :to="localePath({ name: 'legal-terms-of-service'})">{{ $t('termsOfService') }}</nuxt-link>
         </div>
       </div>
       <div class="level-right">
