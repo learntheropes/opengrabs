@@ -15,4 +15,10 @@ export default {
     rewardLabel: "Reward %",
     rewardMessage: "Reward in % that you are willing to pay. Minimum is 5% and maximum is 50%",
     getProductInfo: "Get Product Info",
+    product: "Product",
+    shipping: "shipping",
+    taxes: "Taxes",
+    reward: "Reward",
+    deliveryTo: "Delivery to",
+    publish: "Publish"
 }

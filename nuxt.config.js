@@ -38,6 +38,7 @@ export default {
     '~/plugins/utils.js',
     '~plugins/vue-qrcode.js',
     '~plugins/grab-actions.js',
+    '~plugins/moment.js',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -71,6 +72,7 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
+    '@nuxtjs/moment',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -79,8 +81,7 @@ export default {
     'nuxt-buefy',
     '@nuxtjs/axios',
     '@nuxtjs/dotenv',
-    '@nuxtjs/auth-next',
-    '@nuxtjs/moment',
+    '@nuxtjs/auth-next'
   ],
 
   i18n: {
@@ -148,6 +149,7 @@ export default {
   // https://stackoverflow.com/questions/55856117/using-timezones-with-nuxtjs-moment/57022505
   moment: {
     timezone: true,
+    locales: ['es', 'pt', 'ru']
   },
 
   serverMiddleware: [

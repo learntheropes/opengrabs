@@ -19,7 +19,7 @@
         <b-field :label="dateLabel" :type="dateType" :message="dateMessage">
           <b-datepicker v-model="max_delivery_date" :min-date="new Date()" icon="calendar-today" editable />
         </b-field>
-        <b-field :label="amazonUrlLabel" :type="amazonLinkType" :message="amazonUrlMessage">
+        <b-field :label="amazonUrlLabel" :type="amazonUrlType" :message="amazonUrlMessage">
           <b-input v-model="url" type="text" expanded></b-input>
         </b-field>
         <b-field :label="rewardLabel" :message="rewardMessage">
@@ -44,10 +44,10 @@
           <div class="content">
             <div class="columns is-mobile">
               <div class="column">
-                <p>Product:</p>
-                <p>Shipping:</p>
-                <p>Taxes:</p>
-                <p>Reward:</p>
+                <p>{{ $t('product')}}:</p>
+                <p>{{ $t('shipping')}}:</p>
+                <p>{{ $t('taxes') }}:</p>
+                <p>{{ $t('reward')}}:</p>
                 <p class="has-text-weight-bold">Total:</p>
               </div>
               <div class="column" align="right">
@@ -67,12 +67,12 @@
             </div>
           </div>
           <div class="content">
-            Delivery to <strong>{{ city }} [{{ country }}]</strong><br>
+            {{ $t('deliveryTo')}} <strong>{{ city }} [{{ country }}]</strong><br>
             {{ $moment(max_delivery_date.toISOString()).fromNow() }} <strong>[{{ $utils.momentDate(max_delivery_date.toISOString()) }}]</strong>
           </div>
         </div>
         <footer class="card-footer">
-          <a href="#" class="card-footer-item" @click="publishButton">Publish</a>
+          <a href="#" class="card-footer-item" @click="publishButton">{{ $t('publish')}}</a>
         </footer>
       </div>
     </div>
@@ -110,8 +110,8 @@ export default {
     cityType: null,
     dateError: false,
     dateType: null,
-    amazonLinkError: false,
-    amazonLinkType: null,
+    amazonUrlError: false,
+    amazonUrlType: null,
   }),
   computed: {
     countries() {
@@ -155,8 +155,8 @@ export default {
       return this.$t('amazonUrlLabel')
     },
     amazonUrlMessage() {
-      if (this.amazonLinkError === 'Field required') return this.$t('requiredField')
-      else if (this.amazonLinkError === 'Invalid url') return this.$t('invalidUrl')
+      if (this.amazonUrlError === 'Field required') return this.$t('requiredField')
+      else if (this.amazonUrlError === 'Invalid url') return this.$t('invalidUrl')
       else return this.$t('amazonUrlMessage')
     },
     rewardLabel() {
@@ -269,13 +269,13 @@ export default {
     },
     async loadAmazonButton() {
       this.countryType = null
-      this.countryMessage = this.$t('countryMessage')
+      this.countryError = null
       this.cityType = null
-      this.cityMessage = this.$t('cityMessage')
+      this.cityError = null
       this.dateType = null
-      this.dateMessage = this.$t('dateMessage')
+      this.dateError = null
       this.amazonLinkType = null
-      this.amazonLinkMessage = this.$t('amazonLinkMessage')
+      this.amazonUrlError = null
       const validCountry = this.validateCountry()
       const validCity = this.validateCity()
       const validDate = this.validateDate()

@@ -13,14 +13,14 @@
 
 <script>
 export default {
+  name: 'Adv',
   computed: {
-    name: 'Adv',
     activeTab: {
       get() {
         return this.$store.state.account.adv.activeTab
       },
       set(tab) {
-        this.$store.commit('account/new/setActiveTab', tab)
+        this.$store.commit('account/adv/setActiveTab', tab)
       },
     },
   }
