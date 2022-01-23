@@ -4,16 +4,16 @@
       <div class="hero-body hero-body-shopper">
         <div class="container has-text-right">
           <p class="title">
-            Shop internationally for cheap
+            {{ $t('shopCheaperInternationally') }}
           </p>
           <p class="subtitle">
-            Find a product that you like on Amazon<br>
-            and wait that a traveler bring it to you
+            {{ $t('findAProductThatYouLikeOnAmazon') }}<br>
+            {{ $t('thatATravelerCanBringToYou') }}
           </p>
           <div class="buttons is-right">
-            <a v-if="!authenticated" class="button is-primary" @click="login">Login to add an order</a >
-            <nuxt-link v-if="authenticated" :to="localePath({ name: 'account-adv'})" class="button is-primary">Add an order</nuxt-link >
-            <nuxt-link :to="localePath({ name: 'travels' })" class="button is-primary">View travels</nuxt-link >
+            <a v-if="!authenticated" class="button is-primary" @click="login">{{ $t('loginToAddAnOrder') }}</a >
+            <nuxt-link v-if="authenticated" :to="localePath({ name: 'account-adv'})" class="button is-primary">{{ $t('addAnOrder') }}</nuxt-link >
+            <nuxt-link :to="localePath({ name: 'travels' })" class="button is-primary">{{ $t('viewTravels') }}</nuxt-link >
           </div>
         </div>
       </div>
@@ -22,16 +22,16 @@
       <div class="hero-body hero-body-traveler">
         <div class="container">
           <p class="title">
-            Get paid to travel
+            {{ $t('getPaidToTravel') }}
           </p>
           <p class="subtitle">
-            Gain a reward to bring an Amazon product<br>
-            during your next travel
+            {{ $t('gainRewardToBringAmazonProduct') }}<br>
+            {{ $t('duringYourNextTravel') }}
           </p>
           <div class="buttons">
-            <a v-if="!authenticated" href="#" class="button is-primary" disabled @click="login">Login to add a travel</a>
-            <nuxt-link v-if="authenticated" :to="localePath({ name: 'account-adv'})" class="button is-primary">Add a travel</nuxt-link >
-            <nuxt-link :to="localePath({ name: 'orders'})" class="button is-primary">Book a delivery</nuxt-link>
+            <a v-if="!authenticated" href="#" class="button is-primary" disabled @click="login">{{ $t('loginToAddTravel') }}</a>
+            <nuxt-link v-if="authenticated" :to="localePath({ name: 'account-adv'})" class="button is-primary">{{ $t('addTravel') }}</nuxt-link >
+            <nuxt-link :to="localePath({ name: 'orders'})" class="button is-primary">{{ $t('viewOrders') }}</nuxt-link>
           </div>
         </div>
       </div>
@@ -43,10 +43,10 @@
             We don't charge any fee
           </p>
           <p class="subtitle">
-            We don't charge service fee because Amazon may pay us a referral fee<br>
-            Thanks to Bitcoin lightning we don't need to charge any payment processor fee
+            {{ $t('weDontChargeFee') }}<br>
+            {{ $t('thanksToBitcoin') }}
           </p>
-          <nuxt-link :to="localePath({ name: 'fees' })" class="button is-primary">View comparision fees</nuxt-link>
+          <nuxt-link :to="localePath({ name: 'fees' })" class="button is-primary">{{ $t('viewComparisionFees') }}</nuxt-link>
         </div>
       </div>
     </div>
