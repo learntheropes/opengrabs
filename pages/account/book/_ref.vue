@@ -2,7 +2,7 @@
   <section class="section">
     <div class="columns is-centered">
       <div class="column is-one-third">
-        <b-field :label="$t('deliveryDate')">
+        <b-field :label="$t('deliveryDate')" :message="dateMessage">
           <b-datepicker v-model="delivery_date" :min-date="new Date()" :max-date="new Date(grab.destination.max_delivery_date)" icon="calendar-today" editable />
         </b-field>
         <b-field>
@@ -23,22 +23,43 @@ export default {
   },
   data: () => ({
     delivery_date: null,
+    dateType: null,
+    dateError: false
   }),
+  computed: {
+    dateMessage() {
+      if (this.dateError === 'Field required') return this.$t('requiredField')
+      else return this.$t('dateMessage')
+    }
+  },
   methods: {
+    validateDate() {
+      if (!this.delivery_date) {
+        this.dateType = 'is-danger'
+        this.dateError = 'Field required'
+        return false
+      }
+      return true
+    },
     async book() {
-      await this.$grab.book({
-        ref: this.ref,
-        delivery_date: this.delivery_date.toISOString(),
-      })
-      const [orders, booked] = await Promise.all([
-        this.$db.orders.filter('published'),
-        this.$db.account.deliveries.filter('booked')
-      ])      
-      const orderedOrders = orderBy(orders, ['published_at'], ['desc'])
-      this.$store.commit('orders/setOrderss', orderedOrders)
-      this.$store.commit('account/deliveries/setBooked', booked)
-      this.$store.commit('orders/setInitiated', true)      
-      this.$router.go(-1)
+      this.dateType = null
+      this.dateError = null
+      const validDate = this.validateDate()
+      if (validDate) {
+        await this.$grab.book({
+          ref: this.ref,
+          delivery_date: this.delivery_date.toISOString(),
+        })
+        const [orders, booked] = await Promise.all([
+          this.$db.orders.filter('published'),
+          this.$db.account.deliveries.filter('booked')
+        ])      
+        const orderedOrders = orderBy(orders, ['published_at'], ['desc'])
+        this.$store.commit('orders/setOrderss', orderedOrders)
+        this.$store.commit('account/deliveries/setBooked', booked)
+        this.$store.commit('orders/setInitiated', true)      
+        this.$router.go(-1)
+      }
     },
   },
 }

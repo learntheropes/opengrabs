@@ -8,8 +8,9 @@
           <div class="control">
             <input v-model="email" class="input" type="email" :readonly="readOnly" />
           </div>
+          <p class="help">{{ emailMessage }}</p>
         </div >
-        <b-field :label="$t('communicationLanguage')">
+        <b-field :label="$t('communicationLanguage')" :type="languageType" :message="languageMessage">
           <b-select v-model="selectedLenguage" :placeholder="$t('selectLanguage')" expanded>
             <option v-for="lang in emailLanguages" :key="lang.slug" :value="lang.slug">
               {{ lang.name }}
@@ -47,6 +48,11 @@ export default {
     }
     return { data, email, emailLanguages, selectedLenguage, readOnly }
   },
+  data: () => ({
+    languageType: null,
+    languageError: false,
+    emailMessage: null
+  }),
   async mounted() {
     const strategy = this.$store.$auth.user.sub.split('|')[0]
 
@@ -80,14 +86,42 @@ export default {
     console.log(attribute)
     this.$Tawk.$setAttribute(attribute)
   },
+  computed: {
+    languageMessage() {
+       if (this.languageError === 'Field required') return this.$t('requiredField')
+      else return null      
+    }
+  },
   methods: {
+    validateEmail() {
+      if (!this.email) {
+        this.emailMessage = this.$t('requiredField')
+        return false
+      }
+      return true
+    },
+    validateLanguage() {
+      if (!this.selectedLenguage) {
+        this.languageType = 'is-danger'
+        this.languageError = 'Field required'
+        return false
+      }
+      return true
+    },
     updateProfile() {
-      this.$db.user.update({
-        sub: this.data.sub,
-        name: this.data.name,
-        email: this.email,
-        selected_lenguage: this.selectedLenguage
-      })
+      this.emailMessage = null
+      const validEmail = this.validateEmail()
+      this.languageType = null
+      this.languageError = false
+      const validLanguage = this.validateLanguage()
+      if (validEmail && validLanguage) {
+        this.$db.user.update({
+          sub: this.data.sub,
+          name: this.data.name,
+          email: this.email,
+          selected_lenguage: this.selectedLenguage
+        })
+      }
     }
   }
 }

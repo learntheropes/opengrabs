@@ -5,7 +5,7 @@
         <div class="columns is-centered">
           <div class="column is-half">
             <div class="block">
-              <b-field :label="$t('lightningPaymentRequest')">
+              <b-field :label="$t('lightningPaymentRequest')" :type="invoiceType" :message="invoiceMessage">
                 <b-input v-model="invoice" type="text" expanded></b-input>
               </b-field>
               <button class="button" @click="withdrawLightning">{{ $t('withdrawOnLn') }}</button>
@@ -20,7 +20,7 @@
               {{ $t('theMinimumIs') }} <strong>0.002 BTC</strong>. {{ $t('forThisAmountUse') }}.
             </div>
             <div v-else class="block">
-              <b-field :label="$t('bitcoinAddress')">
+              <b-field :label="$t('bitcoinAddress')" :type="addressType" :message="addressMessage">
                 <b-input v-model="address" type="text" expanded></b-input>
               </b-field>
               <button class="button" @click="withdrawOnChain">{{ $t('withdrawOnChain') }}</button>
@@ -43,25 +43,65 @@ export default {
     return { ref, grab, btc_amount }
   },
   data: () => ({
-    address: null,
     invoice: null,
+    invoiceType: null,
+    invoiceError: false,
+    address: null,
+    addressType: null,
+    addressError: false
   }),
+  computed: {
+    invoiceMessage() {
+      if (this.invoiceError === 'Field required') return this.$t('requiredField')
+      else return null      
+    },
+    addressMessage() {
+      if (this.addressError === 'Field required') return this.$t('requiredField')
+      else return null      
+    }
+  },
   methods: {
-    async withdrawOnChain() {
-      const withdraw = await this.$grab.withdraw({
-        ref: this.ref,
-        type: 'chain',
-        address: this.address.replace('bitcoin:', ''),
-      })
-      return withdraw
+    validateInvoice() {
+      if (!this.invoice) {
+        this.invoiceType = 'is-danger'
+        this.invoiceError = 'Field required'
+        return false
+      }
+      return true
+    },
+    validateAddress() {
+      if (!this.invoice) {
+        this.addressType = 'is-danger'
+        this.addressError = 'Field required'
+        return false
+      }
+      return true
     },
     async withdrawLightning() {
-      const withdraw = await this.$grab.withdraw({
-        ref: this.ref,
-        type: 'ln',
-        address: this.invoice.replace('lightning:', ''),
-      })
-      return withdraw
+      this.invoiceType = null
+      this.invoiceError = false
+      const validInvoice = this.validateInvoice()
+      if (validInvoice) {
+        const withdraw = await this.$grab.withdraw({
+          ref: this.ref,
+          type: 'ln',
+          address: this.invoice.replace('lightning:', ''),
+        })
+        return withdraw
+      }
+    },
+    async withdrawOnChain() {
+      this.addressType = null
+      this.addressError = false
+      const validAddress = this.validateAddress()
+      if (validAddress) {
+        const withdraw = await this.$grab.withdraw({
+          ref: this.ref,
+          type: 'chain',
+          address: this.address.replace('bitcoin:', ''),
+        })
+        return withdraw
+      }
     },
   },
 }
