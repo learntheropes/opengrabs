@@ -18,10 +18,10 @@
           <a href="https://opengrabs.tawk.help/ru" target="_blank">помощь</a>
         </div>
         <div class="level-item">
-          <nuxt-link :to="localePath({ name: 'legal-privacy-policy'})">Privacy Policy</nuxt-link>
+          <nuxt-link :to="localePath({ name: 'legal-privacy-policy'})">{{ $t('privacyPolicy') }}</nuxt-link>
         </div>
         <div class="level-item">
-          <nuxt-link :to="localePath({ name: 'legal-terms-of-service'})">Terms of Service</nuxt-link>
+          <nuxt-link :to="localePath({ name: 'legal-terms-of-service'})">{{ $t('privacyPolicy') }}</nuxt-link>
         </div>
       </div>
       <div class="level-right">
@@ -45,6 +45,7 @@
 
 <script>
 export default {
+  name: 'Footer',
   computed: {
     availableLocales() {
       return this.$i18n.locales.filter((i) => i.code !== this.$i18n.locale)

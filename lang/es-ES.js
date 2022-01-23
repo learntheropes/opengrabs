@@ -17,7 +17,13 @@ export default {
     weDontChargeFee: "We don't charge service fee because Amazon may pay us a referral fee",
     thanksToBitcoin: "Thanks to Bitcoin lightning we don't need to charge any payment processor fee",
     viewComparisionFees: "View comparision fees",
-    
+    // pages/exchange-rates
+    currency: "DIVISA",
+    buy: "COMPRA",
+    sell: "VENTA",
+    // components/layout/footer
+    privacyPolicy: "Politica de privacidad",
+    termsOfService: "Terminos de servicio",
     // components/account/adv/order
     countryLabel: "Pais",
     countryPlaceholder: "Selecione un Pais",

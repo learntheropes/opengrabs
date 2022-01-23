@@ -4,7 +4,7 @@
     <main class="is-tall-container">
       <nuxt />
     </main>
-    <layout-footer-all />
+    <layout-footer />
   </div>
 </template>
 

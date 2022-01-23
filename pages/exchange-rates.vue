@@ -4,13 +4,13 @@
             <div class="column is-one-third">
                 <b-table :data="data">
                     <template>
-                        <b-table-column v-slot="props" label="CURRENCY">
+                        <b-table-column v-slot="props" :label="$t('currency')">
                             {{ props.row.currency }}
                         </b-table-column>
-                        <b-table-column  v-slot="props" label="BUY" numeric>
+                        <b-table-column  v-slot="props" :label="$t('buy')" numeric>
                             {{ props.row.buy.toFixed(2) }}
                         </b-table-column>
-                        <b-table-column v-slot="props" label="SELL" numeric>
+                        <b-table-column v-slot="props" :label="$t('sell')" numeric>
                             {{ props.row.sell.toFixed(2) }}
                         </b-table-column>
                     </template>
