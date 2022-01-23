@@ -8,7 +8,7 @@
           <div class="control">
             <input v-model="email" class="input" type="email" :readonly="readOnly" />
           </div>
-          <p class="help">{{ emailMessage }}</p>
+          <p :class="emailClass">{{ emailMessage }}</p>
         </div >
         <b-field :label="$t('communicationLanguage')" :type="languageType" :message="languageMessage">
           <b-select v-model="selectedLenguage" :placeholder="$t('selectLanguage')" expanded>
@@ -51,8 +51,19 @@ export default {
   data: () => ({
     languageType: null,
     languageError: false,
-    emailMessage: null
+    emailError: null,
+    emailClass: "help"
   }),
+  computed: {
+    emailMessage() {
+      if (this.emailError === 'Field required') return this.$t('requiredField')
+      else return null
+    },
+    languageMessage() {
+       if (this.languageError === 'Field required') return this.$t('requiredField')
+      else return null      
+    }
+  },
   async mounted() {
     const strategy = this.$store.$auth.user.sub.split('|')[0]
 
@@ -86,16 +97,11 @@ export default {
     console.log(attribute)
     this.$Tawk.$setAttribute(attribute)
   },
-  computed: {
-    languageMessage() {
-       if (this.languageError === 'Field required') return this.$t('requiredField')
-      else return null      
-    }
-  },
   methods: {
     validateEmail() {
       if (!this.email) {
-        this.emailMessage = this.$t('requiredField')
+        this.emailError = 'Field required'
+        this.emailClass = 'help is-danger'
         return false
       }
       return true
@@ -110,6 +116,7 @@ export default {
     },
     updateProfile() {
       this.emailMessage = null
+      this.emailClass = "help"
       const validEmail = this.validateEmail()
       this.languageType = null
       this.languageError = false
