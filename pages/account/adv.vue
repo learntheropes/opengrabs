@@ -14,6 +14,9 @@
 <script>
 export default {
   name: 'Adv',
+  asyncData({ query: { adv }}) {
+    return { adv }
+  },
   computed: {
     activeTab: {
       get() {
@@ -23,6 +26,11 @@ export default {
         this.$store.commit('account/adv/setActiveTab', tab)
       },
     },
+  },
+  mounted() {
+    if (this.adv === 'travel') {
+      this.$store.commit('account/adv/setActiveTab', 1)
+    }
   }
 }
 </script>

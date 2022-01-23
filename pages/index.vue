@@ -11,7 +11,7 @@
             {{ $t('thatATravelerCanBringToYou') }}
           </p>
           <div class="buttons is-right">
-            <a v-if="!authenticated" class="button is-primary" @click="login">{{ $t('loginToAddAnOrder') }}</a >
+            <a v-if="!authenticated" class="button is-primary" @click="loginNewOrder">{{ $t('loginToAddAnOrder') }}</a >
             <nuxt-link v-if="authenticated" :to="localePath({ name: 'account-adv'})" class="button is-primary">{{ $t('addAnOrder') }}</nuxt-link >
             <nuxt-link :to="localePath({ name: 'travels' })" class="button is-primary">{{ $t('viewTravels') }}</nuxt-link >
           </div>
@@ -29,8 +29,8 @@
             {{ $t('duringYourNextTravel') }}
           </p>
           <div class="buttons">
-            <a v-if="!authenticated" href="#" class="button is-primary" disabled @click="login">{{ $t('loginToAddTravel') }}</a>
-            <nuxt-link v-if="authenticated" :to="localePath({ name: 'account-adv'})" class="button is-primary">{{ $t('addTravel') }}</nuxt-link >
+            <a v-if="!authenticated" href="#" class="button is-primary" @click="loginNewTravel">{{ $t('loginToAddTravel') }}</a>
+            <a v-if="authenticated" class="button is-primary" @click="addTravel">{{ $t('addTravel') }}</a>
             <nuxt-link :to="localePath({ name: 'orders'})" class="button is-primary">{{ $t('viewOrders') }}</nuxt-link>
           </div>
         </div>
@@ -63,9 +63,18 @@ export default {
     }
   },
   methods: {
-    login() {
-      this.$auth.$storage.setUniversal('redirect', `${this.$i18n.locale}/account/adv`)
+    addTravel() {
+      this.$store.commit('account/adv/setActiveTab', 1)
+      this.$router.push(`${this.$i18n.locale}/account/adv`)      
+    },
+    loginNewOrder() {
+      this.$auth.$storage.setUniversal('redirect', `/${this.$i18n.locale}/account/adv`)
       this.$auth.loginWith('auth0')
+    },
+    loginNewTravel() {
+      this.$store.commit('account/adv/setActiveTab', 1)
+      this.$auth.$storage.setUniversal('redirect', `/${this.$i18n.locale}/account/adv?adv=travel`)
+      this.$auth.loginWith('auth0')    
     }
   }
 }
