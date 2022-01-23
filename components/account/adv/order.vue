@@ -2,30 +2,30 @@
   <section class="section">
     <div class="columns">
       <div class="column is-half">
-        <b-field label="Country" message="Destination Country">
-          <b-select v-model="country" placeholder="Select a country" expanded>
+        <b-field :label="countryLabel" :type="countryType" :message="countryMessage">
+          <b-select v-model="country" :placeholder="countryPlaceholder" expanded>
             <option v-for="oneCountry in countries" :key="oneCountry.alpha2Code" :value="oneCountry.name">
               {{ oneCountry.name }}
             </option>
           </b-select>
         </b-field>
-        <b-field label="City" message="Destination city">
-          <b-select v-model="city" placeholder="Select a city" expanded>
+        <b-field :label="cityLabel" :type="cityType" :message="cityMessage">
+          <b-select v-model="city" :placeholder="cityPlaceholder" expanded>
             <option v-for="(oneCity, index) in cities" :key="index" :value="oneCity.name">
               {{ oneCity.name }}
             </option>
           </b-select>
         </b-field>
-        <b-field label="Limit delivery date" message="When do you expect to receive the product">
+        <b-field :label="dateLabel" :type="dateType" :message="dateMessage">
           <b-datepicker v-model="max_delivery_date" :min-date="new Date()" icon="calendar-today" editable />
         </b-field>
-        <b-field label="Amazon link" message="Supported stores are amazon.com amazon.co.uk amazon.fr amazon.de amazon.it amazon.es">
+        <b-field :label="amazonUrlLabel" :type="amazonLinkType" :message="amazonUrlMessage">
           <b-input v-model="url" type="text" expanded></b-input>
         </b-field>
-        <b-field label="Reward %" message="Reward in % that you are willing to pay. Minimum is 5% and maximum is 50%">
+        <b-field :label="rewardLabel" :message="rewardMessage">
           <b-slider v-model="reward" :min="5" :max="50" :step="5" ticks />
         </b-field>
-        <button :class="loadAmazonButtonClass" @click="loadAmazonButton">Get Product Info</button>
+        <button :class="loadAmazonButtonClass" @click="loadAmazonButton">{{ $t('getProductInfo')}}</button>
       </div>
       <div v-if="scrapedProduct" class="card">
         <div class="card-image">
@@ -84,7 +84,6 @@ import filter from 'lodash.filter'
 import sortBy from 'lodash.sortby'
 import { allCountries } from '~/assets/js/allCountries'
 import { allCities } from '~/assets/js/allCities'
-
 export default {
   name: 'OrderNew',
   middleware: 'auth',
@@ -96,6 +95,7 @@ export default {
     max_delivery_date: null,
     url: null,
     domain: null,
+    slug: null,
     dp: null,
     referral: null,
     reward: 5,
@@ -104,6 +104,14 @@ export default {
     image: null,
     price: {},
     currency: null,
+    countryError: false,
+    countryType: null,
+    cityError: false,
+    cityType: null,
+    dateError: false,
+    dateType: null,
+    amazonLinkError: false,
+    amazonLinkType: null,
   }),
   computed: {
     countries() {
@@ -116,6 +124,47 @@ export default {
         return []
       }
     },
+    countryLabel() {
+      return this.$t('countryLabel')
+    },
+    countryPlaceholder() {
+      return this.$t('countryPlaceholder')
+    },
+    cityLabel() {
+      return this.$t('cityLabel')
+    },
+    cityPlaceholder() {
+      return this.$t('cityPlaceholder')
+    },
+    countryMessage() {
+      if (this.countryError === 'Field required') return this.$t('requiredField')
+      else return this.$t('countryMessage')
+    },
+    cityMessage() {
+      if (this.cityError === 'Field required') return this.$t('requiredField')
+      else return this.$t('cityMessage')
+    },
+    dateLabel() {
+      return this.$t('dateLabel')
+    },
+    dateMessage() {
+      if (this.dateError === 'Field required') return this.$t('requiredField')
+      else return this.$t('dateMessage')
+    },
+    amazonUrlLabel() {
+      return this.$t('amazonUrlLabel')
+    },
+    amazonUrlMessage() {
+      if (this.amazonLinkError === 'Field required') return this.$t('requiredField')
+      else if (this.amazonLinkError === 'Invalid url') return this.$t('invalidUrl')
+      else return this.$t('amazonUrlMessage')
+    },
+    rewardLabel() {
+      return this.$t('rewardLabel')      
+    },
+    rewardMessage() {
+      return this.$t('rewardMessage')      
+    }
   },
   methods: {
     setCurrencyReferralPrice(domain, price) {
@@ -158,9 +207,50 @@ export default {
           break
       }
     },
+    validateCountry() {
+      if (!this.country) {
+        this.countryType = 'is-danger'
+        this.countryError = 'Field required'
+        return false
+      }
+      return true
+    },
+    validateCity() {
+      if (!this.city) {
+        this.cityType = 'is-danger'
+        this.cityError = 'Field required'
+        return false
+      }
+      return true
+    },
+    validateDate() {
+      if (!this.max_delivery_date) {
+        this.dateType = 'is-danger'
+        this.dateError = 'Field required'
+        return false
+      }
+      return true
+    },
+    validateAmazonLink() {
+      if (!this.url) {
+        this.amazonLinkType = 'is-danger'
+        this.amazonLinkError = 'Field required'
+        return false
+      } else {
+        const match = this.url.match(/(?:amazon.)(?<domain>fr|de|it|es|co.uk|com)(?:\/|\?)(?<slug>.+)(?:\/dp\/)(?<dp>\w+)(?:\/|\?|$)/)
+        if (!match || !match.groups.domain || !match.groups.dp) {
+          this.amazonLinkType = 'is-danger'
+          this.amazonLinkError = 'Invalid url'
+          return false
+        }
+      }
+      return true
+    },
     async loadAmazonData() {
-      this.domain = this.url.match(/(amazon.)(fr|de|it|es|co.uk|com)(\/|\?)/)[2]
-      this.dp = this.url.match(/(\/dp\/)(\w+)(\/|\?|$)/)[2]
+      const match = this.url.match(/(?:amazon.)(?<domain>fr|de|it|es|co.uk|com)(?:\/|\?)(?<slug>.+)(?:\/dp\/)(?<dp>\w+)(?:\/|\?|$)/)
+      this.domain = match.groups.domain
+      this.slug = match.groups.slug
+      this.dp = match.groups.dp
       const {
         data: {
           specifications: { title, weight, image, price },
@@ -178,18 +268,29 @@ export default {
       this.scrapedProduct = true
     },
     async loadAmazonButton() {
-      try {
+      this.countryType = null
+      this.countryMessage = this.$t('countryMessage')
+      this.cityType = null
+      this.cityMessage = this.$t('cityMessage')
+      this.dateType = null
+      this.dateMessage = this.$t('dateMessage')
+      this.amazonLinkType = null
+      this.amazonLinkMessage = this.$t('amazonLinkMessage')
+      const validCountry = this.validateCountry()
+      const validCity = this.validateCity()
+      const validDate = this.validateDate()
+      const validUrl = this.validateAmazonLink()
+      if (validCountry && validCity && validDate && validUrl) {
         this.loadAmazonButtonClass = 'button is-loading'
         await this.loadAmazonData()
-        this.loadAmazonButtonClass = 'button'
-      } catch ({ error }) {
-        return error
+        this.loadAmazonButtonClass = 'button'        
       }
     },
     async publishGrab() {
       const amazon = {
-        dp: this.dp,
         domain: this.domain,
+        slug: this.slug,
+        dp: this.dp,
         url: `https://amazon.${this.domain}/dp/${this.dp}/ref=as_li_tl?tag=${this.referral}`,
         title: this.title,
         weight: this.weight,

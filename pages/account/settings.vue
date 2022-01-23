@@ -56,7 +56,7 @@ export default {
         user = {
             email: this.$store.$auth.user.email,
             name: this.$store.$auth.user.name,
-            // hash: null
+            hash: null
         }
         break
     case 'vkontakte':

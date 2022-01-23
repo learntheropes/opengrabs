@@ -165,6 +165,9 @@ export default {
         }
       }
     },
+    transpile: [
+      "vee-validate/dist/rules"
+    ],
     extend(config, { isDev, isClient }) {
       // https://github.com/nuxt-community/dotenv-module/issues/11#issuecomment-376780588
       config.node = {
