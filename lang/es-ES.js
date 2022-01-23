@@ -1,6 +1,20 @@
 export default {
     requiredField: "Campo requerido",
     invalidUrl: "Enlache non valido",
+    // components/layout/nav-bar
+    orders: "Orders",
+    travels: "Travels",
+    exchangeRate: "Exchange rates",
+    settings: "Settings",
+    newAdvertisement: "New Advertisement",
+    myOrders: "My Orders",
+    myDeliveries: "My Deliveries",
+    myTravels: "My Travels",
+    login: "Login",
+    logout: "Logout",
+    // components/layout/footer
+    privacyPolicy: "Politica de privacidad",
+    termsOfService: "Terminos de servicio",    
     // pages/index
     shopCheaperInternationally: "Shop cheaper internationally", 
     findAProductThatYouLikeOnAmazon: "Find a product that you like on Amazon",
@@ -21,20 +35,6 @@ export default {
     currency: "DIVISA",
     buy: "COMPRA",
     sell: "VENTA",
-    // components/layout/nav-bar
-    orders: "Orders",
-    travels: "Travels",
-    exchangeRate: "Exchange rates",
-    settings: "Settings",
-    newAdvertisement: "New Advertisement",
-    myOrders: "My Orders",
-    myDeliveries: "My Deliveries",
-    myTravels: "My Travels",
-    login: "Login",
-    logout: "Logout",
-    // components/layout/footer
-    privacyPolicy: "Politica de privacidad",
-    termsOfService: "Terminos de servicio",
     // components/account/adv/order
     countryLabel: "Pais",
     countryPlaceholder: "Selecione un Pais",

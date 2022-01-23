@@ -1,6 +1,20 @@
 export default {
     requiredField: "Field required",
     invalidUrl: "Invalid url",
+    // components/layout/nav-bar
+    orders: "Orders",
+    travels: "Travels",
+    exchangeRate: "Exchange rates",
+    settings: "Settings",
+    newAdvertisement: "New Advertisement",
+    myOrders: "My Orders",
+    myDeliveries: "My Deliveries",
+    myTravels: "My Travels",
+    login: "Login",
+    logout: "Logout",
+    // components/layout/footer
+    privacyPolicy: "Privacy policy",
+    termsOfService: "Terms of service",
     // pages/index
     shopCheaperInternationally: "Shop cheaper internationally",
     findAProductThatYouLikeOnAmazon: "Find a product that you like on Amazon",
@@ -21,20 +35,6 @@ export default {
     currency: "CURRENCY",
     buy: "BUY",
     sell: "SELL",
-    // components/layout/nav-bar
-    orders: "Orders",
-    travels: "Travels",
-    exchangeRate: "Exchange rates",
-    settings: "Settings",
-    newAdvertisement: "New Advertisement",
-    myOrders: "My Orders",
-    myDeliveries: "My Deliveries",
-    myTravels: "My Travels",
-    login: "Login",
-    logout: "Logout",
-    // components/layout/footer
-    privacyPolicy: "Privacy policy",
-    termsOfService: "Terms of service",
     // components/account/adv/order
     countryLabel: "Country",
     countryPlaceholder: "Select a Country",
