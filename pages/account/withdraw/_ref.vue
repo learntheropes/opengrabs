@@ -5,12 +5,10 @@
         <div class="columns is-centered">
           <div class="column is-half">
             <div class="block">
-              <b-field label="Lightning payment request">
+              <b-field :label="$t('lightningPaymentRequest')">
                 <b-input v-model="invoice" type="text" expanded></b-input>
               </b-field>
-              <button class="button" @click="withdrawLightning">
-                Withdraw on lightning network
-              </button>
+              <button class="button" @click="withdrawLightning">{{ $t('withdrawOnLn') }}</button>
             </div>
           </div>
         </div>
@@ -19,15 +17,13 @@
         <div class="columns is-centered">
           <div class="column is-half">
             <div v-if="btc_amount<0.002" class="notification is-primary">
-              The minimum withdraw amount on chain is <strong>0.002 BTC</strong>. For this amount use the Lightning Network.
+              {{ $t('theMinimumIs') }} <strong>0.002 BTC</strong>. {{ $t('forThisAmountUse') }}.
             </div>
             <div v-else class="block">
-              <b-field label="Bitcoin address">
+              <b-field :label="$t('bitcoinAddress')">
                 <b-input v-model="address" type="text" expanded></b-input>
               </b-field>
-              <button class="button" @click="withdrawOnChain">
-                Withdraw on chain
-              </button>
+              <button class="button" @click="withdrawOnChain">{{ $t('withdrawOnChain') }}</button>
             </div>
           </div>
         </div>

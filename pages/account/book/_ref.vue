@@ -2,11 +2,11 @@
   <section class="section">
     <div class="columns is-centered">
       <div class="column is-one-third">
-        <b-field label="Delivery date">
+        <b-field :label="$t('deliveryDate')">
           <b-datepicker v-model="delivery_date" :min-date="new Date()" :max-date="new Date(grab.destination.max_delivery_date)" icon="calendar-today" editable />
         </b-field>
         <b-field>
-          <button class="button" @click="book">Book</button>
+          <button class="button" @click="book">{{ $t('book') }}</button>
         </b-field>
       </div>
     </div>

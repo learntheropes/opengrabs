@@ -2,23 +2,23 @@
   <section class="section container">
     <div class="block">
       <b-field position="is-centered" grouped group-multiline>
-        <b-select v-model="country" placeholder="By country">
+        <b-select v-model="country" :placeholder="$t('byCountry')">
           <option v-for="oneCountry in countriesSelection" :key="oneCountry" :value="oneCountry">
             {{ oneCountry }}
           </option>
         </b-select>
         <p class="control">
-          <b-select v-model="city" placeholder="By city">
+          <b-select v-model="city" :placeholder="$t('byCity')">
             <option v-for="oneCity in citiesSelection" :key="oneCity" :value="oneCity">
               {{ oneCity }}
             </option>
           </b-select>
         </p>
         <p class="control">
-          <b-button label="Filter" class="is-primary" @click="filterByDestination" />
+          <b-button :label="$t('filter')" class="is-primary" @click="filterByDestination" />
         </p>
         <p v-if="filteredOrders" class="control">
-          <b-button label="Remove Filter" @click="removeFilters" />
+          <b-button :label="$t('removeFilter')" @click="removeFilters" />
         </p>
       </b-field>
     </div>

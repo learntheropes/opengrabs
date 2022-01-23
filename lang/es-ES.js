@@ -32,10 +32,34 @@ export default {
     weDontChargeFeeBecauseAmazon: "We don't charge service fee because Amazon may pay us a referral fee",
     thanksToBitcoin: "Thanks to Bitcoin lightning we don't need to charge any payment processor fee",
     viewComparisionFees: "View comparision fees",
+    // pages/orders
+    byCountry: "Por pais",
+    byCity: "Por ciudad",
+    filter: "Filtrar",
+    removeFilter: "Remover filtro",
     // pages/exchange-rates
     currency: "DIVISA",
     buy: "COMPRA",
     sell: "VENTA",
+    // pages/account/book/_ref
+    deliveryDate: "Fecha de entrega",
+    book: "Reservar",
+    // pages/account/pay/_ref && pages/account/underpay/_ref
+    copyInvoice: "Copy Invoice",
+    copyAddress: "Copy Address",
+    copyAmount: "Copy Amount",
+    paymentProcessing: "Payment processing. We will mark the order as paid as soon as the payment confirms.",
+    paymentConfirmed: "Payment confirmed",
+    goBack: "Go Back",
+    paymentExpired: "Payment expired",
+    generateNewInvoice: "Generate a new invoice",
+    // pages/account/withdraw/_ref
+    lightningPaymentRequest: "Lightning payment request",
+    withdrawOnLn: "Withdraw on lightning network",
+    theMinimumIs: "The minimum withdraw amount on chain is",
+    forThisAmountUse: "For this amount use the Lightning Network",
+    bitcoinAddress: "Bitcoin address",
+    withdrawOnChain: "Withdraw on chain",
     // components/account/adv/order
     countryLabel: "Pais",
     countryPlaceholder: "Selecione un Pais",
