@@ -1,55 +1,55 @@
 <template>
   <section class="section container">
     <div v-if="!booked.length && !disputed.length && !paid.length && !bought.length && !delivered.length && !released.length && !withdrawn.length" class="box has-text-centered">
-      <p>You don't have any delivery booked yet.</p>
-      <p>You can book an order to deliver <nuxt-link :to="localePath({ name: 'orders' })">here</nuxt-link></p>
+      <p>{{ $t('youDontHaveAnyDelivery') }}.</p>
+      <p>{{ $t('youCanBookOrderToDeliver') }} <nuxt-link :to="localePath({ name: 'orders' })">{{ $t('here') }}</nuxt-link></p>
     </div>
     <b-tabs v-else v-model="activeTab" position="is-centered" class="block" multiline>
       <b-tab-item v-if="booked.length">
         <template #header>
-          <span>Booked<b-tag rounded>{{ booked.length }}</b-tag></span>
+          <span>{{ $t('booked') }}<b-tag rounded>{{ booked.length }}</b-tag></span>
         </template>
         <account-deliveries-booked :deliveries="booked" />
       </b-tab-item>
       <b-tab-item v-if="disputed.length">
         <template #header>
-          <span>Disputed<b-tag rounded>{{ disputed.length }}</b-tag></span>
+          <span>{{ $t('disputes') }}<b-tag rounded>{{ disputed.length }}</b-tag></span>
         </template>
         <account-deliveries-disputed :deliveries="disputed" />
       </b-tab-item>
       <b-tab-item v-if="refunded.length">
         <template #header>
-          <span>Refunded<b-tag rounded>{{ refunded.length }}</b-tag></span>
+          <span>{{ $t('refunded') }}<b-tag rounded>{{ refunded.length }}</b-tag></span>
         </template>
         <account-deliveries-refunded :deliveries="refunded" />
       </b-tab-item>
       <b-tab-item v-if="paid.length">
         <template #header>
-          <span>Paid<b-tag rounded>{{ paid.length }}</b-tag></span>
+          <span>{{ $t('paid') }}<b-tag rounded>{{ paid.length }}</b-tag></span>
         </template>
         <account-deliveries-paid :deliveries="paid" />
       </b-tab-item>
       <b-tab-item v-if="bought.length">
         <template #header>
-          <span>Bought<b-tag rounded>{{ bought.length }}</b-tag></span>
+          <span>{{ $t('bought') }}<b-tag rounded>{{ bought.length }}</b-tag></span>
         </template>
         <account-deliveries-bought :deliveries="bought" />
       </b-tab-item>
       <b-tab-item v-if="delivered.length">
         <template #header>
-          <span>Delivered<b-tag rounded>{{ delivered.length }}</b-tag></span>
+          <span>{{ $t('delivered') }}<b-tag rounded>{{ delivered.length }}</b-tag></span>
         </template>
         <account-deliveries-delivered :deliveries="delivered" />
       </b-tab-item>
       <b-tab-item v-if="released.length">
         <template #header>
-          <span>Released<b-tag rounded>{{ released.length }}</b-tag></span>
+          <span>{{ $t('released') }}<b-tag rounded>{{ released.length }}</b-tag></span>
         </template>
         <account-deliveries-released :deliveries="released" />
       </b-tab-item>
       <b-tab-item v-if="withdrawn.length">
         <template #header>
-          <span>Withdrawn<b-tag rounded>{{ withdrawn.length }}</b-tag></span>
+          <span>{{ $t('withdrawn') }}<b-tag rounded>{{ withdrawn.length }}</b-tag></span>
         </template>
         <account-deliveries-withdrawn :deliveries="withdrawn" />
       </b-tab-item>

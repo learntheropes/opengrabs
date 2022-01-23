@@ -60,6 +60,27 @@ export default {
     forThisAmountUse: "For this amount use the Lightning Network",
     bitcoinAddress: "Bitcoin address",
     withdrawOnChain: "Withdraw on chain",
+    // pages/account/adv
+    order: "Orden",
+    travel: "Viaje",
+    // pages/account/deliveries
+    youDontHaveAnyDelivery: "You don't have any delivery booked yet",
+    youCanBookOrderToDeliver: "You can book an order to deliver",
+    here: "here",
+    booked: "Booked",
+    disputed: "Disputed",
+    refunded: "Refunded",
+    paid: "Paid",
+    bought: "Bought",
+    delivered: "Delivered",
+    released: "Released",
+    withdrawn: "Withdrawn", 
+    // pages/account/orders
+    youDontHaveAnyOrder: "You don't have any order to buy yet",
+    youCanPublish: "You can publish a new one",
+    expired: "Expired",
+    published: "Published",
+    underpaid: "Underpaid",      
     // components/account/adv/order
     countryLabel: "Pais",
     countryPlaceholder: "Selecione un Pais",

@@ -1,10 +1,10 @@
 <template>
   <section class="section container">
     <b-tabs v-model="activeTab" position="is-centered" class="block" multiline>
-      <b-tab-item label="Order">
+      <b-tab-item :label="$t('order')">
         <account-adv-order />
       </b-tab-item>
-      <b-tab-item label="Travel">
+      <b-tab-item :label="$t('travel')">
         <account-adv-travel />
       </b-tab-item>
     </b-tabs>             
