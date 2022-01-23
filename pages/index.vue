@@ -72,7 +72,6 @@ export default {
       this.$auth.loginWith('auth0')
     },
     loginNewTravel() {
-      this.$store.commit('account/adv/setActiveTab', 1)
       this.$auth.$storage.setUniversal('redirect', `/${this.$i18n.locale}/account/adv?adv=travel`)
       this.$auth.loginWith('auth0')    
     }
