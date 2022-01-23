@@ -233,14 +233,14 @@ export default {
     },
     validateAmazonLink() {
       if (!this.url) {
-        this.amazonLinkType = 'is-danger'
-        this.amazonLinkError = 'Field required'
+        this.amazonUrlType = 'is-danger'
+        this.amazonUrlError = 'Field required'
         return false
       } else {
         const match = this.url.match(/(?:amazon.)(?<domain>fr|de|it|es|co.uk|com)(?:\/|\?)(?<slug>.+)(?:\/dp\/)(?<dp>\w+)(?:\/|\?|$)/)
         if (!match || !match.groups.domain || !match.groups.dp) {
-          this.amazonLinkType = 'is-danger'
-          this.amazonLinkError = 'Invalid url'
+          this.amazonUrlType = 'is-danger'
+          this.amazonUrlError = 'Invalid url'
           return false
         }
       }
