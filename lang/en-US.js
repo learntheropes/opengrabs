@@ -28,7 +28,8 @@ export default {
     loginToAddTravel: "Login to add a travel",
     addTravel: "Add a travel",
     viewOrders: "View orders",
-    weDontChargeFee: "We don't charge service fee because Amazon may pay us a referral fee",
+    weDontChargeFee: "We don charge any fee",
+    weDontChargeFeeBecauseAmazon: "We don't charge service fee because Amazon may pay us a referral fee",
     thanksToBitcoin: "Thanks to Bitcoin lightning we don't need to charge any payment processor fee",
     viewComparisionFees: "View comparision fees",
     // pages/exchange-rates

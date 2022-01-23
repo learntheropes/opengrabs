@@ -40,10 +40,10 @@
       <div class="hero-body hero-body-fee">
         <div class="container has-text-right">
           <p class="title">
-            We don't charge any fee
+            {{ $t('weDontChargeFee') }}<br>
           </p>
           <p class="subtitle">
-            {{ $t('weDontChargeFee') }}<br>
+            {{ $t('weDontChargeFeeBecauseAmazon') }}<br>
             {{ $t('thanksToBitcoin') }}
           </p>
           <nuxt-link :to="localePath({ name: 'fees' })" class="button is-primary">{{ $t('viewComparisionFees') }}</nuxt-link>
