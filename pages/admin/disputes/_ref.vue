@@ -30,11 +30,11 @@ export default {
     },
     methods: {
         async refund(ref) {
-            await this.$axios.post(`/api/admin/disputes/actions/refund/${ref}`)
+            await this.$admin.disputes.refund(this.ref)
             this.grab = this.$admin.grabs.get(this.ref)
         },
         async release(ref) {
-            await this.$axios.post(`/api/admin/disputes/actions/release/${ref}`)
+            await this.$admin.disputes.release(this.ref)
             this.grab = this.$admin.grabs.get(this.ref)
         }
     }
