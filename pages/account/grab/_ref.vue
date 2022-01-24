@@ -8,7 +8,13 @@
             <p>Buyer: {{ grab.buyer.name }}</p>
             <p>Traveler: {{ grab.traveler.name }}</p>
             <p>Delivery date: {{ $moment(grab.delivery.date).fromNow() }} [{{ $utils.momentDate(grab.delivery.date) }}]</p>
+            <p>Published {{ $moment(grab.published_at).fromNow() }}</p>
             <p>Booked {{ $moment(grab.booked_at).fromNow() }}</p>
+            <p>Paid {{ $moment(grab.paid_at).fromNow() }}</p>
+            <p>Bought {{ $moment(grab.bought_at).fromNow() }}</p>
+            <p>Delivered {{ $moment(grab.delivered_at).fromNow() }}</p>
+            <p>Released {{ $moment(grab.released_at).fromNow() }}</p>
+            <p>Withdrawn {{ $moment(grab.withdrawn_at).fromNow() }}</p>
           </div>
           <b-field>
             <div class="buttons">
@@ -24,7 +30,7 @@
       </div>
       <div class="column is-half">
         <div v-if="isChatable" class="box">
-          <b-field>
+          <b-field :type="postType" :message="postMessage">
             <b-input v-model="message" maxlength="400" type="textarea"></b-input>
           </b-field>
           <b-field>
@@ -41,7 +47,8 @@
               <p v-if="msg.content === 'paid'">{{ $t('statusPaid') }}</p>
               <p v-if="msg.content === 'bought'">{{ $t('statusBought') }}</p>
               <p v-if="msg.content === 'delivered'">{{ $t('statusDelivered') }}</p>
-              <p v-if="msg.content === 'released'">{{ $t('statusReleased') }}</p>         
+              <p v-if="msg.content === 'released'">{{ $t('statusReleased') }}</p>
+              <p v-if="msg.content === 'withdrawn'">{{ $t('statusWithdrawn') }}</p>        
             </div>
             <div else-if="msg.user_sub.split('|')[0] === 'admin'" class="notification has-text-centered is-primary">
               <span class="has-text-weight-semibold has-text-grey-light">{{ $t('admin') }} </span>,<br>
@@ -78,9 +85,15 @@ export default {
   data() {
     return {
       message: null,
+      postType: null,
+      postError: false
     }
   },
   computed: {
+    postMessage() {
+      if (this.postError === 'Field required') return this.$t('requiredField')
+      else return null 
+    },
     me() {
       return this.$store.state.auth.user.sub
     },
@@ -131,18 +144,31 @@ export default {
         return this.$store.state.auth.user.name
       }
     },
-    async postMessage() {
-      const props = {
-        posted_at: new Date().toISOString(),
-        content: this.message,
-        grab_id: this.ref,
-        user_sub: this.$store.state.auth.user.sub,
-        name: this.getName(),
+    validatePost() {
+      if (!this.message) {
+        this.postType = 'is-danger'
+        this.postError = 'Field required'
+        return false
       }
-      await this.$db.messages.create({ props })
-      const messages = await this.$db.messages.filter(this.ref)
-      this.messages = messages
-      this.message = null
+      return true
+    },
+    async postMessage() {
+      this.postType = null
+      this.postError = false
+      const validPost = this.validatePost()
+      if (validPost) {
+        const props = {
+          posted_at: new Date().toISOString(),
+          content: this.message,
+          grab_id: this.ref,
+          user_sub: this.$store.state.auth.user.sub,
+          name: this.getName(),
+        }
+        await this.$db.messages.create({ props })
+        const messages = await this.$db.messages.filter(this.ref)
+        this.messages = messages
+        this.message = null
+      }
     },
     async dispute() {
       await this.$grab.dispute({ ref: this.ref })

@@ -114,7 +114,7 @@ router.post('/btc/withdrawal/webhook', asyncHandler(async (req, res) => {
 
     const withdraw_status = (req.body.status === 'confirmed') ? true : false
 
-    await client.query(
+    const { ref: { value: { id }}} = await client.query(
       q.Update(
         q.Select(['ref'], q.Get(q.Match( q.Index("grab_by_withdraw_id"), req.body.id))),
         { data: { 
@@ -123,6 +123,18 @@ router.post('/btc/withdrawal/webhook', asyncHandler(async (req, res) => {
         }}
       )
     )
+
+    await client.query(
+      q.Create(
+          q.Collection('messages'),
+          { data: {
+              posted_at: new Date().toISOString(),
+              content: 'withdrawn',
+              grab_id: id,
+              user_sub: 'admin|0',
+          }}
+      )
+  )
 
     res.status(200).json({})
     return
