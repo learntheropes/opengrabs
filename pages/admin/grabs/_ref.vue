@@ -23,31 +23,10 @@
                                 <p>Withdrawn {{ $moment(grab.withdrawn_at).fromNow() }}</p>
                                 <p>Refunded {{ $moment(grab.refunded_at).fromNow() }}</p>
                             </div>
-                            <b-field>
-                                <div v-if="isResolveDispute" class="buttons">
-                                    <button class="button is-primary" @click="resolveToTheBuyer">Resolve to the buyer</button>
-                                    <button class="button is-primary" @click="resolveToTheTraveler">Resolve to the traveler</button>
-                                </div>
-                            </b-field>
                         </div>
                     </div>
                     <div class="column is-half">
-                        <div v-if="isChatable" class="box">
-                            <b-field :type="postType" :message="postMessage">
-                                <b-input v-model="message" maxlength="400" type="textarea"></b-input>
-                            </b-field>
-
-                            <b-field label="Attention required" :type="attentionType" :message="attentionMessage">
-                                <b-select v-model="attention" expanded>
-                                    <option v-for="hour in hours" :key="hour.value" :value="hour.value">
-                                        {{ hour.name }}
-                                    </option>
-                                </b-select>
-                            </b-field>
-
-                            <b-field>
-                                <button class="button is-primary" @click="postChatMessage">Post chat message</button>
-                            </b-field>
+                        <div class="box">
                             <div v-for="(msg, index) in messages" :key="index" class="content">
                                 <div v-if="msg.user_sub === 'admin|0'" class="notification has-text-centered is-primary">
                                     <span class="has-text-weight-semibold has-text-grey-light">{{ $t('admin') }} </span>,<br>
@@ -96,117 +75,12 @@ export default {
     layout: 'admin',
     middleware: 'auth',
     async asyncData({ app, params: { ref }}) {
-        const [isAdmin, isResolveDispute, grab, messages] = await Promise.all([
+        const [isAdmin, grab, messages] = await Promise.all([
             app.$admin.isAdmin(),
-            app.$admin.isResolveDispute(),
             app.$admin.grabs.get(ref),
             app.$admin.messages.list(ref)           
         ])
-        return { isAdmin, isResolveDispute, grab, messages }
-    },
-    data: () => ({
-        message: null,
-        postType: null,
-        postError: false,
-        hours: [
-            {
-                value: 1,
-                name: '1 hour'
-            },
-            {
-                value: 4,
-                name: '4 hours'
-            },
-            {
-                value: 12,
-                name: '12 hours'
-            },
-            {
-                value: 24,
-                name: '24 hours'
-            },
-            {
-                value: 48,
-                name: '2 days'
-            },
-            {
-                value: 72,
-                name: '3 days'
-            },
-        ],
-        attention: null,
-        attentionType: null,
-        attentionError: false
-    }),
-    computed: {
-        postMessage() {
-            if (this.postError === 'Field required') return 'Field required'
-            else return null 
-        },
-        attentionMassage() {
-            if (this.attentionError === 'Field required') return 'Field required'
-            else return null 
-        },
-        isChatable() {
-            return (
-                this.grab.status !== 'published' &&
-                this.grab.status !== 'released' &&
-                this.grab.status !== 'withdrawn'
-            )
-        }
-    },
-    methods: {
-        validatePost() {
-            if (!this.message) {
-                this.postType = 'is-danger'
-                this.postError = 'Field required'
-                return false
-            }
-            return true
-        },
-        validateAttention() {
-            if (!this.attention) {
-                this.attentionType = 'is-danger'
-                this.attentionError = 'Field required'
-                return false
-            }
-            return true
-        },
-        async postChatMessage() {
-            this.postType = null
-            this.postError = false
-            this.attentionType = null
-            this.attentionError = false
-            const validPost = this.validatePost()
-            const validateAttention = this.validateAttention()
-            if (validPost && validateAttention) {
-                const props = {
-                    posted_at: new Date().toISOString(),
-                    content: this.message,
-                    grab_id: this.ref,
-                    user_sub: this.$store.state.auth.user.sub.split('|').shift().unshift('admin').join('|'),
-                }
-                await this.$admin.grabs.attention(this.ref, this.attention)
-                await this.$db.messages.create({ props })
-                const messages = await this.$db.messages.filter(this.ref)
-                this.messages = messages
-                this.message = null
-            }
-        },
-        async resolveToTheBuyer() {
-            await this.$axios.post(`/api/admin/disputes/actions/refund/${this.ref}`)
-            const grab = await this.$admin.grabs.get(this.ref)
-            this.grab = grab
-            const messages = await this.$admin.messages.list(this.ref)
-            this.messages = messages
-        },
-        async resolveToTheTraveler() {
-            await this.$axios.post(`/api/admin/disputes/actions/release/${this.ref}`)
-            const grab = await this.$admin.grabs.get(this.ref)
-            this.grab = grab
-            const messages = await this.$admin.messages.list(this.ref)
-            this.messages = messages
-        },        
-    },
+        return { isAdmin, grab, messages }
+    }
 }
 </script>
