@@ -34,7 +34,7 @@
             <b-input v-model="message" maxlength="400" type="textarea"></b-input>
           </b-field>
           <b-field>
-            <button class="button is-primary" @click="postMessage">Post chat message</button>
+            <button class="button is-primary" @click="postChatMessage">Post chat message</button>
           </b-field>
           <div v-for="(msg, index) in messages" :key="index" class="content">
             <div v-if="msg.user_sub === 'admin|0'" class="notification has-text-centered is-primary">
@@ -152,7 +152,7 @@ export default {
       }
       return true
     },
-    async postMessage() {
+    async postChatMessage() {
       this.postType = null
       this.postError = false
       const validPost = this.validatePost()
