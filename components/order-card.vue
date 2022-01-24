@@ -21,12 +21,15 @@
                     <div class="column">
                         <p>Product:</p>
                         <p>Reward:</p>
+                        <p>Total:</p>
                     </div>
                     <div class="column" align="right">
                         <p>{{ (order.amazon.price.product+order.amazon.price.shipping+order.amazon.price.taxes).toFixed(2) }}</p>
                         <p>{{ order.amazon.price.reward.toFixed(2) }}</p>
+                        <p>{{ (order.amazon.price.product+order.amazon.price.shipping+order.amazon.price.taxes+order.amazon.price.reward).toFixed(2) }}</p>
                     </div>
                     <div class="column">
+                        <p>{{ order.amazon.currency }}</p>
                         <p>{{ order.amazon.currency }}</p>
                         <p>{{ order.amazon.currency }}</p>
                     </div>
