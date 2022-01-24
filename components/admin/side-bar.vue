@@ -18,7 +18,11 @@
     <p class="menu-label">Grabs</p>
     <ul class="menu-list">
         <li><nuxt-link to="/admin/grabs">Grabs</nuxt-link></li>
-        <li><nuxt-link to="/admin/disputes">Disputes</nuxt-link></li>
+    </ul>
+    <p class="menu-label">Disputes</p>
+    <ul class="menu-list">
+        <li><nuxt-link to="/admin/disputes/open">Open</nuxt-link></li>
+        <li><nuxt-link to="/admin/disputes/close">Close</nuxt-link></li>
     </ul>
     <p class="menu-label">Charges</p>
     <ul class="menu-list">

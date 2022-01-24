@@ -1,0 +1,293 @@
+CreateCollection({ name: "charge_webhooks" })
+CreateCollection({ name: "facebook_deletion_requests" })
+CreateCollection({ name: "grabs" })
+CreateCollection({ name: "messages" })
+CreateCollection({ name: "users" })
+CreateCollection({ name: "withdrawal_webhooks" })
+
+CreateIndex({
+  name: "grabs_serch_by_adv_status_range_published_at",
+  source: {
+    collection: Collection("grabs"),
+    fields: {
+      max_delivery_date_time: Query(
+        Lambda(
+          "doc",
+          Time(Select(["data", "destination", "max_delivery_date"], Var('doc')))
+        )
+      ),
+      published_at_time: Query(
+        Lambda(
+          "doc",
+          Time(Select(["data", "published_at"], Var('doc')))
+        )
+      )
+    }
+  },
+  terms: [
+    {
+      field: ["data", "adv"]
+    },
+    {
+      field: ["data", "status"]
+    }
+  ],
+  values: [
+    {
+      binding: "max_delivery_date_time"
+    },
+    {
+      binding: "published_at_time", reverse: true
+    },
+    {
+      field: ["ref"]
+    }
+  ]
+})
+
+Paginate(Range(Match(Index("grabs_serch_by_adv_status_range_published_at"), "product", "published"), [Now()], []))
+
+
+
+CreateIndex({
+  name: "grabs_search_by_buyer_sub_status_sort_by_updated_at_desc",
+  source: {
+    collection: Collection("grabs")
+  },
+  terms: [
+    {
+      field: ["data", "buyer", "sub"]
+    },
+    {
+      field: ["data", "status"]
+    }
+  ],
+  values: [
+    {
+       field: ["data", "updated_at"], reverse: true
+    },
+    {
+      field: ["ref"]
+    }
+  ]
+})
+
+CreateIndex({
+  name: "grabs_search_by_buyer_sub_status_withdrawn_sort_by_updated_at_desc",
+  source: {
+    collection: Collection("grabs")
+  },
+  terms: [
+    {
+      field: ["data", "buyer", "sub"]
+    },
+    {
+      field: ["data", "status"]
+    },
+    {
+      field: ["data", "withdrawn"]
+    }
+  ],
+  values: [
+    {
+       field: ["data", "updated_at"], reverse: true
+    },
+    {
+      field: ["ref"]
+    }
+  ]
+})
+
+CreateIndex({
+  name: "grabs_search_by_traveler_sub_status_sort_by_updated_at_desc",
+  source: {
+    collection: Collection("grabs")
+  },
+  terms: [
+    {
+      field: ["data", "traveler", "sub"]
+    },
+    {
+      field: ["data", "status"]
+    }
+  ],
+  values: [
+    {
+       field: ["data", "updated_at"], reverse: true
+    },
+    {
+      field: ["ref"]
+    }
+  ]
+})
+
+CreateIndex({
+  name: "grabs_search_by_traveler_sub_status_withdrawn_sort_by_updated_at_desc",
+  source: {
+    collection: Collection("grabs")
+  },
+  terms: [
+    {
+      field: ["data", "traveler", "sub"]
+    },
+    {
+      field: ["data", "status"]
+    },
+    {
+      field: ["data", "withdrawn"]
+    }
+  ],
+  values: [
+    {
+       field: ["data", "updated_at"], reverse: true
+    },
+    {
+      field: ["ref"]
+    }
+  ]
+})
+
+CreateIndex({
+  name: "admin_disputes_status",
+  source: {
+    collection: Collection("grabs"),
+  },
+  terms: [
+    {
+      field: ["data", "dispute", "status"]
+    }
+  ],
+  values: [
+    {
+      field: ["data", "disputed_at"], reverse: true
+    },
+    {
+      field: ["ref"]
+    }
+  ]
+})
+
+CreateIndex({
+  name: "facebook_deletion_status_by_code",
+  source: {
+    collection: Collection("facebook_deletion_requests"),
+  },
+  terms: [
+    {
+      field: ["data", "dispute", "confirmationCode"]
+    }
+  ],
+  values: [
+    {
+      field: ["ref"]
+    }
+  ]
+})
+
+CreateIndex({
+  name: "messages_by_grab_id",
+  source: {
+    collection: Collection("messages"),
+  },
+  terms: [
+    {
+      field: ["data", "grab_id"]
+    }
+  ],
+  values: [
+    {
+      field: ["data", "posted_at"], reverse: true
+    },
+    {
+      field: ["ref"]
+    }
+  ]
+})
+
+CreateIndex({
+  name: "user_by_sub",
+  source: {
+    collection: Collection("users"),
+  },
+  terms: [
+    {
+      field: ["data", "sub"]
+    }
+  ],
+  values: [
+    {
+      field: ["ref"]
+    }
+  ]
+})
+
+CreateIndex({
+  name: "charge_webhook_by_status",
+  source: {
+    collection: Collection("charge_webhooks"),
+  },
+  terms: [
+    {
+      field: ["data", "status"]
+    }
+  ],
+  values: [
+    {
+      field: ["ref"]
+    }
+  ]
+})
+
+CreateIndex({
+  name: "charge_webhook_by_order_id",
+  source: {
+    collection: Collection("charge_webhooks"),
+  },
+  terms: [
+    {
+      field: ["data", "order_id"]
+    }
+  ],
+  values: [
+    {
+      field: ["ref"]
+    }
+  ]
+})
+
+CreateIndex({
+  name: "grab_by_withdraw_id",
+  source: {
+    collection: Collection("grabs"),
+  },
+  terms: [
+    {
+      field: ["data", "withdraw", "id"]
+    }
+  ],
+  values: [
+    {
+      field: ["ref"]
+    }
+  ]
+})
+
+CreateIndex({
+    name: "disputes_by_status_by_attention_required",
+    source: {
+      collection: Collection("grabs")
+    },
+    terms: [
+      {
+        field: ["data", "dispute", "status"]
+      }
+    ],
+    values: [
+      {
+         field: ["data", "dispute", "attention_required"]
+      },
+      {
+        field: ["ref"]
+      }
+    ]
+ })

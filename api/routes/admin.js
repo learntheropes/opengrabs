@@ -80,10 +80,10 @@ router.get('/admin/disputes/filter/:status', authorizeUser, authorizeAdmin, asyn
   const { data } = await client.query(
     q.Map(
       q.Paginate(
-        q.Match(q.Index('admin_disputes_status'), status),
+        q.Match(q.Index('disputes_by_status_by_attention_required'), status),
         { size: 100000 }
       ),
-      q.Lambda(["disputed_at", "ref"], q.Get(q.Var("ref")))
+      q.Lambda(["attention_required", "ref"], q.Get(q.Var("ref")))
     )
   )
 

@@ -11,6 +11,12 @@
                         <b-table-column v-slot="props" label="Ref">
                             {{ props.row.ref }}
                         </b-table-column>
+                        <b-table-column v-slot="props" label="Amount">
+                            {{ props.row.amazon.price.total.toFix(2) }} {{ props.row.amazon.currency }}
+                        </b-table-column>
+                        <b-table-column v-slot="props" label="Product">
+                            <a :href="props.row.amazon.url" target="_blank">View</a>
+                        </b-table-column>                        
                         <b-table-column  v-slot="props" label="Buyer">
                             {{ props.row.buyer.sub }} {{ props.row.buyer.name }}
                         </b-table-column>
@@ -24,9 +30,7 @@
                             {{ $moment(props.row.disputed_at).fromNow() }}
                         </b-table-column>
                         <b-table-column v-slot="props" label="Open">
-                            <nuxt-link :to="'/admin/disputes/'+props.row.ref">
-                                View
-                            </nuxt-link>
+                            <nuxt-link :to="'/admin/disputes/'+props.row.ref">Open</nuxt-link>
                         </b-table-column>
                     </template>
                 </b-table>
@@ -43,7 +47,7 @@ export default {
     async asyncData({ app }) {
         const [isAdmin, disputes] = await Promise.all([
             app.$admin.isAdmin(),
-            app.$admin.disputes.filter('open') 
+            app.$admin.disputes.filter('close') 
         ])
         return { isAdmin, disputes }
     }
