@@ -201,7 +201,7 @@ export default {
           break
         case 'com':
           this.currency = 'USD'
-          this.referral = 'localgrabs-20'
+          this.referral = 'opengrabs-20'
           this.price.taxes = this.$utils.round(price * 0.06, 2)
           this.price.total = this.$utils.round(price * 1.06 * (this.reward / 100 + 1),2)
           break
@@ -291,7 +291,7 @@ export default {
         domain: this.domain,
         slug: this.slug,
         dp: this.dp,
-        url: `https://amazon.${this.domain}/dp/${this.dp}/ref=as_li_tl?tag=${this.referral}`,
+        url: `https://amazon.${this.domain}/dp/${this.dp}?tag=${this.referral}`,
         title: this.title,
         weight: this.weight,
         image: this.image,
