@@ -29,7 +29,7 @@
                         <b-table-column v-slot="props" label="Attention required">
                             {{ $moment(props.row.dispute.attention_required).fromNow() }}
                         </b-table-column>
-                        <b-table-column v-slot="props" label="Open">
+                        <b-table-column v-slot="props" label="View">
                             <nuxt-link :to="'/admin/disputes/'+props.row.ref">
                                 View
                             </nuxt-link>

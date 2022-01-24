@@ -30,7 +30,7 @@
                             {{ $moment(props.row.disputed_at).fromNow() }}
                         </b-table-column>
                         <b-table-column v-slot="props" label="Open">
-                            <nuxt-link :to="'/admin/disputes/'+props.row.ref">Open</nuxt-link>
+                            <nuxt-link :to="'/admin/disputes/'+props.row.ref">View</nuxt-link>
                         </b-table-column>
                     </template>
                 </b-table>
