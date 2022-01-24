@@ -1,5 +1,9 @@
 <template>
     <aside class="menu">
+    <ul class="menu-list">
+        <li><nuxt-link :to="localePath({ name: 'index' })">Website homepage</nuxt-link></li>
+        <li><nuxt-link to="/admin">Admin homepage</nuxt-link></li>
+    </ul>
     <p class="menu-label">Grabs</p>
     <ul class="menu-list">
         <li><nuxt-link to="/admin/grabs">Grabs</nuxt-link></li>
@@ -18,9 +22,6 @@ export default {
     async asyncData({ app }) {
         const { data } = await app.$axios.get('/api/admin/is-admin')
         return {isAdmin: data.isAdmin}
-    },
-    data: () => ({
-        test: 'test'
-    }),
+    }
 }
 </script>

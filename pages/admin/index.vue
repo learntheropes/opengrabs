@@ -5,6 +5,7 @@
                 <admin-side-bar />
             </div>
             <div class="column">
+                
             </div>
         </div>
     </section>
@@ -15,8 +16,10 @@ export default {
     nuxtI18n: false,
     middleware: 'auth',
     async asyncData({ app }) {
+        app.i18n.locale = 'en'
+        app.$moment.locale('en')
         const isAdmin = await app.$admin.isAdmin()
         return { isAdmin }
-    }
+    },
 }
 </script>
