@@ -78,6 +78,18 @@ router.post('/btc/charge/webhook', asyncHandler(async (req, res) => {
           }},
         )
       )
+
+      await client.query(
+        q.Create(
+            q.Collection('messages'),
+            { data: {
+                posted_at: new Date().toISOString(),
+                content: 'paid',
+                grab_id: req.body.order_id,
+                user_sub: 'admin|0',
+            }}
+        )
+    )
     }
 
     res.status(200).json({})

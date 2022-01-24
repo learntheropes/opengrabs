@@ -31,6 +31,23 @@
             <button class="button is-primary" @click="postMessage">Post chat message</button>
           </b-field>
           <div v-for="(msg, index) in messages" :key="index" class="content">
+            <div v-if="msg.user_sub === 'admin|0'" class="notification has-text-centered is-primary">
+              <span class="has-text-weight-semibold has-text-grey-light">{{ $t('admin') }} </span>,<br>
+              <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
+              <p v-if="msg.content === 'published'">{{ $t('statusPublished') }}</p>
+              <p v-if="msg.content === 'removed'">{{ $t('statusRemoved') }}</p>
+              <p v-if="msg.content === 'booked'">{{ $t('statusBooked') }}</p>
+              <p v-if="msg.content === 'disputed'">{{ $t('statusDisputed') }}</p>
+              <p v-if="msg.content === 'paid'">{{ $t('statusPaid') }}</p>
+              <p v-if="msg.content === 'bought'">{{ $t('statusBought') }}</p>
+              <p v-if="msg.content === 'delivered'">{{ $t('statusDelivered') }}</p>
+              <p v-if="msg.content === 'released'">{{ $t('statusReleased') }}</p>         
+            </div>
+            <div else-if="msg.user_sub.split('|')[0] === 'admin'" class="notification has-text-centered is-primary">
+              <span class="has-text-weight-semibold has-text-grey-light">{{ $t('admin') }} </span>,<br>
+              <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
+              <p>{{ msg.content }}</p>
+            </div>
             <div v-if="msg.user_sub === me" class="notification">
               <span class="has-text-weight-semibold has-text-grey-light">Me </span>,<br>
               <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>

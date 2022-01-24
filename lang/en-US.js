@@ -1,4 +1,5 @@
 export default {
+    // forms
     requiredField: "Field required",
     invalidUrl: "Invalid url",
     // components/layout/nav-bar
@@ -44,6 +45,16 @@ export default {
     // pages/account/book/_ref
     deliveryDate: "Delivery date",
     book: "Book",
+    // pages/account/grab/_ref
+    statusPublished: "Grab published",
+    statusRemoved: "Grab removed",
+    statusBooked: "Grab booked",
+    statusDisputed: "Grab disputed",
+    statusPaid: "Grab paid",
+    statusBought: "Grab bought",
+    statusDelivered: "Grab delivered",
+    statusReleased: "Grab released",
+    admin: "Admin",
     // pages/account/pay/_ref && pages/account/underpay/_ref
     copyInvoice: "Copy Invoice",
     copyAddress: "Copy Address",

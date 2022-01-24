@@ -78,14 +78,26 @@ router.post('/grab/actions/publish', authorizeUser, asyncHandler(async (req, res
         updated_at: new Date().toISOString()
     }
 
-    const response = await client.query(
+    const { ref: { value: { id }}} = await client.query(
         q.Create(
             q.Collection('grabs'),
             { data: props },
         )
     )
 
-    res.status(201).json(response)
+    await client.query(
+        q.Create(
+            q.Collection('messages'),
+            { data: {
+                posted_at: new Date().toISOString(),
+                content: 'published',
+                grab_id: id,
+                user_sub: 'admin|0',
+            }}
+        )
+    )
+
+    res.status(201).json({ id })
 }))
 
 router.post('/grab/actions/remove/:ref', authorizeUser, asyncHandler(async (req, res) => {
@@ -100,6 +112,18 @@ router.post('/grab/actions/remove/:ref', authorizeUser, asyncHandler(async (req,
         res.status(401).send('unauthorized')
         return
     }
+
+    await client.query(
+        q.Create(
+            q.Collection('messages'),
+            { data: {
+                posted_at: new Date().toISOString(),
+                content: 'removed',
+                grab_id: ref,
+                user_sub: 'admin|0',
+            }}
+        )
+    )
 
     const response = await client.query(
         q.Delete(q.Ref(q.Collection('grabs'), ref))
@@ -144,6 +168,18 @@ router.post('/grab/actions/book/:ref', authorizeUser, asyncHandler(async (req, r
         )
     )
 
+    await client.query(
+        q.Create(
+            q.Collection('messages'),
+            { data: {
+                posted_at: new Date().toISOString(),
+                content: 'booked',
+                grab_id: ref,
+                user_sub: 'admin|0',
+            }}
+        )
+    )
+
     res.status(201).json(response)
 }))
 
@@ -178,6 +214,18 @@ router.post('/grab/actions/dispute/:ref', authorizeUser, asyncHandler(async (req
         )
     )
 
+    await client.query(
+        q.Create(
+            q.Collection('messages'),
+            { data: {
+                posted_at: new Date().toISOString(),
+                content: 'disputed',
+                grab_id: ref,
+                user_sub: 'admin|0',
+            }}
+        )
+    )
+
     res.status(201).json(response)
 }))
 
@@ -204,6 +252,18 @@ router.post('/grab/actions/bought/:ref', authorizeUser, asyncHandler(async (req,
         q.Update(
             q.Ref(q.Collection('grabs'), ref),
             { data: props },
+        )
+    )
+
+    await client.query(
+        q.Create(
+            q.Collection('messages'),
+            { data: {
+                posted_at: new Date().toISOString(),
+                content: 'bought',
+                grab_id: ref,
+                user_sub: 'admin|0',
+            }}
         )
     )
 
@@ -236,6 +296,18 @@ router.post('/grab/actions/delivered/:ref', authorizeUser, asyncHandler(async (r
         )
     )
 
+    await client.query(
+        q.Create(
+            q.Collection('messages'),
+            { data: {
+                posted_at: new Date().toISOString(),
+                content: 'delivered',
+                grab_id: ref,
+                user_sub: 'admin|0',
+            }}
+        )
+    )
+
     res.status(201).json(response)
 }))
 
@@ -263,6 +335,18 @@ router.post('/grab/actions/release/:ref', authorizeUser, asyncHandler(async (req
         q.Update(
             q.Ref(q.Collection('grabs'), ref),
             { data: props },
+        )
+    )
+
+    await client.query(
+        q.Create(
+            q.Collection('messages'),
+            { data: {
+                posted_at: new Date().toISOString(),
+                content: 'released',
+                grab_id: ref,
+                user_sub: 'admin|0',
+            }}
         )
     )
 
