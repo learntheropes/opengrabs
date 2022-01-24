@@ -17,9 +17,11 @@ export default {
     layout: 'admin',
     middleware: 'auth',
     async asyncData({ app }) {
-        app.i18n.locale = 'en'
-        app.$moment.locale('en')
         const isAdmin = await app.$admin.isAdmin()
+        if (isAdmin) {
+            app.i18n.locale = 'en'
+            app.$moment.locale('en')
+        }
         return { isAdmin }
     },
 }
