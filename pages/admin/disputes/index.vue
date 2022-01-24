@@ -38,6 +38,7 @@
 <script>
 export default {
     nuxtI18n: false,
+    layout: 'admin',
     middleware: 'auth',
     async asyncData({ app }) {
         const [isAdmin, disputes] = await Promise.all([

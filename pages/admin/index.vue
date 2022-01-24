@@ -14,6 +14,7 @@
 <script>
 export default {
     nuxtI18n: false,
+    layout: 'admin',
     middleware: 'auth',
     async asyncData({ app }) {
         app.i18n.locale = 'en'

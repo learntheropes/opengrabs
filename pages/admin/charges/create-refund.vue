@@ -26,6 +26,7 @@
 // https://developers.opennode.com/reference/create-refund
 export default {
     nuxtI18n: false,
+    layout: 'admin',
     middleware: 'auth',
     async asyncData({ app }) {
         const isAdmin = await app.$admin.isAdmin()
