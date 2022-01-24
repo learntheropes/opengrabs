@@ -2,12 +2,13 @@
   <section class="section container">
     <div class="columns">
       <div class="column is-half">
+        <h1 class="title">Grab {{ ref }}</h1>
         <div class="box">
           <div class="content">
-            <p>Grab id: {{ ref }}</p>
             <p>Buyer: {{ grab.buyer.name }}</p>
             <p>Traveler: {{ grab.traveler.name }}</p>
             <p>Delivery date: {{ $moment(grab.delivery.date).fromNow() }} [{{ $utils.momentDate(grab.delivery.date) }}]</p>
+            <p>Max delivery date: {{ $moment(grab.destination.max_delivery_date).fromNow() }} [{{ $utils.momentDate(grab.destination.max_delivery_date) }}]</p>
             <p>Published {{ $moment(grab.published_at).fromNow() }}</p>
             <p>Booked {{ $moment(grab.booked_at).fromNow() }}</p>
             <p>Paid {{ $moment(grab.paid_at).fromNow() }}</p>
@@ -15,6 +16,7 @@
             <p>Delivered {{ $moment(grab.delivered_at).fromNow() }}</p>
             <p>Released {{ $moment(grab.released_at).fromNow() }}</p>
             <p>Withdrawn {{ $moment(grab.withdrawn_at).fromNow() }}</p>
+            <p>Refunded {{ $moment(grab.refunded_at).fromNow() }}</p>
           </div>
           <b-field>
             <div class="buttons">
@@ -48,7 +50,8 @@
               <p v-if="msg.content === 'bought'">{{ $t('statusBought') }}</p>
               <p v-if="msg.content === 'delivered'">{{ $t('statusDelivered') }}</p>
               <p v-if="msg.content === 'released'">{{ $t('statusReleased') }}</p>
-              <p v-if="msg.content === 'withdrawn'">{{ $t('statusWithdrawn') }}</p>        
+              <p v-if="msg.content === 'withdrawn'">{{ $t('statusWithdrawn') }}</p>
+              <p v-if="msg.content === 'refunded'">{{ $t('statusRefunded') }}</p>       
             </div>
             <div else-if="msg.user_sub.split('|')[0] === 'admin'" class="notification has-text-centered is-primary">
               <span class="has-text-weight-semibold has-text-grey-light">{{ $t('admin') }} </span>,<br>
@@ -82,13 +85,11 @@ export default {
     const messages = await app.$db.messages.filter(ref)
     return { ref, grab, messages }
   },
-  data() {
-    return {
-      message: null,
-      postType: null,
-      postError: false
-    }
-  },
+  data: () => ({
+    message: null,
+    postType: null,
+    postError: false
+  }),
   computed: {
     postMessage() {
       if (this.postError === 'Field required') return this.$t('requiredField')

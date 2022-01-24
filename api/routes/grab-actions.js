@@ -203,7 +203,8 @@ router.post('/grab/actions/dispute/:ref', authorizeUser, asyncHandler(async (req
         updated_at: new Date().toISOString(),
         dispute: {
             by: jwt.sub,
-            status: 'open'
+            status: 'open',
+            attention_required: new Date().toISOString()
         },
     }
 

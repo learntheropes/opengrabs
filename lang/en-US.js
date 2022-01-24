@@ -55,6 +55,7 @@ export default {
     statusDelivered: "Grab delivered",
     statusReleased: "Grab released",
     statusWithdrawn: "Grab withdrawn",
+    statusRefunded: "Grab refunded",
     admin: "Admin",
     // pages/account/pay/_ref && pages/account/underpay/_ref
     copyInvoice: "Copy Invoice",

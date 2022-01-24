@@ -4,6 +4,10 @@ export default ({ $axios, store }, inject) => {
             const { data } = await $axios.get('/api/admin/is-admin')
             return data
         },
+        isResolveDispute: async () => {
+            const { data } = await $axios.get('/api/admin/is-resolve-dispute')
+            return data
+        },
         grabs: {
             list: async () => {
                 const { data } = await $axios.get('/api/admin/grabs/list')
@@ -12,6 +16,10 @@ export default ({ $axios, store }, inject) => {
             get: async (ref) => {
                 const { data } = await $axios.get(`/api/admin/grabs/get/${ref}`)
                 return data
+            },
+            attention: async (ref, hours) => {
+                const { data } = await $axios.get(`/api/admin/grabs/get/${ref}/${hours}`)
+                return data                
             }
         },
         messages: {

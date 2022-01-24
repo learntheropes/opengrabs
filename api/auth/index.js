@@ -35,3 +35,13 @@ export const authorizeAdmin = asyncHandler(async (req, res, next) => {
   }
   next()
 })
+
+export const authorizeDispute = asyncHandler(async (req, res, next) => {
+  const { jwt } = req.body
+  const isAdmin = jwt['https://opengrabs.com/roles'].includes('resolve_dispute')
+  if (!isAdmin) {
+    res.status(401).send('unauthorized')
+    return 
+  }
+  next()
+})
