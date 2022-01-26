@@ -43,6 +43,7 @@ export default {
       this.$auth.loginWith('auth0')
     },
     logout() {
+      this.$Tawk.$endChat()
       this.$auth.logout()
     },
   },

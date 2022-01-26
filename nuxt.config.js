@@ -137,7 +137,7 @@ export default {
         rewriteRedirects: false,
         logoutRedirectUri: (process.env.URL) ? `${process.env.URL}` : 'https://localhost:3000'
       }
-    }
+    },
   },
 
   router: {

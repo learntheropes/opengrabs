@@ -64,7 +64,7 @@ router.get('/db/user/get/:sub', authorizeUser, asyncHandler(async (req, res) => 
           { data: props }
         )
       )
-      res.status(200).json(email)
+      res.status(200).json(props)
       return
     } else {
   
@@ -73,7 +73,7 @@ router.get('/db/user/get/:sub', authorizeUser, asyncHandler(async (req, res) => 
           q.Match(q.Index('user_by_sub'), jwt.sub)
         )
       )
-      res.status(200).json(user.email)
+      res.status(200).json(user)
       return
     }
   }))

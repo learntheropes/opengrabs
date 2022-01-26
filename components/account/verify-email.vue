@@ -26,8 +26,18 @@ export default {
         },        
     },
     async created() {
-        const email = await this.$db.user.create({ locale: this.$i18n.locale })
-        this.$nuxt.$emit('updateEmailExists', email)
+        const user = await this.$db.user.create({ locale: this.$i18n.locale })
+        this.$nuxt.$emit('updateEmailExists', user.email)
+        if (user.email) {
+            const { data: { hash }} = await this.$axios.get(`/api/crypto/sha256/${user.email}`)
+            this.$Tawk.$updateChatUser({ name: user.name, email: user.email, emailHmac: hash})
+
+            const attribute = {
+                key: 'user-sub',
+                value: this.$store.$auth.user.sub
+            }
+            this.$Tawk.$setAttribute(attribute)
+        }
     },
     methods: {
         validateEmail(){
@@ -45,6 +55,15 @@ export default {
             if (validEmail) {
                 const user = await this.$db.user.update({ email: this.email })
                 this.$nuxt.$emit('updateEmailExists', user.email)
+                
+                const { data: { hash }} = await this.$axios.get(`/api/crypto/sha256/${user.email}`)
+                this.$Tawk.$updateChatUser({ name: user.name, email: user.email, emailHmac: hash})
+
+                const attribute = {
+                    key: 'user-sub',
+                    value: this.$store.$auth.user.sub
+                }
+                this.$Tawk.$setAttribute(attribute)
             }
         },
     }
