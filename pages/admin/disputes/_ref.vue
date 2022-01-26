@@ -5,9 +5,9 @@
                 <admin-side-bar />
             </div>
             <div class="column">
+                <h1 class="title">Grab {{ ref }}</h1>
                 <div class="columns">
                     <div class="column is-half">
-                        <h1 class="title">Grab {{ ref }}</h1>
                         <div class="box">
                             <div class="content">
                                 <p>Buyer: {{ grab.buyer.name }}</p>
@@ -103,7 +103,7 @@ export default {
             app.$admin.grabs.get(ref),
             app.$admin.messages.list(ref)           
         ])
-        return { isAdmin, isResolveDispute, grab, messages }
+        return { isAdmin, ref, isResolveDispute, grab, messages }
     },
     data: () => ({
         message: null,
