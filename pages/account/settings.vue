@@ -90,9 +90,9 @@ export default {
 
     this.$Tawk.$updateChatUser(user)
 
-    const attribute = {
-        'user-sub': this.$store.$auth.user.sub
-    }
+    // const attribute = {
+    //     'user-sub': this.$store.$auth.user.sub
+    // }
     // this.$Tawk.$setAttribute(attribute)
   },
   methods: {
