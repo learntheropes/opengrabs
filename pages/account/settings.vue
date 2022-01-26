@@ -73,22 +73,23 @@ export default {
         user = {
             email: this.$store.$auth.user.email,
             name: this.$store.$auth.user.name,
-            hash: null
+            emailHmac: null
         }
         break
     case 'vkontakte':
         user = {
             email: this.$store.$auth.user.email,
             name: `${this.$store.$auth.user.given_name} ${this.$store.$auth.user.family_name}`.replaceAll('-', ' '),
-            hash: null                           
+            emailHmac: null                           
         }
         break
     }
 
     const { data: { hash }} = await this.$axios.get(`/api/crypto/sha256/${user.email}`)
-    user.hash = hash
+    user.emailHmac = hash
 
-    this.$Tawk.$updateChatUser(user)
+    const tawkUser = this.$Tawk.$updateChatUser(user)
+    console.log(tawkUser)
 
     // const attribute = {
     //     'user-sub': this.$store.$auth.user.sub
