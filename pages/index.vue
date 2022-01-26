@@ -63,13 +63,14 @@ export default {
     }
   },
   async mounted() {
+    // All this only to mount the tawk.to chat to new users
     const sleep = (ms) => {
       return new Promise(resolve => setTimeout(resolve, ms));
     }
     if (process.env.URL) {
       await sleep(10000);
-      console.log(this.$tawk)
-      if (!this.$tawk) this.$router.go(0)
+      console.log(this.$Tawk)
+      if (!this.$Tawk) this.$router.go(0)
     }
   },
   methods: {
