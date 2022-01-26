@@ -70,8 +70,9 @@ export default {
     if (process.env.URL) {
       await sleep(1000);
       if (!this.$Tawk) {
-        console.log(this.$Tawk.$isInit())
         this.$router.go(0)
+      } else {
+        console.log(this.$Tawk.$isInit())
       }
     }
   },
