@@ -62,9 +62,15 @@ export default {
       return this.$store.state.auth.loggedIn
     }
   },
-  mounted() {
-    console.log(this.$tawk)
-    if (!this.$tawk) this.$router.go(0)
+  async mounted() {
+    const sleep = (ms) => {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    if (process.env.URL) {
+      await sleep(10000);
+      console.log(this.$tawk)
+      if (!this.$tawk) this.$router.go(0)
+    }
   },
   methods: {
     addTravel() {
