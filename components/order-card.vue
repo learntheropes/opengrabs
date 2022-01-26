@@ -17,27 +17,27 @@
                 <a :href="order.shop.url" target="_blank" class="card-footer-item">{{ order.shop.name }}.{{ order.shop.domain }}</a>
             </div>
             <div class="content">
-                <div class="columns">
+                <div class="columns is-mobile">
                     <div class="column">
-                        <p>{{ $t('product') }}:</p>
-                        <p>{{ $t('reward') }}:</p>
-                        <p>{{ $t('total') }}:</p>
+                        <p>{{ $t('product') }}:<br>
+                        {{ $t('reward') }}:<br>
+                        {{ $t('total') }}:</p>
                     </div>
                     <div class="column" align="right">
-                        <p>{{ (order.shop.price.product+order.shop.price.shipping+order.shop.price.taxes).toFixed(2) }}</p>
-                        <p>{{ order.shop.price.reward.toFixed(2) }}</p>
-                        <p>{{ (order.shop.price.product+order.shop.price.shipping+order.shop.price.taxes+order.shop.price.reward).toFixed(2) }}</p>
+                        <p>{{ (order.shop.price.product+order.shop.price.shipping+order.shop.price.taxes).toFixed(2) }}<br>
+                        {{ order.shop.price.reward.toFixed(2) }}<br>
+                        {{ (order.shop.price.product+order.shop.price.shipping+order.shop.price.taxes+order.shop.price.reward).toFixed(2) }}</p>
                     </div>
                     <div class="column">
-                        <p>{{ order.shop.currency }}</p>
-                        <p>{{ order.shop.currency }}</p>
-                        <p>{{ order.shop.currency }}</p>
+                        <p>{{ order.shop.currency }}<br>
+                        {{ order.shop.currency }}<br>
+                        {{ order.shop.currency }}</p>
                     </div>
                 </div>
             </div>
             <div class="content">
-              {{ $t('deliveryTo') }} <strong>{{ order.destination.city }} [{{ order.destination.country }}]</strong><br>
-               {{ $moment(order.destination.max_delivery_date).fromNow() }} <strong>[{{ $utils.momentDate(order.destination.max_delivery_date) }}]</strong>
+              {{ $t('deliveryTo') }} {{ order.destination.city }} [{{ order.destination.country }}]<br>
+               {{ $moment(order.destination.max_delivery_date).fromNow() }} [{{ $utils.momentDate(order.destination.max_delivery_date) }}]
             </div>
             <div class="content">
               {{ $t('publishedAt') }} {{ $moment(order.published_at).fromNow() }}
