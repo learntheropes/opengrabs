@@ -68,9 +68,11 @@ export default {
       return new Promise(resolve => setTimeout(resolve, ms));
     }
     if (process.env.URL) {
-      console.log(this.$Tawk.$isInit())
       await sleep(1000);
-      if (!this.$Tawk.$isInit()) this.$router.go(0)
+      if (!this.$Tawk) {
+        console.log(this.$Tawk.$isInit())
+        this.$router.go(0)
+      }
     }
   },
   methods: {
