@@ -71,8 +71,6 @@ export default {
       await sleep(1000);
       if (!this.$Tawk) {
         this.$router.go(0)
-      } else {
-        console.log(this.$Tawk.$isInit())
       }
     }
   },
