@@ -304,7 +304,8 @@ export default {
         city: this.city,
         max_delivery_date: this.max_delivery_date.toISOString(),
       }
-      await this.$grab.publish({ shop, destination })
+      const locale = this.$i18n.locale
+      await this.$grab.publish({ locale, shop, destination })
     },
     resetForm() {
       this.scrapedProduct = false

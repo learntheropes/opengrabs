@@ -1,8 +1,8 @@
 export default ({ $axios, store }, inject) => {
     const grab = {
-        publish: async ({ shop, destination }) => {
+        publish: async ({ locale, shop, destination }) => {
             const data = await $axios.post(`/api/grab/actions/publish`, {
-                shop, destination
+                locale, shop, destination
             })
             return data
         },
@@ -10,9 +10,9 @@ export default ({ $axios, store }, inject) => {
             const data = await $axios.post(`/api/grab/actions/remove/${ref}`)
             return data
         },
-        book: async ({ ref, delivery_date }) => {
+        book: async ({ locale, ref, delivery_date }) => {
             const data = await $axios.post(`/api/grab/actions/book/${ref}`, {
-                delivery_date
+                locale, delivery_date
             })
             return data
         },

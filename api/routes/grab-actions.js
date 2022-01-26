@@ -11,6 +11,7 @@ const baseUrl = process.env.URL ? process.env.URL : 'https://localhost:3000'
 
 const saveUserData = async (req) => {
     const { jwt } = req.body
+    const { locale } = req.body
 
     const { data: user } = await axios.get(`https://${process.env.AUTH0_TENANT}.us.auth0.com/userinfo`, {
         headers: {
@@ -27,14 +28,16 @@ const saveUserData = async (req) => {
             props = {
                 sub: jwt.sub,
                 email: user.email,
-                name: user.name
+                name: user.name,
+                selected_lenguage: locale
             }
             break
         case 'vkontakte':
             props = {
                 sub: jwt.sub,
                 email: user.email,
-                name: `${user.given_name} ${user.family_name}`.replaceAll('-', ' ')
+                name: `${user.given_name} ${user.family_name}`.replaceAll('-', ' '),
+                selected_lenguage: locale
             }
             break
         }
