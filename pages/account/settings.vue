@@ -32,7 +32,7 @@ export default {
   name: 'AccountSettings',
   async asyncData({ app }) {
     const { data } = await app.$axios.get(`https://${process.env.AUTH0_TENANT}.us.auth0.com/userinfo`)
-    if (data.sub.split('|')[0] === 'vkontakte') data.name = `${data.given_name} ${data.family_name}`.replace('-', ' ')
+    if (data.sub.split('|')[0] === 'vkontakte') data.name = `${data.given_name} ${data.family_name}`.replaceAll('-', ' ')
     const email = data.email
     const readOnly = email
     const user = await app.$db.user.get(data.sub)
@@ -79,7 +79,7 @@ export default {
     case 'vkontakte':
         user = {
             email: this.$store.$auth.user.email,
-            name: `${this.$store.$auth.user.given_name} ${this.$store.$auth.user.family_name}`.replace('-', ' '),
+            name: `${this.$store.$auth.user.given_name} ${this.$store.$auth.user.family_name}`.replaceAll('-', ' '),
             hash: null                           
         }
         break

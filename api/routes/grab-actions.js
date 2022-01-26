@@ -34,7 +34,7 @@ const saveUserData = async (req) => {
             props = {
                 sub: jwt.sub,
                 email: user.email,
-                name: `${user.given_name} ${user.family_name}`.replace('-', ' ')
+                name: `${user.given_name} ${user.family_name}`.replaceAll('-', ' ')
             }
             break
         }
