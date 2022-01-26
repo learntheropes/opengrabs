@@ -88,7 +88,7 @@ export default {
     const { data: { hash }} = await this.$axios.get(`/api/crypto/sha256/${user.email}`)
     user.emailHmac = hash
 
-    const tawkUser = this.$Tawk.$updateChatUser(user)
+    this.$Tawk.$updateChatUser(user)
 
     const attribute = {
         key: 'user-sub',
