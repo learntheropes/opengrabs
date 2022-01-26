@@ -7,6 +7,10 @@ export default ({ $moment }, inject) => {
     momentDate: (time) => {
       return time && $moment(time).format('MMMM Do YYYY');
     },
+    capitalize: (word) => {
+      const lower = word.toLowerCase();
+      return word.charAt(0).toUpperCase() + lower.slice(1);
+    }
   }
   inject('utils', utils)
 }

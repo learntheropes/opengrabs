@@ -61,14 +61,14 @@ const saveUserData = async (req) => {
 router.post('/grab/actions/publish', authorizeUser, asyncHandler(async (req, res) => {
 
     const { jwt } = req.body
-    const { amazon, destination } = req.body
+    const { shop, destination } = req.body
 
     const user = await saveUserData(req)
 
     const props = {
         status: 'published',
         adv: 'order',
-        amazon,
+        shop,
         destination,
         buyer: {
             sub: jwt.sub,
@@ -364,8 +364,8 @@ router.post('/grab/actions/withdraw/:ref', authorizeUser, asyncHandler(async (re
     )
 
     if ((grab.traveler.sub === jwt.sub && grab.status === 'released' && grab.withdrawn === false) || (grab.buyer.sub === jwt.sub && grab.status === 'refunded' && grab.withdrawn === false)) {
-        const { data: rate } = await axios.get(`${baseUrl}/api/btc/rate/${grab.amazon.currency}`)
-        const btc_amount = Number(Math.round(parseFloat(grab.amazon.price.total / rate.buy * 100000000 + 'e' + 0)) + 'e-' + 0)
+        const { data: rate } = await axios.get(`${baseUrl}/api/btc/rate/${grab.shop.currency}`)
+        const btc_amount = Number(Math.round(parseFloat(grab.shop.price.total / rate.buy * 100000000 + 'e' + 0)) + 'e-' + 0)
         
         await opennode.initiateExchange({ to: 'btc', btc_amount })
 

@@ -12,8 +12,8 @@
                             <div class="content">
                                 <p>Buyer: {{ grab.buyer.name }}</p>
                                 <p>Traveler: {{ grab.traveler.name }}</p>
-                                <p>Product: <a :href="grab.amazon.url" target="_blank">{{ grab.amazon.slug.replace('-','') || grab.amazon.title }}</a></p>
-                                <p>Price: {{ grab.amazon.price.total.toFix(2) }} {{ grab.amazon.currency }}</p>
+                                <p>Product: <a :href="grab.shop.url" target="_blank">{{ grab.shop.slug.replace('-','') || grab.shop.title }}</a></p>
+                                <p>Price: {{ grab.shop.price.total.toFix(2) }} {{ grab.shop.currency }}</p>
                                 <p>Delivery date: {{ $moment(grab.delivery.date).fromNow() }} [{{ $utils.momentDate(grab.delivery.date) }}]</p>
                                 <p v-if="grab.published_at">Published {{ $moment(grab.published_at).fromNow() }}</p>
                                 <p v-if="grab.booked_at">Booked {{ $moment(grab.booked_at).fromNow() }}</p>

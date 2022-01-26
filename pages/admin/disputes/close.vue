@@ -12,10 +12,10 @@
                             {{ props.row.ref }}
                         </b-table-column>
                         <b-table-column v-slot="props" label="Amount">
-                            {{ props.row.amazon.price.total.toFix(2) }} {{ props.row.amazon.currency }}
+                            {{ props.row.shop.price.total.toFix(2) }} {{ props.row.shop.currency }}
                         </b-table-column>
                         <b-table-column v-slot="props" label="Product">
-                            <a :href="props.row.amazon.url" target="_blank">View</a>
+                            <a :href="props.row.shop.url" target="_blank">View</a>
                         </b-table-column>                        
                         <b-table-column  v-slot="props" label="Buyer">
                             {{ props.row.buyer.sub }} {{ props.row.buyer.name }}

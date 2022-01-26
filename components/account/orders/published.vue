@@ -5,19 +5,19 @@
         <div class="card card-equal-height">
           <div class="card-image">
             <figure class="image">
-              <img :src="order.amazon.image" :alt="'Image of ' + order.amazon.title" />
+              <img :src="order.shop.image" :alt="'Image of ' + order.shop.title" />
             </figure>
           </div>
           <div class="card-content">
             <div class="media">
               <div class="media-content">
                 <p class="title is-5">
-                  {{ order.amazon.title }}
+                  {{ order.shop.title }}
                 </p>
               </div>
             </div>
             <div class="content">
-              <a :href="order.amazon.url" target="_blank" class="card-footer-item">amazon.{{ order.amazon.domain }}</a>
+              <a :href="order.shop.url" target="_blank" class="card-footer-item">{{ order.shop.name }}.{{ order.shop.domain }}</a>
             </div>
             <div class="content">
               <div class="columns is-mobile">
@@ -26,12 +26,12 @@
                   <p>Reward:</p>
                 </div>
                 <div class="column" align="right">
-                  <p>{{ (order.amazon.price.product+order.amazon.price.shipping+order.amazon.price.taxes).toFixed(2) }}</p>
-                  <p>{{ order.amazon.price.reward.toFixed(2) }}</p>
+                  <p>{{ (order.shop.price.product+order.shop.price.shipping+order.shop.price.taxes).toFixed(2) }}</p>
+                  <p>{{ order.shop.price.reward.toFixed(2) }}</p>
                 </div>
                 <div class="column">
-                  <p>{{ order.amazon.currency }}</p>
-                  <p>{{ order.amazon.currency }}</p>
+                  <p>{{ order.shop.currency }}</p>
+                  <p>{{ order.shop.currency }}</p>
                 </div>
               </div>
             </div>

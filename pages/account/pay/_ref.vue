@@ -78,11 +78,11 @@ export default {
   middleware: 'auth',
   async asyncData ({ app, params: { ref }}) {
     const grab = await app.$db.grabs.get(ref)
-    const { data: rate } = await app.$axios.get(`/api/btc/rate/${grab.amazon.currency}`)
+    const { data: rate } = await app.$axios.get(`/api/btc/rate/${grab.shop.currency}`)
     const { data: charge } = await app.$axios.post(`/api/btc/create-charge/${ref}`, {
-      amount: grab.amazon.price.total / rate.sell * 100000000,
+      amount: grab.shop.price.total / rate.sell * 100000000,
       order_id: ref,
-      description: `Charge for grab ${ref} at exchange rate of ${rate.sell} ${grab.amazon.currency}/BTC`,
+      description: `Charge for grab ${ref} at exchange rate of ${rate.sell} ${grab.shop.currency}/BTC`,
       callback_url: `${baseUrl}/api/btc/charge/webhook`,
       auto_settle: true,
       exchange_rate: rate.sell

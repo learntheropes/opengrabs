@@ -5,27 +5,27 @@
         <div class="card card-equal-height">
           <div class="card-image">
             <figure :style="'height: 128px; background-color:grey;'" class="image is-square">
-              <img :src="product.amazon.image" :alt="'Image of ' + product.amazon.title" />
+              <img :src="product.shop.image" :alt="'Image of ' + product.shop.title" />
             </figure>
           </div>
           <div class="card-content">
             <div class="media">
               <div class="media-content">
                 <p class="title is-5">
-                  {{ product.amazon.title }}
+                  {{ product.shop.title }}
                 </p>
               </div>
             </div>
             <div class="content">
-              <p>Product: {{ product.amazon.price.product }} {{ product.amazon.currency }}</p>
-              <p>Reward: {{ product.amazon.price.reward }} {{ product.amazon.currency }}</p>
+              <p>Product: {{ product.shop.price.product }} {{ product.shop.currency }}</p>
+              <p>Reward: {{ product.shop.price.reward }} {{ product.shop.currency }}</p>
             </div>
             <div class="content has-text-weight-bold">
               {{ product.destination.city }} [{{ product.destination.country }}]
             </div>
           </div>
           <footer class="card-footer">
-            <a :href="product.amazon.url" target="_blank" class="card-footer-item">Buy on Amazon</a>
+            <a :href="product.shop.url" target="_blank" class="card-footer-item">Buy on {{ $utils.capitalize(product.shop.name) }}</a>
             <nuxt-link :to="{ name: 'account-grab-by-ref', params: { ref: product.ref }}" class="card-footer-item">Chat</nuxt-link>
           </footer>
           <footer class="card-footer">

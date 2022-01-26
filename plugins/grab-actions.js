@@ -1,8 +1,8 @@
 export default ({ $axios, store }, inject) => {
     const grab = {
-        publish: async ({ amazon, destination }) => {
+        publish: async ({ shop, destination }) => {
             const data = await $axios.post(`/api/grab/actions/publish`, {
-                amazon, destination
+                shop, destination
             })
             return data
         },

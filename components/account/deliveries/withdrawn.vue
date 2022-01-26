@@ -5,26 +5,18 @@
         <div class="card card-equal-height">
           <div class="card-image">
             <figure :style="'height: 128px; background-color:grey;'" class="image is-square">
-              <img :src="product.amazon.image" :alt="'Image of ' + product.amazon.title" />
+              <img :src="product.shop.image" :alt="'Image of ' + product.shop.title" />
             </figure>
           </div>
           <div class="card-content">
             <div class="media">
               <div class="media-content">
-                <p class="title is-5">
-                  {{ product.amazon.title }}
-                </p>
+                <p class="title is-5">{{ product.shop.title }}</p>
               </div>
             </div>
             <div class="content">
-              <p>
-                Product: {{ product.amazon.price.product }}
-                {{ product.amazon.currency }}
-              </p>
-              <p>
-                Reward: {{ product.amazon.price.reward }}
-                {{ product.amazon.currency }}
-              </p>
+              <p>Product: {{ product.shop.price.product }} {{ product.shop.currency }}</p>
+              <p>Reward: {{ product.shop.price.reward }} {{ product.shop.currency }}</p>
             </div>
             <div class="content has-text-weight-bold">
               {{ product.destination.city }} [{{ product.destination.country }}]

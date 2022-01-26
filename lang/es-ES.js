@@ -15,7 +15,13 @@ export default {
     logout: "Logout",
     // components/layout/footer
     privacyPolicy: "Politica de privacidad",
-    termsOfService: "Terminos de servicio",    
+    termsOfService: "Terminos de servicio",
+    // components/ order-card
+    book: "Book",
+    loginToBook: "Login to book",
+    reward: "Reward",
+    total: "Total",
+    deliveryTo: "Delivery to",   
     // pages/index
     shopCheaperInternationally: "Shop cheaper internationally", 
     findAProductThatYouLikeOnAmazon: "Find a product that you like on Amazon",
@@ -42,8 +48,6 @@ export default {
     currency: "DIVISA",
     buy: "COMPRA",
     sell: "VENTA",
-    // pages/account/book/_ref
-    book: "Reservar",
     // pages/account/grab/_ref
     grab: "Grab",
     buyer: "Buyer",
@@ -134,7 +138,5 @@ export default {
     product: "Product",
     shipping: "shipping",
     taxes: "Taxes",
-    reward: "Reward",
-    deliveryTo: "Entrega en",
     publish: "Publica"
 }

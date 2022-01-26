@@ -38,8 +38,8 @@ export default {
   middleware: 'auth',
   async asyncData({ app, params: { ref } }) {
     const grab = await app.$db.grabs.get(ref)
-    const { data: rate } = await app.$axios.get(`/api/btc/rate/${grab.amazon.currency}`)
-    const btc_amount = Number(Math.round(parseFloat(grab.amazon.price.total / rate.buy + 'e' + 8)) + 'e-' + 8)
+    const { data: rate } = await app.$axios.get(`/api/btc/rate/${grab.shop.currency}`)
+    const btc_amount = Number(Math.round(parseFloat(grab.shop.price.total / rate.buy + 'e' + 8)) + 'e-' + 8)
     return { ref, grab, btc_amount }
   },
   data: () => ({

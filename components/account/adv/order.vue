@@ -287,7 +287,8 @@ export default {
       }
     },
     async publishGrab() {
-      const amazon = {
+      const shop = {
+        name: 'amazon',
         domain: this.domain,
         slug: this.slug,
         dp: this.dp,
@@ -303,7 +304,7 @@ export default {
         city: this.city,
         max_delivery_date: this.max_delivery_date.toISOString(),
       }
-      await this.$grab.publish({ amazon, destination })
+      await this.$grab.publish({ shop, destination })
     },
     resetForm() {
       this.scrapedProduct = false
