@@ -37,10 +37,10 @@ export default {
     const readOnly = email
     const user = await app.$db.user.get(data.sub)
     const emailLanguages = [
-      {slug: 'EN', name: 'English'},
-      {slug: 'ES', name: 'Spanish'},
-      {slug: 'PT', name: 'Portuguese'},
-      {slug: 'RU', name: 'Russian'}
+      {slug: 'en', name: 'English'},
+      {slug: 'es', name: 'Español'},
+      {slug: 'pt', name: 'Português'},
+      {slug: 'ru', name: 'русский'}
     ]
     let selectedLenguage = null
     if (user.selected_lenguage) {
@@ -65,36 +65,42 @@ export default {
     }
   },
   async mounted() {
-    const strategy = this.$store.$auth.user.sub.split('|')[0]
-
-    let user
-    switch (strategy) {
-    case 'facebook':
-        user = {
-            email: this.$store.$auth.user.email,
-            name: this.$store.$auth.user.name,
-            emailHmac: null
-        }
-        break
-    case 'vkontakte':
-        user = {
-            email: this.$store.$auth.user.email,
-            name: `${this.$store.$auth.user.given_name} ${this.$store.$auth.user.family_name}`.replaceAll('-', ' '),
-            emailHmac: null                           
-        }
-        break
+    if (!this.selectedLenguage) {
+      this.selectedLenguage = this.$i18n.locale
     }
 
-    const { data: { hash }} = await this.$axios.get(`/api/crypto/sha256/${user.email}`)
-    user.emailHmac = hash
+    if (process.env.URL) {
+      const strategy = this.$store.$auth.user.sub.split('|')[0]
 
-    this.$Tawk.$updateChatUser(user)
+      let user
+      switch (strategy) {
+      case 'facebook':
+          user = {
+              email: this.$store.$auth.user.email,
+              name: this.$store.$auth.user.name,
+              emailHmac: null
+          }
+          break
+      case 'vkontakte':
+          user = {
+              email: this.$store.$auth.user.email,
+              name: `${this.$store.$auth.user.given_name} ${this.$store.$auth.user.family_name}`.replaceAll('-', ' '),
+              emailHmac: null                           
+          }
+          break
+      }
 
-    const attribute = {
-        key: 'user-sub',
-        value: this.$store.$auth.user.sub
+      const { data: { hash }} = await this.$axios.get(`/api/crypto/sha256/${user.email}`)
+      user.emailHmac = hash
+
+      this.$Tawk.$updateChatUser(user)
+
+      const attribute = {
+          key: 'user-sub',
+          value: this.$store.$auth.user.sub
+      }
+      this.$Tawk.$setAttribute(attribute)
     }
-    this.$Tawk.$setAttribute(attribute)
   },
   methods: {
     validateEmail() {
