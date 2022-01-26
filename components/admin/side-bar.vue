@@ -34,6 +34,8 @@
 
 <script>
 export default {
+    nuxtI18n: false,
+    auth: false,    
     async asyncData({ app }) {
         const { data } = await app.$axios.get('/api/admin/is-admin')
         return {isAdmin: data.isAdmin}

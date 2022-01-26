@@ -14,8 +14,8 @@
 <script>
 export default {
     nuxtI18n: false,
+    auth: false,
     layout: 'admin',
-    middleware: 'auth',
     async asyncData({ app }) {
         const isAdmin = await app.$admin.isAdmin()
         if (isAdmin) {

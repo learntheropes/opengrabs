@@ -4,7 +4,7 @@
       <div class="container has-text-centered">
         <p v-if="error.statusCode === 404" class="title">Page not found</p>
         <p v-else class="title">{{ error.message }}</p>
-        <nuxt-link :to="{ name: 'index'}" class="button is-primary">Home page</nuxt-link>
+        <nuxt-link :to="localePath({ name: 'index' })" class="button is-primary">Home page</nuxt-link>
       </div>
     </div>
   </section>
