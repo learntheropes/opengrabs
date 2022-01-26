@@ -89,12 +89,12 @@ export default {
     user.emailHmac = hash
 
     const tawkUser = this.$Tawk.$updateChatUser(user)
-    console.log(tawkUser)
 
-    // const attribute = {
-    //     'user-sub': this.$store.$auth.user.sub
-    // }
-    // this.$Tawk.$setAttribute(attribute)
+    const attribute = {
+        key: 'user-sub',
+        value: this.$store.$auth.user.sub
+    }
+    this.$Tawk.$setAttribute(attribute)
   },
   methods: {
     validateEmail() {
