@@ -16,7 +16,7 @@ export default {
     // components/layout/footer
     privacyPolicy: "Politica de privacidad",
     termsOfService: "Terminos de servicio",
-    // components/ order-card
+    // components/order-card
     book: "Book",
     loginToBook: "Login to book",
     reward: "Reward",
@@ -122,6 +122,8 @@ export default {
     selectLanguage: "Select a language for the email communication",
     update: "Update",         
     // components/account/adv/order
+    missingEmailWarning: "Before setting your first order, we need your email address for updates about the order.",
+    emailLabel: "Email",
     countryLabel: "Pais",
     countryPlaceholder: "Selecione un Pais",
     countryMessage: "Pais de destino",

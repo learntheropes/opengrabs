@@ -1,13 +1,16 @@
 <template>
   <section class="section">
     <div class="columns is-centered">
-      <div class="column is-one-third">
-        <b-field :label="$t('deliveryDate')" :message="dateMessage">
-          <b-datepicker v-model="delivery_date" :min-date="new Date()" :max-date="new Date(grab.destination.max_delivery_date)" icon="calendar-today" editable />
-        </b-field>
-        <b-field>
-          <button class="button" @click="book">{{ $t('book') }}</button>
-        </b-field>
+      <account-verify-email v-if="!emailExists" />
+      <div v-else>
+        <div class="column is-one-third">
+          <b-field :label="$t('deliveryDate')" :message="dateMessage">
+            <b-datepicker v-model="delivery_date" :min-date="new Date()" :max-date="new Date(grab.destination.max_delivery_date)" icon="calendar-today" editable />
+          </b-field>
+          <b-field>
+            <button class="button" @click="book">{{ $t('book') }}</button>
+          </b-field>
+        </div>
       </div>
     </div>
   </section>
@@ -22,6 +25,7 @@ export default {
     return { ref, grab }
   },
   data: () => ({
+    emailExists: false,
     delivery_date: null,
     dateType: null,
     dateError: false
@@ -31,6 +35,9 @@ export default {
       if (this.dateError === 'Field required') return this.$t('requiredField')
       else return this.$t('dateMessage')
     }
+  },
+  created() {
+    this.$nuxt.$on('updateEmailExists', ($event) => this.updateEmailExists($event))
   },
   methods: {
     validateDate() {

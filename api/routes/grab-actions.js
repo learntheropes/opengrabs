@@ -9,64 +9,10 @@ import dotenv from 'dotenv'
 dotenv.config()
 const baseUrl = process.env.URL ? process.env.URL : 'https://localhost:3000'
 
-const saveUserData = async (req) => {
-    const { jwt } = req.body
-    const { locale } = req.body
-
-    const { data: user } = await axios.get(`https://${process.env.AUTH0_TENANT}.us.auth0.com/userinfo`, {
-        headers: {
-            Authorization: req.header('Authorization')
-        }
-    })
-
-    let strategy = jwt['https://opengrabs.com/strategy']
-    if (!strategy) strategy = jwt.sub.split('|')[0]
-
-    let props
-    switch (strategy) {
-        case 'facebook':
-            props = {
-                sub: jwt.sub,
-                email: user.email,
-                name: user.name,
-                selected_lenguage: locale
-            }
-            break
-        case 'vkontakte':
-            props = {
-                sub: jwt.sub,
-                email: user.email,
-                name: `${user.given_name} ${user.family_name}`.replaceAll('-', ' '),
-                selected_lenguage: locale
-            }
-            break
-        }
-
-    const exists = await client.query(
-        q.Exists(
-            q.Match(q.Index('user_by_sub'), jwt.sub)
-        )
-    )
-
-    if (!exists) {
-        await client.query(
-            q.Create(
-                q.Collection('users'),
-                { data: props }
-            )
-        )
-    }
-
-    return props
-}
-
-
 router.post('/grab/actions/publish', authorizeUser, asyncHandler(async (req, res) => {
 
     const { jwt } = req.body
     const { shop, destination } = req.body
-
-    const user = await saveUserData(req)
 
     const props = {
         status: 'published',
@@ -137,8 +83,7 @@ router.post('/grab/actions/remove/:ref', authorizeUser, asyncHandler(async (req,
 
 router.post('/grab/actions/book/:ref', authorizeUser, asyncHandler(async (req, res) => {
     const { ref } = req.params
-    const { jwt } = req.body
-    const { delivery_date } = req.body
+    const { jwt, delivery_date } = req.body
     
     const { data: grab } = await client.query(
         q.Get(q.Ref(q.Collection('grabs'), ref))
@@ -148,8 +93,6 @@ router.post('/grab/actions/book/:ref', authorizeUser, asyncHandler(async (req, r
         res.status(401).send('unauthorized')
         return
     }    
-
-    const user = await saveUserData(req)
 
     const props = {
         status: 'booked',

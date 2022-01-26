@@ -55,6 +55,10 @@ export default ({ $axios, store }, inject) => {
         const { data } = await $axios.get(`/api/db/user/get/${sub}`)
         return data
       },
+      create: async(locale) => {
+        const { data } = await $axios.post('/api/db/user/create', { locale })
+        return data
+      },
       update: async (props) => {
         const { data } = await $axios.post('/api/db/user/update', { props })
         return data

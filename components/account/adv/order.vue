@@ -2,30 +2,33 @@
   <section class="section">
     <div class="columns">
       <div class="column is-half">
-        <b-field :label="countryLabel" :type="countryType" :message="countryMessage">
-          <b-select v-model="country" :placeholder="countryPlaceholder" expanded>
-            <option v-for="oneCountry in countries" :key="oneCountry.alpha2Code" :value="oneCountry.name">
-              {{ oneCountry.name }}
-            </option>
-          </b-select>
-        </b-field>
-        <b-field :label="cityLabel" :type="cityType" :message="cityMessage">
-          <b-select v-model="city" :placeholder="cityPlaceholder" expanded>
-            <option v-for="(oneCity, index) in cities" :key="index" :value="oneCity.name">
-              {{ oneCity.name }}
-            </option>
-          </b-select>
-        </b-field>
-        <b-field :label="dateLabel" :type="dateType" :message="dateMessage">
-          <b-datepicker v-model="max_delivery_date" :min-date="new Date()" icon="calendar-today" editable />
-        </b-field>
-        <b-field :label="amazonUrlLabel" :type="amazonUrlType" :message="amazonUrlMessage">
-          <b-input v-model="url" type="text" expanded></b-input>
-        </b-field>
-        <b-field :label="rewardLabel" :message="rewardMessage">
-          <b-slider v-model="reward" :min="5" :max="50" :step="5" ticks />
-        </b-field>
-        <button :class="loadAmazonButtonClass" @click="loadAmazonButton">{{ $t('getProductInfo')}}</button>
+        <account-verify-email v-if="!emailExists" />
+        <div v-else>
+          <b-field :label="countryLabel" :type="countryType" :message="countryMessage">
+            <b-select v-model="country" :placeholder="countryPlaceholder" expanded>
+              <option v-for="oneCountry in countries" :key="oneCountry.alpha2Code" :value="oneCountry.name">
+                {{ oneCountry.name }}
+              </option>
+            </b-select>
+          </b-field>
+          <b-field :label="cityLabel" :type="cityType" :message="cityMessage">
+            <b-select v-model="city" :placeholder="cityPlaceholder" expanded>
+              <option v-for="(oneCity, index) in cities" :key="index" :value="oneCity.name">
+                {{ oneCity.name }}
+              </option>
+            </b-select>
+          </b-field>
+          <b-field :label="dateLabel" :type="dateType" :message="dateMessage">
+            <b-datepicker v-model="max_delivery_date" :min-date="new Date()" icon="calendar-today" editable />
+          </b-field>
+          <b-field :label="amazonUrlLabel" :type="amazonUrlType" :message="amazonUrlMessage">
+            <b-input v-model="url" type="text" expanded></b-input>
+          </b-field>
+          <b-field :label="rewardLabel" :message="rewardMessage">
+            <b-slider v-model="reward" :min="5" :max="50" :step="5" ticks />
+          </b-field>
+          <button :class="loadAmazonButtonClass" @click="loadAmazonButton">{{ $t('getProductInfo')}}</button>
+        </div>
       </div>
       <div v-if="scrapedProduct" class="card">
         <div class="card-image">
@@ -88,6 +91,7 @@ export default {
   name: 'OrderNew',
   middleware: 'auth',
   data: () => ({
+    emailExists: false,
     loadAmazonButtonClass: 'button',
     scrapedProduct: false,
     country: null,
@@ -166,7 +170,14 @@ export default {
       return this.$t('rewardMessage')      
     }
   },
+  created() {
+    this.$nuxt.$on('updateEmailExists', ($event) => this.updateEmailExists($event))
+  },
   methods: {
+    updateEmailExists(values) {
+      console.log(values)
+      this.emailExists = values[0]
+    },
     setCurrencyReferralPrice(domain, price) {
       switch (domain) {
         case 'fr':
@@ -305,7 +316,10 @@ export default {
         max_delivery_date: this.max_delivery_date.toISOString(),
       }
       const locale = this.$i18n.locale
-      await this.$grab.publish({ locale, shop, destination })
+      const publish = await this.$grab.publish({ locale, shop, destination })
+      if (publish.error === 'missing email') {
+        this.error = publish.error
+      }
     },
     resetForm() {
       this.scrapedProduct = false
