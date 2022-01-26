@@ -63,7 +63,8 @@ export default {
     }
   },
   mounted() {
-    this.$router.go(0)
+    console.log(this.$tawk)
+    if (!this.$tawk) this.$router.go(0)
   },
   methods: {
     addTravel() {
