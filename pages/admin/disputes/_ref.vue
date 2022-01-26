@@ -15,14 +15,14 @@
                                 <p v-if="grab.shop.slug">Product: <a :href="grab.shop.url" target="_blank">{{ grab.shop.slug.replaceAll('-','') || grab.shop.title }}</a></p>
                                 <p>Price: {{ grab.shop.price.total.toFixed(2) }} {{ grab.shop.currency }}</p>
                                 <p>Delivery date: {{ $moment(grab.delivery.date).fromNow() }} [{{ $utils.momentDate(grab.delivery.date) }}]</p>
-                                <p v-if="grab.published_at">Published {{ $moment(grab.published_at).fromNow() }}</p>
-                                <p v-if="grab.booked_at">Booked {{ $moment(grab.booked_at).fromNow() }}</p>
-                                <p v-if="grab.paid_at">Paid {{ $moment(grab.paid_at).fromNow() }}</p>
-                                <p v-if="grab.bought_at">Bought {{ $moment(grab.bought_at).fromNow() }}</p>
-                                <p v-if="grab.delivered_at">Delivered {{ $moment(grab.delivered_at).fromNow() }}</p>
-                                <p v-if="grab.released_at">Released {{ $moment(grab.released_at).fromNow() }}</p>
-                                <p v-if="grab.withdrawn_at">Withdrawn {{ $moment(grab.withdrawn_at).fromNow() }}</p>
-                                <p v-if="grab.refunded_at">Refunded {{ $moment(grab.refunded_at).fromNow() }}</p>
+                                <p v-if="grab.published_at">Published {{ $moment(grab.published_at).fromNow() }} [{{ $moment(grab.published_at).format('MMMM Do YYYY HH:mm') }}]</p>
+                                <p v-if="grab.booked_at">Booked {{ $moment(grab.booked_at).fromNow() }} [{{ $moment(grab.booked_at).format('MMMM Do YYYY HH:mm') }}]</p>
+                                <p v-if="grab.paid_at">Paid {{ $moment(grab.paid_at).fromNow() }} [{{ $moment(grab.paid_at).format('MMMM Do YYYY HH:mm') }}]</p>
+                                <p v-if="grab.bought_at">Bought {{ $moment(grab.bought_at).fromNow() }} [{{ $moment(grab.bought_at).format('MMMM Do YYYY HH:mm') }}]</p>
+                                <p v-if="grab.delivered_at">Delivered {{ $moment(grab.delivered_at).fromNow() }} [{{ $moment(grab.delivered_at).format('MMMM Do YYYY HH:mm') }}]</p>
+                                <p v-if="grab.released_at">Released {{ $moment(grab.released_at).fromNow() }} [{{ $moment(grab.released_at).format('MMMM Do YYYY HH:mm') }}]</p>
+                                <p v-if="grab.withdrawn_at">Withdrawn {{ $moment(grab.withdrawn_at).fromNow() }} [{{ $moment(grab.withdrawn_at).format('MMMM Do YYYY HH:mm') }}]</p>
+                                <p v-if="grab.refunded_at">Refunded {{ $moment(grab.refunded_at).fromNow() }} [{{ $moment(grab.refunded_at).format('MMMM Do YYYY HH:mm') }}]</p>
                             </div>
                             <b-field>
                                 <div v-if="isResolveDispute" class="buttons">
