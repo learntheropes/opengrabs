@@ -15,7 +15,6 @@
     </template>
     <template slot="end">
       <b-navbar-dropdown v-if="authenticated" label="Account">
-        <b-navbar-item tag="router-link" :to="localePath({ name: 'account-settings'})">{{ $t('settings') }}</b-navbar-item>
         <b-navbar-item tag="router-link" :to="localePath({ name: 'account-adv' })">{{ $t('newAdvertisement') }}</b-navbar-item>
         <b-navbar-item tag="router-link" :to="localePath({ name: 'account-orders' })">{{ $t('myOrders') }}</b-navbar-item>
         <b-navbar-item tag="router-link" :to="localePath({ name: 'account-deliveries' })">{{ $t('myDeliveries') }}</b-navbar-item>
