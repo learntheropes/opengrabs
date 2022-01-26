@@ -62,6 +62,9 @@ export default {
       return this.$store.state.auth.loggedIn
     }
   },
+  mounted() {
+    this.$router.app.refresh()
+  },
   methods: {
     addTravel() {
       this.$store.commit('account/adv/setActiveTab', 1)
