@@ -63,7 +63,7 @@ export default {
     }
   },
   mounted() {
-    this.$router.push(this.$router.currentRoute)
+    this.$router.go(0)
   },
   methods: {
     addTravel() {
