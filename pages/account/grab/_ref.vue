@@ -2,32 +2,31 @@
   <section class="section container">
     <div class="columns">
       <div class="column is-half">
-        <h1 class="title">Grab {{ ref }}</h1>
+        <h1 class="title">{{ $t('grab') }} {{ ref }}</h1>
         <div class="box">
           <div class="content">
-            <p>Buyer: {{ grab.buyer.name }}</p>
-            <p>Traveler: {{ grab.traveler.name }}</p>
-            <p>Product: <a :href="grab.amazon.url" target="_blank">{{ grab.amazon.slug.replace('-','') || grab.amazon.title }}</a></p>
-            <p>Price: {{ grab.amazon.price.total.toFix(2) }} {{ grab.amazon.currency }}</p>
-            <p>Delivery date: {{ $moment(grab.delivery.date).fromNow() }} [{{ $utils.momentDate(grab.delivery.date) }}]</p>
-            <p>Max delivery date: {{ $moment(grab.destination.max_delivery_date).fromNow() }} [{{ $utils.momentDate(grab.destination.max_delivery_date) }}]</p>
-            <p v-if="grab.published_at">Published {{ $moment(grab.published_at).fromNow() }}</p>
-            <p v-if="grab.booked_at">Booked {{ $moment(grab.booked_at).fromNow() }}</p>
-            <p v-if="grab.paid_at">Paid {{ $moment(grab.paid_at).fromNow() }}</p>
-            <p v-if="grab.bought_at">Bought {{ $moment(grab.bought_at).fromNow() }}</p>
-            <p v-if="grab.delivered_at">Delivered {{ $moment(grab.delivered_at).fromNow() }}</p>
-            <p v-if="grab.released_at">Released {{ $moment(grab.released_at).fromNow() }}</p>
-            <p v-if="grab.withdrawn_at">Withdrawn {{ $moment(grab.withdrawn_at).fromNow() }}</p>
-            <p v-if="grab.refunded_at">Refunded {{ $moment(grab.refunded_at).fromNow() }}</p>
+            <p>{{ $t('buyer') }}: {{ grab.buyer.name }}</p>
+            <p>{{ $t('traveler') }}: {{ grab.traveler.name }}</p>
+            <p>{{ $t('product') }}: <a :href="grab.amazon.url" target="_blank">{{ grab.amazon.slug.replace('-','') || grab.amazon.title }}</a></p>
+            <p>{{ $t('price') }}: {{ grab.amazon.price.total.toFix(2) }} {{ grab.amazon.currency }}</p>
+            <p>{{ $t('deliveryDate') }}: {{ $moment(grab.delivery.date).fromNow() }} [{{ $utils.momentDate(grab.delivery.date) }}]</p>
+            <p v-if="grab.published_at">{{ $t('publishedAt') }} {{ $moment(grab.published_at).fromNow() }}</p>
+            <p v-if="grab.booked_at">{{ $t('bookedAt') }} {{ $moment(grab.booked_at).fromNow() }}</p>
+            <p v-if="grab.paid_at">{{ $t('paidAt') }} {{ $moment(grab.paid_at).fromNow() }}</p>
+            <p v-if="grab.bought_at">{{ $t('boughtAt') }} {{ $moment(grab.bought_at).fromNow() }}</p>
+            <p v-if="grab.delivered_at">{{ $t('deliveredAt') }} {{ $moment(grab.delivered_at).fromNow() }}</p>
+            <p v-if="grab.released_at">{{ $t('releasedAt') }} {{ $moment(grab.released_at).fromNow() }}</p>
+            <p v-if="grab.withdrawn_at">{{ $t('withdrawnAt') }} {{ $moment(grab.withdrawn_at).fromNow() }}</p>
+            <p v-if="grab.refunded_at">{{ $t('refundedAt') }} {{ $moment(grab.refunded_at).fromNow() }}</p>
           </div>
           <b-field>
             <div class="buttons">
-              <a v-if="isBookedAndBuyer" class="button is-primary" :href="'/account/pay/'+ref+'/'">Pay</a>
-              <button v-if="isDisputable" class="button is-primary" @click="dispute">Dispute</button>
-              <button v-if="isPaidAndTraveler" class="button is-primary" @click="bought">Mark as bought</button>
-              <button v-if="isBoughtAndTraveler" class="button is-primary" @click="delivered">Mark as delivered</button>
-              <button v-if="isDeliveredAndBuyer" class="button is-primary" @click="release">Release</button>
-              <button v-if="isReleasedAndTraveler" class="button is-primary" :href="'/account/withdraw/'+ref+'/'">Withdraw</button>
+              <a v-if="isBookedAndBuyer" class="button is-primary" :href="'/account/pay/'+ref+'/'">{{ $t('pay') }}</a>
+              <button v-if="isDisputable" class="button is-primary" @click="dispute">{{ $t('dispute') }}</button>
+              <button v-if="isPaidAndTraveler" class="button is-primary" @click="bought">{{ $t('markAsBought') }}</button>
+              <button v-if="isBoughtAndTraveler" class="button is-primary" @click="delivered">{{ $t('markAsDelivered') }}</button>
+              <button v-if="isDeliveredAndBuyer" class="button is-primary" @click="release">{{ $t('release') }}</button>
+              <button v-if="isReleasedAndTraveler" class="button is-primary" :href="'/account/withdraw/'+ref+'/'">{{ $t('withdraw') }}</button>
             </div>
           </b-field>
         </div>
@@ -38,7 +37,7 @@
             <b-input v-model="message" maxlength="400" type="textarea"></b-input>
           </b-field>
           <b-field>
-            <button class="button is-primary" @click="postChatMessage">Post chat message</button>
+            <button class="button is-primary" @click="postChatMessage">{{ $t('postChatMessage') }}</button>
           </b-field>
           <div v-for="(msg, index) in messages" :key="index" class="content">
             <div v-if="msg.user_sub === 'admin|0'" class="notification has-text-centered is-primary">
