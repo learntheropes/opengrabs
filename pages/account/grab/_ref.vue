@@ -7,16 +7,18 @@
           <div class="content">
             <p>Buyer: {{ grab.buyer.name }}</p>
             <p>Traveler: {{ grab.traveler.name }}</p>
+            <p>Product: <a :href="grab.amazon.url" target="_blank">{{ grab.amazon.slug.replace('-','') || grab.amazon.title }}</a></p>
+            <p>Price: {{ grab.amazon.price.total.toFix(2) }} {{ grab.amazon.currency }}</p>
             <p>Delivery date: {{ $moment(grab.delivery.date).fromNow() }} [{{ $utils.momentDate(grab.delivery.date) }}]</p>
             <p>Max delivery date: {{ $moment(grab.destination.max_delivery_date).fromNow() }} [{{ $utils.momentDate(grab.destination.max_delivery_date) }}]</p>
-            <p>Published {{ $moment(grab.published_at).fromNow() }}</p>
-            <p>Booked {{ $moment(grab.booked_at).fromNow() }}</p>
-            <p>Paid {{ $moment(grab.paid_at).fromNow() }}</p>
-            <p>Bought {{ $moment(grab.bought_at).fromNow() }}</p>
-            <p>Delivered {{ $moment(grab.delivered_at).fromNow() }}</p>
-            <p>Released {{ $moment(grab.released_at).fromNow() }}</p>
-            <p>Withdrawn {{ $moment(grab.withdrawn_at).fromNow() }}</p>
-            <p>Refunded {{ $moment(grab.refunded_at).fromNow() }}</p>
+            <p v-if="grab.published_at">Published {{ $moment(grab.published_at).fromNow() }}</p>
+            <p v-if="grab.booked_at">Booked {{ $moment(grab.booked_at).fromNow() }}</p>
+            <p v-if="grab.paid_at">Paid {{ $moment(grab.paid_at).fromNow() }}</p>
+            <p v-if="grab.bought_at">Bought {{ $moment(grab.bought_at).fromNow() }}</p>
+            <p v-if="grab.delivered_at">Delivered {{ $moment(grab.delivered_at).fromNow() }}</p>
+            <p v-if="grab.released_at">Released {{ $moment(grab.released_at).fromNow() }}</p>
+            <p v-if="grab.withdrawn_at">Withdrawn {{ $moment(grab.withdrawn_at).fromNow() }}</p>
+            <p v-if="grab.refunded_at">Refunded {{ $moment(grab.refunded_at).fromNow() }}</p>
           </div>
           <b-field>
             <div class="buttons">
