@@ -135,7 +135,7 @@ export default {
         responseType: 'code',
         grantType: 'authorization_code',
         codeChallengeMethod: 'S256',
-        rewriteRedirects: false,
+        rewriteRedirects: true,
         logoutRedirectUri: (process.env.URL) ? `${process.env.URL}` : 'https://localhost:3000'
       }
     },
