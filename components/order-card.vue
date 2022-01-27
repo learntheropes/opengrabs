@@ -9,10 +9,8 @@
             </figure>
         </div>
         <div class="card-content">
-            <div class="media">
-                <div class="media-content">
-                    <p class="title is-5">{{ order.shop.title }}</p>
-                </div>
+            <div class="content">
+                <p >{{ order.shop.title }}</p>
             </div>
             <div class="content">
                 <a :href="order.shop.url" target="_blank" class="card-footer-item">{{ order.shop.name }}.{{ order.shop.domain }}</a>

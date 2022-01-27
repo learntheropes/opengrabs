@@ -1,31 +1,54 @@
 <template>
   <section class="section">
     <div class="columns is-multiline">
-      <div v-for="product of deliveries" :key="product.ref" class="column is-full-mobile is-one-third-tablet is-one-third-desktop is-one-quarter-widescreen is-one-quarter-fullhd">
+      <div v-for="delivery of deliveries" :key="delivery.ref" class="column is-full-mobile is-one-third-tablet is-one-third-desktop is-one-quarter-widescreen is-one-quarter-fullhd">
         <div class="card card-equal-height">
+          <header class="card-header">
+            <p class="card-header-title">{{ delivery.shop.slug.replaceAll('-',' ')}}</p>
+          </header> 
           <div class="card-image">
-            <figure :style="'height: 128px; background-color:grey;'" class="image is-square">
-              <img :src="product.shop.image" :alt="'Image of ' + product.shop.title" />
+            <figure :style="'background-color:grey;'" class="image">
+              <img :src="delivery.shop.image" :alt="'Image of ' + delivery.shop.title"/>
             </figure>
           </div>
           <div class="card-content">
-            <div class="media">
-              <div class="media-content">
-                <p class="title is-5">
-                  {{ product.shop.title }}
-                </p>
+            <div class="content">
+              <p>{{ delivery.shop.title }}</p>
+            </div>
+            <div class="content">
+              <a :href="delivery.shop.url" target="_blank" class="card-footer-item">{{ delivery.shop.name }}.{{ delivery.shop.domain }}</a>
+            </div>
+            <div class="content">
+              <div class="columns is-mobile">
+                <div class="column">
+                  <p>{{ $t('product') }}:<br>
+                    {{ $t('reward') }}:<br>
+                    {{ $t('total') }}:
+                  </p>
+                </div>
+                <div class="column" align="right">
+                  <p>{{ (delivery.shop.price.product+delivery.shop.price.shipping+delivery.shop.price.taxes).toFixed(2) }}<br>
+                    {{ delivery.shop.price.reward.toFixed(2) }}<br>
+                    {{ (delivery.shop.price.product+delivery.shop.price.shipping+delivery.shop.price.taxes+delivery.shop.price.reward).toFixed(2) }}
+                  </p>
+                </div>
+                <div class="column">
+                  <p>{{ delivery.shop.currency }}<br>
+                    {{ delivery.shop.currency }}<br>
+                    {{ delivery.shop.currency }}
+                  </p>
+                </div>
               </div>
             </div>
             <div class="content">
-              <p>Product: {{ product.shop.price.product }} {{ product.shop.currency }}</p>
-              <p>Reward: {{ product.shop.price.reward }} {{ product.shop.currency }}</p>
+              {{ $t('deliveryTo') }} {{ delivery.destination.city }} [{{ delivery.destination.country }}]<br>
             </div>
-            <div class="content has-text-weight-bold">
-              {{ product.destination.city }} [{{ product.destination.country }}]
+            <div class="content">
+              {{ $t('disputedAt') }} {{ $moment(delivery.disputed_at).fromNow() }}
             </div>
           </div>
           <footer class="card-footer">
-            <nuxt-link :to="{ name: 'account-grab-by-ref', params: { ref: product.ref }}" class="card-footer-item">Chat</nuxt-link>
+            <nuxt-link :to="{ name: 'account-grab-by-ref', params: { ref: delivery.ref }}" class="card-footer-item">{{ $t('chat') }}</nuxt-link>
           </footer>
         </div>
       </div>
