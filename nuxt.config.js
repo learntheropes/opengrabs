@@ -33,6 +33,7 @@ export default {
   plugins: [
     '~plugins/tawk.client.js',
     '~/plugins/db.js',
+    '~/plugins/user.js',
     '~/plugins/admin.js',
     '~/plugins/utils.js',
     '~plugins/vue-qrcode.js',

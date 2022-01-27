@@ -2,6 +2,8 @@ export default {
     // forms
     requiredField: "Field required",
     invalidUrl: "Invalid url",
+    invalidEmail: "Invalid email",
+    invalidCode: "Invalid code",
     // components/layout/nav-bar
     orders: "Orders",
     travels: "Travels",
@@ -116,14 +118,7 @@ export default {
     expired: "Expired",
     published: "Published",
     underpaid: "Underpaid",
-    // pages/account/settings
-    communicationEmail: "Communication Email",
-    communicationLanguage: "Communication Language",
-    selectLanguage: "Select a language for the email communication",
-    update: "Update",
     // components/account/adv/order
-    missingEmailWarning: "Before setting your first order, we need your email address for updates about the order.",
-    emailLabel: "Email",
     countryLabel: "Country",
     countryPlaceholder: "Select a Country",
     countryMessage: "Destination Country",
@@ -140,5 +135,11 @@ export default {
     product: "Product",
     shipping: "shipping",
     taxes: "Taxes",
-    publish: "Publish"
+    publish: "Publish",
+    // component/account/verify-email
+    missingEmailWarningOrder: "Before setting your first order, we need your email address for updates about the order.",
+    emailLabel: "Email",
+    codeLabel: "Verification code received by email",
+    verify: "Verify",
+    update: "Update",
 }

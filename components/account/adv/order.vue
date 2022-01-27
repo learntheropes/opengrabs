@@ -175,7 +175,6 @@ export default {
   },
   methods: {
     updateEmailExists(values) {
-      console.log(values)
       this.emailExists = values[0]
     },
     setCurrencyReferralPrice(domain, price) {
@@ -262,11 +261,7 @@ export default {
       this.domain = match.groups.domain
       this.slug = match.groups.slug
       this.dp = match.groups.dp
-      const {
-        data: {
-          specifications: { title, weight, image, price },
-        },
-      } = await this.$axios.get(`/api/amazon/${this.domain}/${this.dp}`)
+      const { data: { specifications: { title, weight, image, price }}} = await this.$axios.get(`/api/amazon/${this.domain}/${this.dp}`)
       this.title = title
       this.weight = weight
       this.image = image
@@ -315,11 +310,7 @@ export default {
         city: this.city,
         max_delivery_date: this.max_delivery_date.toISOString(),
       }
-      const locale = this.$i18n.locale
-      const publish = await this.$grab.publish({ locale, shop, destination })
-      if (publish.error === 'missing email') {
-        this.error = publish.error
-      }
+      await this.$grab.publish({ shop, destination })
     },
     resetForm() {
       this.scrapedProduct = false

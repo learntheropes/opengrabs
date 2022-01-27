@@ -42,7 +42,9 @@ export default {
       this.$auth.loginWith('auth0')
     },
     logout() {
-      this.$Tawk.$endChat()
+      if (process.env.URL) {
+        this.$Tawk.$endChat()
+      }
       this.$auth.logout()
     },
   },

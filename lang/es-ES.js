@@ -2,6 +2,8 @@ export default {
     // forms
     requiredField: "Campo requerido",
     invalidUrl: "Enlache non valido",
+    invalidEmail: "Invalid email",
+    invalidCode: "Invalid code",
     // components/layout/nav-bar
     orders: "Orders",
     travels: "Travels",
@@ -115,15 +117,8 @@ export default {
     youCanPublish: "You can publish a new one",
     expired: "Expired",
     published: "Published",
-    underpaid: "Underpaid", 
-    // pages/account/settings
-    communicationEmail: "Communication Email",
-    communicationLanguage: "Communication Language",
-    selectLanguage: "Select a language for the email communication",
-    update: "Update",         
+    underpaid: "Underpaid",         
     // components/account/adv/order
-    missingEmailWarning: "Before setting your first order, we need your email address for updates about the order.",
-    emailLabel: "Email",
     countryLabel: "Pais",
     countryPlaceholder: "Selecione un Pais",
     countryMessage: "Pais de destino",
@@ -140,5 +135,11 @@ export default {
     product: "Product",
     shipping: "shipping",
     taxes: "Taxes",
-    publish: "Publica"
+    publish: "Publica",
+    // component/account/verify-email
+    missingEmailWarningOrder: "Before setting your first order, we need your email address for updates about the order.",
+    emailLabel: "Email",
+    codeLabel: "Verification code received by email",
+    verify: "Verify",
+    update: "Update",
 }
