@@ -40,6 +40,9 @@ export default {
     this.$nuxt.$on('updateEmailExists', ($event) => this.updateEmailExists($event))
   },
   methods: {
+    updateEmailExists(values) {
+      this.emailExists = values[0]
+    },
     validateDate() {
       if (!this.delivery_date) {
         this.dateType = 'is-danger'
