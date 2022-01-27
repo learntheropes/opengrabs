@@ -1,12 +1,8 @@
 <template>
     <div class="card card-equal-height">
-
         <header class="card-header">
-            <p class="card-header-title">
-                {{ order.shop.slug.replaceAll('-',' ')}}
-            </p>
+            <p class="card-header-title">{{ order.shop.slug.replaceAll('-',' ')}}</p>
         </header> 
-
         <div class="card-image">
             <figure :style="'background-color:grey;'" class="image">
                 <img :src="order.shop.image" :alt="'Image of ' + order.shop.title"/>
@@ -15,9 +11,7 @@
         <div class="card-content">
             <div class="media">
                 <div class="media-content">
-                    <p class="title is-5">
-                        {{ order.shop.title }}
-                    </p>
+                    <p class="title is-5">{{ order.shop.title }}</p>
                 </div>
             </div>
             <div class="content">
