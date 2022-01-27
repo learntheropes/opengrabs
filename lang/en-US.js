@@ -4,6 +4,15 @@ export default {
     invalidUrl: "Invalid url",
     invalidEmail: "Invalid email",
     invalidCode: "Invalid code",
+    // generic
+    publishedBy: "Published by",
+    bookedBy: "Booked by",
+    paidBy: "Paid by",
+    boughtBy: "Bought by",
+    deliveredBy: "Delivered by",
+    releasedBy: "Released by",
+    withdrawnBy: "Withdrawn by",
+    refundedBy: "Refunded by",    
     // components/layout/nav-bar
     orders: "Orders",
     travels: "Travels",

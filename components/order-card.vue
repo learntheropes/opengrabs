@@ -47,7 +47,7 @@
                {{ $moment(order.destination.max_delivery_date).fromNow() }} [{{ $utils.momentDate(order.destination.max_delivery_date) }}]
             </div>
             <div class="content">
-              {{ $t('publishedAt') }} {{ $moment(order.published_at).fromNow() }}
+              {{ $t('publishedBy') }} {{ order.buyer.name }} {{ $moment(order.published_at).fromNow() }}
             </div>
         </div>
         <footer class="card-footer">
