@@ -6,6 +6,7 @@ const router = Router()
   
 router.post('/db/user/create', authorizeUser, asyncHandler(async (req, res) => {
   const { jwt, locale } = req.body
+  console.log(locale)
   const sub = jwt.sub
 
   let strategy = jwt['https://opengrabs.com/strategy']
@@ -17,10 +18,11 @@ router.post('/db/user/create', authorizeUser, asyncHandler(async (req, res) => {
   switch (strategy) {
     case 'facebook':
       const name = jwt['https://opengrabs.com/name']
+      const verifed = jwt['https://opengrabs.com/verified']
       props = {
         sub: sub,
         email: email,
-        verified: (email) ? true : false,
+        verified: verifed,
         name: name,
         locale: locale
       }
