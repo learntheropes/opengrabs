@@ -63,18 +63,20 @@ export default {
     }
   },
   async mounted() {
-    // All this only to mount the tawk.to chat to new users
     const sleep = (ms) => {
       return new Promise(resolve => setTimeout(resolve, ms));
     }
+    // This is only to mount the tawk.to chat to new users
     if (process.env.URL) {
-      await sleep(1000);
+      await sleep(1000)
       if (!this.$Tawk) {
         this.$router.go(0)
       }
-      if (this.$Tawk.$isInit()) {
+      // Set the bitcoin network attribute
+      else if (this.$Tawk.$isInit()) {
+        console.log(this.$Tawk.$isInit())
         const attribute = {
-          key: 'network',
+          key: 'bitcoin-network',
           value: (process.env.URL === 'https://opengrabs.com') ? 'mainnet' : 'testnet'
         }
         console.log(attribute)
