@@ -4,6 +4,7 @@ CreateCollection({ name: "grabs" })
 CreateCollection({ name: "messages" })
 CreateCollection({ name: "users" })
 CreateCollection({ name: "withdrawal_webhooks" })
+CreateCollection({ name: "travels" })
 
 CreateIndex({
   name: "grabs_serch_by_adv_status_range_published_at",

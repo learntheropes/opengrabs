@@ -1,5 +1,5 @@
 <template>
-  <section class="section">
+  <section class="section container">
     <div class="columns">
       <div class="column is-half">
         <account-verify-email v-if="!emailExists" />
