@@ -42,7 +42,9 @@ export default {
       this.$auth.loginWith('auth0')
     },
     logout() {
-      if (process.env.URL) {
+      console.log(this.$Tawk.$isInit())
+      console.log(this.$Tawk.$isChatOngoing())
+      if (process.env.URL && this.$Tawk.$isChatOngoing()) {
         this.$Tawk.$endChat()
       }
       this.$auth.logout()
