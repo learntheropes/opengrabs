@@ -4,7 +4,7 @@
       <b-navbar-item tag="router-link" :to="localePath({ name: 'index' })">
         <b-taglist attached>
           <b-tag size="is-medium" type="is-primary">OpenGrabs</b-tag>
-          <b-tag size="is-medium" type="is-grey">0.2</b-tag>
+          <b-tag size="is-medium" type="is-grey">{{ network }}</b-tag>
         </b-taglist>
       </b-navbar-item>
     </template>
@@ -35,6 +35,11 @@ export default {
     authenticated() {
       return this.$store.state.auth.loggedIn
     },
+    network() {
+      if (process.env.URL === 'https://opengrabs.com') return 'mainnet'
+      else if (process.env.URL === 'https://testnet.opengrabs.com') return 'testnet'
+      else return 'testnet'
+    }
   },
   methods: {
     login() {
