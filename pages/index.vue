@@ -72,6 +72,14 @@ export default {
       if (!this.$Tawk) {
         this.$router.go(0)
       }
+      if (this.$Tawk.$isInit()) {
+        const attribute = {
+          key: 'network',
+          value: (process.env.URL === 'https://opengrabs.com') ? 'mainnet' : 'testnet'
+        }
+        console.log(attribute)
+        this.$Tawk.$setAttribute(attribute)
+      }
     }
   },
   methods: {
