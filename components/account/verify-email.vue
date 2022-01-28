@@ -1,5 +1,6 @@
 <template>
     <section class="section">
+        <div v-if="show">
         <div class="notification">
             {{ $t('missingEmailWarningOrder')}}
         </div>
@@ -15,6 +16,7 @@
                 <b-button @click="verifyUserEmail">{{ $t('update') }}</b-button> 
             </p>
         </b-field> 
+        </div>
     </section>
 </template>
 
@@ -23,6 +25,7 @@ export default {
     name: 'VerifyEmail',
     middleware: 'auth',
     data: () => ({
+        show: false,
         email: null,
         code: null,
         emailError: false,
@@ -58,6 +61,7 @@ export default {
             }
             this.$Tawk.$setAttribute(attribute)
         }
+        this.show = true
     },
     methods: {
         validateEmail(){

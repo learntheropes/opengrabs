@@ -6,7 +6,6 @@ const router = Router()
   
 router.post('/db/user/create', authorizeUser, asyncHandler(async (req, res) => {
   const { jwt, locale } = req.body
-  console.log(locale)
   const sub = jwt.sub
 
   let strategy = jwt['https://opengrabs.com/strategy']
@@ -38,7 +37,7 @@ router.post('/db/user/create', authorizeUser, asyncHandler(async (req, res) => {
         locale: locale
       }
       break
-      }
+  }
 
   const exists = await client.query(
     q.Exists(
