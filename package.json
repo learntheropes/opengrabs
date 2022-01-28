@@ -43,7 +43,7 @@
     "redirect-ssl": "^3.0.0",
     "vue": "^2.6.14",
     "vue-server-renderer": "^2.6.14",
-    "vue-tawk-multiple-languages": "^1.1.7",
+    "vue-tawk-multiple-languages": "^1.1.9",
     "vue-template-compiler": "^2.6.14",
     "webpack": "^4.46.0"
   },
