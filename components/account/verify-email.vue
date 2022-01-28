@@ -7,13 +7,13 @@
         <b-field grouped :type="emailType" :message="emailMessage">
             <b-input v-model="email" type="text" :placeholder="$t('emailLabel')" expanded />
             <p class="control">
-                <b-button @click="updateUserEmail">{{ $t('verify') }}</b-button> 
+                <b-button @click="updateUserEmail">{{ $t('update') }}</b-button> 
             </p>
         </b-field>
         <b-field grouped :type="codeType" :message="codeMessage">
             <b-input v-model="code" type="text" :placeholder="$t('codeLabel')" expanded />
             <p class="control">
-                <b-button @click="verifyUserEmail">{{ $t('update') }}</b-button> 
+                <b-button @click="verifyUserEmail">{{ $t('verify') }}</b-button> 
             </p>
         </b-field> 
         </div>
