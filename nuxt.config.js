@@ -50,8 +50,8 @@ export default {
         prefix: 'Layout'
       },
       {
-        path  : '~/components/account/adv',
-        prefix: 'AccountAdv'
+        path  : '~/components/account/new',
+        prefix: 'AccountNew'
       },
       {
         path  : '~/components/account/orders',

@@ -11,8 +11,8 @@
             {{ $t('thatATravelerCanBringToYou') }}
           </p>
           <div class="buttons is-right">
-            <a v-if="!authenticated" class="button is-primary" @click="loginNewOrder">{{ $t('loginToAddAnOrder') }}</a >
-            <nuxt-link v-if="authenticated" :to="localePath({ name: 'account-adv'})" class="button is-primary">{{ $t('addAnOrder') }}</nuxt-link >
+            <a v-if="!authenticated" class="button is-primary" @click="loginNewOrder">{{ $t('loginToAddOrder') }}</a >
+            <a v-if="authenticated" class="button is-primary" @click="addOrder">{{ $t('addOrder') }}</a>
             <nuxt-link :to="localePath({ name: 'travels' })" class="button is-primary">{{ $t('viewTravels') }}</nuxt-link >
           </div>
         </div>
@@ -85,16 +85,20 @@ export default {
     }
   },
   methods: {
+    addOrder() {
+      this.$store.commit('account/new/setActiveTab', 0)
+      this.$router.push(`${this.$i18n.locale}/account/new`)      
+    },
     addTravel() {
-      this.$store.commit('account/adv/setActiveTab', 1)
-      this.$router.push(`${this.$i18n.locale}/account/adv`)      
+      this.$store.commit('account/new/setActiveTab', 1)
+      this.$router.push(`${this.$i18n.locale}/account/new`)      
     },
     loginNewOrder() {
-      this.$auth.$storage.setUniversal('redirect', `/${this.$i18n.locale}/account/adv`)
+      this.$auth.$storage.setUniversal('redirect', `/${this.$i18n.locale}/account/new?adv=order`)
       this.$auth.loginWith('auth0')
     },
     loginNewTravel() {
-      this.$auth.$storage.setUniversal('redirect', `/${this.$i18n.locale}/account/adv?adv=travel`)
+      this.$auth.$storage.setUniversal('redirect', `/${this.$i18n.locale}/account/new?adv=travel`)
       this.$auth.loginWith('auth0')    
     }
   }

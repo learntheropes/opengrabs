@@ -42,8 +42,8 @@ export default {
     shopCheaperInternationally: "Shop cheaper internationally", 
     findAProductThatYouLikeOnAmazon: "Find a product that you like on Amazon",
     thatATravelerCanBringToYou: "that a traveler can bring to you",
-    loginToAddAnOrder: "Login to add an order",
-    addAnOrder: "Add an order",
+    loginToAddOrder: "Login to add an order",
+    addOrder: "Add an order",
     viewTravels: "View travels",
     getPaidToTravel: "Get paid to travel",
     gainRewardToBringAmazonProduct: "Gain a reward to bring an Amazon product",
@@ -114,7 +114,7 @@ export default {
     forThisAmountUse: "For this amount use the Lightning Network",
     bitcoinAddress: "Bitcoin address",
     withdrawOnChain: "Withdraw on chain",
-    // pages/account/adv
+    // pages/account/new
     order: "Orden",
     travel: "Viaje",
     // pages/account/deliveries
@@ -135,7 +135,7 @@ export default {
     expired: "Expired",
     published: "Published",
     underpaid: "Underpaid",         
-    // components/account/adv/order
+    // components/account/new/order
     countryLabel: "Pais",
     countryPlaceholder: "Selecione un Pais",
     countryMessage: "Pais de destino",
@@ -153,7 +153,7 @@ export default {
     shipping: "shipping",
     taxes: "Taxes",
     publish: "Publica",
-    // components/account/adv/travel
+    // components/account/new/travel
     originCountryLabel: "Country of departure",
     originCountryPlaceholder: "Select a Country",
     originCountryMessage: "Select the Country from where you leave and where you will shop the orders.",

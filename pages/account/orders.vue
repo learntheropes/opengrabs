@@ -2,7 +2,7 @@
   <section class="section container">
     <div v-if="!expired.length && ! published.length && !booked.length && !disputed.length && !refunded.length && !withdrawn.length && !paid.length && !bought.length && !delivered.length && !released.length" class="box has-text-centered">
       <p>{{ $t('youDontHaveAnyOrder') }}.</p>
-      <p>{{ $t('youCanPublish') }} <nuxt-link :to="localePath({ name: 'account-adv' })">{{ $t('here') }}</nuxt-link></p>
+      <p>{{ $t('youCanPublish') }} <nuxt-link :to="localePath({ name: 'account-new' })">{{ $t('here') }}</nuxt-link></p>
     </div>
     <b-tabs v-else v-model="activeTab" position="is-centered" class="block" multiline>
       <b-tab-item v-if="expired.length">
