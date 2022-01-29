@@ -5,6 +5,9 @@
         <div class="level-item">
           <nuxt-link to="/admin">Admin</nuxt-link>
         </div>
+        <div class="level-item">
+          <nuxt-link :to="localePath({ name: 'exchange-rates' })">{{ $t('exchangeRate') }}</nuxt-link>
+        </div>
         <div v-if="$i18n.locale==='en'" class="level-item">
           <a href="https://opengrabs.tawk.help/" target="_blank">Help</a>
         </div>
