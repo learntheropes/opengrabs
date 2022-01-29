@@ -46,7 +46,7 @@
                         <div class="content">
                             {{ $t('travelFrom') }} {{ originObject.name }}<br>
                             {{ $t('travelTo') }} {{ destinationCity}} ({{ destinationCountry }})<br>
-                            {{ $t('travelBudget') }} {{ travelBudget }} {{ originObject.currency }}
+                            {{ $t('travelBudget') }} {{ parseFloat(travelBudget).toFixed(2) }} {{ originObject.currency }}
                         </div>
                         <div class="content">
                             {{ $t('publishedBy') }} {{ travelerName }}<br>
@@ -237,12 +237,13 @@ export default {
         },
         async publishTravelButton() {
             const props = {
+                status: (parseFloat(this.travelBudget) > 0) ? 'active' : 'fully_booked',
                 origin_country: this.originCountry,
                 destination_country: this.destinationCountry,
                 destination_city: this.destinationCity,
                 date: this.travelDate.toISOString(),
                 reward: this.travelReward,
-                budget: this.travelBudget,
+                budget: parseFloat(this.travelBudget),
                 currency: this.travelCurrency,
                 published_at: this.travelPublishedAt
             }

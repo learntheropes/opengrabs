@@ -7,6 +7,45 @@ CreateCollection({ name: "withdrawal_webhooks" })
 CreateCollection({ name: "travels" })
 
 CreateIndex({
+  name: "travels_search_by_status_active_and_not_expired_range_published_at",
+  source: {
+    collection: Collection("travels"),
+    fields: {
+      date_time: Query(
+        Lambda(
+          "doc",
+          Time(Select(["data", "date"], Var('doc')))
+        )
+      ),
+      published_at_time: Query(
+        Lambda(
+          "doc",
+          Time(Select(["data", "published_at"], Var('doc')))
+        )
+      )
+    }
+  },
+  terms: [
+    {
+      field: ["data", "status"]
+    }
+  ],
+  values: [
+    {
+      binding: "date_time"
+    },
+    {
+      binding: "published_at_time", reverse: true
+    },
+    {
+      field: ["ref"]
+    }
+  ]
+})
+
+Paginate(Range(Match(Index("travels_search_by_status_active_and_not_expired_range_published_at"), "active"), [Now()], []))
+
+CreateIndex({
   name: "grabs_serch_by_adv_status_range_published_at",
   source: {
     collection: Collection("grabs"),
