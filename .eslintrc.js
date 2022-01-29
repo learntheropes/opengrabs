@@ -35,8 +35,13 @@ module.exports = {
       "checkout_id",
       "btc_amount",
       "missing_amt",
-      "Tawk_EN",
-      "Tawk_ES"
+      "travel_date",
+      "origin_country",
+      "destination_country",
+      "destination_city",
+      "published_at",
+      "given_name",
+      "family_name"
     ]}],
   },
 }

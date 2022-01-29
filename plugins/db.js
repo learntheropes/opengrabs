@@ -35,8 +35,8 @@ export default ({ $axios }, inject) => {
       },
     },
     travels: {
-      filter: async (status) => {
-        const { data } = await $axios.get(`/api/db/grabs/filter/travel/${status}`)
+      create: async ({ props }) => {
+        const { data } = await $axios.post('/api/db/travels/create', { props })
         return data
       },
     },

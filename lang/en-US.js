@@ -4,6 +4,7 @@ export default {
     invalidUrl: "Invalid url",
     invalidEmail: "Invalid email",
     invalidCode: "Invalid code",
+    invalidBudget: "Invalid budget",
     // generic
     publishedBy: "Published by",
     bookedBy: "Booked by",

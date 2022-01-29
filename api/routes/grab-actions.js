@@ -14,6 +14,12 @@ router.post('/grab/actions/publish', authorizeUser, asyncHandler(async (req, res
     const { jwt } = req.body
     const { shop, destination } = req.body
 
+    const { data: user } = await client.query(
+        q.Get(
+            q.Match(q.Index('user_by_sub'), jwt.sub)
+        )
+    )
+
     const props = {
         status: 'published',
         adv: 'order',
