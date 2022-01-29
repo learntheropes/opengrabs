@@ -195,4 +195,28 @@ router.post('/db/travels/create', authorizeUser, asyncHandler(async (req, res) =
   res.status(201).json(response)
 }))
 
+router.get('/db/travels/filter/:status', asyncHandler(async (req, res) => {
+  res.set('Access-Control-Allow-Origin', allowOrigin)
+  const { status } = req.params
+  const { data } = await client.query(
+    q.Map(
+      q.Paginate(
+        q.Range(
+          q.Match(q.Index("travels_search_by_status_active_and_not_expired_range_published_at"), status),
+          [q.Now()], []
+        ),
+        { size: 100000 }
+      ),
+      q.Lambda(["date_time", "published_at_time", "ref"], q.Get(q.Var("ref")))
+    )
+  )
+
+  const travels = data.map(({ data, ref: { value: { id }}}) => {
+    data.ref = id
+    return data
+  })
+
+  res.status(200).json(travels)
+}))
+
 module.exports = router

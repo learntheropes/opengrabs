@@ -37,7 +37,9 @@ export default {
     loginToBook: "Login to book",
     reward: "Reward",
     total: "Total",
-    deliveryTo: "Delivery to",   
+    deliveryTo: "Delivery to",
+    // components/travel-card
+    loginToOrder: "Login to order",  
     // pages/index
     shopCheaperInternationally: "Shop cheaper internationally", 
     findAProductThatYouLikeOnAmazon: "Find a product that you like on Amazon",
@@ -60,6 +62,10 @@ export default {
     byCity: "Por ciudad",
     filter: "Filtrar",
     removeFilter: "Remover filtro",
+    // pages/travels
+    byOriginCountry: "By country of origin",
+    byDestinationCountry: "By country of destination",
+    byDestinationCity: "By city of destination",
     // pages/exchange-rates
     currency: "DIVISA",
     buy: "COMPRA",
@@ -172,7 +178,7 @@ export default {
     previewTravel: "Preview of your advertisement",
     travelFrom: "From",
     travelTo: "To",
-    travelBudget: "Remaining budget",
+    travelBudget: "Available budget",
     // component/account/verify-email
     missingEmailWarningOrder: "Before setting your first order, we need your email address for updates about the order.",
     emailLabel: "Email",
