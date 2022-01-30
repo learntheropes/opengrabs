@@ -105,13 +105,25 @@ router.post('/grab/actions/order', authorizeUser, asyncHandler(async (req, res) 
         )
     )
 
-
-
     const { data: travelerUser } = await client.query(
         q.Get(
             q.Match(q.Index('user_by_sub'), traveler.sub)
         )
     )
+
+    let emailContent
+    switch (travelerUser.locale) {
+        case 'en':
+            emailContent = en.emailOrder(travelerUser.locale,id)
+        case 'es':
+            emailContent = es.emailOrder(travelerUser.locale,id)
+        case 'pt':
+            emailContent = pt.emailOrder(travelerUser.locale,id)
+        case 'ru':
+            emailContent = ru.emailOrder(travelerUser.locale,id)
+        default:
+            emailContent = en.emailOrder(travelerUser.locale,id)
+    }
 
     await transporter.sendMail({
         to: travelerUser.email,
@@ -180,7 +192,7 @@ router.post('/grab/actions/book/:ref', authorizeUser, asyncHandler(async (req, r
         updated_at: new Date().toISOString(),
     }
 
-    const response = await client.query(
+    const { data: grab } = await client.query(
         q.Update(
             q.Ref(q.Collection('grabs'), ref),
             { data: props },
@@ -199,7 +211,33 @@ router.post('/grab/actions/book/:ref', authorizeUser, asyncHandler(async (req, r
         )
     )
 
-    res.status(201).json(response)
+    const { data: buyerUser } = await client.query(
+        q.Get(
+            q.Match(q.Index('user_by_sub'), grab.buyer.sub)
+        )
+    )
+
+    let emailContent
+    switch (buyerUser.locale) {
+        case 'en':
+            emailContent = en.emailBook(buyerUser.locale,ref)
+        case 'es':
+            emailContent = es.emailBook(buyerUser.locale,ref)
+        case 'pt':
+            emailContent = pt.emailBook(buyerUser.locale,ref)
+        case 'ru':travelerUser
+            emailContent = ru.emailBook(buyerUser.locale,ref)
+        default:
+            emailContent = en.emailBook(buyerUser.locale,ref)
+    }
+
+    await transporter.sendMail({
+        to: buyerUser.email,
+        subject: emailContent.subject,
+        text: emailContent.content,
+    })
+
+    res.status(201).json({})
 }))
 
 router.post('/grab/actions/dispute/:ref', authorizeUser, asyncHandler(async (req, res) => {
@@ -246,6 +284,41 @@ router.post('/grab/actions/dispute/:ref', authorizeUser, asyncHandler(async (req
         )
     )
 
+    let userNotifySub
+    if (grab.buyer.sub === jwt.sub) {
+        userNotifySub = grab.traveler.sub
+    } else if (grab.traveler.sub === jwt.sub) {
+        userNotifySub = grab.buyer.sub
+    }
+
+    const { data: userNotifyObject } = await client.query(
+        q.Get(
+            q.Match(q.Index('user_by_sub'), userNotifySub)
+        )
+    )
+
+    let emailContent
+    switch (userNotifyObject.locale) {
+        case 'en':
+            emailContent = en.emailDispute(userNotifyObject.locale,ref)
+        case 'es':
+            emailContent = es.emailDispute(userNotifyObject.locale,ref)
+        case 'pt':
+            emailContent = pt.emailDispute(userNotifyObject.locale,ref)
+        case 'ru':
+            emailContent = ru.emailDispute(userNotifyObject.locale,ref)
+        default:
+            emailContent = en.emailDispute(userNotifyObject.locale,ref)
+    }
+
+    await transporter.sendMail({
+        to: userNotifyObject.email,
+        subject: emailContent.subject,
+        text: emailContent.content,
+    })
+
+
+
     res.status(201).json(response)
 }))
 
@@ -286,6 +359,32 @@ router.post('/grab/actions/bought/:ref', authorizeUser, asyncHandler(async (req,
             }}
         )
     )
+
+    const { data: buyerUser } = await client.query(
+        q.Get(
+            q.Match(q.Index('user_by_sub'), grab.buyer.sub)
+        )
+    )
+
+    let emailContent
+    switch (buyerUser.locale) {
+        case 'en':
+            emailContent = en.emailBought(buyerUser.locale,ref)
+        case 'es':
+            emailContent = es.emailBought(buyerUser.locale,ref)
+        case 'pt':
+            emailContent = pt.emailBought(buyerUser.locale,ref)
+        case 'ru':
+            emailContent = ru.emailBought(buyerUser.locale,ref)
+        default:
+            emailContent = en.emailBought(buyerUser.locale,ref)
+    }
+
+    await transporter.sendMail({
+        to: buyerUser.email,
+        subject: emailContent.subject,
+        text: emailContent.content,
+    })
 
     res.status(201).json(response)
 }))
@@ -328,6 +427,32 @@ router.post('/grab/actions/delivered/:ref', authorizeUser, asyncHandler(async (r
         )
     )
 
+    const { data: buyerUser } = await client.query(
+        q.Get(
+            q.Match(q.Index('user_by_sub'), grab.buyer.sub)
+        )
+    )
+
+    let emailContent
+    switch (buyerUser.locale) {
+        case 'en':
+            emailContent = en.emailDelivered(buyerUser.locale,ref)
+        case 'es':
+            emailContent = es.emailDelivered(buyerUser.locale,ref)
+        case 'pt':
+            emailContent = pt.emailDelivered(buyerUser.locale,ref)
+        case 'ru':
+            emailContent = ru.emailDelivered(buyerUser.locale,ref)
+        default:
+            emailContent = en.emailDelivered(buyerUser.locale,ref)
+    }
+
+    await transporter.sendMail({
+        to: buyerUser.email,
+        subject: emailContent.subject,
+        text: emailContent.content,
+    })
+
     res.status(201).json(response)
 }))
 
@@ -369,6 +494,32 @@ router.post('/grab/actions/release/:ref', authorizeUser, asyncHandler(async (req
             }}
         )
     )
+
+    const { data: travelerUser } = await client.query(
+        q.Get(
+            q.Match(q.Index('user_by_sub'), grab.traveler.sub)
+        )
+    )
+
+    let emailContent
+    switch (travelerUser.locale) {
+        case 'en':
+            emailContent = en.emailReleased(travelerUser.locale,ref)
+        case 'es':
+            emailContent = es.emailReleased(travelerUser.locale,ref)
+        case 'pt':
+            emailContent = pt.emailReleased(travelerUser.locale,ref)
+        case 'ru':
+            emailContent = ru.emailReleased(travelerUser.locale,ref)
+        default:
+            emailContent = en.emailReleased(travelerUser.locale,ref)
+    }
+
+    await transporter.sendMail({
+        to: travelerUser.email,
+        subject: emailContent.subject,
+        text: emailContent.content,
+    })
 
     res.status(201).json(response)
 }))
