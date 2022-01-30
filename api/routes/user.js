@@ -1,6 +1,11 @@
 import asyncHandler from 'express-async-handler'
 import { authorizeUser } from '../auth'
 import { q, client } from '../db'
+import { transporter } from '../email/index'
+import * as en from '../email/en'
+import * as es from '../email/es'
+// import * as pt from '../email/pt'
+// import * as ru from '../email/ru'
 import { Router } from 'express'
 const router = Router()
   
@@ -71,20 +76,58 @@ router.post('/db/user/update', authorizeUser, asyncHandler(async (req,res) => {
   props.verified = false
   props.code = Math.floor(100000 + Math.random() * 900000);
   
-  const { ref: {value: { id }}} = await client.query(
+  const { data: user, ref: {value: { id }}} = await client.query(
     q.Get(
       q.Match(q.Index('user_by_sub'), jwt.sub)
     )
   )
   
-  const { data: user} = await client.query(
+  await client.query(
     q.Update(
       q.Ref(q.Collection('users'), id),
       { data: props },
     )
   )
 
-  res.status(200).json(user)
+  let emailContent
+  switch (user.locale) {
+    case 'en':
+      emailContent = en.emailConfirmationCode(props.code)
+    // case 'es':
+    //   emailContent = es.emailConfirmationCode(props.code)
+    // case 'pt':
+    //   emailContent = pt.emailConfirmationCode(props.code)
+    // case 'ru':
+    //   emailContent = ru.emailConfirmationCode(props.code)
+    default:
+      emailContent = en.emailConfirmationCode(props.code)
+  }
+
+  transporter.verify(function (error, success) {
+    if (error) {
+      console.log(error);
+    }
+    else if (success) {
+      console.log('success')
+    }
+    else {
+      console.log("Server is ready to take our messages");
+    }
+  });
+
+  try {
+    const email = await transporter.sendMail({
+      from: '"OpenGrabs" <no-reply@opengrabs.com>',
+      to: props.email,
+      subject: emailContent.subject,
+      text: emailContent.content,
+    })
+    console.log(email);
+  } catch (error) {
+    console.log(error)
+  }
+
+  res.status(200).json({})
 }))
 
 router.post('/db/user/verify/:code', authorizeUser, asyncHandler(async (req,res) => {

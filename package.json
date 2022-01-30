@@ -34,6 +34,7 @@
     "lodash.sortby": "^4.7.0",
     "lodash.uniq": "^4.5.0",
     "nanoid": "^2.1.11",
+    "nodemailer": "^6.7.2",
     "nuxt": "^2.15.8",
     "nuxt-buefy": "^0.4.13",
     "path": "^0.12.7",
