@@ -104,7 +104,7 @@ router.post('/grab/actions/order/:ref', authorizeUser, asyncHandler(async (req, 
             q.Ref(q.Collection('travels'), ref),
             {
                 data: {
-                    status: (availableBudget < 10) ? 'FullyOrdered' : 'PartiallyOrdered',
+                    status: (availableBudget < 10) ? 'ordered' : 'active',
                     budget: availableBudget
                 }
             },
