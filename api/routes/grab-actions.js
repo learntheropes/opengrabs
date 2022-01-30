@@ -192,7 +192,7 @@ router.post('/grab/actions/book/:ref', authorizeUser, asyncHandler(async (req, r
         updated_at: new Date().toISOString(),
     }
 
-    const { data: grab } = await client.query(
+    await client.query(
         q.Update(
             q.Ref(q.Collection('grabs'), ref),
             { data: props },
