@@ -30,53 +30,55 @@
           <button :class="loadAmazonButtonClass" @click="loadAmazonButton">{{ $t('getProductInfo')}}</button>
         </div>
       </div>
-      <div v-if="scrapedProduct" class="card">
-        <div class="card-image">
-          <figure style="background-color: grey" class="image">
-            <img :src="image" :alt="'Image of ' + title" />
-          </figure>
-        </div>
-        <div class="card-content">
-          <div class="media">
-            <div class="media-content">
-              <p class="title is-4">
-                {{ title }}
-              </p>
-            </div>
+      <div v-if="scrapedProduct" class="column is-half">
+        <div class="card">
+          <div class="card-image">
+            <figure style="background-color: grey" class="image">
+              <img :src="image" :alt="'Image of ' + title" />
+            </figure>
           </div>
-          <div class="content">
-            <div class="columns is-mobile">
-              <div class="column">
-                <p>{{ $t('product')}}:</p>
-                <p>{{ $t('shipping')}}:</p>
-                <p>{{ $t('taxes') }}:</p>
-                <p>{{ $t('reward')}}:</p>
-                <p class="has-text-weight-bold">Total:</p>
-              </div>
-              <div class="column" align="right">
-                <p>{{ price.product.toFixed(2) }}</p>
-                <p>{{ price.shipping.toFixed(2) }}</p>
-                <p>{{ price.taxes.toFixed(2) }}</p>
-                <p>{{ price.reward.toFixed(2) }}</p>
-                <p class="has-text-weight-bold">{{ price.total.toFixed(2) }}</p>
-              </div>
-              <div class="column">
-                <p>{{ currency }}</p>
-                <p>{{ currency }}</p>
-                <p>{{ currency }}</p>
-                <p>{{ currency }}</p>
-                <p class="has-text-weight-bold">{{ currency }}</p>
+          <div class="card-content">
+            <div class="media">
+              <div class="media-content">
+                <p class="title is-4">
+                  {{ title }}
+                </p>
               </div>
             </div>
+            <div class="content">
+              <div class="columns is-mobile">
+                <div class="column">
+                  <p>{{ $t('product')}}:</p>
+                  <p>{{ $t('shipping')}}:</p>
+                  <p>{{ $t('taxes') }}:</p>
+                  <p>{{ $t('reward')}}:</p>
+                  <p class="has-text-weight-bold">Total:</p>
+                </div>
+                <div class="column" align="right">
+                  <p>{{ price.product.toFixed(2) }}</p>
+                  <p>{{ price.shipping.toFixed(2) }}</p>
+                  <p>{{ price.taxes.toFixed(2) }}</p>
+                  <p>{{ price.reward.toFixed(2) }}</p>
+                  <p class="has-text-weight-bold">{{ price.total.toFixed(2) }}</p>
+                </div>
+                <div class="column">
+                  <p>{{ currency }}</p>
+                  <p>{{ currency }}</p>
+                  <p>{{ currency }}</p>
+                  <p>{{ currency }}</p>
+                  <p class="has-text-weight-bold">{{ currency }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="content">
+              {{ $t('deliveryTo')}} <strong>{{ city }} [{{ country }}]</strong><br>
+              {{ $moment(max_delivery_date.toISOString()).fromNow() }} <strong>[{{ $utils.momentDate(max_delivery_date.toISOString()) }}]</strong>
+            </div>
           </div>
-          <div class="content">
-            {{ $t('deliveryTo')}} <strong>{{ city }} [{{ country }}]</strong><br>
-            {{ $moment(max_delivery_date.toISOString()).fromNow() }} <strong>[{{ $utils.momentDate(max_delivery_date.toISOString()) }}]</strong>
-          </div>
+          <footer class="card-footer">
+            <a href="#" class="card-footer-item" @click="publishButton">{{ $t('publish')}}</a>
+          </footer>
         </div>
-        <footer class="card-footer">
-          <a href="#" class="card-footer-item" @click="publishButton">{{ $t('publish')}}</a>
-        </footer>
       </div>
     </div>
   </section>
@@ -270,7 +272,7 @@ export default {
         shipping: 0.0,
         reward: this.$utils.round(price * 1.06 * (this.reward / 100), 2),
       }
-      this.setCurrencyReferralPrice(this.domain, price)
+      this.setCurrencyReferralPrice(this.domain, this.price)
       this.scrapedProduct = true
     },
     async loadAmazonButton() {

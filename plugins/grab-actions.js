@@ -6,6 +6,12 @@ export default ({ $axios, store }, inject) => {
             })
             return data
         },
+        order: async ({ shop, destination, delivery, traveler }) =>{
+            const data = await $axios.post(`/api/grab/actions/order`, {
+                shop, destination, delivery, traveler
+            })
+            return data
+        },
         remove: async ({ ref }) => {
             const data = await $axios.post(`/api/grab/actions/remove/${ref}`)
             return data

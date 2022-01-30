@@ -5,6 +5,7 @@ export default {
     invalidEmail: "Invalid email",
     invalidCode: "Invalid code",
     invalidBudget: "Invalid budget",
+    invaliShop: "Invalid shop",
     // generic
     publishedBy: "Published by",
     bookedBy: "Booked by",

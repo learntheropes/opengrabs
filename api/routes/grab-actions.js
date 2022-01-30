@@ -55,6 +55,54 @@ router.post('/grab/actions/publish', authorizeUser, asyncHandler(async (req, res
     res.status(201).json({ id })
 }))
 
+router.post('/grab/actions/order', authorizeUser, asyncHandler(async (req, res) => {
+    const { jwt } = req.body
+    const { shop, destination, delivery, traveler } = req.body
+
+    const { data: buyer } = await client.query(
+        q.Get(
+            q.Match(q.Index('user_by_sub'), jwt.sub)
+        )
+    )
+
+    const props = {
+        status: 'booked',
+        adv: 'travel',
+        shop,
+        destination,
+        delivery,
+        traveler,
+        buyer: {
+            sub: jwt.sub,
+            name: buyer.name
+        },
+        published_at: new Date().toISOString(),
+        booked_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+    }
+
+    const { ref: { value: { id }}} = await client.query(
+        q.Create(
+            q.Collection('grabs'),
+            { data: props },
+        )
+    )
+
+    await client.query(
+        q.Create(
+            q.Collection('messages'),
+            { data: {
+                posted_at: new Date().toISOString(),
+                content: 'booked',
+                grab_id: id,
+                user_sub: 'admin|0',
+            }}
+        )
+    )
+
+    res.status(201).json({ id })
+}))
+
 router.post('/grab/actions/remove/:ref', authorizeUser, asyncHandler(async (req, res) => {
     const { ref } = req.params
     const { jwt } = req.body
@@ -321,21 +369,17 @@ router.post('/grab/actions/withdraw/:ref', authorizeUser, asyncHandler(async (re
         
         await opennode.initiateExchange({ to: 'btc', btc_amount })
 
-        const exchange = {
-            rate: rate.buy
-        }
-
         const withdraw = await opennode.initiateWithdrawalAsync({
             type,
             address,
             amount: btc_amount,
-            callback_url: `${baseUrl}/api/btc/withdrawal/webhook`
+            callback_url: `${baseUrl}/api/btc/withdrawal/webhook`,
+            exchange_rate: rate.buy
         })
 
         const props = {
             withdrawn_at: new Date().toISOString(),
             updated_at: new Date().toISOString(),
-            exchange,
             withdraw
         }
 

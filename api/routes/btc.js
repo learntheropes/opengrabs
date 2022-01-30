@@ -119,7 +119,9 @@ router.post('/btc/withdrawal/webhook', asyncHandler(async (req, res) => {
         q.Select(['ref'], q.Get(q.Match( q.Index("grab_by_withdraw_id"), req.body.id))),
         { data: { 
           withdrawn: withdraw_status,
-          withdraw: req.body,
+          withdraw: {
+            webhook: req.body
+          },
         }}
       )
     )

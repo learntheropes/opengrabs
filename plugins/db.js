@@ -42,6 +42,10 @@ export default ({ $axios }, inject) => {
       filter: async (status) => {
         const { data } = await $axios.get(`/api/db/travels/filter/${status}`)
         return data
+      },
+      get: async (ref) => {
+        const { data } = await $axios.get(`/api/db/travels/get/${ref}`)
+        return data
       }
     },
     messages: {

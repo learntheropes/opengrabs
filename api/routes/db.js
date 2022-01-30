@@ -9,17 +9,17 @@ router.get('/db/grabs/get/:ref', authorizeUser, asyncHandler(async (req, res) =>
   const { ref } = req.params
   const { jwt } = req.body
 
-  const { data } = await client.query(
+  const { data: grab } = await client.query(
     q.Get(q.Ref(q.Collection('grabs'), ref))
   )
   
-  if (data.traveler) {
-    if (jwt.sub !== data.buyer.sub && jwt.sub !== data.traveler.sub) {
+  if (grab.traveler) {
+    if (jwt.sub !== grab.buyer.sub && jwt.sub !== grab.traveler.sub) {
       res.status(401).send('unauthorized')
       return
     }
   }
-  res.status(200).json(data)
+  res.status(200).json(grab)
 }))
 
 router.get('/db/grabs/filter/:adv/:status', asyncHandler(async (req, res) => {
@@ -217,6 +217,16 @@ router.get('/db/travels/filter/:status', asyncHandler(async (req, res) => {
   })
 
   res.status(200).json(travels)
+}))
+
+router.get('/db/travels/get/:ref', asyncHandler(async (req,res) => {
+  const { ref } = req.params
+
+  const { data: travel } = await client.query(
+    q.Get(q.Ref(q.Collection('travels'), ref))
+  )
+  
+  res.status(200).json(travel)
 }))
 
 module.exports = router

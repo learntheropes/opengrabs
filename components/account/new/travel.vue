@@ -78,6 +78,7 @@ export default {
             { value: 'it', name: 'Italy', currency: 'EUR' },
             { value: 'es', name: 'Spain', currency: 'EUR'  },
             { value: 'de', name: 'Germany', currency: 'EUR'  },
+            { value: 'fr', name: 'France', currency: 'EUR'  },
         ],
         originObject: null,
         originCountryError: false,
@@ -142,6 +143,24 @@ export default {
         travelerName() {
             const user = this.$store.state.auth.user
             return `${user.given_name} ${user.family_name}`.replace(/-/g, ' ')
+        },
+        domain() {
+            switch (this.originObject.name) {
+                case 'United States':
+                    return 'com'
+                case 'United Kingdom':
+                    return 'co.uk'
+                case 'Italy':
+                    return 'it'
+                case 'Spain':
+                    return 'es'
+                case 'Germany':
+                    return 'de'
+                case 'France':
+                    return 'fr'
+                default:
+                    return null
+            }            
         }
     },
     created() {
@@ -245,7 +264,8 @@ export default {
                 reward: this.travelReward,
                 budget: parseFloat(this.travelBudget),
                 currency: this.travelCurrency,
-                published_at: this.travelPublishedAt
+                published_at: this.travelPublishedAt,
+                domain: this.domain
             }
             await this.$db.travels.create({ props })
             this.resetForm()
