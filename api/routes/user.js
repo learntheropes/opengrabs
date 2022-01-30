@@ -1,11 +1,11 @@
 import asyncHandler from 'express-async-handler'
 import { authorizeUser } from '../auth'
 import { q, client } from '../db'
-import { transporter } from '../email/index'
+import { transporter } from '../email'
 import * as en from '../email/en'
 import * as es from '../email/es'
-// import * as pt from '../email/pt'
-// import * as ru from '../email/ru'
+import * as pt from '../email/pt'
+import * as ru from '../email/ru'
 import { Router } from 'express'
 const router = Router()
   
@@ -93,12 +93,12 @@ router.post('/db/user/update', authorizeUser, asyncHandler(async (req,res) => {
   switch (user.locale) {
     case 'en':
       emailContent = en.emailConfirmationCode(props.code)
-    // case 'es':
-    //   emailContent = es.emailConfirmationCode(props.code)
-    // case 'pt':
-    //   emailContent = pt.emailConfirmationCode(props.code)
-    // case 'ru':
-    //   emailContent = ru.emailConfirmationCode(props.code)
+    case 'es':
+      emailContent = es.emailConfirmationCode(props.code)
+    case 'pt':
+      emailContent = pt.emailConfirmationCode(props.code)
+    case 'ru':
+      emailContent = ru.emailConfirmationCode(props.code)
     default:
       emailContent = en.emailConfirmationCode(props.code)
   }
