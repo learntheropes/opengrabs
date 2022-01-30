@@ -2,6 +2,11 @@ import asyncHandler from 'express-async-handler'
 import { authorizeUser } from '../auth'
 import { q, client } from '../db'
 import opennode from '../btc'
+import { transporter } from '../email'
+import * as en from '../email/en'
+import * as es from '../email/es'
+import * as pt from '../email/pt'
+import * as ru from '../email/ru'
 import { Router } from 'express'
 import axios from 'axios'
 const router = Router()
@@ -99,6 +104,20 @@ router.post('/grab/actions/order', authorizeUser, asyncHandler(async (req, res) 
             }}
         )
     )
+
+
+
+    const { data: travelerUser } = await client.query(
+        q.Get(
+            q.Match(q.Index('user_by_sub'), traveler.sub)
+        )
+    )
+
+    await transporter.sendMail({
+        to: travelerUser.email,
+        subject: emailContent.subject,
+        text: emailContent.content,
+      })
 
     res.status(201).json({ id })
 }))

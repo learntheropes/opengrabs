@@ -12,7 +12,7 @@
                             <div class="content">
                                 <p>Buyer: {{ grab.buyer.name }}</p>
                                 <p>Traveler: {{ grab.traveler.name }}</p>
-                                <p v-if="grab.shop.slug">Product: <a :href="grab.shop.url" target="_blank">{{ grab.shop.slug.replaceAll('-','') || grab.shop.title }}</a></p>
+                                <p v-if="grab.shop.slug">Product: <a :href="grab.shop.url" target="_blank">{{ grab.shop.slug.replace(/-/g,'') || grab.shop.title }}</a></p>
                                 <p>Price: {{ grab.shop.price.total.toFixed(2) }} {{ grab.shop.currency }}</p>
                                 <p>Delivery date: {{ $moment(grab.delivery.date).fromNow() }} [{{ $utils.momentDate(grab.delivery.date) }}]</p>
                                 <p v-if="grab.published_at">Published {{ $moment(grab.published_at).fromNow() }} [{{ $moment(grab.published_at).format('MMMM Do YYYY HH:mm') }}]</p>

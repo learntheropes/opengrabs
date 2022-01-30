@@ -1,7 +1,7 @@
 <template>
     <div class="card card-equal-height">
         <header class="card-header">
-            <p class="card-header-title">{{ order.shop.slug.replaceAll('-',' ')}}</p>
+            <p class="card-header-title">{{ order.shop.slug.replace(/-/g,' ')}}</p>
         </header> 
         <div class="card-image">
             <figure :style="'background-color:grey;'" class="image">

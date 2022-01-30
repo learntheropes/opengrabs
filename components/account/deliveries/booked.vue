@@ -4,7 +4,7 @@
       <div v-for="delivery of deliveries" :key="delivery.ref" class="column is-full-mobile is-one-third-tablet is-one-third-desktop is-one-quarter-widescreen is-one-quarter-fullhd">
         <div class="card card-equal-height">
           <header class="card-header">
-            <p class="card-header-title">{{ delivery.shop.slug.replaceAll('-',' ')}}</p>
+            <p class="card-header-title">{{ delivery.shop.slug.replace(/-/g,' ')}}</p>
           </header> 
           <div class="card-image">
             <figure :style="'background-color:grey;'" class="image">

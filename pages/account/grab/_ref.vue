@@ -7,7 +7,7 @@
           <div class="content">
             <p>{{ $t('buyer') }}: {{ grab.buyer.name }}</p>
             <p>{{ $t('traveler') }}: {{ grab.traveler.name }}</p>
-            <p>{{ $t('product') }}: <a :href="grab.shop.url" target="_blank">{{ grab.shop.slug.replaceAll('-','') || grab.shop.title }}</a></p>
+            <p>{{ $t('product') }}: <a :href="grab.shop.url" target="_blank">{{ grab.shop.slug.replace(/-/g,'') || grab.shop.title }}</a></p>
             <p>{{ $t('price') }}: {{ grab.shop.price.total.toFix(2) }} {{ grab.shop.currency }}</p>
             <p>{{ $t('deliveryDate') }}: {{ $moment(grab.delivery.date).fromNow() }} [{{ $utils.momentDate(grab.delivery.date) }}]</p>
             <p v-if="grab.published_at">{{ $t('publishedAt') }} {{ $moment(grab.published_at).fromNow() }}</p>
@@ -141,7 +141,7 @@ export default {
   methods: {
     getName() {
       if (this.$store.state.auth.user.sub.split('|')[0] === 'vkontakte') {
-        return `${this.$store.state.auth.user.given_name} ${this.$store.state.auth.user.family_name}`.replaceAll('-', ' ')
+        return `${this.$store.state.auth.user.given_name} ${this.$store.state.auth.user.family_name}`.replace(/-/g, ' ')
       } else {
         return this.$store.state.auth.user.name
       }
