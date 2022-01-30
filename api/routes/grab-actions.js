@@ -60,9 +60,9 @@ router.post('/grab/actions/publish', authorizeUser, asyncHandler(async (req, res
     res.status(201).json({ id })
 }))
 
-router.post('/grab/actions/order', authorizeUser, asyncHandler(async (req, res) => {
-    const { jwt } = req.body
-    const { shop, destination, delivery, traveler } = req.body
+router.post('/grab/actions/order/:ref', authorizeUser, asyncHandler(async (req, res) => {
+    const { ref } = req.params
+    const { jwt, shop, destination, delivery, traveler } = req.body
 
     const { data: buyer } = await client.query(
         q.Get(
@@ -90,6 +90,24 @@ router.post('/grab/actions/order', authorizeUser, asyncHandler(async (req, res) 
         q.Create(
             q.Collection('grabs'),
             { data: props },
+        )
+    )
+
+    const { data: travel } = await client.query(
+        q.Get(q.Ref(q.Collection('travels'), ref))
+    )
+
+    const availableBudget = travel.budget - (shop.price.product+shop.price.shipping+shop.price.taxes)
+
+    await client.query(
+        q.Update(
+            q.Ref(q.Collection('travels'), ref),
+            {
+                data: {
+                    status: (availableBudget < 10) ? 'FullyOrdered' : 'PartiallyOrdered',
+                    budget: availableBudget
+                }
+            },
         )
     )
 
