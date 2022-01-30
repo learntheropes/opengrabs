@@ -6,8 +6,8 @@ export default ({ $axios, store }, inject) => {
             })
             return data
         },
-        order: async ({ shop, destination, delivery, traveler }) =>{
-            const data = await $axios.post(`/api/grab/actions/order`, {
+        order: async ({ ref, shop, destination, delivery, traveler }) =>{
+            const data = await $axios.post(`/api/grab/actions/order/${ref}`, {
                 shop, destination, delivery, traveler
             })
             return data
