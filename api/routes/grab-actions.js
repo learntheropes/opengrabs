@@ -57,7 +57,7 @@ router.post('/grab/actions/publish', authorizeUser, asyncHandler(async (req, res
         )
     )
 
-    res.status(201).json({ id })
+    res.status(201)
 }))
 
 router.post('/grab/actions/order/:ref', authorizeUser, asyncHandler(async (req, res) => {
@@ -149,7 +149,7 @@ router.post('/grab/actions/order/:ref', authorizeUser, asyncHandler(async (req, 
         text: emailContent.content,
       })
 
-    res.status(201).json({ id })
+    res.status(201)
 }))
 
 router.post('/grab/actions/remove/:ref', authorizeUser, asyncHandler(async (req, res) => {
@@ -181,7 +181,7 @@ router.post('/grab/actions/remove/:ref', authorizeUser, asyncHandler(async (req,
         q.Delete(q.Ref(q.Collection('grabs'), ref))
     )
 
-    res.status(204).json(response)
+    res.status(204)
 }))
 
 router.post('/grab/actions/book/:ref', authorizeUser, asyncHandler(async (req, res) => {
@@ -255,7 +255,7 @@ router.post('/grab/actions/book/:ref', authorizeUser, asyncHandler(async (req, r
         text: emailContent.content,
     })
 
-    res.status(201).json({})
+    res.status(201)
 }))
 
 router.post('/grab/actions/dispute/:ref', authorizeUser, asyncHandler(async (req, res) => {
@@ -337,7 +337,7 @@ router.post('/grab/actions/dispute/:ref', authorizeUser, asyncHandler(async (req
 
 
 
-    res.status(201).json(response)
+    res.status(201)
 }))
 
 router.post('/grab/actions/bought/:ref', authorizeUser, asyncHandler(async (req, res) => {
@@ -404,7 +404,7 @@ router.post('/grab/actions/bought/:ref', authorizeUser, asyncHandler(async (req,
         text: emailContent.content,
     })
 
-    res.status(201).json(response)
+    res.status(201)
 }))
 
 router.post('/grab/actions/delivered/:ref', authorizeUser, asyncHandler(async (req, res) => {
@@ -471,7 +471,7 @@ router.post('/grab/actions/delivered/:ref', authorizeUser, asyncHandler(async (r
         text: emailContent.content,
     })
 
-    res.status(201).json(response)
+    res.status(201)
 }))
 
 router.post('/grab/actions/release/:ref', authorizeUser, asyncHandler(async (req, res) => {
@@ -539,7 +539,7 @@ router.post('/grab/actions/release/:ref', authorizeUser, asyncHandler(async (req
         text: emailContent.content,
     })
 
-    res.status(201).json(response)
+    res.status(201)
 }))
 
 router.post('/grab/actions/withdraw/:ref', authorizeUser, asyncHandler(async (req, res) => {
@@ -578,7 +578,7 @@ router.post('/grab/actions/withdraw/:ref', authorizeUser, asyncHandler(async (re
             )
         )
 
-        res.status(200).json(withdraw)
+        res.status(200)
         return
     }
     res.status(401).send('unauthorized')
