@@ -142,6 +142,9 @@ export default {
     expired: "Expired",
     published: "Published",
     underpaid: "Underpaid",
+    // pages/account/travels
+    youDontHaveAnyTravel: "You don't have any travel planned yet",
+    actives: "Actives",
     // components/account/new/order
     countryLabel: "Country",
     countryPlaceholder: "Select a Country",

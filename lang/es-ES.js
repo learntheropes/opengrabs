@@ -141,7 +141,10 @@ export default {
     youCanPublish: "You can publish a new one",
     expired: "Expired",
     published: "Published",
-    underpaid: "Underpaid",         
+    underpaid: "Underpaid", 
+    // pages/account/travels
+    youDontHaveAnyTravel: "You don't have any travel planned yet",
+    actives: "Actives",        
     // components/account/new/order
     countryLabel: "Pais",
     countryPlaceholder: "Selecione un Pais",
