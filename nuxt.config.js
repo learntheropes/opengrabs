@@ -29,6 +29,13 @@ export default {
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [],
 
+  // https://nuxtjs.org/docs/configuration-glossary/configuration-vue-config/
+  vue: {
+    config: {
+      devtools: true
+    }
+  },
+
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     '~plugins/tawk.client.js',
@@ -131,7 +138,7 @@ export default {
         domain: `${process.env.AUTH0_TENANT}.us.auth0.com`,
         clientId: process.env.AUTH0_CLIENT_ID,
         audience: `https://${process.env.AUTH0_TENANT}.us.auth0.com/api/v2/`,
-        scope: ['openid', 'profile', 'offline_access'],
+        scope: ['openid', 'profile', 'offline_access', 'email'],
         accessType: 'offline',
         responseType: 'code',
         grantType: 'authorization_code',
@@ -166,9 +173,7 @@ export default {
         }
       }
     },
-    transpile: [
-      "vee-validate/dist/rules"
-    ],
+    
     extend(config, { isDev, isClient }) {
       // https://github.com/nuxt-community/dotenv-module/issues/11#issuecomment-376780588
       config.node = {

@@ -14,8 +14,9 @@
 <script>
 export default {
   name: 'New',
-  asyncData({ query: { adv }}) {
-    return { adv }
+  async asyncData({ app, query: { adv }}) {
+    const user = await app.$user.create()
+    return { user, adv }
   },
   computed: {
     activeTab: {

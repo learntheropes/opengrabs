@@ -9,23 +9,45 @@ import * as ru from '../email/ru'
 import { Router } from 'express'
 const router = Router()
   
+router.get('/db/user/get', authorizeUser, asyncHandler(async (req, res) => {
+  const { jwt } = req.body
+  const sub = jwt.sub
+
+  const exists = await client.query(
+    q.Exists(
+      q.Match(q.Index('user_by_sub'), sub)
+    )
+  )
+  if (exists) {
+    const { data: user } = await client.query(
+      q.Get(
+        q.Match(q.Index('user_by_sub'), sub)
+      )
+    )
+    res.status(200).json(user)
+    return
+  } else {
+    res.status(200).json({})
+    return
+  }
+}))
+
 router.post('/db/user/create', authorizeUser, asyncHandler(async (req, res) => {
-  const { jwt, locale } = req.body
+  const { jwt } = req.body
   const sub = jwt.sub
 
   let strategy = jwt['https://opengrabs.com/strategy']
   if (!strategy) strategy = jwt.sub.split('|')[0]
 
-  let props, verified, email
+  let props, email_verified, email
   switch (strategy) {
     case 'facebook':
       email = jwt['https://opengrabs.com/email']
-      verifed = jwt['https://opengrabs.com/verified']
+      email_verified = jwt['https://opengrabs.com/verified']
       props = {
         sub: sub,
         email: email,
-        verified: verifed,
-        locale: locale
+        email_verified: email_verified,
       }
       break
     case 'vkontakte':
@@ -33,18 +55,16 @@ router.post('/db/user/create', authorizeUser, asyncHandler(async (req, res) => {
       props = {
         sub: sub,
         email: email,
-        verified: (email) ? true : false,
-        locale: locale
+        email_verified: (email) ? true : false,
       }
       break
     case 'email':
       email = jwt['https://opengrabs.com/name']
-      verified = jwt['https://opengrabs.com/verified']
+      email_verified = jwt['https://opengrabs.com/verified']
       props = {
         sub: sub,
         email: email,
-        verified: verified,
-        locale: locale
+        email_verified: email_verified,
       }
   }
 
@@ -75,18 +95,38 @@ router.post('/db/user/create', authorizeUser, asyncHandler(async (req, res) => {
   }
 }))
 
-router.post('/db/user/update/email', authorizeUser, asyncHandler(async (req,res) => {
+router.post('/db/user/update', authorizeUser, asyncHandler(async (req,res) => {
   const { jwt, props } = req.body
-  props.verified = false
-  props.code = Math.floor(100000 + Math.random() * 900000);
   
-  const { data: user, ref: {value: { id }}} = await client.query(
+  const { ref: {value: { id }}} = await client.query(
     q.Get(
       q.Match(q.Index('user_by_sub'), jwt.sub)
     )
   )
   
-  await client.query(
+  const { data: user } = await client.query(
+    q.Update(
+      q.Ref(q.Collection('users'), id),
+      { data: props },
+    )
+  )
+
+  res.status(200).json(user)
+}))
+
+router.post('/db/user/update/email', authorizeUser, asyncHandler(async (req,res) => {
+  const { jwt, props } = req.body
+
+  props.email_verified = false
+  props.code = Math.floor(100000 + Math.random() * 900000);
+  
+  const { ref: {value: { id }}} = await client.query(
+    q.Get(
+      q.Match(q.Index('user_by_sub'), jwt.sub)
+    )
+  )
+  
+  const { data: user } = await client.query(
     q.Update(
       q.Ref(q.Collection('users'), id),
       { data: props },
@@ -94,7 +134,7 @@ router.post('/db/user/update/email', authorizeUser, asyncHandler(async (req,res)
   )
 
   let emailContent
-  switch (user.locale) {
+  switch (props.locale) {
     case 'en':
       emailContent = en.emailConfirmationCode(props.code)
     case 'es':
@@ -113,7 +153,7 @@ router.post('/db/user/update/email', authorizeUser, asyncHandler(async (req,res)
     text: emailContent.content,
   })
 
-  res.status(200).json({})
+  res.status(200).json(user)
 }))
 
 router.post('/db/user/verify/:code', authorizeUser, asyncHandler(async (req,res) => {
@@ -130,7 +170,7 @@ router.post('/db/user/verify/:code', authorizeUser, asyncHandler(async (req,res)
     const { data: user} = await client.query(
       q.Update(
         q.Ref(q.Collection('users'), id),
-        { data: { verified: true } },
+        { data: { email_verified: true } },
       )
     )
     res.status(200).json(user)
@@ -140,7 +180,7 @@ router.post('/db/user/verify/:code', authorizeUser, asyncHandler(async (req,res)
   }
 }))
 
-router.post('db/user/update/username', authorizeUser, asyncHandler(async (req,res) => {
+router.post('/db/user/update/username', authorizeUser, asyncHandler(async (req,res) => {
   const { jwt, props } = req.body
 
   const exists = await client.query(

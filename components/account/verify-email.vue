@@ -1,21 +1,21 @@
 <template>
     <section class="section">
         <div v-if="show">
-        <div class="notification">
-            {{ $t('missingEmailWarningOrder')}}
-        </div>
-        <b-field grouped :type="emailType" :message="emailMessage">
-            <b-input v-model="email" type="text" :placeholder="$t('emailLabel')" expanded />
-            <p class="control">
-                <b-button @click="updateUserEmail">{{ $t('update') }}</b-button> 
-            </p>
-        </b-field>
-        <b-field grouped :type="codeType" :message="codeMessage">
-            <b-input v-model="code" type="text" :placeholder="$t('codeLabel')" expanded />
-            <p class="control">
-                <b-button @click="verifyUserEmail">{{ $t('verify') }}</b-button> 
-            </p>
-        </b-field> 
+            <div class="notification">
+                {{ $t('missingEmailWarningOrder')}}
+            </div>
+            <b-field grouped :type="emailType" :message="emailMessage">
+                <b-input v-model="user.email" type="text" :placeholder="$t('emailLabel')" expanded />
+                <p class="control">
+                    <b-button @click="updateUserEmail">{{ $t('update') }}</b-button> 
+                </p>
+            </b-field>
+            <b-field grouped :type="codeType" :message="codeMessage">
+                <b-input v-model="user.code" type="text" :placeholder="$t('codeLabel')" expanded />
+                <p class="control">
+                    <b-button @click="verifyUserEmail">{{ $t('verify') }}</b-button> 
+                </p>
+            </b-field> 
         </div>
     </section>
 </template>
@@ -26,13 +26,29 @@ export default {
     middleware: 'auth',
     data: () => ({
         show: false,
-        email: null,
-        code: null,
+        user: {
+            email: null,
+            email_verified: false,
+            code: null,
+            locale: null
+        },
         emailError: false,
         emailType: null,
         codeError: false,
         codeType: null
     }),
+    async fetch() {
+        this.user = await this.$user.get()
+        if (this.user.email && this.user.email_verified) {
+            this.$nuxt.$emit('updateUser', {email: this.user.email, email_verified: this.user.email_verified, username: this.user.username})
+        } else {
+            const user = this.$store.state.auth.user
+            this.user = JSON.parse(JSON.stringify(user))
+            if (!this.user.email_verified || !this.user.email) {
+                this.show = true
+            }
+        } 
+    },
     computed: {
         emailMessage() {
             if (this.emailError === 'Field required') return this.$t('requiredField')
@@ -46,32 +62,27 @@ export default {
         }     
     },
     async created() {
-        const user = await this.$user.create(this.$i18n.locale)
-        if (user.email && user.verified) {
-            this.$nuxt.$emit('updateEmailExists', user.email)
-        }
-        if (process.env.URL) {
-            if (user.email) {
-                const { data: { hash }} = await this.$axios.get(`/api/crypto/sha256/${user.email}`)
-                this.$Tawk.$updateChatUser({ name: user.name, email: user.email, emailHmac: hash})
-            }
-            const attribute = {
-                key: 'user-sub',
-                value: this.$store.$auth.user.sub
-            }
-            this.$Tawk.$setAttribute(attribute)
-        }
-        this.show = true
+        // if (process.env.URL) {
+        //     if (user.username && user.email) {
+        //         const { data: { hash }} = await this.$axios.get(`/api/crypto/sha256/${user.email}`)
+        //         this.$Tawk.$updateChatUser({ name: user.username, email: user.email, emailHmac: hash})
+        //     }
+        //     const attribute = {
+        //         key: 'user-sub',
+        //         value: this.$store.$auth.user.sub
+        //     }
+        //     this.$Tawk.$setAttribute(attribute)
+        // }
     },
     methods: {
         validateEmail(){
-            if (!this.email) {
+            if (!this.user.email) {
                 this.emailType = 'is-danger'
                 this.emailError = 'Field required'
                 return false
             } else {
                 const regex = /\S+@\S+\.\S+/
-                const isValidFormat = regex.test(this.email)
+                const isValidFormat = regex.test(this.user.email)
                 if (!isValidFormat) {
                     this.emailType = 'is-danger'
                     this.emailError = 'Invalid email'              
@@ -84,17 +95,18 @@ export default {
             this.emailError = null
             const validEmail = this.validateEmail()
             if (validEmail) {
-                await this.$user.update({ email: this.email })
+                this.user.locale = this.$i18n.locale
+                await this.$user.updateEmail(this.user)
             }
         },
         validateCode(){
-            if (!this.code) {
+            if (!this.user.code) {
                 this.codeType = 'is-danger'
                 this.codeError = 'Field required'
                 return false
             } else {
                 const regex = /^\d{6}$/
-                const isValidFormat = regex.test(this.code)
+                const isValidFormat = regex.test(this.user.code)
                 if (!isValidFormat) {
                     this.codeType = 'is-danger'
                     this.codeError = 'Invalid code'                
@@ -107,15 +119,16 @@ export default {
             this.codeError = null
             const validCode = this.validateCode()
             if (validCode) {
-                const user = await this.$user.verify(this.code)
-                if (user.error) {
+                this.user = await this.$user.verify(this.user.code)
+                if (this.user.error) {
                     this.codeType = 'is-danger'
                     this.codeError = 'Invalid code'
                 } else {
-                    this.$nuxt.$emit('updateEmailExists', this.email)
-                    if (process.env.URL) {
-                        const { data: { hash }} = await this.$axios.get(`/api/crypto/sha256/${user.email}`)
-                        this.$Tawk.$updateChatUser({ name: user.name, email: user.email, emailHmac: hash})
+                    this.show = false
+                    this.$nuxt.$emit('updateUser', {email: this.user.email, email_verified: this.user.email_verified, username: this.user.username})
+                    if (process.env.URL && this.user.username && this.user.email) {
+                        const { data: { hash }} = await this.$axios.get(`/api/crypto/sha256/${this.user.email}`)
+                        this.$Tawk.$updateChatUser({ name: this.user.username, email: this.user.email, emailHmac: hash})
                     }
                 }  
             }     

@@ -2,9 +2,9 @@
   <section class="section container">
     <div class="columns">
       <div class="column is-half">
-        <account-verify-username v-if="!usernameExists" />
-        <account-verify-email v-if="!emailExists" />
-        <div v-if="usernameExists && emailExists">
+        <account-verify-username v-if="!user.username" />
+        <account-verify-email v-if="!user.email||!user.email_verified" />
+        <div v-if="user.username && user.email && user.email_verified">
           <b-field :label="countryLabel" :type="countryType" :message="countryMessage">
             <b-select v-model="country" :placeholder="countryPlaceholder" expanded>
               <option v-for="oneCountry in countries" :key="oneCountry.alpha2Code" :value="oneCountry.name">
@@ -94,8 +94,11 @@ export default {
   name: 'OrderNew',
   middleware: 'auth',
   data: () => ({
-    usernameExists: false,
-    emailExists: false,
+    user : {
+      username: null,
+      email: null,
+      email_verified: false
+    },
     loadAmazonButtonClass: 'button',
     scrapedProduct: false,
     country: null,
@@ -175,15 +178,11 @@ export default {
     }
   },
   created() {
-    this.$nuxt.$on('updateUsernameExists', ($event) => this.updateUsernameExists($event))
-    this.$nuxt.$on('updateEmailExists', ($event) => this.updateEmailExists($event))
+    this.$nuxt.$on('updateUser', ($event) => this.updateUser($event))
   },
   methods: {
-    updateUsernameExists(values) {
-      this.usernameExists = values[0]
-    },
-    updateEmailExists(values) {
-      this.emailExists = values[0]
+    updateUser(user) {
+      this.user = user
     },
     setCurrencyReferralPrice(domain, price) {
       switch (domain) {

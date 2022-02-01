@@ -41,7 +41,8 @@ module.exports = {
       "destination_city",
       "published_at",
       "given_name",
-      "family_name"
+      "family_name",
+      "email_verified"
     ]}],
   },
 }

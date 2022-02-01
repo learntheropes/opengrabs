@@ -5,9 +5,9 @@
                 {{ $t('missingUsernameWarning')}}
             </div>
             <b-field grouped :type="usernameType" :message="usernameMessage">
-                <b-input v-model="username" type="text" :placeholder="$t('usernameLabel')" expanded />
+                <b-input v-model="user.username" type="text" :placeholder="$t('usernameLabel')" expanded />
                 <p class="control">
-                    <b-button @click="verifyUserEmail">{{ $t('verify') }}</b-button> 
+                    <b-button @click="updateUserUsername">{{ $t('update') }}</b-button> 
                 </p>
             </b-field> 
         </div>
@@ -19,13 +19,29 @@ export default {
     name: 'VerifyUsername',
     middleware: 'auth',
     data: () => ({
+        user: {
+            email: null,
+            email_verified: false,
+            username: null,
+        },
         show: false,
-        username: null,
         usernameError: false,
         usernameType: null,
     }),
+    async fetch() {
+        this.user = await this.$user.get()
+        if (this.user.username) {
+            this.$nuxt.$emit('updateUser', {email: this.user.email, email_verified: this.user.email_verified, username: this.user.username})
+        } else {
+            const user = this.$store.state.auth.user
+            this.user = JSON.parse(JSON.stringify(user))
+            if (!this.user.username) {
+                this.show = true
+            }
+        }
+    },
     computed: {
-        codeMessage() {
+        usernameMessage() {
             if (this.usernameError === 'Field required') return this.$t('requiredField')
             else if (this.usernameError === 'Invalid username') return this.$t('invalidUsername')
             else if (this.usernameError === 'Username already in use') return this.$t('UsernameAlreadyInUse')
@@ -33,35 +49,31 @@ export default {
         }     
     },
     async created() {
-        const user = await this.$user.create(this.$i18n.locale)
-        if (user.username) {
-            this.$nuxt.$emit('updateUsernameExists', user.username)
-        }
-        if (process.env.URL) {
-            if (user.username && user.email) {
-                const { data: { hash }} = await this.$axios.get(`/api/crypto/sha256/${user.email}`)
-                this.$Tawk.$updateChatUser({ name: user.username, email: user.email, emailHmac: hash})
-            }
-            const attribute = {
-                key: 'user-sub',
-                value: this.$store.$auth.user.sub
-            }
-            this.$Tawk.$setAttribute(attribute)
-        }
-        this.show = true
+        // if (process.env.URL) {
+        //     if (user.username && user.email) {
+        //         const { data: { hash }} = await this.$axios.get(`/api/crypto/sha256/${user.email}`)
+        //         this.$Tawk.$updateChatUser({ name: user.username, email: user.email, emailHmac: hash})
+        //     }
+        //     const attribute = {
+        //         key: 'user-sub',
+        //         value: this.$store.$auth.user.sub
+        //     }
+        //     this.$Tawk.$setAttribute(attribute)
+        // }
     },
     methods: {
         validateUsername(){
-            if (!this.username) {
-                this.emailType = 'is-danger'
-                this.emailError = 'Field required'
+            if (!this.user.username) {
+                this.usernameType = 'is-danger'
+                this.usernameError = 'Field required'
                 return false
             } else {
                 const regex = /^[a-zA-Z0-9]{5,15}$/
-                const isValidFormat = regex.test(this.username)
+                const isValidFormat = regex.test(this.user.username)
+                console.log(isValidFormat)
                 if (!isValidFormat) {
-                    this.emailType = 'is-danger'
-                    this.emailError = 'Invalid username'              
+                    this.usernameType = 'is-danger'
+                    this.usernameError = 'Invalid username'              
                 }
                 return isValidFormat                
             }
@@ -71,15 +83,17 @@ export default {
             this.usenrameError = null
             const validUsername = this.validateUsername()
             if (validUsername) {
-                const user = await this.$user.updateUsername({ username: this.username })
-                if (user.error) {
+                this.user = await this.$user.update(this.user)
+                if (this.user.error) {
                     this.usernameType = 'is-danger'
                     this.usernameError = 'Username already in use'
                 } else {
-                    this.$nuxt.$emit('updateUsernameExists', this.username)
-                    if (process.env.URL && user.email && user.username) {
-                        const { data: { hash }} = await this.$axios.get(`/api/crypto/sha256/${user.email}`)
-                        this.$Tawk.$updateChatUser({ name: user.username, email: user.email, emailHmac: hash})
+                    this.show = false
+                    console.log(this.user.username)
+                    this.$nuxt.$emit('updateUser', {email: this.user.email, email_verified: this.user.email_verified, username: this.user.username})
+                    if (process.env.URL && this.user.email && this.user.username) {
+                        const { data: { hash }} = await this.$axios.get(`/api/crypto/sha256/${this.user.email}`)
+                        this.$Tawk.$updateChatUser({ name: this.user.username, email: this.user.email, emailHmac: hash})
                     }
                 }  
             }
