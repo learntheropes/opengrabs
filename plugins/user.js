@@ -5,13 +5,17 @@ export default ({ $axios }, inject) => {
           return data
         },
         update: async (props) => {
-          const { data } = await $axios.post('/api/db/user/update', { props })
+          const { data } = await $axios.post('/api/db/user/update/email', { props })
           return data
         },
         verify: async (code) => {
             const { data } = await $axios.post(`/api/db/user/verify/${code}`)
             return data
-        }
+        },
+        updateUsername: async (props) => {
+          const { data } = await $axios.post('/api/db/user/update/username', { props })
+          return data
+        },
     }
     inject('user', user)
   }

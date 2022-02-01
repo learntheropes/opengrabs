@@ -38,6 +38,7 @@ export default {
     '~/plugins/utils.js',
     '~plugins/vue-qrcode.js',
     '~plugins/grab-actions.js',
+    '~plugins/travel-actions.js',
     '~plugins/moment.js',
   ],
 

@@ -16,32 +16,36 @@ router.post('/db/user/create', authorizeUser, asyncHandler(async (req, res) => {
   let strategy = jwt['https://opengrabs.com/strategy']
   if (!strategy) strategy = jwt.sub.split('|')[0]
 
-  const email = jwt['https://opengrabs.com/email']
-
-  let props
+  let props, verified, email
   switch (strategy) {
     case 'facebook':
-      const name = jwt['https://opengrabs.com/name']
-      const verifed = jwt['https://opengrabs.com/verified']
+      email = jwt['https://opengrabs.com/email']
+      verifed = jwt['https://opengrabs.com/verified']
       props = {
         sub: sub,
         email: email,
         verified: verifed,
-        name: name,
         locale: locale
       }
       break
     case 'vkontakte':
-      const given_name = jwt['https://opengrabs.com/given_name']
-      const family_name = jwt['https://opengrabs.com/family_name']
+      email = jwt['https://opengrabs.com/email']
       props = {
         sub: sub,
         email: email,
         verified: (email) ? true : false,
-        name: `${given_name} ${family_name}`.replace(/-/g, ' '),
         locale: locale
       }
       break
+    case 'email':
+      email = jwt['https://opengrabs.com/name']
+      verified = jwt['https://opengrabs.com/verified']
+      props = {
+        sub: sub,
+        email: email,
+        verified: verified,
+        locale: locale
+      }
   }
 
   const exists = await client.query(
@@ -71,7 +75,7 @@ router.post('/db/user/create', authorizeUser, asyncHandler(async (req, res) => {
   }
 }))
 
-router.post('/db/user/update', authorizeUser, asyncHandler(async (req,res) => {
+router.post('/db/user/update/email', authorizeUser, asyncHandler(async (req,res) => {
   const { jwt, props } = req.body
   props.verified = false
   props.code = Math.floor(100000 + Math.random() * 900000);
@@ -134,6 +138,36 @@ router.post('/db/user/verify/:code', authorizeUser, asyncHandler(async (req,res)
   } else {
     res.status(200).json({ error: 'invalid code'})
   }
+}))
+
+router.post('db/user/update/username', authorizeUser, asyncHandler(async (req,res) => {
+  const { jwt, props } = req.body
+
+  const exists = await client.query(
+    q.Exists(
+      q.Match(q.Index('user_by_username'), props.username)
+    )
+  )
+
+  if (exists) {
+    res.status(200).json({ error: 'Username already in use'})
+    return
+  }
+
+  const { ref: {value: { id }}} = await client.query(
+    q.Get(
+      q.Match(q.Index('user_by_sub'), jwt.sub)
+    )
+  )
+
+  const { data: user} = await client.query(
+    q.Update(
+      q.Ref(q.Collection('users'), id),
+      { data: props },
+    )
+  )
+
+  res.status(200).json(user)
 }))
 
 module.exports = router

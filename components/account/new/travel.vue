@@ -2,8 +2,9 @@
     <section class="section container">
         <div class="columns">
             <div class="column is-half">
+                <account-verify-username v-if="!usernameExists" />
                 <account-verify-email v-if="!emailExists" />
-                <div v-else>
+                <div v-if="usernameExists && emailExists">
                     <b-field :label="$t('originCountryLabel')" :type="originCountryType" :message="originCountryMessage">
                         <b-select v-model="originObject" :placeholder="$t('originCountryPlaceholder')" expanded>
                             <option v-for="oneCountry in originCountries" :key="oneCountry.value" :value="oneCountry">
@@ -71,6 +72,7 @@ export default {
     name: 'TravelNew',
     middleware: 'auth',
     data: () => ({
+        usernameExists: false,
         emailExists: false,
         allOrigins: [
             { value: 'us', name: 'United States', currency: 'USD' },
@@ -164,9 +166,13 @@ export default {
         }
     },
     created() {
+        this.$nuxt.$on('updateUsernameExists', ($event) => this.updateUsernameExists($event))
         this.$nuxt.$on('updateEmailExists', ($event) => this.updateEmailExists($event))
     },
     methods: {
+        updateUsernameExists(values) {
+            this.usernameExists = values[0]
+        },
         updateEmailExists(values) {
             this.emailExists = values[0]
         },
@@ -267,7 +273,7 @@ export default {
                 published_at: this.travelPublishedAt,
                 domain: this.domain
             }
-            await this.$db.travels.create({ props })
+            await this.$travels.create({ props })
             this.resetForm()
         }
     }

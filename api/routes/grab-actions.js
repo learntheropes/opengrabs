@@ -32,7 +32,7 @@ router.post('/grab/actions/publish', authorizeUser, asyncHandler(async (req, res
         destination,
         buyer: {
             sub: jwt.sub,
-            name: user.name
+            username: user.username
         },
         published_at: new Date().toISOString(),
         updated_at: new Date().toISOString()
@@ -192,6 +192,12 @@ router.post('/grab/actions/book/:ref', authorizeUser, asyncHandler(async (req, r
         q.Get(q.Ref(q.Collection('grabs'), ref))
     )
 
+    const { data: user } = await client.query(
+        q.Get(
+          q.Match(q.Index('user_by_sub'), jwt.sub)
+        )
+      )
+
     if (grab.status !== 'published') {
         res.status(401).send('unauthorized')
         return
@@ -201,7 +207,7 @@ router.post('/grab/actions/book/:ref', authorizeUser, asyncHandler(async (req, r
         status: 'booked',
         traveler: {
             sub: jwt.sub,
-            name: user.name,
+            username: user.username,
         },
         delivery: {
             date: delivery_date,

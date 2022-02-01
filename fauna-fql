@@ -262,6 +262,23 @@ CreateIndex({
 })
 
 CreateIndex({
+  name: "user_by_username",
+  source: {
+    collection: Collection("users"),
+  },
+  terms: [
+    {
+      field: ["data", "username"]
+    }
+  ],
+  values: [
+    {
+      field: ["ref"]
+    }
+  ]
+})
+
+CreateIndex({
   name: "charge_webhook_by_status",
   source: {
     collection: Collection("charge_webhooks"),

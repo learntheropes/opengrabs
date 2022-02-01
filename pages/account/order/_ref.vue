@@ -2,8 +2,9 @@
     <section class="section container">
         <div class="columns">
             <div class="column is-half">
+                <account-verify-username v-if="!usernameExists" />
                 <account-verify-email v-if="!emailExists" />
-                <div v-else>
+                <div v-if="usernameExists && emailExists">
                     <b-field :label="$t('amazonUrlLabel')" :type="amazonUrlType" :message="amazonUrlMessage">
                         <b-input v-model="url" type="text" expanded></b-input>
                     </b-field>
@@ -98,6 +99,7 @@ export default {
         return { ref, country, city, reward, date, max_delivery_date, currency, traveler, domain, supportedShops }
     },
     data: () => ({
+        usernameExists: false,
         emailExists: false,
         loadAmazonButtonClass: 'button',
         scrapedProduct: false,
@@ -120,7 +122,14 @@ export default {
             else return `${this.$t('amazonUrlMessage1')} ${this.supportedShops.join(', ')} ${this.$t('amazonUrlMessage2')}`
         },        
     },
+    created() {
+        this.$nuxt.$on('updateUsernameExists', ($event) => this.updateUsernameExists($event))
+        this.$nuxt.$on('updateEmailExists', ($event) => this.updateEmailExists($event))
+    },
     methods: {
+        updateUsernameExists(values) {
+            this.usernameExists = values[0]
+        },
         updateEmailExists(values) {
             this.emailExists = values[0]
         },
