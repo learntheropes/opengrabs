@@ -1,16 +1,15 @@
 <template>
   <section class="section">
     <div class="columns is-centered">
-      <account-verify-email v-if="!emailExists" />
-      <div v-else>
-        <div class="column is-one-third">
-          <b-field :label="$t('deliveryDate')" :message="dateMessage">
-            <b-datepicker v-model="delivery_date" :min-date="new Date()" :max-date="new Date(grab.destination.max_delivery_date)" icon="calendar-today" editable />
-          </b-field>
-          <b-field>
-            <button class="button" @click="book">{{ $t('book') }}</button>
-          </b-field>
-        </div>
+      <account-verify-username v-if="!user.username" />
+      <account-verify-email v-if="!user.email||!user.email_verified" />
+      <div v-if="user.username && user.email && user.email_verified" class="column is-one-third">
+        <b-field :label="$t('deliveryDate')" :message="dateMessage">
+          <b-datepicker v-model="delivery_date" :min-date="new Date()" :max-date="new Date(grab.destination.max_delivery_date)" icon="calendar-today" editable />
+        </b-field>
+        <b-field>
+          <button class="button" @click="book">{{ $t('book') }}</button>
+        </b-field>
       </div>
     </div>
   </section>
@@ -19,13 +18,18 @@
 <script>
 import orderBy from 'lodash.orderby'
 export default {
-  name: 'BookByRef',
+  name: 'BookRef',
+  middleware: 'auth',
   async asyncData({ app, params: { ref } }) {
     const grab = await app.$db.grabs.get(ref)
     return { ref, grab }
   },
   data: () => ({
-    emailExists: false,
+    user : {
+      username: null,
+      email: null,
+      email_verified: false
+    },
     delivery_date: null,
     dateType: null,
     dateError: false
@@ -37,11 +41,11 @@ export default {
     }
   },
   created() {
-    this.$nuxt.$on('updateEmailExists', ($event) => this.updateEmailExists($event))
+    this.$nuxt.$on('updateUser', ($event) => this.updateUser($event))
   },
   methods: {
-    updateEmailExists(values) {
-      this.emailExists = values[0]
+    updateUser(user) {
+      this.user = user
     },
     validateDate() {
       if (!this.delivery_date) {

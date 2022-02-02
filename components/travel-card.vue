@@ -17,7 +17,7 @@
             </div>
         </div>
         <footer class="card-footer">
-            <nuxt-link v-if="authenticated && authenticatedUserId !== travel.traveler.sub" :to="localePath({ name: 'account-order-by-ref', params: { ref: travel.ref }})" class="card-footer-item">{{ $t('order') }}</nuxt-link>
+            <nuxt-link v-if="authenticated && authenticatedUserId !== travel.traveler.sub" :to="localePath({ name: 'account-order-ref', params: { ref: travel.ref }})" class="card-footer-item">{{ $t('order') }}</nuxt-link>
             <a v-if="!authenticated" href="#" class="card-footer-item" @click="login">{{ $t('loginToOrder') }}</a>
         </footer>
     </div>

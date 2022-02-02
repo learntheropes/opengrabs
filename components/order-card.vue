@@ -44,7 +44,7 @@
         </div>
         <footer class="card-footer">
             <a :href="order.shop.url" target="_blank" class="card-footer-item">{{ $utils.capitalize(order.shop.name) }}</a>
-            <nuxt-link v-if="authenticated && authenticatedUserId !== order.buyer.sub" :to="localePath({ name: 'account-book-by-ref', params: { ref: order.ref }})" class="card-footer-item">{{ $t('book') }}</nuxt-link>
+            <nuxt-link v-if="authenticated && authenticatedUserId !== order.buyer.sub" :to="localePath({ name: 'account-book-ref', params: { ref: order.ref }})" class="card-footer-item">{{ $t('book') }}</nuxt-link>
             <a v-if="!authenticated" href="#" class="card-footer-item" @click="login">{{ $t('loginToBook') }}</a>
         </footer>
     </div>
