@@ -12,7 +12,7 @@ export default {
         return { fullPath: from.fullPath, path: from.path }
     },
     created() {
-        if (this.path !== '/cb') this.$auth.$storage.setUniversal('redirect', this.fullPath)
+        if (this.path !== '/cb' && this.path !== `${this.$i18n.locale}/orders` && this.path !== `${this.$i18n.locale}/travels`) this.$auth.$storage.setUniversal('redirect', this.fullPath)
         this.$auth.loginWith('auth0')
     }
 }
