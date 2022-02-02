@@ -7,11 +7,12 @@
 export default {
     name: 'Login',
     middleware: 'auth',
-    asyncData({ from }) {   
-        return { fullPath: from.fullPath}
+    asyncData({ from }) {
+        console.log(from)
+        return { fullPath: from.fullPath, path: from.path }
     },
     created() {
-        this.$auth.$storage.setUniversal('redirect', this.fullPath)
+        if (this.path !== '/cb') this.$auth.$storage.setUniversal('redirect', this.fullPath)
         this.$auth.loginWith('auth0')
     }
 }
