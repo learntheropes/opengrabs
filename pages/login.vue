@@ -12,7 +12,7 @@ export default {
     },
     created() {
         this.$auth.$storage.setUniversal('redirect', this.fullPath)
-        // this.$auth.loginWith('auth0')
+        this.$auth.loginWith('auth0')
     }
 }
 </script>
