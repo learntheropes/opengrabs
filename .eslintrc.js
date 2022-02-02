@@ -42,7 +42,9 @@ module.exports = {
       "published_at",
       "given_name",
       "family_name",
-      "email_verified"
+      "email_verified",
+      "jwt_decode",
+      "logins_count"
     ]}],
   },
 }

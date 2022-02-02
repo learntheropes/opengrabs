@@ -148,7 +148,10 @@ export default {
         logoutRedirectUri: (process.env.URL) ? `${process.env.URL}` : 'https://localhost:3000'
       }
     },
-    plugins: [ '~/plugins/auth.js' ]
+    plugins: [
+      '~/plugins/auth.js',
+      { src: '~/plugins/watchState.js', mode: 'client' }
+    ]
   },
 
   router: {
