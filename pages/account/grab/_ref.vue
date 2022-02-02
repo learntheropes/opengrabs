@@ -5,11 +5,11 @@
         <h1 class="title">{{ $t('grab') }} {{ ref }}</h1>
         <div class="box">
           <div class="content">
-            <p>{{ $t('buyer') }}: {{ grab.buyer.name }}</p>
-            <p>{{ $t('traveler') }}: {{ grab.traveler.name }}</p>
-            <p>{{ $t('product') }}: <a :href="grab.shop.url" target="_blank">{{ grab.shop.slug.replace(/-/g,'') || grab.shop.title }}</a></p>
-            <p>{{ $t('price') }}: {{ grab.shop.price.total.toFix(2) }} {{ grab.shop.currency }}</p>
-            <p>{{ $t('deliveryDate') }}: {{ $moment(grab.delivery.date).fromNow() }} [{{ $utils.momentDate(grab.delivery.date) }}]</p>
+            <p v-if="grab.buyer">{{ $t('buyer') }}: {{ grab.buyer.name }}</p>
+            <p v-if="grab.traveler">{{ $t('traveler') }}: {{ grab.traveler.name }}</p>
+            <p>{{ $t('product') }}: <a :href="grab.shop.url" target="_blank">{{ grab.shop.slug.replace(/-/g,' ') || grab.shop.title }}</a></p>
+            <p>{{ $t('price') }}: {{ grab.shop.price.total.toFixed(2) }} {{ grab.shop.currency }}</p>
+            <p v-if="grab.delivery">{{ $t('deliveryDate') }}: {{ $moment(grab.delivery.date).fromNow() }} [{{ $utils.momentDate(grab.delivery.date) }}]</p>
             <p v-if="grab.published_at">{{ $t('publishedAt') }} {{ $moment(grab.published_at).fromNow() }}</p>
             <p v-if="grab.booked_at">{{ $t('bookedAt') }} {{ $moment(grab.booked_at).fromNow() }}</p>
             <p v-if="grab.paid_at">{{ $t('paidAt') }} {{ $moment(grab.paid_at).fromNow() }}</p>
