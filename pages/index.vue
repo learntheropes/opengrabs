@@ -76,7 +76,7 @@ export default {
       else if (this.$Tawk.$isInit()) {
         const attribute = {
           key: 'bitcoin-network',
-          value: (process.env.URL === 'https://opengrabs.com') ? 'mainnet' : 'testnet'
+          value: (process.env.BTC_CHAIN === 'test3') ? 'testnet': 'mainnet'
         }
         const { data: { hash }} = await this.$axios.get(`/api/crypto/sha256/${attribute.value}`)
         attribute.hash = hash

@@ -35,9 +35,7 @@ export default {
       return this.$store.state.auth.loggedIn
     },
     network() {
-      if (process.env.URL === 'https://opengrabs.com') return 'mainnet'
-      else if (process.env.URL === 'https://testnet.opengrabs.com') return 'testnet'
-      else return 'testnet'
+      return (process.env.BTC_CHAIN === 'test3') ? 'testnet': 'mainnet'
     }
   },
   methods: {
