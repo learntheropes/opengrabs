@@ -7,6 +7,7 @@ export default {
   target: 'server',
 
   env: {
+    BTC_CHAIN: process.env.BTC_CHAIN,
     URL: process.env.URL,
     AUTH0_TENANT: process.env.AUTH0_TENANT
   },
