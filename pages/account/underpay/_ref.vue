@@ -53,7 +53,7 @@
 <script>
 import Qrcode from '@chenfengyuan/vue-qrcode'
 export default {
-  name: 'UnderpayByRef',
+  name: 'UnderpayRef',
   components: {
     Qrcode
   },

@@ -1,7 +1,7 @@
 <template>
     <div class="card card-equal-height">
         <header class="card-header">
-            <p class="card-header-title">{{ order.shop.slug.replace(/-/g,' ')}}</p>
+            <p class="card-header-title">{{ order.shop.slug.replace(/-/g,' ') || order.shop.title }}</p>
         </header> 
         <div class="card-image">
             <figure :style="'background-color:grey;'" class="image">
@@ -9,12 +9,6 @@
             </figure>
         </div>
         <div class="card-content">
-            <div class="content">
-                <p >{{ order.shop.title }}</p>
-            </div>
-            <div class="content">
-                <a :href="order.shop.url" target="_blank" class="card-footer-item">{{ order.shop.name }}.{{ order.shop.domain }}</a>
-            </div>
             <div class="content">
                 <div class="columns is-mobile">
                     <div class="column">
@@ -43,7 +37,7 @@
             </div>
         </div>
         <footer class="card-footer">
-            <a :href="order.shop.url" target="_blank" class="card-footer-item">{{ $utils.capitalize(order.shop.name) }}</a>
+            <a :href="order.shop.url" target="_blank" class="card-footer-item">{{ order.shop.name }}.{{ order.shop.domain }}</a>
             <nuxt-link v-if="authenticated && authenticatedUserId !== order.buyer.sub" :to="localePath({ name: 'account-book-ref', params: { ref: order.ref }})" class="card-footer-item">{{ $t('book') }}</nuxt-link>
             <a v-if="!authenticated" href="#" class="card-footer-item" @click="login">{{ $t('loginToBook') }}</a>
         </footer>

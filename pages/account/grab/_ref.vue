@@ -80,7 +80,7 @@
 
 <script>
 export default {
-  name: 'GrabByRef',
+  name: 'GrabRef',
   async asyncData({ app, params: { ref }}) {
     const grab = await app.$db.grabs.get(ref)
     const messages = await app.$db.messages.filter(ref)

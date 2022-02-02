@@ -13,12 +13,6 @@
           </div>
           <div class="card-content">
             <div class="content">
-              <p>{{ order.shop.title }}</p>
-            </div>
-            <div class="content">
-              <a :href="order.shop.url" target="_blank" class="card-footer-item">{{ order.shop.name }}.{{ order.shop.domain }}</a>
-            </div>
-            <div class="content">
               <div class="columns is-mobile">
                 <div class="column">
                   <p>{{ $t('product') }}:<br>
@@ -50,8 +44,9 @@
             </div>
           </div>
           <footer class="card-footer">
-            <nuxt-link :to="{ name: 'account-grab-by-ref', params: { ref: order.ref }}" class="card-footer-item">{{ $t('chat') }}</nuxt-link>
-            <nuxt-link :to="{ name: 'account-pay-by-ref', params: { ref: order.ref }}" class="card-footer-item">{{ $t('pay') }}</nuxt-link>
+            <a :href="order.shop.url" target="_blank" class="card-footer-item">{{ order.shop.name }}.{{ order.shop.domain }}</a>
+            <nuxt-link :to="{ name: 'account-grab-ref', params: { ref: order.ref }}" class="card-footer-item">{{ $t('chat') }}</nuxt-link>
+            <nuxt-link :to="{ name: 'account-pay-ref', params: { ref: order.ref }}" class="card-footer-item">{{ $t('pay') }}</nuxt-link>
           </footer>
         </div>
       </div>

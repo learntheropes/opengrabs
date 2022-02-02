@@ -34,7 +34,7 @@
 
 <script>
 export default {
-  name: 'WithdrawByRef',
+  name: 'WithdrawRef',
   middleware: 'auth',
   async asyncData({ app, params: { ref } }) {
     const grab = await app.$db.grabs.get(ref)

@@ -13,12 +13,6 @@
           </div>
           <div class="card-content">
             <div class="content">
-              <p>{{ delivery.shop.title }}</p>
-            </div>
-            <div class="content">
-              <a :href="delivery.shop.url" target="_blank" class="card-footer-item">{{ delivery.shop.name }}.{{ delivery.shop.domain }}</a>
-            </div>
-            <div class="content">
               <div class="columns is-mobile">
                 <div class="column">
                   <p>{{ $t('product') }}:<br>
@@ -53,7 +47,7 @@
             </div>
           </div>
           <footer class="card-footer">
-            <nuxt-link :to="{ name: 'account-grab-by-ref', params: { ref: delivery.ref }}" class="card-footer-item">Chat</nuxt-link>
+            <nuxt-link :to="{ name: 'account-grab-ref', params: { ref: delivery.ref }}" class="card-footer-item">Chat</nuxt-link>
             <a href="#" class="card-footer-item" @click="delivered(delivery.ref)">{{ $t('delivered') }}</a>
             <a href="#" class="card-footer-item" @click="dispute(delivery.ref)">{{ $t('dispute') }}</a>
           </footer>
