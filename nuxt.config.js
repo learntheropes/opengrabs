@@ -132,6 +132,7 @@ export default {
   auth: {
     redirect: {
       callback: '/cb/',
+      home: '/'
     },
     strategies: {
       auth0: {
