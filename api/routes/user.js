@@ -51,14 +51,16 @@ router.post('/db/user/create', authorizeUser, asyncHandler(async (req, res) => {
         sub: sub,
         email: email,
         email_verified: email_verified,
+        strategy: 'facebook'
       }
       break
-    case 'vkontakte':
-      email = jwt['https://opengrabs.com/email']
+    case 'oauth2':
+      email = jwt['https://opengrabs.com/name']
       props = {
         sub: sub,
         email: email,
         email_verified: (email) ? true : false,
+        strategy: 'vkontakte'
       }
       break
     case 'email':
@@ -68,6 +70,7 @@ router.post('/db/user/create', authorizeUser, asyncHandler(async (req, res) => {
         sub: sub,
         email: email,
         email_verified: email_verified,
+        strategy: 'email'
       }
   }
 
