@@ -7,9 +7,7 @@ const router = Router()
 import dotenv from 'dotenv'
 dotenv.config()
 
-const network = (process.env.BTC_CHAIN === 'test3') ? 'dev' : 'live'
-
-opennode.setCredentials(network)
+opennode.setCredentials()
 
 router.get('/btc/charge-info/:id', asyncHandler(async (req, res) => {
   const { id } = req.params

@@ -1,26 +1,25 @@
 import axios from 'axios'
 import crypto from 'crypto'
 import HttpsProxyAgent from "https-proxy-agent"
-const version = 'opennode-opengrabs'
 import dotenv from 'dotenv'
 dotenv.config()
 
-const httpsAgent = new HttpsProxyAgent({host: 'velodrome.usefixie.com', port: '80', auth: `fixie:${process.env.FIXIE_PASSWORD}`})
+const httpsAgent = new HttpsProxyAgent({host: `${process.env.FIXIE_SUBDOMAIN}.usefixie.com`, port: '80', auth: `fixie:${process.env.FIXIE_PASSWORD}`})
 
 class OpenNodeClient {
-    constructor(environment = 'live') {
+    constructor() {
+        this.version = (process.env.BTC_CHAIN === 'test3') ? 'testnet.opengrabs.com' : 'opengrabs.com'
         this.api_key_invoice = process.env.OPENNODE_API_KEY_INVOICE
         this.api_key_withdrawal = process.env.OPENNODE_API_KEY_WITHDRAWAL
-        this.baseUrl = (environment === 'live') ? 'https://api.opennode.com' : 'https://dev-api.opennode.com'
-        this.env = environment
+        this.baseUrl = (process.env.BTC_CHAIN === 'test3') ? 'https://dev-api.opennode.com' : 'https://api.opennode.com'
         this.instance = axios.create()
         this.instance.defaults.baseURL = this.baseUrl
         this.instance.defaults.timeout = 15000
-        this.instance.defaults.headers = { 'Authorization': this.api_key_invoice, 'user_agent': version }
+        this.instance.defaults.headers = { 'Authorization': this.api_key_invoice, 'user_agent': this.version }
         this.proxyInstance = axios.create({ httpsAgent })
         this.proxyInstance.defaults.baseURL = this.baseUrl
         this.proxyInstance.defaults.timeout = 15000
-        this.proxyInstance.defaults.headers = { 'Authorization': this.api_key_withdrawal, 'user_agent': version }
+        this.proxyInstance.defaults.headers = { 'Authorization': this.api_key_withdrawal, 'user_agent': this.version }
     }
 
     async createCharge({ amount, description, currency, order_id, callback_url, auto_settle, ttl = 10 }) {

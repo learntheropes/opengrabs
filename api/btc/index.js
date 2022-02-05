@@ -2,9 +2,9 @@ import OpenNodeClient from './client'
 let openNode = undefined
 
 
-const setCredentials = (environment = 'dev') => {
+const setCredentials = () => {
   if (openNode !== undefined) return
-  openNode = new OpenNodeClient(environment)
+  openNode = new OpenNodeClient()
 }
 
 const createCharge = async({ amount, description, currency, order_id, callback_url, auto_settle, ttl = 10 }) => {
