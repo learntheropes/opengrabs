@@ -179,6 +179,17 @@ export default {
   },
   created() {
     this.$nuxt.$on('updateUser', ($event) => this.updateUser($event))
+    // if (process.env.URL) {
+    //     if (user.username && user.email) {
+    //         const { data: { hash }} = await this.$axios.get(`/api/crypto/sha256/${user.email}`)
+    //         this.$Tawk.$updateChatUser({ name: user.username, email: user.email, emailHmac: hash})
+    //     }
+    //     const attribute = {
+    //         key: 'user-sub',
+    //         value: this.$store.$auth.user.sub
+    //     }
+    //     this.$Tawk.$setAttribute(attribute)
+    // }
   },
   methods: {
     updateUser(user) {
