@@ -189,4 +189,11 @@ export default {
     codeLabel: "Verification code received by email",
     verify: "Verify",
     update: "Update",
+    // component/account/verify-username
+    missingUsernameWarning: "Please choose an username before proceeding",
+    usernameLabel: "Choose an username",
+    invalidUsername: "Invalid username",
+    UsernameAlreadyInUse: "Username already in use",
+    youCantChangeUsername: "You can't change username",
+    UsernameAlphaNumericBetween5and15Caracters: "Choose an alphanumberic username between 5 and 15 caracters"
 }

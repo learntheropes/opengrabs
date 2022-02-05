@@ -45,6 +45,7 @@ export default {
             if (this.usernameError === 'Field required') return this.$t('requiredField')
             else if (this.usernameError === 'Invalid username') return this.$t('invalidUsername')
             else if (this.usernameError === 'Username already in use') return this.$t('UsernameAlreadyInUse')
+            else if (this.usernameError === "You can't change username") return this.$t('youCantChangeUsername')
             else return this.$t('UsernameAlphaNumericBetween5and15Caracters')         
         }     
     },
@@ -86,7 +87,7 @@ export default {
                 this.user = await this.$user.update(this.user)
                 if (this.user.error) {
                     this.usernameType = 'is-danger'
-                    this.usernameError = 'Username already in use'
+                    this.usernameError = this.user.error
                 } else {
                     this.show = false
                     console.log(this.user.username)

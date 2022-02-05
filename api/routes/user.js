@@ -11,6 +11,20 @@ import { Router } from 'express'
 import dotenv from 'dotenv'
 dotenv.config()
 const router = Router()
+
+const getManagmentAccessToken = async () => {
+  const { data: { access_token }} = await axios.post(`https://${process.env.AUTH0_TENANT}.us.auth0.com/oauth/token`, {
+    client_id: process.env.AUTH0_MANAGEMENT_CLIENT_ID,
+    client_secret: process.env.AUTH0_MANAGEMENT_CLIENT_SECRET,
+    audience: `https://${process.env.AUTH0_TENANT}.us.auth0.com/api/v2/`,
+    grant_type: 'client_credentials'
+  }, {
+    headers: {
+      'content-type': 'application/json'
+    }
+  })
+  return access_token
+}
   
 router.get('/db/user/get', authorizeUser, asyncHandler(async (req, res) => {
   const { jwt } = req.body
@@ -213,22 +227,36 @@ router.post('/db/user/update/username', authorizeUser, asyncHandler(async (req,r
     )
   )
 
+  const access_token = await getManagmentAccessToken()
+
+  const { data: { user_metadata: { username }}} = await axios.get(`https://${process.env.AUTH0_TENANT}.us.auth0.com/api/v2/users/${jwt.sub}`, {
+    headers: {
+      'content-type': 'application/json',
+      'Authorization': `Bearer ${access_token}`
+    }
+  })
+
+  if (!username) {
+    const { data } = await axios.patch(`https://${process.env.AUTH0_TENANT}.us.auth0.com/api/v2/users/${jwt.sub}`, {
+      user_metadata: { username: props.username }
+    }, {
+      headers: {
+        'content-type': 'application/json',
+        'Authorization': `Bearer ${access_token}`
+      }
+    })
+  } else {
+    res.status(200).json({ error: "You can't change username"})
+    return
+  }
+
   res.status(200).json(user)
 }))
 
 router.post('/user/management/lang', authorizeUser, asyncHandler(async (req,res) => {
   const { jwt, lang } = req.body
 
-  const { data: { access_token }} = await axios.post(`https://${process.env.AUTH0_TENANT}.us.auth0.com/oauth/token`, {
-    client_id: process.env.AUTH0_MANAGEMENT_CLIENT_ID,
-    client_secret: process.env.AUTH0_MANAGEMENT_CLIENT_SECRET,
-    audience: `https://${process.env.AUTH0_TENANT}.us.auth0.com/api/v2/`,
-    grant_type: 'client_credentials'
-  }, {
-    headers: {
-      'content-type': 'application/json'
-    }
-  })
+  const access_token = await getManagmentAccessToken()
 
   const { data } = await axios.patch(`https://${process.env.AUTH0_TENANT}.us.auth0.com/api/v2/users/${jwt.sub}`, {
     user_metadata: { lang }
