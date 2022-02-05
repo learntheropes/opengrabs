@@ -79,7 +79,7 @@ router.post('/grab/actions/order/:ref', authorizeUser, asyncHandler(async (req, 
         traveler,
         buyer: {
             sub: jwt.sub,
-            name: buyer.name
+            username: buyer.username
         },
         published_at: new Date().toISOString(),
         booked_at: new Date().toISOString(),
