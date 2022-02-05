@@ -5,6 +5,23 @@ import { q, client } from '../db'
 import { Router } from 'express'
 const router = Router()
 
+router.get('/db/isbuyerortraveler/:ref', authorizeUser, asyncHandler (async (req,res) => {
+  const { ref } = req.params
+  const { jwt } = req.body
+
+  const { data: grab } = await client.query(
+    q.Get(q.Ref(q.Collection('grabs'), ref))
+  )
+
+  if (jwt.sub === grab.buyer.sub || jwt.sub === grab.traveler.sub) {
+    res.status(200).send(true)
+    return
+  } else {
+    res.status(200).send(false)
+    return
+  }
+}))
+
 router.get('/db/grabs/get/:ref', authorizeUser, asyncHandler(async (req, res) => {
   const { ref } = req.params
   const { jwt } = req.body

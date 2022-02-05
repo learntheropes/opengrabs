@@ -1,6 +1,6 @@
 <template>
   <section class="section container">
-    <div class="columns">
+    <div v-if="isBuyerOrTraveler" class="columns">
       <div class="column is-half">
         <h1 class="title">{{ $t('grab') }} {{ ref }}</h1>
         <div class="box">
@@ -82,9 +82,12 @@
 export default {
   name: 'GrabRef',
   async asyncData({ app, params: { ref }}) {
-    const grab = await app.$db.grabs.get(ref)
-    const messages = await app.$db.messages.filter(ref)
-    return { ref, grab, messages }
+    const [isBuyerOrTraveler, grab, messages] = await Promise.all([
+      app.$db.isBuyerOrTraveler(ref),
+      app.$db.grabs.get(ref),
+      app.$db.messages.filter(ref)
+    ])
+    return { ref, isBuyerOrTraveler, grab, messages }
   },
   data: () => ({
     message: null,

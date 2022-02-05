@@ -1,5 +1,9 @@
 export default ({ $axios }, inject) => {
   const db = {
+    isBuyerOrTraveler: async (ref) => {
+      const { data } = await $axios.get(`/api/db/isbuyerortraveler/${ref}`)
+      return data
+    },
     account: {
       orders: {
         filter: async (status) => {
