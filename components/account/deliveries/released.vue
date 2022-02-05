@@ -35,7 +35,7 @@
               </div>
             </div>
             <div class="content">
-              {{ $t('releasedBy') }} {{ delivery.buyer.name }}<br>
+              {{ $t('releasedBy') }} <nuxt-link :to="localePath({ name: 'user-username', params: { ref: delivery.buyer.username }})">{{ delivery.buyer.username }}<br>
               {{ $moment(delivery.released_at).fromNow() }}
             </div>
           </div>

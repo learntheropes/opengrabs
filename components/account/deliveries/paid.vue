@@ -39,7 +39,7 @@
               {{ $moment(delivery.delivery.date).fromNow() }} [{{ $utils.momentDate(delivery.delivery.date) }}]
             </div>
             <div class="content">
-              {{ $t('paidBy') }} {{ delivery.buyer.name }}<br>
+              {{ $t('paidBy') }} <nuxt-link :to="localePath({ name: 'user-username', params: { ref: delivery.buyer.username }})">{{ delivery.buyer.username }}<br>
               {{ $moment(delivery.paid_at).fromNow() }}
             </div>
           </div>

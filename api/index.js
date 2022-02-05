@@ -15,6 +15,7 @@ import travelActions from './routes/travel-actions'
 import admin from './routes/admin'
 import crypto from './routes/crypto'
 import user from './routes/user'
+import reviews from './routes/reviews'
 
 app.use(amazon)
 app.use(db)
@@ -25,6 +26,7 @@ app.use(travelActions)
 app.use(admin)
 app.use(crypto)
 app.use(user)
+app.use(reviews)
 
 module.exports = {
   path: '/api',

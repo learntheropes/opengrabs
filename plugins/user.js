@@ -17,8 +17,8 @@ export default ({ $axios }, inject) => {
         return data
       },
       verify: async (code) => {
-          const { data } = await $axios.post(`/api/db/user/verify/${code}`)
-          return data
+        const { data } = await $axios.post(`/api/db/user/verify/${code}`)
+        return data
       }
     }
     inject('user', user)
