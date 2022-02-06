@@ -23,6 +23,13 @@ export const emailBooked = (locale, grabId) => {
     }
 };
 
+export const emailPaid = (locale, grabId) => {
+    return {
+        subject: 'Your grab has been paid',
+        content: `Your grab has been paid. You can view more here: ${baseUrl}/${locale}/account/grab/${grabId}`
+    }
+};
+
 export const emailDispute = (locale, grabId) => {
     return {
         subject: 'Your grab has been disputed',

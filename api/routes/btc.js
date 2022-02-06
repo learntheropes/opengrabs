@@ -2,6 +2,11 @@ import asyncHandler from 'express-async-handler'
 import { authorizeUser, authorizeAdmin } from '../auth'
 import { q, client } from '../db'
 import opennode from '../btc'
+import { transporter } from '../email'
+import * as en from '../email/en'
+import * as es from '../email/es'
+import * as pt from '../email/pt'
+import * as ru from '../email/ru'
 import { Router } from 'express'
 const router = Router()
 import dotenv from 'dotenv'
@@ -79,15 +84,49 @@ router.post('/btc/charge/webhook', asyncHandler(async (req, res) => {
 
       await client.query(
         q.Create(
-            q.Collection('messages'),
-            { data: {
-                posted_at: new Date().toISOString(),
-                content: 'paid',
-                grab_id: req.body.order_id,
-                user_sub: 'admin|0',
-            }}
+          q.Collection('messages'),
+          {
+            data: {
+              posted_at: new Date().toISOString(),
+              content: 'paid',
+              grab_id: req.body.order_id,
+              user_sub: 'admin|0',
+            }
+          }
         )
-    )
+      )
+    }
+
+    if (req.body.status === 'paid') {
+      const { data: grab } = await client.query(
+        q.Get(q.Ref(q.Collection('grabs'), ref))
+      )
+  
+      const { data: traveler } = await client.query(
+        q.Get(
+          q.Match(q.Index('user_by_sub'), grab.traveler.sub)
+        )
+      )
+  
+      let emailContent
+      switch (traveler.locale) {
+        case 'en':
+          emailContent = en.emailPaid(traveler.locale,req.body.order_id)
+        case 'es':
+          emailContent = es.emailPaid(traveler.locale,req.body.order_id)
+        case 'pt':
+          emailContent = pt.emailPaid(traveler.locale,req.body.order_id)
+        case 'ru':travelerUser
+          emailContent = ru.emailPaid(traveler.locale,req.body.order_id)
+        default:
+          emailContent = en.emailPaid(traveler.locale,req.body.order_id)
+      }
+  
+      await transporter.sendMail({
+        to: traveler.email,
+        subject: emailContent.subject,
+        text: emailContent.content,
+      })
     }
 
     res.status(200).json({})
