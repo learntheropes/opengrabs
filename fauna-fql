@@ -5,6 +5,7 @@ CreateCollection({ name: "messages" })
 CreateCollection({ name: "users" })
 CreateCollection({ name: "withdrawal_webhooks" })
 CreateCollection({ name: "travels" })
+CreateCollection({ name: "reviews" })
 
 CreateIndex({
   name: "travels_search_by_status_active_and_not_expired_range_published_at",
