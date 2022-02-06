@@ -4,7 +4,7 @@ import { q, client } from '../db'
 import { Router } from 'express'
 const router = Router()
 
-router.post('/travels/create', authorizeUser, asyncHandler(async (req, res) => {
+router.post('/travels/actions/create', authorizeUser, asyncHandler(async (req, res) => {
     const { jwt, props } = req.body
   
     const { data: user } = await client.query(
@@ -15,7 +15,7 @@ router.post('/travels/create', authorizeUser, asyncHandler(async (req, res) => {
   
     props.traveler = {
       sub: jwt.sub,
-      usenrame: user.username
+      username: user.username
     }
     
     const response = await client.query(
@@ -26,5 +26,25 @@ router.post('/travels/create', authorizeUser, asyncHandler(async (req, res) => {
     )
     res.status(201).json(response)
   }))
+
+  router.post('/travels/actions/remove/:ref', authorizeUser, asyncHandler(async (req, res) => {
+    const { ref } = req.params
+    const { jwt } = req.body
+
+    const { data: travel } = await client.query(
+      q.Get(q.Ref(q.Collection('travels'), ref))
+    )
+
+    if (travel.traveler.sub !== jwt.sub) {
+      res.status(401).send('unauthorized')
+      return
+    }
+
+    await client.query(
+      q.Delete(q.Ref(q.Collection('grabs'), ref))
+    )
+
+    res.status(204)
+}))
 
   module.exports = router
