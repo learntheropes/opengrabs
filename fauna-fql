@@ -8,6 +8,45 @@ CreateCollection({ name: "travels" })
 CreateCollection({ name: "reviews" })
 
 CreateIndex({
+  name: "travels_search_by_traveler_sub_and_expired",
+  source: {
+    collection: Collection("travels"),
+    fields: {
+      date_time: Query(
+        Lambda(
+          "doc",
+          Time(Select(["data", "date"], Var('doc')))
+        )
+      )
+    }
+  },
+  terms: [
+    {
+      field: ["data", "traveler", "sub"]
+    }
+  ],
+  values: [
+    {
+      binding: "date_time"
+    },
+    {
+      field: ["ref"]
+    }
+  ]
+})
+
+Map(
+  Paginate(
+    Range(
+      Match(Index("travels_search_by_traveler_sub_and_expired"), jwt.sub),
+      [], [Now()]
+    ),
+    { size: 100000 }
+  ),
+  Lambda(["date_time", "ref"], Get(Var("ref")))
+)
+
+CreateIndex({
   name: "travels_search_by_status_active_and_not_expired_range_published_at",
   source: {
     collection: Collection("travels"),
@@ -87,7 +126,6 @@ CreateIndex({
 })
 
 Paginate(Range(Match(Index("grabs_serch_by_adv_status_range_published_at"), "product", "published"), [Now()], []))
-
 
 
 CreateIndex({

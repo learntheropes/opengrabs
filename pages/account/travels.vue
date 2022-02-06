@@ -37,7 +37,9 @@ export default {
     async fetch({ app, store }) {
         if (!store.state.account.travels.initiated) {
             const [expired, actives, booked] = await Promise.all([
-
+                app.$db.account.travels.filter('expired'),
+                app.$db.account.travels.filter('actives'),
+                app.$db.account.travels.filter('booked'),
             ])
             store.commit('account/travels/setExpired', expired)
             store.commit('account/travels/setActives', actives)

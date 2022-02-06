@@ -25,6 +25,12 @@ export default ({ $axios }, inject) => {
           return data
         }
       },
+      travels: {
+        filter: async (status) => {
+          const { data } = await $axios.get(`/api/db/account/travels/${status}`)
+          return data          
+        }
+      }
     },
     grabs: {
       get: async (ref) => {
