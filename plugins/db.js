@@ -27,7 +27,7 @@ export default ({ $axios }, inject) => {
       },
       travels: {
         filter: async (status) => {
-          const { data } = await $axios.get(`/api/db/account/travels/${status}`)
+          const { data } = await $axios.get(`/api/db/account/travels/filter/${status}`)
           return data          
         }
       }

@@ -1,6 +1,6 @@
 <template>
     <section class="section container">
-        <div v-if="!expired.length && ! actives.length && !booked.length" class="box has-text-centered">
+        <div v-if="!expired.length && ! actives.length" class="box has-text-centered">
             <p>{{ $t('youDontHaveAnyTravel') }}.</p>
             <p>{{ $t('youCanPublish') }} <nuxt-link :to="localePath({ name: 'account-new', query: { adv: 'travel'}})">{{ $t('here') }}</nuxt-link></p>
         </div>
@@ -18,13 +18,6 @@
                 </template>
                 <account-travels-actives :travels="actives" />
             </b-tab-item>
-
-            <b-tab-item v-if="booked.length">
-                <template #header>
-                    <span>{{ $t('booked') }}<b-tag rounded>{{ booked.length }}</b-tag></span>
-                </template>
-                <account-travels-booked :travels="booked" />
-            </b-tab-item>
         </b-tabs>
     </section>
 </template>
@@ -36,21 +29,19 @@ export default {
     middleware: 'auth',
     async fetch({ app, store }) {
         if (!store.state.account.travels.initiated) {
-            const [expired, actives, booked] = await Promise.all([
+            const [expired, actives] = await Promise.all([
                 app.$db.account.travels.filter('expired'),
-                app.$db.account.travels.filter('actives'),
-                app.$db.account.travels.filter('booked'),
+                app.$db.account.travels.filter('actives')
             ])
             store.commit('account/travels/setExpired', expired)
             store.commit('account/travels/setActives', actives)
-            store.commit('account/travels/setBooked', booked)
+            store.commit('account/travels/setInitiated', true)
         } 
     },
     computed: {
         ...mapState({
             expired: (state) => state.account.travels.expired,
-            actives: (state) => state.account.travels.actives,
-            booked: (state) => state.account.travels.booked,
+            actives: (state) => state.account.travels.actives
         }),
         activeTab: {
             get() {

@@ -8,7 +8,7 @@ CreateCollection({ name: "travels" })
 CreateCollection({ name: "reviews" })
 
 CreateIndex({
-  name: "travels_search_by_traveler_sub_and_expired",
+  name: "travels_search_by_traveler_sub_and_date",
   source: {
     collection: Collection("travels"),
     fields: {
@@ -38,7 +38,7 @@ CreateIndex({
 Map(
   Paginate(
     Range(
-      Match(Index("travels_search_by_traveler_sub_and_expired"), jwt.sub),
+      Match(Index("travels_search_by_traveler_sub_and_date"), jwt.sub),
       [], [Now()]
     ),
     { size: 100000 }

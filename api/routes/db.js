@@ -217,23 +217,33 @@ router.get('/db/account/travels/filter/:status', authorizeUser, asyncHandler(asy
   const { jwt } = req.body
   const { status } = req.params
 
+  let data
   if (status === 'expired') {
-    let { data } = await client.query(
+    ({ data } = await client.query(
       q.Map(
         q.Paginate(
           q.Range(
-            q.Match(q.Index("travels_search_by_traveler_sub_and_expired"), jwt.sub),
+            q.Match(q.Index("travels_search_by_traveler_sub_and_date"), jwt.sub),
             [], [q.Now()]
           ),
           { size: 100000 }
         ),
         q.Lambda(["date_time", "ref"], q.Get(q.Var("ref")))
       )      
-    )
+    ))
   } else if (status === 'actives') {
-
-  } else if (status === 'booked') {
-
+    ({ data } = await client.query(
+      q.Map(
+        q.Paginate(
+          q.Range(
+            q.Match(q.Index("travels_search_by_traveler_sub_and_date"), jwt.sub),
+            [q.Now()], []
+          ),
+          { size: 100000 }
+        ),
+        q.Lambda(["date_time", "ref"], q.Get(q.Var("ref")))
+      )      
+    ))
   }
 
   const travels = data.map(({ data, ref: { value: { id }}}) => {
