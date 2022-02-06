@@ -39,7 +39,7 @@
               {{ $moment(delivery.delivery.date).fromNow() }} [{{ $utils.momentDate(delivery.delivery.date) }}]
             </div>
             <div class="content">
-              {{ $t('publishedBy') }} <nuxt-link :to="localePath({ name: 'user-username', params: { ref: delivery.buyer.username }})">{{ delivery.buyer.username }}<br>
+              {{ $t('publishedBy') }} <nuxt-link :to="localePath({ name: 'user-username', params: { ref: delivery.buyer.username }})">{{ delivery.buyer.username }}</nuxt-link><br>
               {{ $moment(delivery.published_at).fromNow() }}
             </div>
             <div class="content">
