@@ -213,7 +213,7 @@ export default {
         username: this.partnerUsername,
         reviewer_username: this.getUsername(),
         rate: this.rate,
-        review: this.review
+        content: this.review
       }
       await this.$reviews.create({ props })
     }
