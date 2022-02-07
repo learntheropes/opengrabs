@@ -67,6 +67,8 @@ export default {
     byOriginCountry: "By country of origin",
     byDestinationCountry: "By country of destination",
     byDestinationCity: "By city of destination",
+    // pages/user/username
+    reviewBy: "Review by",
     // pages/exchange-rates
     currency: "DIVISA",
     buy: "COMPRA",
