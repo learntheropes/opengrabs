@@ -3292,7 +3292,7 @@ export const allCountries = [
 "region": "Europe"
 },
 {
-"name": "Russian Federation",
+"name": "Russia",
 "topLevelDomain": [
 ".ru"
 ],
