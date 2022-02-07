@@ -202,24 +202,48 @@ export default {
       this.disputeButtonClass = 'button is-primary is-loading',
       await this.$grab.dispute({ ref: this.ref })
       this.disputeButtonClass = 'button is-primary',
+      this.$buefy.toast.open({
+        duration: 3000,
+        message: this.$t('toastGrabDisputed'),
+        position: 'is-bottom',
+        type: 'is-primary'
+      })
       this.grab = await this.$db.grabs.get(this.ref)
     },
     async bought() {
       this.boughtButtonClass = 'button is-primary is-loading'
       await this.$grab.bought({ ref: this.ref })
       this.boughtButtonClass = 'button is-primary'
+      this.$buefy.toast.open({
+        duration: 3000,
+        message: this.$t('toastGrabBought'),
+        position: 'is-bottom',
+        type: 'is-primary'
+      })
       this.grab = await this.$db.grabs.get(this.ref)
     },
     async delivered() {
       this.deliveredButtonClass = 'button is-primary is-loading'
       await this.$grab.delivered({ ref: this.ref })
       this.deliveredButtonClass = 'button is-primary'
+      this.$buefy.toast.open({
+        duration: 3000,
+        message: this.$t('toastGrabDelivered'),
+        position: 'is-bottom',
+        type: 'is-primary'
+      })
       this.grab = await this.$db.grabs.get(this.ref)
     },
     async release() {
       this.releaseButtonClass = 'button is-primary is-loading'
       await this.$grab.release({ ref: this.ref })
       this.releaseButtonClass = 'button is-primary'
+      this.$buefy.toast.open({
+        duration: 3000,
+        message: this.$t('toastGrabReleased'),
+        position: 'is-bottom',
+        type: 'is-primary'
+      })
       this.grab = await this.$db.grabs.get(this.ref)
     },
     async postReview() {
@@ -234,6 +258,12 @@ export default {
       }
       await this.$reviews.create({ props })
       this.reviewButtonClass = 'button is-primary'
+      this.$buefy.toast.open({
+        duration: 3000,
+        message: this.$t('toastReviewPosted'),
+        position: 'is-bottom',
+        type: 'is-primary'
+      })
     }
   },
 }

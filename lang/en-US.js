@@ -112,6 +112,11 @@ export default {
     rating: "Rating",
     review: "Review",
     postReview: "Post rating and review",
+    toastGrabDisputed: "Grab disputed",
+    toastGrabBought: "Grab marked as bought",
+    toastGrabDelivered: "Grab marked as delivered",
+    toastGrabReleased: "Grab released",
+    toastReviewPosted: "Review posted",
     // pages/account/pay/_ref && pages/account/underpay/_ref
     copyInvoice: "Copy Invoice",
     copyAddress: "Copy Address",
