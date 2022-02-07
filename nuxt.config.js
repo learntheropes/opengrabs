@@ -99,14 +99,14 @@ export default {
       {
         code: 'en',
         iso: 'en-US',
-        file: 'en-US.js',
-        name: 'EN'
+        file: 'en.js',
+        name: 'English'
       },
       {
         code: 'es',
         iso: 'es-ES',
-        file: 'es-ES.js',
-        name: 'ES'
+        file: 'es.js',
+        name: 'Español'
       }
     ],
     defaultLocale: 'en',

@@ -2,6 +2,7 @@
 ### Node template
 .env
 /.vscode
+/.VSCodeCounter
 
 # Logs
 /logs
