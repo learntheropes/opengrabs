@@ -33,6 +33,9 @@
       </div>
       <div v-if="scrapedProduct" class="column is-half">
         <div class="card">
+          <header class="card-header">
+            <p class="card-header-title">{{ slug.replace(/-/g,' ')}}</p>
+          </header> 
           <div class="card-image">
             <figure style="background-color: grey" class="image">
               <img :src="image" :alt="'Image of ' + title" />
