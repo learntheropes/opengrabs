@@ -63,12 +63,6 @@ export default ({ $axios }, inject) => {
         const { data } = await $axios.post(`/api/db/messages/create`, { props })
         return data
       }
-    },
-    reviews: {
-      create: async ({ props }) => {
-        const { data } = await $axios.post(`/api/db/reviews/create`, { props })
-        return data        
-      }
     }
   }
   inject('db', db)

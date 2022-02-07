@@ -215,7 +215,7 @@ export default {
         rate: this.rate,
         review: this.review
       }
-      await this.$db.reviews.create({ props })
+      await this.$reviews.create({ props })
     }
   },
 }

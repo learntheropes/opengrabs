@@ -31,11 +31,11 @@ export default {
   css: [],
 
   // https://nuxtjs.org/docs/configuration-glossary/configuration-vue-config/
-  vue: {
-    config: {
-      devtools: true
-    }
-  },
+  // vue: {
+  //   config: {
+  //     devtools: true
+  //   }
+  // },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
