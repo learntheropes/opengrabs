@@ -66,7 +66,7 @@
             </div>
             <div v-else class="notification has-text-right">
               <p>
-                <span class="has-text-weight-semibold has-text-grey-light">{{ msg.name }} </span>,<br>
+                <span class="has-text-weight-semibold has-text-grey-light">{{ msg.user_username }} </span>,<br>
                 <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
               </p>
               <p>{{ msg.content }}</p>
@@ -130,10 +130,11 @@ export default {
       return this.grab.status === 'delivered' && this.me === this.grab.buyer.sub
     },
     isReleasedAndTraveler() {
-      return (
-        this.grab.status === 'released' && this.me === this.grab.traveler.sub
-      )
+      return this.grab.status === 'released' && this.me === this.grab.traveler.sub
     },
+    isRatingPossible() {
+      return this.grab.status === 'released' || this.grab.status === 'refunded'
+    }
   },
   created() {
     setInterval(async () => {
@@ -142,12 +143,9 @@ export default {
     }, 1000 * 60 * 1)
   },
   methods: {
-    getName() {
-      if (this.$store.state.auth.user.sub.split('|')[0] === 'vkontakte') {
-        return `${this.$store.state.auth.user.given_name} ${this.$store.state.auth.user.family_name}`.replace(/-/g, ' ')
-      } else {
-        return this.$store.state.auth.user.name
-      }
+    getUsername() {
+      if (this.$store.state.auth.user.sub === this.grab.buyer.sub) return this.grab.buyer.username
+      else if (this.$store.state.auth.user.sub === this.grab.traveler.sub) return this.grab.traveler.username
     },
     validatePost() {
       if (!this.message) {
@@ -167,7 +165,7 @@ export default {
           content: this.message,
           grab_id: this.ref,
           user_sub: this.$store.state.auth.user.sub,
-          name: this.getName(),
+          user_username: this.getUsername(),
         }
         await this.$db.messages.create({ props })
         const messages = await this.$db.messages.filter(this.ref)

@@ -44,7 +44,8 @@ module.exports = {
       "family_name",
       "email_verified",
       "jwt_decode",
-      "logins_count"
+      "logins_count",
+      "user_username"
     ]}],
   },
 }
