@@ -125,7 +125,7 @@ export default {
             this.paymentConfirmed = true
             clearInterval(refreshIntervalId)
           }  else if (data.status === 'underpaid') {
-            this.$router.push(`/underpaid/${this.ref}`)
+            this.$router.push(`${this.$i18n.locale}/underpaid/${this.ref}`)
             clearInterval(refreshIntervalId)
           } else if (data.status === 'expired') {
             this.paymentExpired = true
