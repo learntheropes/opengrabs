@@ -6,7 +6,7 @@
                     <header class="card-header">
                         <p class="card-header-title">{{ travel.origin_country }} - {{  travel.destination_city }}</p>
                     </header>
-                    <div class="card-image">
+                    <div class="card-image card-image-equal-height">
                         <figure style="background-color: grey" class="image">
                             <img :src="travel.destination_photo" :alt="'Image of ' + travel.destination_city" />
                         </figure>

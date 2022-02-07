@@ -40,4 +40,11 @@ a.disabled {
   cursor: default;
   opacity: 0.5;
 }
+.card-image-equal-height {
+    height: 200px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+}
 </style>

@@ -56,13 +56,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-.card-image-equal-height {
-    height: 200px;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    overflow: hidden;
-}
-</style>
