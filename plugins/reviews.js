@@ -5,7 +5,7 @@ export default ({ $axios }, inject) => {
         return data        
       },
       filter: async (username) => {
-        const { data } = await $axios.get(`/api/db/reviews/${username}`)
+        const { data } = await $axios.get(`/api/db/reviews/get/${username}`)
         return data
       }
     }

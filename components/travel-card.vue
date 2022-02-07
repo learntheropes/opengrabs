@@ -12,7 +12,7 @@
                 {{ $t('travelBudget') }} {{ travel.budget.toFixed(2) }} {{ travel.currency }}
             </div>
             <div class="content">
-                {{ $t('publishedBy') }} <nuxt-link :to="localePath({ name: 'user-username', params: { ref: travel.traveler.username }})">{{ travel.traveler.username }}</nuxt-link><br>
+                {{ $t('publishedBy') }} <nuxt-link :to="localePath({ name: 'user', params: { username: travel.traveler.username }})">{{ travel.traveler.username }}</nuxt-link><br>
                 {{ $moment(travel.published_at).fromNow() }} 
             </div>
         </div>

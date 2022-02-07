@@ -1,5 +1,5 @@
 <template>
-    <section class="section">
+    <section class="section container">
         <h1 class="title">{{ username }}</h1>
         <p class="subtitle is-3"><b-rate v-model="average" size="is-large" disabled></b-rate></p>
         <div v-for="review in reviews" :key="review.grab_id" class="block">
@@ -13,8 +13,9 @@
 <script>
 export default {
     auth: false,
-    name: 'UserUsername',
+    name: 'User',
     async asyncData({ app, params: { username }}) {
+        console.log(username)
         const reviews = await app.$reviews.filter(username)
         const sum = reviews.reduce(function (previousValue, currentValue) {
             return previousValue + currentValue.rate

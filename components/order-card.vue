@@ -29,12 +29,12 @@
                 </div>
             </div>
             <div class="content">
-              {{ $t('deliveryTo') }} {{ order.destination.city }} [{{ order.destination.country }}]<br>
-               {{ $moment(order.destination.max_delivery_date).fromNow() }} [{{ $utils.momentDate(order.destination.max_delivery_date) }}]
+                {{ $t('deliveryTo') }} {{ order.destination.city }} [{{ order.destination.country }}]<br>
+                {{ $moment(order.destination.max_delivery_date).fromNow() }} [{{ $utils.momentDate(order.destination.max_delivery_date) }}]
             </div>
             <div class="content">
-              {{ $t('publishedBy') }} <nuxt-link :to="localePath({ name: 'user-username', params: { ref: order.buyer.username }})">{{ order.buyer.username }}</nuxt-link><br>
-              {{ $moment(order.published_at).fromNow() }}
+                {{ $t('publishedBy') }} <nuxt-link :to="localePath({ name: 'user', params: { username: order.buyer.username }})">{{ order.buyer.username }}</nuxt-link><br>
+                {{ $moment(order.published_at).fromNow() }}
             </div>
         </div>
         <footer class="card-footer">
