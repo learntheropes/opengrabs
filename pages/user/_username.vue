@@ -2,7 +2,8 @@
     <section class="section container">
         <h1 class="title">{{ username }}</h1>
         <p class="subtitle is-3"><b-rate v-model="average" size="is-large" disabled></b-rate></p>
-        <div v-for="review in reviews" :key="review.grab_id" class="block">
+        <div v-if="reviews.length === 0">{{ $t('noReviewsYet')}}</div>
+        <div v-for="review in reviews" v-else :key="review.grab_id" class="block">
             <p class="title is-3">{{ $t('reviewBy') }} {{review.reviewer_username}} {{ $t('publishedAt') }} {{ $moment(review.posted_at).fromNow() }}</p>
             <p class="subtitle is-5"><b-rate v-model="review.rate" disabled></b-rate></p>
             <p>{{ review.content }}</p>

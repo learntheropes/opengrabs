@@ -69,6 +69,7 @@ export default {
     byDestinationCountry: "By country of destination",
     byDestinationCity: "By city of destination",
     // pages/user/username
+    noReviewsYet: "No reviews yet",
     reviewBy: "Review by",
     // pages/exchange-rates
     currency: "DIVISA",
