@@ -46,7 +46,7 @@
           <footer class="card-footer">
             <a :href="order.shop.url" target="_blank" class="card-footer-item">{{ order.shop.name }}.{{ order.shop.domain }}</a>
             <nuxt-link :to="{ name: 'account-order-by-ref', params: { ref: order.ref }}" class="card-footer-item">{{ $t('chat') }}</nuxt-link>
-            <a href="#" class="card-footer-item" @click="dispute(order.ref)">{{ $t('dispute') }}</a>
+            <a href="#" :class="disputeButtonClass" @click="dispute(order.ref)">{{ $t('dispute') }}</a>
           </footer>
         </div>
       </div>
@@ -64,8 +64,12 @@ export default {
       default: () => [],
     },
   },
+  data: () => ({
+    disputeButtonClass: 'card-footer-item'
+  }),
   methods: {
     async dispute(ref) {
+      this.disputeButtonClass = 'card-footer-item disabled'
       await this.$grab.dispute({ ref })
       const [paid, disputed] = await Promise.all([
         this.$db.account.orders.filter('paid'),
@@ -73,6 +77,7 @@ export default {
       ])
       this.$store.commit('account/orders/setPaid', paid)
       this.$store.commit('account/orders/setDisputed', disputed)
+      this.disputeButtonClass = 'card-footer-item'
     },
   },
 }

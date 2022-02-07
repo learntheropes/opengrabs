@@ -48,8 +48,8 @@
           </div>
           <footer class="card-footer">
             <nuxt-link :to="{ name: 'account-grab-ref', params: { ref: delivery.ref }}" class="card-footer-item">Chat</nuxt-link>
-            <a href="#" class="card-footer-item" @click="delivered(delivery.ref)">{{ $t('delivered') }}</a>
-            <a href="#" class="card-footer-item" @click="dispute(delivery.ref)">{{ $t('dispute') }}</a>
+            <a href="#" :class="deliveredButtonClass" @click="delivered(delivery.ref)">{{ $t('delivered') }}</a>
+            <a href="#" :class="disputeButtonClass" @click="dispute(delivery.ref)">{{ $t('dispute') }}</a>
           </footer>
         </div>
       </div>
@@ -67,8 +67,13 @@ export default {
       default: () => [],
     },
   },
+  data: () => ({
+    deliveredButtonClass: 'card-footer-item',
+    disputeButtonClass: 'card-footer-item'
+  }),
   methods: {
     async delivered(ref) {
+      this.deliveredButtonClass = 'card-footer-item disabled'
       await this.$grab.delivered({ ref })
       const [bought, delivered] = await Promise.all([
         this.$db.account.deliveries.filter('bought'),
@@ -76,8 +81,10 @@ export default {
       ])
       this.$store.commit('account/deliveries/setBought', bought)
       this.$store.commit('account/deliveries/setDelivered', delivered)
+      this.deliveredButtonClass = 'card-footer-item'
     },
     async dispute(ref) {
+      this.disputeButtonClass = 'card-footer-item disabled'
       await this.$grab.dispute({ ref })
       const [bought, disputed] = await Promise.all([
         this.$db.account.deliveries.filter('bought'),
@@ -85,6 +92,7 @@ export default {
       ])
       this.$store.commit('account/deliveries/setBought', bought)
       this.$store.commit('account/deliveries/setDisputed', disputed)
+      this.disputeButtonClass = 'card-footer-item'
     },
   },
 }

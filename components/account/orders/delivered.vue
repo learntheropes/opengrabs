@@ -45,7 +45,7 @@
           </div>
           <footer class="card-footer">
             <nuxt-link :to="{ name: 'account-grab-ref', params: { ref: order.ref }}" class="card-footer-item">{{ $t('chat') }}</nuxt-link>
-            <a href="#" class="card-footer-item" @click="release(order.ref)">{{ $t('release') }}</a>
+            <a href="#" :class="releaseButtonClass" @click="release(order.ref)">{{ $t('release') }}</a>
           </footer>
         </div>
       </div>
@@ -63,8 +63,12 @@ export default {
       default: () => [],
     },
   },
+  data: () => ({
+    releaseButtonClass: 'card-footer-item'
+  }),
   methods: {
     async release(ref) {
+      this.releaseButtonClass = 'card-footer-item disabled'
       await this.$grab.release({ ref })
       const [delivered, released] = await Promise.all([
         this.$db.account.orders.filter('delivered'),
@@ -72,6 +76,7 @@ export default {
       ])
       this.$store.commit('account/orders/setDelivered', delivered)
       this.$store.commit('account/orders/setReleased', released)
+      this.releaseButtonClass = 'card-footer-item'
     },
   },
 }

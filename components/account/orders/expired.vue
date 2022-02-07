@@ -43,7 +43,7 @@
           </div>
           <footer class="card-footer">
             <a :href="order.shop.url" target="_blank" class="card-footer-item">{{ order.shop.name }}.{{ order.shop.domain }}</a>
-            <a href="#" class="card-footer-item" @click="remove(order.ref)">{{ $t('remove') }}</a>
+            <a href="#" :class="removeButtonClass" @click="remove(order.ref)">{{ $t('remove') }}</a>
           </footer>
         </div>
       </div>
@@ -63,12 +63,17 @@ export default {
       default: () => [],
     },
   },
+  data: () => ({
+    removeButtonClass: 'card-footer-item'
+  }),
   methods: {
     async remove(ref) {
+      this.removeButtonClass = 'card-footer-item disabled'
       await this.$grab.remove({ ref })
       const actives = await this.$db.account.orders.filter('published')
       const expired = orderBy(filter(actives,(o) => new Date(o.destination.max_delivery_date) < new Date()),['published_at'])
       this.$store.commit('account/orders/setExpired', expired)
+      this.removeButtonClass = 'card-footer-item'
     },
   },
 }

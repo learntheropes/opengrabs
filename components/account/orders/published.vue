@@ -44,7 +44,7 @@
           </div>
           <footer class="card-footer">
             <a :href="order.shop.url" target="_blank" class="card-footer-item">{{ order.shop.name }}.{{ order.shop.domain }}</a>
-            <a href="#" class="card-footer-item" @click="remove(order.ref)">{{ $t('remove') }}</a>
+            <a href="#" :class="removeButtonClass" @click="remove(order.ref)">{{ $t('remove') }}</a>
           </footer>
         </div>
       </div>
@@ -64,8 +64,12 @@ export default {
       default: () => [],
     },
   },
+  data: () => ({
+    removeButtonClass: 'card-footer-item'
+  }),
   methods: {
     async remove(ref) {
+      this.removeButtonClass = 'card-footer-item disabled'
       await this.$grab.remove({ ref })
       const [actives, data] = await Promise.all([
         this.$db.account.orders.filter('published'),
@@ -75,7 +79,8 @@ export default {
       this.$store.commit('account/orders/setPublished', published)
       const orders = orderBy(data, ['published_at'], ['desc'])
       this.$store.commit('orders/setOrders', orders)
-      this.$store.commit('orders/setInitiated', true)      
+      this.$store.commit('orders/setInitiated', true)
+      this.removeButtonClass = 'card-footer-item'    
     },
   },
 }

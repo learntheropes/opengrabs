@@ -35,4 +35,9 @@ export default {
 .card-equal-height .card-footer {
   margin-top: auto;
 }
+a.disabled {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.5;
+}
 </style>

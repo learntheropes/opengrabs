@@ -49,8 +49,8 @@
           </footer>
           <footer class="card-footer">
             <a :href="order.shop.url" target="_blank" class="card-footer-item">{{ order.shop.name }}.{{ order.shop.domain }}</a>
-            <a href="#" class="card-footer-item" @click="bought(delivery.ref)">{{ $t('bought') }}</a>
-            <a href="#" class="card-footer-item" @click="dispute(delivery.ref)">{{ $t('dispute') }}</a>
+            <a href="#" :class="boughtButtonClass" @click="bought(delivery.ref)">{{ $t('bought') }}</a>
+            <a href="#" :class="disputeButtonClass" @click="dispute(delivery.ref)">{{ $t('dispute') }}</a>
           </footer>
         </div>
       </div>
@@ -68,8 +68,13 @@ export default {
       default: () => [],
     },
   },
+  data: () => ({
+    boughtButtonClass: 'card-footer-item',
+    disputeButtonClass: 'card-footer-item'
+  }),
   methods: {
     async bought(ref) {
+      this.boughtButtonClass = 'card-footer-item disabled'
       await this.$grab.bought({ ref })
       const [paid, bought] = await Promise.all([
         this.$db.account.deliveries.filter('paid'),
@@ -77,8 +82,10 @@ export default {
       ])
       this.$store.commit('account/deliveries/setPaid', paid)
       this.$store.commit('account/deliveries/setBought', bought)
+      this.boughtButtonClass = 'card-footer-item'
     },
     async dispute(ref) {
+      this.disputeButtonClass = 'card-footer-item disabled'
       await this.$grab.dispute({ ref })
       const [paid, disputed] = await Promise.all([
         this.$db.account.deliveries.filter('paid'),
@@ -86,6 +93,7 @@ export default {
       ])
       this.$store.commit('account/deliveries/setPaid', paid)
       this.$store.commit('account/deliveries/setDisputed', disputed)
+      this.disputeButtonClass = 'card-footer-item'
     },
   },
 }
