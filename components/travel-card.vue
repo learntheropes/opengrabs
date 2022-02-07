@@ -1,5 +1,5 @@
 <template>
-    <div class="card card-equal-height has-text-centered">
+    <div class="card card-equal-height">
         <header class="card-header">
             <p class="card-header-title">{{ travel.origin_country }} - {{  travel.destination_city }}</p>
         </header> 
