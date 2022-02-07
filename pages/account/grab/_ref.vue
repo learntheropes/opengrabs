@@ -199,9 +199,9 @@ export default {
       }
     },
     async dispute() {
-      this.disputeButtonClass = 'button is-primary is-loading',
+      this.disputeButtonClass = 'button is-primary is-loading'
       await this.$grab.dispute({ ref: this.ref })
-      this.disputeButtonClass = 'button is-primary',
+      this.disputeButtonClass = 'button is-primary'
       this.$buefy.toast.open({
         duration: 3000,
         message: this.$t('toastGrabDisputed'),
