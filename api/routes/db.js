@@ -161,12 +161,9 @@ router.get('/db/messages/filter/grab/:ref', authorizeUser, asyncHandler(async (r
   }
 
   const { data } = await client.query(
-    q.Map(
-      q.Paginate(
-        q.Match(q.Index('messages_by_grab_id'), ref),
-        { size: 100000 }
-      ),
-      q.Lambda(["posted_at", "ref"], q.Get(q.Var("ref")))
+    q.Paginate(
+      q.Match(q.Index('messages_by_grab_id'), ref),
+      { size: 100000 }
     )
   )
 
