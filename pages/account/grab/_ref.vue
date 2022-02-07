@@ -22,11 +22,11 @@
           <b-field>
             <div class="buttons">
               <a v-if="isBookedAndBuyer" class="button is-primary" :href="'/account/pay/'+ref+'/'">{{ $t('pay') }}</a>
-              <button v-if="isDisputable" class="button is-primary" @click="dispute">{{ $t('dispute') }}</button>
-              <button v-if="isPaidAndTraveler" class="button is-primary" @click="bought">{{ $t('markAsBought') }}</button>
-              <button v-if="isBoughtAndTraveler" class="button is-primary" @click="delivered">{{ $t('markAsDelivered') }}</button>
-              <button v-if="isDeliveredAndBuyer" class="button is-primary" @click="release">{{ $t('release') }}</button>
-              <button v-if="isReleasedAndTraveler" class="button is-primary" :href="'/account/withdraw/'+ref+'/'">{{ $t('withdraw') }}</button>
+              <button v-if="isDisputable" :class="disputeButtonClass" @click="dispute">{{ $t('dispute') }}</button>
+              <button v-if="isPaidAndTraveler" :class="boughtButtonClass" @click="bought">{{ $t('markAsBought') }}</button>
+              <button v-if="isBoughtAndTraveler" :class="deliveredButtonClass" @click="delivered">{{ $t('markAsDelivered') }}</button>
+              <button v-if="isDeliveredAndBuyer" :class="releaseButtonClass" @click="release">{{ $t('release') }}</button>
+              <a v-if="isReleasedAndTraveler" class="button is-primary" :href="'/account/withdraw/'+ref+'/'">{{ $t('withdraw') }}</a>
             </div>
           </b-field>
           <div v-if="isRatingPossible">
@@ -36,7 +36,7 @@
               <b-input v-model="review" maxlength="400" type="textarea"></b-input>
             </b-field>
             <b-field>
-              <button class="button is-primary" @click="postReview">{{ $t('postReview') }}</button>
+              <button :class="reviewButtonClass" @click="postReview">{{ $t('postReview') }}</button>
             </b-field>
           </div>
         </div>
@@ -47,7 +47,7 @@
             <b-input v-model="message" maxlength="400" type="textarea"></b-input>
           </b-field>
           <b-field>
-            <button class="button is-primary" @click="postChatMessage">{{ $t('postChatMessage') }}</button>
+            <button :class="chatButtonClass" @click="postChatMessage">{{ $t('postChatMessage') }}</button>
           </b-field>
           <div v-for="(msg, index) in messages" :key="index" class="content">
             <div v-if="msg.user_sub === 'admin|0'" class="notification has-text-centered is-primary">
@@ -100,6 +100,12 @@ export default {
     return { ref, isBuyerOrTraveler, grab, messages }
   },
   data: () => ({
+    disputeButtonClass: 'button is-primary',
+    boughtButtonClass: 'button is-primary',
+    deliveredButtonClass: 'button is-primary',
+    releaseButtonClass: 'button is-primary',
+    chatButtonClass: 'button is-primary',
+    reviewButtonClass: 'button is-primary',
     message: null,
     postType: null,
     postError: false,
@@ -177,6 +183,7 @@ export default {
       this.postError = false
       const validPost = this.validatePost()
       if (validPost) {
+        this.chatButtonClass = 'button is-primary is-loading'
         const props = {
           posted_at: new Date().toISOString(),
           content: this.message,
@@ -185,28 +192,38 @@ export default {
           user_username: this.getUsername(),
         }
         await this.$db.messages.create({ props })
+        this.chatButtonClass = 'button is-primary'
         const messages = await this.$db.messages.filter(this.ref)
         this.messages = messages
         this.message = null
       }
     },
     async dispute() {
+      this.disputeButtonClass = 'button is-primary is-loading',
       await this.$grab.dispute({ ref: this.ref })
+      this.disputeButtonClass = 'button is-primary',
       this.grab = await this.$db.grabs.get(this.ref)
     },
     async bought() {
+      this.boughtButtonClass = 'button is-primary is-loading'
       await this.$grab.bought({ ref: this.ref })
+      this.boughtButtonClass = 'button is-primary'
       this.grab = await this.$db.grabs.get(this.ref)
     },
     async delivered() {
+      this.deliveredButtonClass = 'button is-primary is-loading'
       await this.$grab.delivered({ ref: this.ref })
+      this.deliveredButtonClass = 'button is-primary'
       this.grab = await this.$db.grabs.get(this.ref)
     },
     async release() {
+      this.releaseButtonClass = 'button is-primary is-loading'
       await this.$grab.release({ ref: this.ref })
+      this.releaseButtonClass = 'button is-primary'
       this.grab = await this.$db.grabs.get(this.ref)
     },
     async postReview() {
+      this.reviewButtonClass = 'button is-primary is-loading'
       const props = {
         posted_at: new Date().toISOString(),
         grab_id: this.ref,
@@ -216,6 +233,7 @@ export default {
         content: this.review
       }
       await this.$reviews.create({ props })
+      this.reviewButtonClass = 'button is-primary'
     }
   },
 }
