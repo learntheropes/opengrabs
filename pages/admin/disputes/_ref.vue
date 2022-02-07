@@ -51,7 +51,7 @@
                             </b-field>
                             <div v-for="(msg, index) in messages" :key="index" class="content">
                                 <div v-if="msg.user_sub === 'admin|0'" class="notification has-text-centered is-primary">
-                                    <span class="has-text-weight-semibold has-text-grey-light">{{ $t('admin') }} </span>,<br>
+                                    <span class="has-text-weight-semibold has-text-grey-light">Admin</span><br>
                                     <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
                                     <p v-if="msg.content === 'published'">Published</p>
                                     <p v-if="msg.content === 'removed'">Removed</p>
@@ -65,18 +65,18 @@
                                     <p v-if="msg.content === 'refunded'">Refunded</p>        
                                 </div>
                                 <div :else-if="msg.user_sub.split('|')[0] === 'admin'" class="notification has-text-centered is-primary">
-                                    <span class="has-text-weight-semibold has-text-grey-light">{{ $t('admin') }} </span>,<br>
+                                    <span class="has-text-weight-semibold has-text-grey-light">Admin</span><br>
                                     <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
                                     <p>{{ msg.content }}</p>
                                 </div>
                                 <div v-if="msg.user_sub === grab.buyer.sub" class="notification">
-                                    <span class="has-text-weight-semibold has-text-grey-light">{{ msg.user_sub }} {{ msg.user_username }} </span>,<br>
+                                    <span class="has-text-weight-semibold has-text-grey-light">{{ msg.user_username }}</span><br>
                                     <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
                                     <p>{{ msg.content }}</p>
                                 </div>
                                 <div v-if="msg.user_sub === grab.traveler.sub" class="notification has-text-right">
                                     <p>
-                                        <span class="has-text-weight-semibold has-text-grey-light">{{ msg.user_sub }} {{ msg.user_username }} </span>,<br>
+                                        <span class="has-text-weight-semibold has-text-grey-light">{{ msg.user_username }}</span><br>
                                         <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
                                     </p>
                                     <p>{{ msg.content }}</p>

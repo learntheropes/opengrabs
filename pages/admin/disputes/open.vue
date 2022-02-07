@@ -18,13 +18,13 @@
                             <a :href="props.row.shop.url" target="_blank">View</a>
                         </b-table-column>  
                         <b-table-column  v-slot="props" label="Buyer">
-                            {{ props.row.buyer.sub }} {{ props.row.buyer.name }}
+                            {{ props.row.buyer.sub }} {{ props.row.buyer.username }}
                         </b-table-column>
                         <b-table-column v-slot="props" label="Traveler">
-                            {{ props.row.traveler.sub }} {{ props.row.traveler.name }}
+                            {{ props.row.traveler.sub }} {{ props.row.traveler.username }}
                         </b-table-column>
-                        <b-table-column v-slot="props" label="Started By">
-                            {{ props.row.dispute.by }}
+                        <b-table-column v-slot="props" label="Disputed By">
+                            {{ props.row.dispute.by.username }}
                         </b-table-column>
                         <b-table-column v-slot="props" label="Attention required">
                             {{ $moment(props.row.dispute.attention_required).fromNow() }}

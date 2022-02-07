@@ -13,12 +13,12 @@
                         </b-table-column>
                         <b-table-column  v-slot="props" label="Status">
                             {{ props.row.status }}
-                        </b-table-column>                        
+                        </b-table-column>                     
                         <b-table-column  v-slot="props" label="Buyer">
-                            <p v-if="props.row.buyer">{{ props.row.buyer.sub }} {{ props.row.buyer.name }}</p>
+                            <p v-if="props.row.buyer">{{ props.row.buyer.username }}</p>
                         </b-table-column>
                         <b-table-column v-slot="props" label="Traveler">
-                            <p v-if="props.row.traveler">{{ props.row.traveler.sub }} {{ props.row.traveler.name }}</p>
+                            <p v-if="props.row.traveler">{{ props.row.traveler.username }}</p>
                         </b-table-column>
                         <b-table-column v-slot="props" label="Updated At">
                             {{ $moment(props.row.updated_at).fromNow() }}
