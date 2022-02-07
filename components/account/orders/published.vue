@@ -80,7 +80,13 @@ export default {
       const orders = orderBy(data, ['published_at'], ['desc'])
       this.$store.commit('orders/setOrders', orders)
       this.$store.commit('orders/setInitiated', true)
-      this.removeButtonClass = 'card-footer-item'    
+      this.removeButtonClass = 'card-footer-item'  
+      this.$buefy.toast.open({
+        duration: 3000,
+        message: this.$t('toastGrabRemoved'),
+        position: 'is-bottom',
+        type: 'is-primary'
+      })  
     },
   },
 }

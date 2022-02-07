@@ -45,6 +45,8 @@
           </div>
           <footer class="card-footer">
             <a :href="order.shop.url" target="_blank" class="card-footer-item">{{ order.shop.name }}.{{ order.shop.domain }}</a>
+          </footer>
+          <footer class="card-footer">
             <nuxt-link :to="{ name: 'account-order-by-ref', params: { ref: order.ref }}" class="card-footer-item">{{ $t('chat') }}</nuxt-link>
             <a href="#" :class="disputeButtonClass" @click="dispute(order.ref)">{{ $t('dispute') }}</a>
           </footer>
@@ -78,6 +80,12 @@ export default {
       this.$store.commit('account/orders/setPaid', paid)
       this.$store.commit('account/orders/setDisputed', disputed)
       this.disputeButtonClass = 'card-footer-item'
+      this.$buefy.toast.open({
+        duration: 3000,
+        message: this.$t('toastGrabDisputed'),
+        position: 'is-bottom',
+        type: 'is-primary'
+      })
     },
   },
 }

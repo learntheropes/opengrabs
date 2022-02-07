@@ -112,6 +112,7 @@ export default {
     rating: "Rating",
     review: "Review",
     postReview: "Post rating and review",
+    toastGrabRemoved: "Grab removed",
     toastGrabDisputed: "Grab disputed",
     toastGrabBought: "Grab marked as bought",
     toastGrabDelivered: "Grab marked as delivered",

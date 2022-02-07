@@ -80,6 +80,12 @@ export default {
       this.$store.commit('account/products/setDelivered', delivered)
       this.$store.commit('account/products/setDisputed', disputed)
       this.disputeButtonClass = 'card-footer-item'
+      this.$buefy.toast.open({
+        duration: 3000,
+        message: this.$t('toastGrabDisputed'),
+        position: 'is-bottom',
+        type: 'is-primary'
+      })
     },
   },
 }

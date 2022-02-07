@@ -74,9 +74,15 @@ export default {
         this.$db.account.products.filter('bought'),
         this.$db.account.products.filter('disputed'),
       ])
-      this.$store.commit('account/products/setBought', bought)
-      this.$store.commit('account/products/setDisputed', disputed)
+      this.$store.commit('account/orders/setBought', bought)
+      this.$store.commit('account/orders/setDisputed', disputed)
       this.disputeButtonClass = 'card-footer-item'
+      this.$buefy.toast.open({
+        duration: 3000,
+        message: this.$t('toastGrabDisputed'),
+        position: 'is-bottom',
+        type: 'is-primary'
+      })
     },
   },
 }

@@ -74,6 +74,12 @@ export default {
       const expired = orderBy(filter(actives,(o) => new Date(o.destination.max_delivery_date) < new Date()),['published_at'])
       this.$store.commit('account/orders/setExpired', expired)
       this.removeButtonClass = 'card-footer-item'
+      this.$buefy.toast.open({
+        duration: 3000,
+        message: this.$t('toastGrabRemoved'),
+        position: 'is-bottom',
+        type: 'is-primary'
+      })
     },
   },
 }

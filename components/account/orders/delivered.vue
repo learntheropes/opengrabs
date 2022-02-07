@@ -45,6 +45,9 @@
           </div>
           <footer class="card-footer">
             <nuxt-link :to="{ name: 'account-grab-ref', params: { ref: order.ref }}" class="card-footer-item">{{ $t('chat') }}</nuxt-link>
+          </footer>
+          <footer class="card-footer">
+            <a href="#" :class="disputeButtonClass" @click="dispute(order.ref)">{{ $t('dispute') }}</a>
             <a href="#" :class="releaseButtonClass" @click="release(order.ref)">{{ $t('release') }}</a>
           </footer>
         </div>
@@ -64,9 +67,27 @@ export default {
     },
   },
   data: () => ({
+    disputeButtonClass: 'card-footer-item',
     releaseButtonClass: 'card-footer-item'
   }),
   methods: {
+    async dispute(ref) {
+      this.disputeButtonClass = 'card-footer-item disabled'
+      await this.$grab.dispute({ ref })
+      const [bought, disputed] = await Promise.all([
+        this.$db.account.products.filter('bought'),
+        this.$db.account.products.filter('disputed'),
+      ])
+      this.$store.commit('account/orders/setBought', bought)
+      this.$store.commit('account/orders/setDisputed', disputed)
+      this.disputeButtonClass = 'card-footer-item'
+      this.$buefy.toast.open({
+        duration: 3000,
+        message: this.$t('toastGrabDisputed'),
+        position: 'is-bottom',
+        type: 'is-primary'
+      })
+    },
     async release(ref) {
       this.releaseButtonClass = 'card-footer-item disabled'
       await this.$grab.release({ ref })
@@ -77,6 +98,12 @@ export default {
       this.$store.commit('account/orders/setDelivered', delivered)
       this.$store.commit('account/orders/setReleased', released)
       this.releaseButtonClass = 'card-footer-item'
+      this.$buefy.toast.open({
+        duration: 3000,
+        message: this.$t('toastGrabReleased'),
+        position: 'is-bottom',
+        type: 'is-primary'
+      })
     },
   },
 }

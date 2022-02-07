@@ -83,6 +83,12 @@ export default {
       this.$store.commit('account/deliveries/setPaid', paid)
       this.$store.commit('account/deliveries/setBought', bought)
       this.boughtButtonClass = 'card-footer-item'
+      this.$buefy.toast.open({
+        duration: 3000,
+        message: this.$t('toastGrabBought'),
+        position: 'is-bottom',
+        type: 'is-primary'
+      })
     },
     async dispute(ref) {
       this.disputeButtonClass = 'card-footer-item disabled'
@@ -94,6 +100,12 @@ export default {
       this.$store.commit('account/deliveries/setPaid', paid)
       this.$store.commit('account/deliveries/setDisputed', disputed)
       this.disputeButtonClass = 'card-footer-item'
+      this.$buefy.toast.open({
+        duration: 3000,
+        message: this.$t('toastGrabDisputed'),
+        position: 'is-bottom',
+        type: 'is-primary'
+      })
     },
   },
 }
