@@ -387,3 +387,23 @@ CreateIndex({
       }
     ]
  })
+
+CreateIndex({
+  name: "reviews_by_username",
+  source: {
+    collection: Collection("reviews"),
+  },
+  terms: [
+    {
+      field: ["data", "username"]
+    }
+  ],
+  values: [
+    {
+      field: ["data", "posted_at"], reverse: true
+    },
+    {
+      field: ["ref"]
+    }
+  ]
+})
