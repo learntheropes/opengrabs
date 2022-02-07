@@ -28,7 +28,7 @@ export default {
       },
     },
   },
-  mounted() {
+  created() {
     if (this.adv === 'order') {
       this.$store.commit('account/new/setActiveTab', 0)
     } else if (this.adv === 'travel') {
