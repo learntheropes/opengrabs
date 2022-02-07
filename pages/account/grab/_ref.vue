@@ -60,7 +60,7 @@
               <p>{{ msg.content }}</p>
             </div>
             <div v-if="msg.user_sub === me" class="notification">
-              <span class="has-text-weight-semibold has-text-grey-light">Me </span>,<br>
+              <span class="has-text-weight-semibold has-text-grey-light">{{ $t('me') }} </span>,<br>
               <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
               <p>{{ msg.content }}</p>
             </div>

@@ -105,6 +105,7 @@ export default {
     statusWithdrawn: "Grab withdrawn",
     statusRefunded: "Grab refunded",
     admin: "Admin",
+    me: "Me",
     // pages/account/pay/_ref && pages/account/underpay/_ref
     copyInvoice: "Copy Invoice",
     copyAddress: "Copy Address",
