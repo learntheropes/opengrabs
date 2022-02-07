@@ -45,7 +45,8 @@ module.exports = {
       "email_verified",
       "jwt_decode",
       "logins_count",
-      "user_username"
+      "user_username",
+      "reviewer_username"
     ]}],
   },
 }

@@ -179,14 +179,49 @@ router.get('/db/messages/filter/grab/:ref', authorizeUser, asyncHandler(async (r
 }))
 
 router.post('/db/messages/create', authorizeUser, asyncHandler(async (req, res) => {
-  const { props } = req.body
+  const { jwt, props } = req.body
+
+  const { data: grab } = await client.query(
+    q.Get(q.Ref(q.Collection('grabs'), props.grab_id))
+  )
+
+  if (jwt.sub !== grab.buyer.sub && jwt.sub !== grab.traveler.sub) {
+    res.status(401).send('unauthorized')
+    return
+  }
+
   const response = await client.query(
     q.Create(
       q.Collection('messages'),
       { data: props },
     )
   )
+
   res.status(201).json(response)
+}))
+
+router.post('/db/reviews/create', authorizeUser, asyncHandler(async (req, res) => {
+  const { jwt, props } = req.body
+
+  const { data: grab } = await client.query(
+    q.Get(q.Ref(q.Collection('grabs'), props.grab_id))
+  )
+
+  if ((jwt.sub === grab.buyer.id && props.reviewer_username === grab.buyer.username && props.username === grab.traveler.username) ||
+  (jwt.sub === grab.traveler.id && props.reviewer_username === grab.traveler.username && props.username === grab.buyer.username)) {
+
+    const response = await client.query(
+      q.Create(
+        q.Collection('messages'),
+        { data: props },
+      )
+    )
+
+    res.status(201).json(response)
+    return
+  } else {
+    res.status(401).send('unauthorized')
+  }
 }))
 
 router.get('/db/travels/filter/:status', asyncHandler(async (req, res) => {

@@ -29,6 +29,16 @@
               <button v-if="isReleasedAndTraveler" class="button is-primary" :href="'/account/withdraw/'+ref+'/'">{{ $t('withdraw') }}</button>
             </div>
           </b-field>
+          <div v-if="isRatingPossible">
+            <h5 class="title is-5">{{ $t('leaveAReviewFor') }} {{ partnerUsername }}</h5>
+            <b-rate v-model="rate" :custom-text="$t('rating')"></b-rate>
+            <b-field :label="$t('review')">
+              <b-input v-model="review" maxlength="400" type="textarea"></b-input>
+            </b-field>
+            <b-field>
+              <button class="button is-primary" @click="postReview">{{ $t('postReview') }}</button>
+            </b-field>
+          </div>
         </div>
       </div>
       <div class="column is-half">
@@ -92,7 +102,9 @@ export default {
   data: () => ({
     message: null,
     postType: null,
-    postError: false
+    postError: false,
+    rate: null,
+    review: null
   }),
   computed: {
     postMessage() {
@@ -134,6 +146,11 @@ export default {
     },
     isRatingPossible() {
       return this.grab.status === 'released' || this.grab.status === 'refunded'
+    },
+    partnerUsername() {
+      if (this.$store.state.auth.user.sub === this.grab.buyer.sub) return this.grab.traveler.username
+      else if (this.$store.state.auth.user.sub === this.grab.traveler.sub) return this.grab.buyer.username
+      else return null    
     }
   },
   created() {
@@ -189,6 +206,17 @@ export default {
       await this.$grab.release({ ref: this.ref })
       this.grab = await this.$db.grabs.get(this.ref)
     },
+    async postReview() {
+      const props = {
+        posted_at: new Date().toISOString(),
+        grab_id: this.ref,
+        username: this.partnerUsername,
+        reviewer_username: this.getUsername(),
+        rate: this.rate,
+        review: this.review
+      }
+      await this.$db.reviews.create({ props })
+    }
   },
 }
 </script>
