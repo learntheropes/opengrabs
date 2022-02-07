@@ -77,7 +77,7 @@
             </div>
           </div>
           <footer class="card-footer">
-            <a href="#" class="card-footer-item" @click="publishButton">{{ $t('publish')}}</a>
+            <a href="#" :class="publishButtonClass" @click="publishButton">{{ $t('publish')}}</a>
           </footer>
         </div>
       </div>
@@ -100,6 +100,7 @@ export default {
       email_verified: false
     },
     loadAmazonButtonClass: 'button',
+    publishButtonClass: 'card-footer-item',
     scrapedProduct: false,
     country: null,
     city: null,
@@ -340,9 +341,17 @@ export default {
     },
     async publishButton() {
       try {
+        this.publishButtonClass = 'card-footer-item disabled'
         await this.publishGrab()
         const published = await this.$db.account.orders.filter('published')
         this.$store.commit('account/orders/setPublished', published)
+        this.publishButtonClass = 'card-footer-item'
+        this.$buefy.toast.open({
+          duration: 3000,
+          message: this.$t('toastOrderPublished'),
+          position: 'is-bottom',
+          type: 'is-primary'
+        })        
         this.resetForm()
       } catch ({ message }) {
         return message

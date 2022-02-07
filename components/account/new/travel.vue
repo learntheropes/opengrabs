@@ -55,7 +55,7 @@
                         </div>
                     </div>
                     <footer class="card-footer">
-                        <a href="#" class="card-footer-item" @click="publishTravelButton">{{ $t('publish')}}</a>
+                        <a href="#" :class="publishButtonClass" @click="publishTravelButton">{{ $t('publish')}}</a>
                     </footer>
                 </div>
             </div>  
@@ -85,6 +85,7 @@ export default {
             { value: 'de', name: 'Germany', currency: 'EUR'  },
             { value: 'fr', name: 'France', currency: 'EUR'  },
         ],
+        publishButtonClass: 'card-footer-item',
         originObject: null,
         originCountryError: false,
         originCountryType: null,
@@ -271,6 +272,7 @@ export default {
             this.showPreview = false
         },
         async publishTravelButton() {
+            this.publishButtonClass = 'card-footer-item disabled'
             const props = {
                 status: (parseFloat(this.travelBudget) > 0) ? 'active' : 'fully_booked',
                 origin_country: this.originCountry,
@@ -284,6 +286,13 @@ export default {
                 domain: this.domain
             }
             await this.$travels.create({ props })
+            this.publishButtonClass = 'card-footer-item'
+            this.$buefy.toast.open({
+                duration: 3000,
+                message: this.$t('toastTravelPublished'),
+                position: 'is-bottom',
+                type: 'is-primary'
+            })    
             this.resetForm()
         }
     }

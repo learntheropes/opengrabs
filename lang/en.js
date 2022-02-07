@@ -176,6 +176,7 @@ export default {
     shipping: "shipping",
     taxes: "Taxes",
     publish: "Publish",
+    toastOrderPublished: "Order published",
     // components/account/new/travel
     originCountryLabel: "Country of departure",
     originCountryPlaceholder: "Select a Country",
@@ -196,6 +197,7 @@ export default {
     travelFrom: "From",
     travelTo: "To",
     travelBudget: "Available budget",
+    toastTravelPublished: "Travel published",
     // component/account/verify-email
     missingEmailWarningOrder: "Before setting your first order, we need your email address for updates about the order.",
     emailLabel: "Email",
