@@ -3,6 +3,15 @@
         <div class="columns is-multiline">
             <div v-for="travel of travels" :key="travel.ref" class="column is-full-mobile is-one-third-tablet is-one-third-desktop is-one-quarter-widescreen is-one-quarter-fullhd">
                 <div class="card card-equal-height">
+                    <div class="card-image">
+                        <figure style="background-color: grey" class="image">
+                            <img :src="travel.destination_photo" :alt="'Image of ' + travel.destination_city" />
+                        </figure>
+                    </div>
+                    <div class="content">
+                        {{ $t('travelFrom') }} {{ travel.origin_country }}<br>
+                        {{ $t('travelTo') }} {{ travel.destination_city}} ({{ travel.destination_country }})<br>
+                    </div>
                     <div class="card-content">
                         <div class="content">
                             {{ $t('travelFrom') }} {{ travel.origin_country }}<br>
