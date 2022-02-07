@@ -33,7 +33,7 @@
                 {{ $moment(order.destination.max_delivery_date).fromNow() }} [{{ $utils.momentDate(order.destination.max_delivery_date) }}]
             </div>
             <div class="content">
-                {{ $t('publishedBy') }} <nuxt-link :to="localePath({ name: 'user', params: { username: order.buyer.username }})">{{ order.buyer.username }}</nuxt-link><br>
+                {{ $t('publishedBy') }} <nuxt-link :to="localePath({ name: 'user-username', params: { username: order.buyer.username }})">{{ order.buyer.username }}</nuxt-link><br>
                 {{ $moment(order.published_at).fromNow() }}
             </div>
         </div>

@@ -39,7 +39,7 @@
               {{ $moment(order.delivery.date).fromNow() }} [{{ $utils.momentDate(order.delivery.date) }}]
             </div>
             <div class="content">
-              {{ $t('releasedBy') }} <nuxt-link :to="localePath({ name: 'user-username', params: { ref: order.traveler.username }})">{{ order.traveler.username }}</nuxt-link><br>
+              {{ $t('releasedBy') }} <nuxt-link :to="localePath({ name: 'user-username', params: { username: order.traveler.username }})">{{ order.traveler.username }}</nuxt-link><br>
               {{ $moment(order.released_at).fromNow() }}
             </div>
           </div>
