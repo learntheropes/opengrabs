@@ -21,12 +21,12 @@
           </div>
           <b-field>
             <div class="buttons">
-              <nuxt-link v-if="isBookedAndBuyer" class="button is-primary" :to="localePath({ name: 'account-pay-ref', params: ref })">{{ $t('pay') }}</nuxt-link>
+              <nuxt-link v-if="isBookedAndBuyer" class="button is-primary" :to="localePath({ name: 'account-pay-ref', params: { ref }})">{{ $t('pay') }}</nuxt-link>
               <button v-if="isDisputable" :class="disputeButtonClass" @click="dispute">{{ $t('dispute') }}</button>
               <button v-if="isPaidAndTraveler" :class="boughtButtonClass" @click="bought">{{ $t('markAsBought') }}</button>
               <button v-if="isBoughtAndTraveler" :class="deliveredButtonClass" @click="delivered">{{ $t('markAsDelivered') }}</button>
               <button v-if="isDeliveredAndBuyer" :class="releaseButtonClass" @click="release">{{ $t('release') }}</button>
-              <nuxt-link v-if="isReleasedAndTraveler" class="button is-primary" :to="localePath({ name: 'account-withdraw-ref', params: ref })">{{ $t('withdraw') }}</nuxt-link>
+              <nuxt-link v-if="isReleasedAndTraveler" class="button is-primary" :to="localePath({ name: 'account-withdraw-ref', params: { ref }})">{{ $t('withdraw') }}</nuxt-link>
             </div>
           </b-field>
           <div v-if="isRatingPossible">
