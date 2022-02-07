@@ -1,14 +1,14 @@
 <template>
     <div class="card card-equal-height has-text-centered">
+        <header class="card-header">
+            <p class="card-header-title">{{ travel.origin_country }} - {{  travel.destination_city }}</p>
+        </header> 
+        <div class="card-image">
+            <figure style="background-color: grey" class="image">
+                <img :src="travel.destination_photo" :alt="'Image of ' + travel.destination_city" />
+            </figure>
+        </div>
         <div class="card-content">
-            <header class="card-header">
-                <p class="card-header-title">{{ travel.origin_country }} - {{  travel.destination_city }}</p>
-            </header> 
-            <div class="card-image">
-                <figure style="background-color: grey" class="image">
-                    <img :src="travel.destination_photo" :alt="'Image of ' + travel.destination_city" />
-                </figure>
-            </div>
             <div class="content">
                 {{ $t('travelFrom') }} {{ travel.origin_country }}<br>
                 {{ $t('travelTo') }} {{ travel.destination_city}} ({{ travel.destination_country }})<br>
