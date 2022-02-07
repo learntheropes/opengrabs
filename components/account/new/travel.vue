@@ -38,15 +38,25 @@
                             <span class="button is-static">{{ travelCurrency }}</span>
                         </p>
                     </b-field>
-                    <button class="button" @click="loadTravelButton">{{ $t('previewTravel')}}</button>
+                    <button :class="loadTravelButtonClass" @click="loadTravelButton">{{ $t('previewTravel')}}</button>
                 </div>
             </div>
             <div v-if="showPreview" class="column is-half">
                 <div class="card">
+                    <header class="card-header">
+                        <p class="card-header-title">{{ originCountry }} - {{  destinationCity }}</p>
+                    </header> 
+                    <div class="card-image">
+                        <figure style="background-color: grey" class="image">
+                            <img :src="destinationPhoto" :alt="'Image of ' + destinationCity" />
+                        </figure>
+                    </div>
                     <div class="card-content">
                         <div class="content">
                             {{ $t('travelFrom') }} {{ originObject.name }}<br>
                             {{ $t('travelTo') }} {{ destinationCity}} ({{ destinationCountry }})<br>
+                        </div>
+                        <div class="content">
                             {{ $t('travelBudget') }} {{ parseFloat(travelBudget).toFixed(2) }} {{ originObject.currency }}
                         </div>
                         <div class="content">
@@ -85,6 +95,7 @@ export default {
             { value: 'de', name: 'Germany', currency: 'EUR'  },
             { value: 'fr', name: 'France', currency: 'EUR'  },
         ],
+        loadTravelButtonClass: 'button',
         publishButtonClass: 'card-footer-item',
         originObject: null,
         originCountryError: false,
@@ -103,6 +114,7 @@ export default {
         travelBudgetError: false,
         travelBudgetType: null,
         travelPublishedAt: null,
+        destinationPhoto: null,
         showPreview: false,
     }),
     computed: {
@@ -234,22 +246,26 @@ export default {
                 return isValidFormat
             }
         },
-        loadTravelButton() {
+        async loadTravelButton() {
             this.originCountryError = false
             this.originCountryType = null
             this.destinationCountryError = false
             this.destinationCountryType = null
             this.destinationCityError = false
             this.destinationCityType = null
+            this.loadTravelButtonClass = 'button is-loading'
             const validOriginCountry = this.validateOriginCountry()
             const validDestinationCountry = this.validateDestinationCountry()
             const validDestinationCity = this.validateDestinationCity()
             const validTravelDate = this.validateTravelDate()
             const validTravelBudget = this.validateTravelBudget()
             if (validOriginCountry && validDestinationCountry && validDestinationCity && validTravelDate && validTravelBudget) {
+                this.destinationPhoto = await this.$db.travels.getPhoto(`${this.destinationCity},${this.destinationCountry}`)
+                console.log(this.destinationPhoto)
                 this.travelPublishedAt = new Date().toISOString()
                 this.showPreview = true
             }
+            this.loadTravelButtonClass = 'button'
         },
         resetForm() {
             this.originObject = null
@@ -269,6 +285,7 @@ export default {
             this.travelBudgetError = false
             this.travelBudgetType = null
             this.travelPublishedAt = null
+            this.destinationPhoto = null
             this.showPreview = false
         },
         async publishTravelButton() {
@@ -278,6 +295,7 @@ export default {
                 origin_country: this.originCountry,
                 destination_country: this.destinationCountry,
                 destination_city: this.destinationCity,
+                destination_photo: this.destinationPhoto,
                 date: this.travelDate.toISOString(),
                 reward: this.travelReward,
                 budget: parseFloat(this.travelBudget),
@@ -285,7 +303,7 @@ export default {
                 published_at: this.travelPublishedAt,
                 domain: this.domain
             }
-            await this.$travels.create({ props })
+            await this.$travel.create({ props })
             this.publishButtonClass = 'card-footer-item'
             this.$buefy.toast.open({
                 duration: 3000,

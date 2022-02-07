@@ -52,6 +52,13 @@ export default ({ $axios }, inject) => {
       get: async (ref) => {
         const { data } = await $axios.get(`/api/db/travels/get/${ref}`)
         return data
+      },
+      getPhoto: async (input) => {
+        const { data } = await $axios.post('/api/travels/get-photo', {
+          input
+        })
+        console.log(data)
+        return data        
       }
     },
     messages: {

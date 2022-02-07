@@ -2,6 +2,7 @@ import asyncHandler from 'express-async-handler'
 import { authorizeUser } from '../auth'
 import { allowOrigin } from '../lambda'
 import { q, client } from '../db'
+import getTravelPhoto from '../places' 
 import { Router } from 'express'
 const router = Router()
 
@@ -294,6 +295,13 @@ router.get('/db/travels/get/:ref', asyncHandler(async (req,res) => {
   )
   
   res.status(200).json(travel)
+}))
+
+router.post('/travels/get-photo', authorizeUser, asyncHandler(async (req,res) => {
+  const { input } = req.body
+
+  const photo = await getTravelPhoto(input) 
+  res.status(200).send(photo)
 }))
 
 module.exports = router
