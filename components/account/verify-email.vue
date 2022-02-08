@@ -62,17 +62,22 @@ export default {
         }     
     },
     async created() {
-        // if (process.env.URL) {
-        //     if (user.username && user.email) {
-        //         const { data: { hash }} = await this.$axios.get(`/api/crypto/sha256/${user.email}`)
-        //         this.$Tawk.$updateChatUser({ name: user.username, email: user.email, emailHmac: hash})
-        //     }
-        //     const attribute = {
-        //         key: 'user-sub',
-        //         value: this.$store.$auth.user.sub
-        //     }
-        //     this.$Tawk.$setAttribute(attribute)
-        // }
+        if (process.env.URL && user.username && user.email && this.$Tawk.$isInit()) {
+            const { data: { hash }} = await this.$axios.get(`/api/crypto/sha256/${user.email}`)
+            this.$Tawk.$updateChatUser({ name: user.username, email: user.email, emailHmac: hash})
+
+            const userSub = {
+                key: 'user-sub',
+                value: this.$store.$auth.user.sub
+            }
+            this.$Tawk.$setAttribute(userSub)
+
+            const bitcoinNetwork = {
+                key: 'bitcoin-network',
+                value: (process.env.BTC_CHAIN === 'test3') ? 'testnet': 'mainnet'
+            }
+            this.$Tawk.$setAttribute(bitcoinNetwork)
+        }
     },
     methods: {
         validateEmail(){

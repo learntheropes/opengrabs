@@ -72,18 +72,6 @@ export default {
       if (!this.$Tawk) {
         this.$router.go(0)
       }
-      // Set the bitcoin network attribute
-      else if (this.$Tawk.$isInit()) {
-        const attribute = {
-          key: 'bitcoin-network',
-          value: (process.env.BTC_CHAIN === 'test3') ? 'testnet': 'mainnet'
-        }
-        const { data: { hash }} = await this.$axios.get(`/api/crypto/sha256/${attribute.value}`)
-        attribute.hash = hash
-
-        console.log(attribute)
-        this.$Tawk.$setAttribute(attribute)
-      }
     }
   },
   methods: {
