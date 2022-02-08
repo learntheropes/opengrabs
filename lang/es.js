@@ -200,6 +200,7 @@ export default {
     travelTo: "To",
     travelBudget: "Available budget",
     toastTravelPublished: "Travel published",
+    toastTravelRemoved: "Travel removed",
     // component/account/verify-email
     missingEmailWarningOrder: "Before setting your first order, we need your email address for updates about the order.",
     emailLabel: "Email",

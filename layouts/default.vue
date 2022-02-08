@@ -46,6 +46,7 @@ a.disabled {
   align-items: center;
   height: 210px;
   background-size: cover;
+  background-color: black;
   overflow: hidden;
 }
 </style>

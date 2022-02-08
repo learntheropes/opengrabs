@@ -17,7 +17,7 @@
                 {{ $moment(travel.date).fromNow() }} ({{ $moment(travel.date).format('MMMM Do YYYY') }})
             </div>
             <div class="content">
-                {{ $t('travelBudget') }} {{ travel.budget.toFixed(2) }} {{ travel.currency }}
+                {{ $t('travelBudget') }} {{ travel.budget.toFixed(0) }} {{ travel.currency }}
             </div>
             <div class="content">
                 {{ $t('publishedBy') }} <nuxt-link :to="localePath({ name: 'user-username', params: { username: travel.traveler.username }})">{{ travel.traveler.username }}</nuxt-link><br>

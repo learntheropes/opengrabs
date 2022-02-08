@@ -41,10 +41,10 @@ router.post('/travels/actions/create', authorizeUser, asyncHandler(async (req, r
     }
 
     await client.query(
-      q.Delete(q.Ref(q.Collection('grabs'), ref))
+      q.Delete(q.Ref(q.Collection('travels'), ref))
     )
 
-    res.status(204)
+    res.status(204).json({})
 }))
 
   module.exports = router

@@ -57,10 +57,10 @@
                             {{ $t('travelTo') }} {{ destinationCity}} ({{ destinationCountry }})<br>
                         </div>
                         <div class="content">
-                            {{ $t('travelBudget') }} {{ parseFloat(travelBudget).toFixed(2) }} {{ originObject.currency }}
+                            {{ $t('travelBudget') }} {{ parseFloat(travelBudget).toFixed(0) }} {{ originObject.currency }}
                         </div>
                         <div class="content">
-                            {{ $t('publishedBy') }} {{ travelerName }}<br>
+                            {{ $t('publishedBy') }} {{ user.username }}<br>
                             {{ $moment(travelPublishedAt).fromNow() }} 
                         </div>
                     </div>
@@ -312,6 +312,8 @@ export default {
                 type: 'is-primary'
             })    
             this.resetForm()
+            this.$store.commit('account/travels/setInitiated', false)
+            this.$store.commit('travels/setInitiated', false)
         }
     }
 }

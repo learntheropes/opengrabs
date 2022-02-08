@@ -20,14 +20,14 @@
                             {{ $moment(travel.date).fromNow() }} ({{ $moment(travel.date).format('MMMM Do YYYY') }})
                         </div>
                         <div class="content">
-                            {{ $t('travelBudget') }} {{ travel.budget.toFixed(2) }} {{ travel.currency }}
+                            {{ $t('travelBudget') }} {{ travel.budget.toFixed(0) }} {{ travel.currency }}
                         </div>
                         <div class="content">
                             {{ $t('publishedAt') }} {{ $moment(travel.published_at).fromNow() }} 
                         </div>
                     </div>
                     <footer class="card-footer">
-                        <a href="#" class="card-footer-item" @click="remove(travel.ref)">{{ $t('remove') }}</a>
+                        <a href="#" :class="removeButtonClass" @click="remove(travel.ref)">{{ $t('remove') }}</a>
                     </footer>
                 </div>
             </div>
@@ -44,9 +44,24 @@ export default {
             default: () => [],
         },
     },
+    data: () => ({
+        removeButtonClass: 'card-footer-item'
+    }),
     methods: {
         async remove(ref) {
+            this.removeButtonClass = 'card-footer-item disabled'
             await this.$travel.remove(ref)
+            const expired = await this.$db.account.travels.filter('expired')
+            this.$store.commit('account/travels/setExpired', expired)
+            this.$store.commit('account/travels/setInitiated', true)
+            this.$store.commit('travels/setInitiated', false)
+            this.removeButtonClass = 'card-footer-item'
+            this.$buefy.toast.open({
+                duration: 3000,
+                message: this.$t('toastTravelRemoved'),
+                position: 'is-bottom',
+                type: 'is-primary'
+            })  
         } 
     }
 }
