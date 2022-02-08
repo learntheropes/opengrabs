@@ -5,7 +5,7 @@
 
 <script>
 export default {
-  nuxtI18n: false,
+  nuxtI18n: false
 }
 </script>
 
