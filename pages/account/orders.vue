@@ -152,17 +152,11 @@ export default {
       const { data: { hash }} = await this.$axios.get(`/api/crypto/sha256/${user.email}`)
       this.$Tawk.$updateChatUser({ name: user.username, email: user.email, emailHmac: hash})
 
-      const userSub = {
-        key: 'user-sub',
-        value: this.$store.$auth.user.sub
+      const attributes = {
+        'user-sub': this.$store.$auth.user.sub,
+        'bitcoin-network': (process.env.BTC_CHAIN === 'test3') ? 'testnet': 'mainnet'
       }
-      this.$Tawk.$setAttribute(userSub)
-
-      const bitcoinNetwork = {
-        key: 'bitcoin-network',
-        value: (process.env.BTC_CHAIN === 'test3') ? 'testnet': 'mainnet'
-      }
-      this.$Tawk.$setAttribute(bitcoinNetwork)
+      this.$Tawk.$setAttribute(attributes)
     }
   },
 }
