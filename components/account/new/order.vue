@@ -181,9 +181,9 @@ export default {
       return this.$t('rewardMessage')      
     }
   },
-  created() {
+  async created() {
     this.$nuxt.$on('updateUser', ($event) => this.updateUser($event))
-    
+
     const user = await this.$user.get()
     if (process.env.URL && user.username && user.email && this.$Tawk.$isInit()) {
       const { data: { hash }} = await this.$axios.get(`/api/crypto/sha256/${user.email}`)
