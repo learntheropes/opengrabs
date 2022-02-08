@@ -185,7 +185,7 @@ export default {
     this.$nuxt.$on('updateUser', ($event) => this.updateUser($event))
 
     const user = await this.$user.get()
-    if (process.env.URL && user.username && user.email && this.$Tawk.$isInit() && !this.$store.state.account.initiated) {
+    if (process.env.URL && user.username && user.email && this.$Tawk.$isInit() && !this.$store.state.account.tawk.initiated) {
       const { data: { hash }} = await this.$axios.get(`/api/crypto/sha256/${user.email}`)
       this.$Tawk.$updateChatUser({ name: user.username, email: user.email, emailHmac: hash})
 
@@ -200,7 +200,7 @@ export default {
   methods: {
     async updateUser(user) {
       this.user = user
-      if (process.env.URL && user.username && user.email && this.$Tawk.$isInit() && !this.$store.state.account.initiated) {
+      if (process.env.URL && user.username && user.email && this.$Tawk.$isInit() && !this.$store.state.account.tawk.initiated) {
         const { data: { hash }} = await this.$axios.get(`/api/crypto/sha256/${user.email}`)
         this.$Tawk.$updateChatUser({ name: user.username, email: user.email, emailHmac: hash})
 
