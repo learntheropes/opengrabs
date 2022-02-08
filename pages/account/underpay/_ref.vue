@@ -101,6 +101,12 @@ export default {
             this.paymentProcessing = false
             this.paymentConfirmed = true
             clearInterval(refreshIntervalId)
+            this.$buefy.toast.open({
+              duration: 3000,
+              message: this.$t('toastGrabPaid'),
+              position: 'is-bottom',
+              type: 'is-primary'
+            })
           } else if (data.status === 'expired') {
             this.paymentExpired = true
             clearInterval(refreshIntervalId)

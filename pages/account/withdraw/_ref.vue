@@ -8,7 +8,7 @@
               <b-field :label="$t('lightningPaymentRequest')" :type="invoiceType" :message="invoiceMessage">
                 <b-input v-model="invoice" type="text" expanded></b-input>
               </b-field>
-              <button class="button" @click="withdrawLightning">{{ $t('withdrawOnLn') }}</button>
+              <button :class="withdrawButtonClass" @click="withdrawLightning">{{ $t('withdrawOnLn') }}</button>
             </div>
           </div>
         </div>
@@ -23,7 +23,7 @@
               <b-field :label="$t('bitcoinAddress')" :type="addressType" :message="addressMessage">
                 <b-input v-model="address" type="text" expanded></b-input>
               </b-field>
-              <button class="button" @click="withdrawOnChain">{{ $t('withdrawOnChain') }}</button>
+              <button :class="withdrawButtonClass" @click="withdrawOnChain">{{ $t('withdrawOnChain') }}</button>
             </div>
           </div>
         </div>
@@ -48,7 +48,8 @@ export default {
     invoiceError: false,
     address: null,
     addressType: null,
-    addressError: false
+    addressError: false,
+    withdrawButtonClass: 'button'
   }),
   computed: {
     invoiceMessage() {
@@ -82,11 +83,13 @@ export default {
       this.invoiceError = false
       const validInvoice = this.validateInvoice()
       if (validInvoice) {
+        this.withdrawButtonClass = 'button is-loading'
         const withdraw = await this.$grab.withdraw({
           ref: this.ref,
           type: 'ln',
           address: this.invoice.replace('lightning:', ''),
         })
+        this.withdrawButtonClass = 'button'
         return withdraw
       }
     },
@@ -95,11 +98,13 @@ export default {
       this.addressError = false
       const validAddress = this.validateAddress()
       if (validAddress) {
+        this.withdrawButtonClass = 'button is-loading'
         const withdraw = await this.$grab.withdraw({
           ref: this.ref,
           type: 'chain',
           address: this.address.replace('bitcoin:', ''),
         })
+        this.withdrawButtonClass = 'button'
         return withdraw
       }
     },

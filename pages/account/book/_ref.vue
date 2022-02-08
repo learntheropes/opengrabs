@@ -8,7 +8,7 @@
           <b-datepicker v-model="delivery_date" :min-date="new Date()" :max-date="new Date(grab.destination.max_delivery_date)" icon="calendar-today" editable />
         </b-field>
         <b-field>
-          <button class="button" @click="book">{{ $t('book') }}</button>
+          <button :class="bookButtonClass" @click="book">{{ $t('book') }}</button>
         </b-field>
       </div>
     </div>
@@ -16,7 +16,6 @@
 </template>
 
 <script>
-import orderBy from 'lodash.orderby'
 export default {
   name: 'BookRef',
   middleware: 'auth',
@@ -32,7 +31,8 @@ export default {
     },
     delivery_date: null,
     dateType: null,
-    dateError: false
+    dateError: false,
+    bookButtonClass: 'button'
   }),
   computed: {
     dateMessage() {
@@ -60,18 +60,21 @@ export default {
       this.dateError = null
       const validDate = this.validateDate()
       if (validDate) {
+        this.bookButtonClass = 'button is-loading'
         await this.$grab.book({
           ref: this.ref,
           delivery_date: this.delivery_date.toISOString(),
         })
-        const [orders, booked] = await Promise.all([
-          this.$db.orders.filter('published'),
-          this.$db.account.deliveries.filter('booked')
-        ])      
-        const orderedOrders = orderBy(orders, ['published_at'], ['desc'])
-        this.$store.commit('orders/setOrderss', orderedOrders)
+        const booked = await this.$db.account.deliveries.filter('booked')    
         this.$store.commit('account/deliveries/setBooked', booked)
-        this.$store.commit('orders/setInitiated', true)      
+        this.$store.commit('orders/setInitiated', false)
+        this.bookButtonClass = 'button'
+        this.$buefy.toast.open({
+          duration: 3000,
+          message: this.$t('toastGrabBooked'),
+          position: 'is-bottom',
+          type: 'is-primary'
+        })
         this.$router.go(-1)
       }
     },

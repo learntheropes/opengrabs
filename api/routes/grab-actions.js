@@ -98,13 +98,16 @@ router.post('/grab/actions/order/:ref', authorizeUser, asyncHandler(async (req, 
     )
 
     const availableBudget = travel.budget - (shop.price.product+shop.price.shipping+shop.price.taxes)
+    if (availableBudget < 0) {
+        res.status(401).send('unauthorized')
+        return
+    }
 
     await client.query(
         q.Update(
             q.Ref(q.Collection('travels'), ref),
             {
                 data: {
-                    status: (availableBudget < 10) ? 'ordered' : 'active',
                     budget: availableBudget
                 }
             },

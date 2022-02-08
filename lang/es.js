@@ -119,6 +119,9 @@ export default {
     toastGrabBought: "Grab marked as bought",
     toastGrabDelivered: "Grab marked as delivered",
     toastGrabReleased: "Grab released",
+    toastGrabBooked: "Grab booked",
+    toastGrabPaid: "Grab paid",
+    toastGrabUnderpaid: "Grab underpaid",
     toastReviewPosted: "Review posted",
     // pages/account/pay/_ref && pages/account/underpay/_ref
     copyInvoice: "Copy Invoice",
