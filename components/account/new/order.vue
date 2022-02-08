@@ -198,7 +198,7 @@ export default {
     }
   },
   methods: {
-    updateUser(user) {
+    async updateUser(user) {
       this.user = user
       if (process.env.URL && user.username && user.email && this.$Tawk.$isInit() && !this.$store.state.account.initiated) {
         const { data: { hash }} = await this.$axios.get(`/api/crypto/sha256/${user.email}`)
