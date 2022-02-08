@@ -57,7 +57,6 @@ export default ({ $axios }, inject) => {
         const { data } = await $axios.post('/api/travels/get-photo', {
           input
         })
-        console.log(data)
         return data        
       }
     },

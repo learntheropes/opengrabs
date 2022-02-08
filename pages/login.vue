@@ -8,7 +8,6 @@ export default {
     name: 'Login',
     middleware: 'auth',
     asyncData({ from }) {
-        console.log(from)
         return { fullPath: from.fullPath, path: from.path }
     },
     created() {

@@ -16,7 +16,6 @@ export default {
     auth: false,
     name: 'User',
     async asyncData({ app, params: { username }}) {
-        console.log(username)
         const reviews = await app.$reviews.filter(username)
         const sum = reviews.reduce(function (previousValue, currentValue) {
             return previousValue + currentValue.rate

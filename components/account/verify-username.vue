@@ -77,7 +77,6 @@ export default {
             } else {
                 const regex = /^[a-zA-Z0-9]{5,15}$/
                 const isValidFormat = regex.test(this.user.username)
-                console.log(isValidFormat)
                 if (!isValidFormat) {
                     this.usernameType = 'is-danger'
                     this.usernameError = 'Invalid username'              
@@ -96,7 +95,6 @@ export default {
                     this.usernameError = this.user.error
                 } else {
                     this.show = false
-                    console.log(this.user.username)
                     this.$nuxt.$emit('updateUser', {email: this.user.email, email_verified: this.user.email_verified, username: this.user.username})
                     if (process.env.URL && this.user.email && this.user.username) {
                         const { data: { hash }} = await this.$axios.get(`/api/crypto/sha256/${this.user.email}`)

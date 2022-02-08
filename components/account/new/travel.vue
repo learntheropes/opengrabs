@@ -261,7 +261,6 @@ export default {
             const validTravelBudget = this.validateTravelBudget()
             if (validOriginCountry && validDestinationCountry && validDestinationCity && validTravelDate && validTravelBudget) {
                 this.destinationPhoto = await this.$db.travels.getPhoto(`${this.destinationCity},${this.destinationCountry}`)
-                console.log(this.destinationPhoto)
                 this.travelPublishedAt = new Date().toISOString()
                 this.showPreview = true
             }

@@ -33,6 +33,5 @@ const getPhoto = async (photoreference) => {
 export default async (input) => {
     const photoreference = await getPhotoReference(input)
     const url = await getPhoto(photoreference)
-    console.log(url)
     return url
 }
