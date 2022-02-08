@@ -56,7 +56,7 @@ export default {
         const user = await this.$user.get()
         if (process.env.URL && user.username && user.email && this.$Tawk.$isInit() && !this.$store.state.account.tawk.initiated) {
             const { data: { hash }} = await this.$axios.get(`/api/crypto/sha256/${user.email}`)
-            this.$Tawk.$updateChatUser({ name: user.username, email: user.email, emailHmac: hash})
+            this.$Tawk.$updateChatUser({ name: user.username, email: user.email, hash: hash})
 
             const attributes = {
                 'user-sub': this.$store.$auth.user.sub,
