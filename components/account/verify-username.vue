@@ -56,8 +56,8 @@ export default {
             this.$Tawk.$updateChatUser({ name: user.username, email: user.email, emailHmac: hash})
 
             const attributes = {
-                'user-sub': this.$store.$auth.user.sub,
-                'bitcoin-network': (process.env.BTC_CHAIN === 'test3') ? 'testnet': 'mainnet'
+                'sub': this.$store.$auth.user.sub,
+                'network': (process.env.BTC_CHAIN === 'test3') ? 'testnet': 'mainnet'
             }
             this.$Tawk.$setAttribute(attributes)
         }

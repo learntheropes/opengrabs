@@ -183,17 +183,18 @@ export default {
   },
   created() {
     this.$nuxt.$on('updateUser', ($event) => this.updateUser($event))
-    // if (process.env.URL) {
-    //     if (user.username && user.email) {
-    //         const { data: { hash }} = await this.$axios.get(`/api/crypto/sha256/${user.email}`)
-    //         this.$Tawk.$updateChatUser({ name: user.username, email: user.email, emailHmac: hash})
-    //     }
-    //     const attribute = {
-    //         key: 'user-sub',
-    //         value: this.$store.$auth.user.sub
-    //     }
-    //     this.$Tawk.$setAttribute(attribute)
-    // }
+    
+    const user = await this.$user.get()
+    if (process.env.URL && user.username && user.email && this.$Tawk.$isInit()) {
+      const { data: { hash }} = await this.$axios.get(`/api/crypto/sha256/${user.email}`)
+      this.$Tawk.$updateChatUser({ name: user.username, email: user.email, emailHmac: hash})
+
+      const attributes = {
+        'sub': this.$store.$auth.user.sub,
+        'network': (process.env.BTC_CHAIN === 'test3') ? 'testnet': 'mainnet'
+      }
+      this.$Tawk.$setAttribute(attributes)
+    }
   },
   methods: {
     updateUser(user) {
