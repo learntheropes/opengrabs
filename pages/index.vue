@@ -88,19 +88,17 @@ export default {
   },
   methods: {
     addOrder() {
-      this.$store.commit('account/new/setActiveTab', 0)
-      this.$router.push(`${this.$i18n.locale}/account/new`)      
+      this.$router.push(`${this.$i18n.locale}/account/new/order`)      
     },
     addTravel() {
-      this.$store.commit('account/new/setActiveTab', 1)
-      this.$router.push(`${this.$i18n.locale}/account/new`)      
+      this.$router.push(`${this.$i18n.locale}/account/new/travel`)      
     },
     loginNewOrder() {
-      this.$auth.$storage.setUniversal('redirect', `/${this.$i18n.locale}/account/new?adv=order`)
+      this.$auth.$storage.setUniversal('redirect', `/${this.$i18n.locale}/account/new/order`)
       this.$auth.loginWith('auth0')
     },
     loginNewTravel() {
-      this.$auth.$storage.setUniversal('redirect', `/${this.$i18n.locale}/account/new?adv=travel`)
+      this.$auth.$storage.setUniversal('redirect', `/${this.$i18n.locale}/account/new/travel`)
       this.$auth.loginWith('auth0')    
     }
   }
