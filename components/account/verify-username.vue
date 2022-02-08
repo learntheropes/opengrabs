@@ -49,19 +49,6 @@ export default {
             else return this.$t('UsernameAlphaNumericBetween5and15Caracters')         
         }     
     },
-    async created() {
-        const user = await this.$user.get()
-        if (process.env.URL && user.username && user.email && this.$Tawk.$isInit()) {
-            const { data: { hash }} = await this.$axios.get(`/api/crypto/sha256/${user.email}`)
-            this.$Tawk.$updateChatUser({ name: user.username, email: user.email, emailHmac: hash})
-
-            const attributes = {
-                'user-sub': this.$store.$auth.user.sub,
-                'bitcoin-network': (process.env.BTC_CHAIN === 'test3') ? 'testnet': 'mainnet'
-            }
-            this.$Tawk.$setAttribute(attributes)
-        }
-    },
     methods: {
         validateUsername(){
             if (!this.user.username) {
