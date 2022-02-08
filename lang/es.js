@@ -198,7 +198,7 @@ export default {
     travelRewardMessage: "Select the reward in % that you want to be paid to deliver the orders. Minimum is 5% and maximum is 50%.",
     travelBudgetLabel: "Budget",
     travelBudgetMessage: "Budget you are willing to invest in orders for this travel.",
-    previewTravel: "Preview of your advertisement",
+    previewTravel: "Travel preview",
     travelFrom: "From",
     travelTo: "To",
     travelBudget: "Available budget",
