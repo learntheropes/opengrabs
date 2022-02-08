@@ -14,7 +14,12 @@
 <script>
 export default {
   name: 'New',
-  async asyncData({ app, query: { adv }}) {
+  async asyncData({ app, store, params: { adv }}) {
+    if (adv === 'order') {
+      store.commit('account/new/setActiveTab', 0)
+    } else if (adv === 'travel') {
+      store.commit('account/new/setActiveTab', 1)
+    }
     const user = await app.$user.create()
     return { user, adv }
   },
@@ -28,12 +33,5 @@ export default {
       },
     },
   },
-  created() {
-    if (this.adv === 'order') {
-      this.$store.commit('account/new/setActiveTab', 0)
-    } else if (this.adv === 'travel') {
-      this.$store.commit('account/new/setActiveTab', 1)
-    }
-  }
 }
 </script>
