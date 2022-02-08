@@ -49,7 +49,7 @@ export default {
     address: null,
     addressType: null,
     addressError: false,
-    withdrawButtonClass: 'button'
+    withdrawButtonClass: 'button is-primary is-outlined'
   }),
   computed: {
     invoiceMessage() {
@@ -83,13 +83,13 @@ export default {
       this.invoiceError = false
       const validInvoice = this.validateInvoice()
       if (validInvoice) {
-        this.withdrawButtonClass = 'button is-loading'
+        this.withdrawButtonClass = 'button is-primary is-outlined is-loading'
         const withdraw = await this.$grab.withdraw({
           ref: this.ref,
           type: 'ln',
           address: this.invoice.replace('lightning:', ''),
         })
-        this.withdrawButtonClass = 'button'
+        this.withdrawButtonClass = 'button is-primary is-outlined'
         return withdraw
       }
     },
@@ -98,13 +98,13 @@ export default {
       this.addressError = false
       const validAddress = this.validateAddress()
       if (validAddress) {
-        this.withdrawButtonClass = 'button is-loading'
+        this.withdrawButtonClass = 'button is-primary is-outlined is-loading'
         const withdraw = await this.$grab.withdraw({
           ref: this.ref,
           type: 'chain',
           address: this.address.replace('bitcoin:', ''),
         })
-        this.withdrawButtonClass = 'button'
+        this.withdrawButtonClass = 'button is-primary is-outlined'
         return withdraw
       }
     },

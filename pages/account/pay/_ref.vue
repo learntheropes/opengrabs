@@ -14,7 +14,7 @@
                 </div>
               </div>
               <div class="buttons has-addons is-centered">
-                <button class="button" @click="copyLightningInvoice">{{ $t('copyInvoice')}}</button>
+                <button class="button is-primary is-outlined" @click="copyLightningInvoice">{{ $t('copyInvoice')}}</button>
               </div>
             </div>
           </div>
@@ -32,8 +32,8 @@
                 </div>
               </div>
               <div class="buttons is-centered">
-                <button class="button" @click="copyBitcoinAddress">{{ $t('copyAddress')}}</button>
-                <button class="button" @click="copyBitcoinAmount">{{ $t('copyAmount')}}</button>
+                <button class="button is-primary is-outlined" @click="copyBitcoinAddress">{{ $t('copyAddress')}}</button>
+                <button class="button is-primary is-outlined" @click="copyBitcoinAmount">{{ $t('copyAmount')}}</button>
               </div>
             </div>
           </div>
@@ -55,13 +55,13 @@
     <div v-if="paymentConfirmed" class="columns is-centered">
       <div class="column is-one-third">
         <div class="box"><p>{{ $t('paymentConfirmed')}}</p></div>
-        <button class="button" @click="goBack">{{ $t('goBack')}}</button>
+        <button class="button is-primary is-outlined" @click="goBack">{{ $t('goBack')}}</button>
       </div>
     </div>
     <div v-if="paymentExpired" class="columns is-centered">
       <div class="column is-one-third">
         <div class="box"><p>{{ $t('paymentExpired')}}</p></div>
-        <button class="button" @click="reloadPage">{{ $t('generateNewInvoice')}}</button>
+        <button class="button is-primary is-outlined" @click="reloadPage">{{ $t('generateNewInvoice')}}</button>
       </div>
     </div>
   </section>

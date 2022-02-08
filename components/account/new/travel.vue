@@ -95,7 +95,7 @@ export default {
             { value: 'de', name: 'Germany', currency: 'EUR'  },
             { value: 'fr', name: 'France', currency: 'EUR'  },
         ],
-        loadTravelButtonClass: 'button',
+        loadTravelButtonClass: 'button is-primary is-outlined',
         publishButtonClass: 'card-footer-item',
         originObject: null,
         originCountryError: false,
@@ -253,7 +253,7 @@ export default {
             this.destinationCountryType = null
             this.destinationCityError = false
             this.destinationCityType = null
-            this.loadTravelButtonClass = 'button is-loading'
+            this.loadTravelButtonClass = 'button is-primary is-outlined is-loading'
             const validOriginCountry = this.validateOriginCountry()
             const validDestinationCountry = this.validateDestinationCountry()
             const validDestinationCity = this.validateDestinationCity()
@@ -265,7 +265,7 @@ export default {
                 this.travelPublishedAt = new Date().toISOString()
                 this.showPreview = true
             }
-            this.loadTravelButtonClass = 'button'
+            this.loadTravelButtonClass = 'button is-primary is-outlined'
         },
         resetForm() {
             this.originObject = null

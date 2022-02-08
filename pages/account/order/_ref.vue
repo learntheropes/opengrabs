@@ -104,7 +104,7 @@ export default {
             email: null,
             email_verified: false
         },
-        loadAmazonButtonClass: 'button',
+        loadAmazonButtonClass: 'button is-primary is-outlined',
         publishButtonClass: 'card-footer-item',
         scrapedProduct: false,
         url: null,
@@ -214,9 +214,9 @@ export default {
             this.amazonUrlType = null
             const validUrl = this.validateAmazonUrl()
             if (validUrl) {
-                this.loadAmazonButtonClass = 'button is-loading'
+                this.loadAmazonButtonClass = 'button is-primary is-outlined is-loading'
                 await this.loadAmazonData()
-                this.loadAmazonButtonClass = 'button'        
+                this.loadAmazonButtonClass = 'button is-primary is-outlined'        
             }
         },
         async publishGrab() {

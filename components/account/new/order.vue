@@ -102,7 +102,7 @@ export default {
       email: null,
       email_verified: false
     },
-    loadAmazonButtonClass: 'button',
+    loadAmazonButtonClass: 'button is-primary is-outlined',
     publishButtonClass: 'card-footer-item',
     scrapedProduct: false,
     country: null,
@@ -309,9 +309,9 @@ export default {
       const validDate = this.validateDate()
       const validUrl = this.validateAmazonLink()
       if (validCountry && validCity && validDate && validUrl) {
-        this.loadAmazonButtonClass = 'button is-loading'
+        this.loadAmazonButtonClass = 'button is-primary is-outlined is-loading'
         await this.loadAmazonData()
-        this.loadAmazonButtonClass = 'button'        
+        this.loadAmazonButtonClass = 'button is-primary is-outlined'        
       }
     },
     async publishGrab() {

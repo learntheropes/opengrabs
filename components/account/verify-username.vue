@@ -7,7 +7,7 @@
             <b-field grouped :type="usernameType" :message="usernameMessage">
                 <b-input v-model="user.username" type="text" :placeholder="$t('usernameLabel')" expanded />
                 <p class="control">
-                    <b-button @click="updateUserUsername">{{ $t('update') }}</b-button> 
+                    <b-button type="is-primary" outlined @click="updateUserUsername">{{ $t('update') }}</b-button> 
                 </p>
             </b-field> 
         </div>

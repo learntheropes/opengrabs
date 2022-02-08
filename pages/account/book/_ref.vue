@@ -32,7 +32,7 @@ export default {
     delivery_date: null,
     dateType: null,
     dateError: false,
-    bookButtonClass: 'button'
+    bookButtonClass: 'button is-primary is-outlined'
   }),
   computed: {
     dateMessage() {
@@ -60,7 +60,7 @@ export default {
       this.dateError = null
       const validDate = this.validateDate()
       if (validDate) {
-        this.bookButtonClass = 'button is-loading'
+        this.bookButtonClass = 'button is-primary is-outlined is-loading'
         await this.$grab.book({
           ref: this.ref,
           delivery_date: this.delivery_date.toISOString(),
@@ -68,7 +68,7 @@ export default {
         const booked = await this.$db.account.deliveries.filter('booked')    
         this.$store.commit('account/deliveries/setBooked', booked)
         this.$store.commit('orders/setInitiated', false)
-        this.bookButtonClass = 'button'
+        this.bookButtonClass = 'button is-primary is-outlined'
         this.$buefy.toast.open({
           duration: 3000,
           message: this.$t('toastGrabBooked'),

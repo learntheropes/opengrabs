@@ -21,12 +21,12 @@
           </div>
           <b-field>
             <div class="buttons">
-              <nuxt-link v-if="isBookedAndBuyer" class="button is-primary" :to="localePath({ name: 'account-pay-ref', params: { ref }})">{{ $t('pay') }}</nuxt-link>
+              <nuxt-link v-if="isBookedAndBuyer" class="button is-primary is-outlined" :to="localePath({ name: 'account-pay-ref', params: { ref }})">{{ $t('pay') }}</nuxt-link>
               <button v-if="isDisputable" :class="disputeButtonClass" @click="dispute">{{ $t('dispute') }}</button>
               <button v-if="isPaidAndTraveler" :class="boughtButtonClass" @click="bought">{{ $t('markAsBought') }}</button>
               <button v-if="isBoughtAndTraveler" :class="deliveredButtonClass" @click="delivered">{{ $t('markAsDelivered') }}</button>
               <button v-if="isDeliveredAndBuyer" :class="releaseButtonClass" @click="release">{{ $t('release') }}</button>
-              <nuxt-link v-if="isReleasedAndTraveler" class="button is-primary" :to="localePath({ name: 'account-withdraw-ref', params: { ref }})">{{ $t('withdraw') }}</nuxt-link>
+              <nuxt-link v-if="isReleasedAndTraveler" class="button is-primary is-outlined" :to="localePath({ name: 'account-withdraw-ref', params: { ref }})">{{ $t('withdraw') }}</nuxt-link>
             </div>
           </b-field>
           <div v-if="isRatingPossible">
@@ -100,12 +100,12 @@ export default {
     return { ref, isBuyerOrTraveler, grab, messages }
   },
   data: () => ({
-    disputeButtonClass: 'button is-primary',
-    boughtButtonClass: 'button is-primary',
-    deliveredButtonClass: 'button is-primary',
-    releaseButtonClass: 'button is-primary',
-    chatButtonClass: 'button is-primary',
-    reviewButtonClass: 'button is-primary',
+    disputeButtonClass: 'button is-primary is-outlined',
+    boughtButtonClass: 'button is-primary is-outlined',
+    deliveredButtonClass: 'button is-primary is-outlined',
+    releaseButtonClass: 'button is-primary is-outlined',
+    chatButtonClass: 'button is-primary is-outlined',
+    reviewButtonClass: 'button is-primary is-outlined',
     message: null,
     postType: null,
     postError: false,
@@ -183,7 +183,7 @@ export default {
       this.postError = false
       const validPost = this.validatePost()
       if (validPost) {
-        this.chatButtonClass = 'button is-primary is-loading'
+        this.chatButtonClass = 'button is-primary is-outlined is-loading'
         const props = {
           posted_at: new Date().toISOString(),
           content: this.message,
@@ -192,16 +192,16 @@ export default {
           user_username: this.getUsername(),
         }
         await this.$db.messages.create({ props })
-        this.chatButtonClass = 'button is-primary'
+        this.chatButtonClass = 'button is-primary is-outlined'
         const messages = await this.$db.messages.filter(this.ref)
         this.messages = messages
         this.message = null
       }
     },
     async dispute() {
-      this.disputeButtonClass = 'button is-primary is-loading'
+      this.disputeButtonClass = 'button is-primary is-outlined is-loading'
       await this.$grab.dispute({ ref: this.ref })
-      this.disputeButtonClass = 'button is-primary'
+      this.disputeButtonClass = 'button is-primary is-outlined'
       this.$buefy.toast.open({
         duration: 3000,
         message: this.$t('toastGrabDisputed'),
@@ -211,9 +211,9 @@ export default {
       this.grab = await this.$db.grabs.get(this.ref)
     },
     async bought() {
-      this.boughtButtonClass = 'button is-primary is-loading'
+      this.boughtButtonClass = 'button is-primary is-outlined is-loading'
       await this.$grab.bought({ ref: this.ref })
-      this.boughtButtonClass = 'button is-primary'
+      this.boughtButtonClass = 'button is-primary is-outlined'
       this.$buefy.toast.open({
         duration: 3000,
         message: this.$t('toastGrabBought'),
@@ -223,9 +223,9 @@ export default {
       this.grab = await this.$db.grabs.get(this.ref)
     },
     async delivered() {
-      this.deliveredButtonClass = 'button is-primary is-loading'
+      this.deliveredButtonClass = 'button is-primary is-outlined is-loading'
       await this.$grab.delivered({ ref: this.ref })
-      this.deliveredButtonClass = 'button is-primary'
+      this.deliveredButtonClass = 'button is-primary is-outlined'
       this.$buefy.toast.open({
         duration: 3000,
         message: this.$t('toastGrabDelivered'),
@@ -235,9 +235,9 @@ export default {
       this.grab = await this.$db.grabs.get(this.ref)
     },
     async release() {
-      this.releaseButtonClass = 'button is-primary is-loading'
+      this.releaseButtonClass = 'button is-primary is-outlined is-loading'
       await this.$grab.release({ ref: this.ref })
-      this.releaseButtonClass = 'button is-primary'
+      this.releaseButtonClass = 'button is-primary is-outlined'
       this.$buefy.toast.open({
         duration: 3000,
         message: this.$t('toastGrabReleased'),
@@ -247,7 +247,7 @@ export default {
       this.grab = await this.$db.grabs.get(this.ref)
     },
     async postReview() {
-      this.reviewButtonClass = 'button is-primary is-loading'
+      this.reviewButtonClass = 'button is-primary is-outlined is-loading'
       const props = {
         posted_at: new Date().toISOString(),
         grab_id: this.ref,
@@ -257,7 +257,7 @@ export default {
         content: this.review
       }
       await this.$reviews.create({ props })
-      this.reviewButtonClass = 'button is-primary'
+      this.reviewButtonClass = 'button is-primary is-outlined'
       this.$buefy.toast.open({
         duration: 3000,
         message: this.$t('toastReviewPosted'),

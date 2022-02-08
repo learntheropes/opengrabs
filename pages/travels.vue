@@ -23,7 +23,7 @@
                     </b-select>
                 </p>
                 <p class="control">
-                    <b-button :label="$t('filter')" class="is-primary" @click="filter" />
+                    <b-button :label="$t('filter')" class="is-primary" outlined @click="filter" />
                 </p>
                 <p v-if="filteredTravels" class="control">
                     <b-button :label="$t('removeFilter')" @click="removeFilters" />
