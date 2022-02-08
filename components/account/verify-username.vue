@@ -77,9 +77,9 @@ export default {
                 } else {
                     this.show = false
                     this.$nuxt.$emit('updateUser', {email: this.user.email, email_verified: this.user.email_verified, username: this.user.username})
-                    if (process.env.URL && user.username && user.email && this.$Tawk.$isInit() && !this.$store.state.account.tawk.initiated) {
-                        const { data: { hash }} = await this.$axios.get(`/api/crypto/sha256/${user.email}`)
-                        this.$Tawk.$updateChatUser({ name: user.username, email: user.email, hash: hash})
+                    if (process.env.URL && this.user.username && this.user.email && this.$Tawk.$isInit() && !this.$store.state.account.tawk.initiated) {
+                        const { data: { hash }} = await this.$axios.get(`/api/crypto/sha256/${this.user.email}`)
+                        this.$Tawk.$updateChatUser({ name: this.user.username, email: this.user.email, hash })
                         const attributes = {
                             'user-sub': this.$store.$auth.user.sub,
                             'bitcoin-network': (process.env.BTC_CHAIN === 'test3') ? 'testnet': 'mainnet'

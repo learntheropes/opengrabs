@@ -110,7 +110,18 @@ export default {
       return this.$moment.utc(this.countdown).format('mm:ss')
     }
   },
-  created () {
+  async created () {
+    const user = await this.$user.get()
+    if (process.env.URL && user.username && user.email && this.$Tawk.$isInit() && !this.$store.state.account.tawk.initiated) {
+      const { data: { hash }} = await this.$axios.get(`/api/crypto/sha256/${user.email}`)
+      this.$Tawk.$updateChatUser({ name: user.username, email: user.email, hash })
+      const attributes = {
+        'user-sub': this.$store.$auth.user.sub,
+        'bitcoin-network': (process.env.BTC_CHAIN === 'test3') ? 'testnet': 'mainnet'
+      }
+      this.$Tawk.$setAttribute(attributes)
+      this.$store.commit('account/tawk/setInitiated', true)
+    }
     const checkConfirmations = () => {
       this.countdown = this.countdown -1000
       if (this.countdown % 5000 === 0) {

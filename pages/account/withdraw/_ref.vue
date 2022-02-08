@@ -61,6 +61,19 @@ export default {
       else return null      
     }
   },
+  async created() {
+    const user = await this.$user.get()
+    if (process.env.URL && user.username && user.email && this.$Tawk.$isInit() && !this.$store.state.account.tawk.initiated) {
+      const { data: { hash }} = await this.$axios.get(`/api/crypto/sha256/${user.email}`)
+      this.$Tawk.$updateChatUser({ name: user.username, email: user.email, hash })
+      const attributes = {
+        'user-sub': this.$store.$auth.user.sub,
+        'bitcoin-network': (process.env.BTC_CHAIN === 'test3') ? 'testnet': 'mainnet'
+      }
+      this.$Tawk.$setAttribute(attributes)
+      this.$store.commit('account/tawk/setInitiated', true)
+    }
+  },
   methods: {
     validateInvoice() {
       if (!this.invoice) {
