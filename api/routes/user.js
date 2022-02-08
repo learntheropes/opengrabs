@@ -50,7 +50,7 @@ router.get('/db/user/get', authorizeUser, asyncHandler(async (req, res) => {
 }))
 
 router.post('/db/user/create', authorizeUser, asyncHandler(async (req, res) => {
-  const { jwt } = req.body
+  const { jwt, locale } = req.body
   const sub = jwt.sub
 
   let strategy = jwt['https://opengrabs.com/strategy']
@@ -65,7 +65,8 @@ router.post('/db/user/create', authorizeUser, asyncHandler(async (req, res) => {
         sub: sub,
         email: email,
         email_verified: email_verified,
-        strategy: 'facebook'
+        strategy: 'facebook',
+        locale: locale
       }
       break
     case 'oauth2':
@@ -74,7 +75,8 @@ router.post('/db/user/create', authorizeUser, asyncHandler(async (req, res) => {
         sub: sub,
         email: email,
         email_verified: (email) ? true : false,
-        strategy: 'vkontakte'
+        strategy: 'vkontakte',
+        locale: locale
       }
       break
     case 'email':
@@ -84,7 +86,8 @@ router.post('/db/user/create', authorizeUser, asyncHandler(async (req, res) => {
         sub: sub,
         email: email,
         email_verified: email_verified,
-        strategy: 'email'
+        strategy: 'email',
+        locale: locale
       }
   }
 

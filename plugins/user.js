@@ -4,8 +4,10 @@ export default ({ $axios }, inject) => {
         const { data } = await $axios.get('/api/db/user/get')
         return data
       },
-      create: async() => {
-        const { data } = await $axios.post('/api/db/user/create')
+      create: async(locale) => {
+        const { data } = await $axios.post('/api/db/user/create', {
+          locale
+        })
         return data
       },
       update: async (props) => {

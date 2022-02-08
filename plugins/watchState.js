@@ -9,6 +9,7 @@ export default async ({ app, $auth, $axios }) => {
         const jwt = jwt_decode(token)
         const logins_count = jwt['https://opengrabs.com/logins_count']
         if (logins_count === 1) {
+            await app.$user.create(lang)
             await $axios.post('/api/user/management/lang', { lang }, {
                 headers: { 'Authorization': auth }
             })

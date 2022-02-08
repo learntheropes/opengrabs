@@ -14,14 +14,12 @@
 <script>
 export default {
   name: 'New',
-  async asyncData({ app, store, params: { adv }}) {
+  asyncData({ store, params: { adv }}) {
     if (adv === 'order') {
       store.commit('account/new/setActiveTab', 0)
     } else if (adv === 'travel') {
       store.commit('account/new/setActiveTab', 1)
     }
-    const user = await app.$user.create()
-    return { user, adv }
   },
   computed: {
     activeTab: {
