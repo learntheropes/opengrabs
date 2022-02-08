@@ -14,6 +14,21 @@ export default async ({ app, $auth, $axios }) => {
                 headers: { 'Authorization': auth }
             })
         }
+        console.log('Tawk', app.$Tawk)
+
+        if (process.env.URL) {
+            const user = await app.$user.get()
+            if (user.username && user.email) {
+                const { data: { hash }} = await $axios.get(`/api/crypto/sha256/${user.email}`)
+                app.$Tawk.$updateChatUser({ name: user.username, email: user.email, emailHmac: hash})
+            }
+            const attribute = {
+                key: 'user-sub',
+                value: app.$store.$auth.user.sub
+            }
+            app.$Tawk.$setAttribute(attribute)
+        }
+
     }
 
     // wait that bug is fixed https://github.com/nuxt-community/auth-module/issues/156#issuecomment-751308223
