@@ -30,7 +30,7 @@
                         <b-datepicker v-model="travelDate" :min-date="new Date()" icon="calendar-today" editable />
                     </b-field>
                     <b-field :label="$t('travelRewardLabel')" :message="$t('travelRewardMessage')">
-                        <b-slider v-model="travelReward" :min="5" :max="50" :step="5" ticks tooltip-always />
+                        <b-slider v-model="travelReward" :min="5" :max="50" :step="5" ticks :custom-formatter="(val) => val + '%'" :tooltip="false" indicator />
                     </b-field>
                     <b-field :label="$t('travelBudgetLabel')" :type="travelBudgetType" :message="travelBudgetMessage">
                         <b-input v-model="travelBudget" type="text" expanded></b-input>
