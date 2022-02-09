@@ -114,7 +114,7 @@ export default {
                     this.show = false
                     this.$nuxt.$emit('updateUser', {email: this.user.email, email_verified: this.user.email_verified, username: this.user.username})
                     if (process.env.URL && this.user.username && this.user.email && this.$Tawk.$isInit() && !this.$store.state.account.tawk.initiated) {
-                        const { data: { hash }} = await this.$axios.get(`/api/crypto/sha256/${this.user.email}`)
+                        const { data: { hash }} = await this.$axios.get(`/api/crypto/sha256`)
                         this.$Tawk.$updateChatUser({ name: this.user.username, email: this.user.email, hash })
                         const attributes = {
                             'user-sub': this.$store.$auth.user.sub,

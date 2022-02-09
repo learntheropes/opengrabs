@@ -13,7 +13,6 @@ import facebook from './routes/facebook'
 import grabActions from './routes/grab-actions'
 import travelActions from './routes/travel-actions'
 import admin from './routes/admin'
-import crypto from './routes/crypto'
 import user from './routes/user'
 import reviews from './routes/reviews'
 
@@ -24,7 +23,6 @@ app.use(facebook)
 app.use(grabActions)
 app.use(travelActions)
 app.use(admin)
-app.use(crypto)
 app.use(user)
 app.use(reviews)
 
