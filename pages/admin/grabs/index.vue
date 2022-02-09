@@ -8,22 +8,22 @@
                 <h1 class="title">Grabs</h1>
                 <b-table :data="grabs">
                     <template>
-                        <b-table-column v-slot="props" label="Ref">
+                        <b-table-column v-slot="props" label="Ref" field="ref" searchable>
                             {{ props.row.ref }}
                         </b-table-column>
-                        <b-table-column  v-slot="props" label="Status">
+                        <b-table-column  v-slot="props" label="Status" field="status" searchable>
                             {{ props.row.status }}
                         </b-table-column>                     
-                        <b-table-column  v-slot="props" label="Buyer">
+                        <b-table-column v-slot="props" label="Buyer" field="buyer.username" searchable>
                             <p v-if="props.row.buyer">{{ props.row.buyer.username }}</p>
                         </b-table-column>
-                        <b-table-column v-slot="props" label="Traveler">
+                        <b-table-column v-slot="props" label="Traveler" field="traveler.username" searchable>
                             <p v-if="props.row.traveler">{{ props.row.traveler.username }}</p>
                         </b-table-column>
                         <b-table-column v-slot="props" label="Updated At">
                             {{ $moment(props.row.updated_at).fromNow() }}
                         </b-table-column>
-                        <b-table-column v-slot="props" label="Open">
+                        <b-table-column v-slot="props">
                             <nuxt-link :to="'/admin/grabs/'+props.row.ref">
                                 View
                             </nuxt-link>

@@ -5,10 +5,10 @@
                 <admin-side-bar />
             </div>
             <div class="column">
-                <h1 class="title">Disputes</h1>
+                <h1 class="title">Closed Disputes</h1>
                 <b-table :data="disputes">
                     <template>
-                        <b-table-column v-slot="props" label="Ref">
+                        <b-table-column v-slot="props" label="Ref" field="ref" searchable>
                             {{ props.row.ref }}
                         </b-table-column>
                         <b-table-column v-slot="props" label="Amount">
@@ -17,19 +17,19 @@
                         <b-table-column v-slot="props" label="Product">
                             <a :href="props.row.shop.url" target="_blank">View</a>
                         </b-table-column>                        
-                        <b-table-column  v-slot="props" label="Buyer">
+                        <b-table-column  v-slot="props" label="Buyer" field="buyer.username" searchable>
                             {{ props.row.buyer.username }}
                         </b-table-column>
-                        <b-table-column v-slot="props" label="Traveler">
+                        <b-table-column v-slot="props" label="Traveler" field="traveler.username" searchable>
                             {{ props.row.traveler.username }}
                         </b-table-column>
-                        <b-table-column v-slot="props" label="Disputed By">
+                        <b-table-column v-slot="props" label="Disputed By" field="disputed.by.username" searchable>
                             {{ props.row.dispute.by.username }}
                         </b-table-column>
                         <b-table-column v-slot="props" label="Started At">
                             {{ $moment(props.row.disputed_at).fromNow() }}
                         </b-table-column>
-                        <b-table-column v-slot="props" label="Open">
+                        <b-table-column v-slot="props">
                             <nuxt-link :to="'/admin/disputes/'+props.row.ref">View</nuxt-link>
                         </b-table-column>
                     </template>
