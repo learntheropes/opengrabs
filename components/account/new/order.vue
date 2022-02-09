@@ -26,7 +26,7 @@
             <b-input v-model="url" type="text" expanded></b-input>
           </b-field>
           <b-field :label="rewardLabel" :message="rewardMessage">
-            <b-slider v-model="reward" :min="5" :max="50" :step="5" ticks />
+            <b-slider v-model="reward" :min="5" :max="50" :step="5" ticks tooltip-always />
           </b-field>
           <button :class="loadAmazonButtonClass" @click="loadAmazonButton">{{ $t('getProductInfo')}}</button>
         </div>
