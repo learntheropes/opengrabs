@@ -14,7 +14,7 @@ import grabActions from './routes/grab-actions'
 import travelActions from './routes/travel-actions'
 import admin from './routes/admin'
 import user from './routes/user'
-import reviews from './routes/reviews'
+import feedback from './routes/feedback'
 
 app.use(amazon)
 app.use(db)
@@ -24,7 +24,7 @@ app.use(grabActions)
 app.use(travelActions)
 app.use(admin)
 app.use(user)
-app.use(reviews)
+app.use(feedback)
 
 module.exports = {
   path: '/api',

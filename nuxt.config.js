@@ -42,7 +42,7 @@ export default {
     '~plugins/tawk.client.js',
     '~/plugins/db.js',
     '~/plugins/user.js',
-    '~/plugins/reviews.js',
+    '~/plugins/feedback.js',
     '~/plugins/admin.js',
     '~/plugins/utils.js',
     '~plugins/vue-qrcode.js',

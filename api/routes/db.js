@@ -198,7 +198,7 @@ router.post('/db/messages/create', authorizeUser, asyncHandler(async (req, res) 
   res.status(201).json(response)
 }))
 
-router.post('/db/reviews/create', authorizeUser, asyncHandler(async (req, res) => {
+router.post('/db/feedback/create', authorizeUser, asyncHandler(async (req, res) => {
   const { jwt, props } = req.body
 
   const { data: grab } = await client.query(

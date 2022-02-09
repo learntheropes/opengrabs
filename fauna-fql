@@ -5,7 +5,7 @@ CreateCollection({ name: "messages" })
 CreateCollection({ name: "users" })
 CreateCollection({ name: "withdrawal_webhooks" })
 CreateCollection({ name: "travels" })
-CreateCollection({ name: "reviews" })
+CreateCollection({ name: "feedback" })
 
 CreateIndex({
   name: "travels_search_by_traveler_sub_and_date",
@@ -389,9 +389,9 @@ CreateIndex({
  })
 
 CreateIndex({
-  name: "reviews_by_username",
+  name: "feedback_by_username",
   source: {
-    collection: Collection("reviews"),
+    collection: Collection("feedback"),
   },
   terms: [
     {

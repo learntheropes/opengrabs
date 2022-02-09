@@ -69,8 +69,8 @@ export default {
     byDestinationCountry: "By country of destination",
     byDestinationCity: "By city of destination",
     // pages/user/username
-    noReviewsYet: "No reviews yet",
-    reviewBy: "Review by",
+    noFeedbackYet: "No feedback yet",
+    feedbackBy: "Feedback by",
     // pages/exchange-rates
     currency: "CURRENCY",
     buy: "BUY",
@@ -110,10 +110,10 @@ export default {
     statusRefunded: "Grab refunded",
     admin: "Admin",
     me: "Me",
-    leaveAReviewFor: "Leave a review for",
+    leaveFeedbackFor: "Leave a feedback for",
     rating: "Rating",
-    review: "Review",
-    postReview: "Post rating and review",
+    feedback: "Feedback",
+    postFeedback: "Post rating and feedback",
     toastGrabRemoved: "Grab removed",
     toastGrabDisputed: "Grab disputed",
     toastGrabBought: "Grab marked as bought",
@@ -122,7 +122,7 @@ export default {
     toastGrabBooked: "Grab booked",
     toastGrabPaid: "Grab paid",
     toastGrabUnderpaid: "Grab underpaid",
-    toastReviewPosted: "Review posted",
+    toastFeedbackPosted: "Feedback posted",
     // pages/account/pay/_ref && pages/account/underpay/_ref
     copyInvoice: "Copy Invoice",
     copyAddress: "Copy Address",

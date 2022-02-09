@@ -30,13 +30,13 @@
             </div>
           </b-field>
           <div v-if="isRatingPossible">
-            <h5 class="title is-5">{{ $t('leaveAReviewFor') }} {{ partnerUsername }}</h5>
+            <h5 class="title is-5">{{ $t('leaveFeedbackFor') }} {{ partnerUsername }}</h5>
             <b-rate v-model="rate" :custom-text="$t('rating')"></b-rate>
-            <b-field :label="$t('review')">
-              <b-input v-model="review" maxlength="400" type="textarea"></b-input>
+            <b-field :label="$t('feedback')">
+              <b-input v-model="feedback" maxlength="400" type="textarea"></b-input>
             </b-field>
             <b-field>
-              <button :class="reviewButtonClass" @click="postReview">{{ $t('postReview') }}</button>
+              <button :class="feedbackButtonClass" @click="postFeedback">{{ $t('postFeedback') }}</button>
             </b-field>
           </div>
         </div>
@@ -105,12 +105,12 @@ export default {
     deliveredButtonClass: 'button is-primary is-outlined',
     releaseButtonClass: 'button is-primary is-outlined',
     chatButtonClass: 'button is-primary is-outlined',
-    reviewButtonClass: 'button is-primary is-outlined',
+    feedbackButtonClass: 'button is-primary is-outlined',
     message: null,
     postType: null,
     postError: false,
     rate: null,
-    review: null
+    feedback: null
   }),
   computed: {
     postMessage() {
@@ -257,21 +257,21 @@ export default {
       })
       this.grab = await this.$db.grabs.get(this.ref)
     },
-    async postReview() {
-      this.reviewButtonClass = 'button is-primary is-outlined is-loading'
+    async postFeedback() {
+      this.feedbackButtonClass = 'button is-primary is-outlined is-loading'
       const props = {
         posted_at: new Date().toISOString(),
         grab_id: this.ref,
         username: this.partnerUsername,
         reviewer_username: this.getUsername(),
         rate: this.rate,
-        content: this.review
+        content: this.feedback
       }
-      await this.$reviews.create({ props })
-      this.reviewButtonClass = 'button is-primary is-outlined'
+      await this.$feedback.create({ props })
+      this.feedbackButtonClass = 'button is-primary is-outlined'
       this.$buefy.toast.open({
         duration: 3000,
-        message: this.$t('toastReviewPosted'),
+        message: this.$t('toastFeedbackPosted'),
         position: 'is-bottom',
         type: 'is-primary'
       })
