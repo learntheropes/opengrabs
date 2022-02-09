@@ -17,6 +17,7 @@
     "@nuxtjs/auth-next": "^5.0.0-1642152945.3bb6b5f",
     "@nuxtjs/axios": "^5.13.6",
     "@nuxtjs/dotenv": "^1.4.1",
+    "@nuxtjs/eslint-module": "^3.0.2",
     "@nuxtjs/i18n": "^7.2.0",
     "@nuxtjs/moment": "^1.6.1",
     "base64-url": "^2.3.3",
@@ -51,7 +52,6 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.3",
     "@nuxtjs/eslint-config": "^8.0.0",
-    "@nuxtjs/eslint-module": "^3.0.2",
     "eslint": "^8.4.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-nuxt": "^3.1.0",
