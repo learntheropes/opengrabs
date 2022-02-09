@@ -33,7 +33,7 @@
                                 <p>{{ $t('shipping')}}:</p>
                                 <p>{{ $t('taxes') }}:</p>
                                 <p>{{ $t('reward')}}:</p>
-                                <p class="has-text-weight-bold">Total:</p>
+                                <p class="has-text-weight-bold">{{ $t('total') }}</p>
                             </div>
                             <div class="column" align="right">
                                 <p>{{ price.product.toFixed(2) }}</p>
