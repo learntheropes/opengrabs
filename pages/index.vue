@@ -1,14 +1,13 @@
 <template>
   <section>
-    <div class="hero is-fullheight-with-navbar">
-      <div class="hero-body hero-body-shopper">
+    <div class="hero is-medium">
+      <div class="hero-body">
         <div class="container has-text-right">
           <p class="title">
             {{ $t('shopCheaperInternationally') }}
           </p>
           <p class="subtitle">
-            {{ $t('findAProductThatYouLikeOnAmazon') }}<br>
-            {{ $t('thatATravelerCanBringToYou') }}
+            {{ $t('findAProductThatYouLikeOnAmazon') }} {{ $t('thatATravelerCanBringToYou') }}
           </p>
           <div class="buttons is-right">
             <a v-if="!authenticated" class="button is-primary" @click="loginNewOrder">{{ $t('loginToAddOrder') }}</a >
@@ -18,15 +17,14 @@
         </div>
       </div>
     </div>
-    <div class="hero is-fullheight-with-navbar">
-      <div class="hero-body hero-body-traveler">
+    <div class="hero is-medium">
+      <div class="hero-body">
         <div class="container">
           <p class="title">
             {{ $t('getPaidToTravel') }}
           </p>
           <p class="subtitle">
-            {{ $t('gainRewardToBringAmazonProduct') }}<br>
-            {{ $t('duringYourNextTravel') }}
+            {{ $t('gainRewardToBringAmazonProduct') }} {{ $t('duringYourNextTravel') }}
           </p>
           <div class="buttons">
             <a v-if="!authenticated" href="#" class="button is-primary" @click="loginNewTravel">{{ $t('loginToAddTravel') }}</a>
@@ -36,11 +34,11 @@
         </div>
       </div>
     </div>
-    <div class="hero is-fullheight-with-navbar">
-      <div class="hero-body hero-body-fee">
+    <div class="hero is-medium">
+      <div class="hero-body">
         <div class="container has-text-right">
           <p class="title">
-            {{ $t('weDontChargeFee') }}<br>
+            {{ $t('weDontChargeFee') }}
           </p>
           <p class="subtitle">
             {{ $t('weDontChargeFeeBecauseAmazon') }}<br>
@@ -92,33 +90,3 @@ export default {
   }
 }
 </script>
-
-
-<style scoped>
-/*
-.hero-body-shopper {
-  background-image: url('../static/shopping.png');
-  height: 100%;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  opacity: 0.8;
-}
-.hero-body-traveler {
-  background-image: url('../static/travel.svg');
-  height: 100%;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  opacity: 0.8;
-}
-.hero-body-fee {
-  background-image: url('../static/fee.png');
-  height: 100%;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  opacity: 0.8;
-}
-*/
-</style>
