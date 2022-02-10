@@ -57,7 +57,7 @@ export default {
     viewOrders: "View orders",
     weDontChargeFee: "We don charge fees",
     weDontChargeFeeBecauseAmazon: "We don't charge service fee because Amazon may pay us a referral fee.",
-    thanksToBitcoin: "Thanks to Bitcoin lightning we don't charge any payment processor fee.",
+    thanksToBitcoin: "Thanks to Bitcoin lightning network we don't charge any payment processor fee.",
     viewComparisionFees: "View comparision fees",
     // pages/orders
     byCountry: "By country",
