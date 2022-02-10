@@ -13,6 +13,10 @@ Date.prototype.addHours = function(h) {
 router.get('/admin/is-admin', authorizeUser, asyncHandler(async (req,res) => {
   const { jwt } = req.body
   const isAdmin = jwt['https://opengrabs.com/roles'].includes('admin')
+  if (isAdmin === false) {
+    res.status(401).send('unauthorized')
+    return
+  }
   res.status(200).json(isAdmin)
 }))
 
