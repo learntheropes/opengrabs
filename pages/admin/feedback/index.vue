@@ -9,7 +9,7 @@
                 <b-field label="Charge ID">
                     <b-input v-model="username" />
                 </b-field>
-                <b-button @click="search" class="button">Search</b-button>
+                <b-button class="button" @click="search">Search</b-button>
                 <div v-if="response">
                     <h1 class="title">{{ username }}</h1>
                     <p class="subtitle is-3"><b-rate v-model="average" size="is-large" disabled></b-rate></p>
@@ -18,7 +18,7 @@
                         <p class="title is-3">Feedback by {{fb.autor}} Published {{ $moment(fb.posted_at).fromNow() }}</p>
                         <p class="subtitle is-5"><b-rate v-model="fb.rate" disabled></b-rate></p>
                         <p>{{ fb.content }}</p>
-                        <button @click="remove(fb.ref)" class="button">Remove</button>
+                        <button class="button" @click="remove(fb.ref)">Remove</button>
                     </div>
                 </div>
             </div>
