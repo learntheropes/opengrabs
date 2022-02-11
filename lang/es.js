@@ -55,7 +55,7 @@ export default {
     loginToAddTravel: "Sign in to add a travel.",
     addTravel: "Add a travel",
     viewOrders: "View orders",
-    weDontChargeFee: "We don charge fees",
+    weDontChargeFee: "We don't charge fees",
     weDontChargeFeeBecauseAmazon: "We don't charge service fee because Amazon may pay us a referral fee.",
     thanksToBitcoin: "Thanks to Bitcoin lightning network we don't charge any payment processor fee.",
     viewComparisionFees: "View comparision fees",
