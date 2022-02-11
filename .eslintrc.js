@@ -46,7 +46,6 @@ module.exports = {
       "jwt_decode",
       "logins_count",
       "user_username",
-      "reviewer_username",
       "destination_photo"
     ]}],
   },

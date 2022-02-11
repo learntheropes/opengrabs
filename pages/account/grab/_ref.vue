@@ -263,7 +263,7 @@ export default {
         posted_at: new Date().toISOString(),
         grab_id: this.ref,
         username: this.partnerUsername,
-        reviewer_username: this.getUsername(),
+        autor: this.getUsername(),
         rate: this.rate,
         content: this.feedback
       }

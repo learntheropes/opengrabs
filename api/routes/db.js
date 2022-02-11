@@ -205,8 +205,8 @@ router.post('/db/feedback/create', authorizeUser, asyncHandler(async (req, res) 
     q.Get(q.Ref(q.Collection('grabs'), props.grab_id))
   )
 
-  if ((jwt.sub === grab.buyer.id && props.reviewer_username === grab.buyer.username && props.username === grab.traveler.username) ||
-  (jwt.sub === grab.traveler.id && props.reviewer_username === grab.traveler.username && props.username === grab.buyer.username)) {
+  if ((jwt.sub === grab.buyer.id && props.autor === grab.buyer.username && props.username === grab.traveler.username) ||
+  (jwt.sub === grab.traveler.id && props.autor === grab.traveler.username && props.username === grab.buyer.username)) {
 
     const response = await client.query(
       q.Create(

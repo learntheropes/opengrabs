@@ -15,7 +15,7 @@
                     <p class="subtitle is-3"><b-rate v-model="average" size="is-large" disabled></b-rate></p>
                     <div v-if="feedback.length === 0">No feedback yet</div>
                     <div v-for="fb in feedback" v-else :key="fb.grab_id" class="block">
-                        <p class="title is-3">Feedback by {{fb.reviewer_username}} Published {{ $moment(fb.posted_at).fromNow() }}</p>
+                        <p class="title is-3">Feedback by {{fb.autor}} Published {{ $moment(fb.posted_at).fromNow() }}</p>
                         <p class="subtitle is-5"><b-rate v-model="fb.rate" disabled></b-rate></p>
                         <p>{{ fb.content }}</p>
                         <button @click="remove(fb.ref)" class="button">Remove</button>
