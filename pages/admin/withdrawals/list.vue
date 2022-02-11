@@ -15,7 +15,7 @@
                             {{ props.row.type}}
                         </b-table-column>                 
                         <b-table-column v-slot="props" label="Processed At">
-                            {{ $moment(props.row.processed_at).format('MMMM Do YYYY HH:mm') }}
+                            {{ $moment(props.row.processed_at*1000).format('MMMM Do YYYY HH:mm') }}
                         </b-table-column>
                         <b-table-column v-slot="props">
                             <nuxt-link :to="'/admin/withdrawals/'+props.row.id">View</nuxt-link>
