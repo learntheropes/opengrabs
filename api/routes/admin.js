@@ -220,8 +220,14 @@ router.post('/admin/charges/create-refund', authorizeUser, authorizeAdmin, async
 }))
 
 router.get('/admin/charges/paid', authorizeUser, authorizeAdmin, asyncHandler(async (req,res) => {
-  const { page = 1, pageSize = 10, search = '' } = req.query
+  const { page = 1, pageSize = 2147483647, search = '' } = req.query
   const data = await opennode.listPaidCharges({ page, pageSize, search }) // max pageSize 2147483647
+  res.status(200).json(data)
+}))
+
+router.get('/admin/charges/:id', authorizeUser, authorizeAdmin, asyncHandler(async (req,res) => {
+  const { id } = req.params
+  const data = await opennode.chargeInfo(id)
   res.status(200).json(data)
 }))
 
