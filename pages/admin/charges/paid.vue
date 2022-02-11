@@ -8,10 +8,10 @@
                 <h1 class="title">Paid Charges</h1>
                 <b-table :data="charges.data.items">
                     <template>
-                        <b-table-column v-slot="props" label="ID">
+                        <b-table-column v-slot="props" label="ID" field="id" searchable>
                             {{ props.row.id }}
                         </b-table-column>
-                        <b-table-column v-slot="props" label="Order ID">
+                        <b-table-column v-slot="props" label="Order ID" field="order_id" searchable>
                             {{ props.row.order_id}}
                         </b-table-column>                  
                         <b-table-column  v-slot="props" label="Description">
@@ -19,6 +19,9 @@
                         </b-table-column>
                         <b-table-column v-slot="props" label="Created At">
                             {{ $moment(props.row.created_at).format('MMMM Do YYYY HH:mm') }}
+                        </b-table-column>
+                        <b-table-column v-slot="props">
+                            <nuxt-link :to="'/admin/charges/'+props.row.id">View</nuxt-link>
                         </b-table-column>
                     </template>
                 </b-table>
