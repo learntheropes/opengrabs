@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div class="hero is-fullheight-with-navbar">
+    <div :class="heroClass">
       <div class="hero-body">
         <div class="container has-text-right">
           <p class="title">
@@ -17,7 +17,7 @@
         </div>
       </div>
     </div>
-    <div class="hero is-fullheight-with-navbar">
+    <div :class="heroClass">
       <div class="hero-body">
         <div class="container">
           <p class="title">
@@ -34,7 +34,7 @@
         </div>
       </div>
     </div>
-    <div class="hero is-fullheight-with-navbar">
+    <div :class="heroClass">
       <div class="hero-body">
         <div class="container has-text-right">
           <p class="title">
@@ -55,6 +55,9 @@
 export default {
   name: 'Index',
   auth: false,
+  data: () =>({
+    heroClass: (window.innerWidth < 769) ? 'hero is-fullheight-with-navbar' : 'hero is-medium'
+  }),
   computed: {
     authenticated() {
       return this.$store.state.auth.loggedIn
