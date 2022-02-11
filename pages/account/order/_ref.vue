@@ -123,7 +123,7 @@ export default {
             if (this.amazonUrlError === 'Field required') return this.$t('requiredField')
             else if (this.amazonUrlError === 'Invalid url') return this.$t('invalidUrl')
             else if (this.amazonUrlError === 'Invalid shop') return this.$t('invaliShop')
-            else return `${this.$t('amazonUrlMessage1')} ${this.supportedShops.join(', ')} ${this.$t('amazonUrlMessage2')}`
+            else return `${this.$t('amazonUrlMessage1')} ${this.supportedShops.join(', ')}`
         },        
     },
     async created() {
@@ -188,17 +188,17 @@ export default {
         validateAmazonUrl() {
             if (!this.url) {
                 this.amazonUrlType = 'is-danger'
-                this.amazonUrlError = 'Field required'
+                this.amazonUrlError = this.$t('requiredField')
                 return false
             } else {
                 const match = this.url.match(/(?:amazon.)(?<domain>fr|de|it|es|co.uk|com)(?:\/|\?)(?<slug>.+)(?:\/dp\/)(?<dp>\w+)(?:\/|\?|$)/)
                 if (!match || !match.groups.domain || !match.groups.dp) {
                     this.amazonUrlType = 'is-danger'
-                    this.amazonUrlError = 'Invalid url'
+                    this.amazonUrlError = this.$t('invalidUrl')
                 return false
                 } else if (match.group.domain !== this.domain) {
                     this.amazonUrlType = 'is-danger'
-                    this.amazonUrlError = 'Invalid shop'
+                    this.amazonUrlError = this.$t('invalidShop')
                     return false
                 }
             }

@@ -2,6 +2,7 @@ export default {
     // forms
     requiredField: "Campo requerido",
     invalidUrl: "Enlache non valido",
+    invalidShop: "Invalid shop",
     invalidEmail: "Invalid email",
     invalidCode: "Invalid code",
     invalidBudget: "Invalid budget",
@@ -162,7 +163,9 @@ export default {
     underpaid: "Underpaid", 
     // pages/account/travels
     youDontHaveAnyTravel: "You don't have any travel planned yet",
-    actives: "Actives",        
+    actives: "Actives",
+    // pages/account/order/_ref
+    amazonUrlMessage1: "Allowed websites are:",      
     // components/account/new/order
     countryLabel: "Pais",
     countryPlaceholder: "Selecione un Pais",

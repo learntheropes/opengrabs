@@ -2,6 +2,7 @@ export default {
     // forms
     requiredField: "Field required",
     invalidUrl: "Invalid url",
+    invalidShop: "Invalid shop",
     invalidEmail: "Invalid email",
     invalidCode: "Invalid code",
     invalidBudget: "Invalid budget",
@@ -163,6 +164,8 @@ export default {
     // pages/account/travels
     youDontHaveAnyTravel: "You don't have any travel planned yet",
     actives: "Actives",
+    // pages/account/order/_ref
+    amazonUrlMessage1: "Allowed websites are:",
     // components/account/new/order
     countryLabel: "Country",
     countryPlaceholder: "Select a Country",
