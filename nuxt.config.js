@@ -28,7 +28,9 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [],
+  css: [
+    'vue-json-pretty/lib/styles.css'
+  ],
 
   // https://nuxtjs.org/docs/configuration-glossary/configuration-vue-config/
   // vue: {
@@ -39,16 +41,17 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '~plugins/tawk.client.js',
+    '~/plugins/tawk.client.js',
     '~/plugins/db.js',
     '~/plugins/user.js',
     '~/plugins/feedback.js',
     '~/plugins/admin.js',
     '~/plugins/utils.js',
-    '~plugins/vue-qrcode.js',
-    '~plugins/grab-actions.js',
-    '~plugins/travel-actions.js',
-    '~plugins/moment.js',
+    '~/plugins/vue-qrcode.js',
+    '~/plugins/grab-actions.js',
+    '~/plugins/travel-actions.js',
+    '~/plugins/moment.js',
+    '~/plugins/vue-json-pretty'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
