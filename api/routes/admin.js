@@ -231,4 +231,16 @@ router.get('/admin/charges/:id', authorizeUser, authorizeAdmin, asyncHandler(asy
   res.status(200).json(data)
 }))
 
+router.get('/admin/withdrawals/list', authorizeUser, authorizeAdmin, asyncHandler(async (req,res) => {
+  const { page = 1, pageSize = 2147483647, search = '' } = req.query
+  const data = await opennode.listWithdrawals({ page, pageSize, search }) // max pageSize 2147483647
+  res.status(200).json(data)
+}))
+
+router.get('/admin/withdrawals/:id', authorizeUser, authorizeAdmin, asyncHandler(async (req,res) => {
+  const { id } = req.params
+  const data = await opennode.withdrawalInfo(id)
+  res.status(200).json(data)
+}))
+
 module.exports = router
