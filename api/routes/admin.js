@@ -243,4 +243,32 @@ router.get('/admin/withdrawals/:id', authorizeUser, authorizeAdmin, asyncHandler
   res.status(200).json(data)
 }))
 
+router.get('/admin/feedback/get/:username', authorizeUser, authorizeAdmin, asyncHandler (async (req,res) => {
+  const { username } = req.params
+
+  const { data } = await client.query(
+      q.Paginate(
+          q.Match(q.Index('feedback_by_username'), username),
+          { size: 100000 }
+      )
+  )
+
+  const feedback = data.map(({ data, ref: { value: { id }}}) => {
+      data.ref = id
+      return data
+  })
+  
+  res.status(200).json(feedback)
+}))
+
+router.get('/admin/feedback/remove/:ref', authorizeUser, authorizeAdmin, asyncHandler (async (req,res) => {
+  const { ref } = req.params
+
+  await client.query(
+    q.Delete(q.Ref(q.Collection('feedback'), ref))
+  )
+
+  res.status(204).json({})
+}))
+
 module.exports = router
