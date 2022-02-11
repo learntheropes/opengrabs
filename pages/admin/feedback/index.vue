@@ -6,7 +6,7 @@
             </div>
             <div class="column">
                 <h1 class="title">Feedback by username</h1>
-                <b-field label="Charge ID">
+                <b-field label="Username">
                     <b-input v-model="username" />
                 </b-field>
                 <b-button class="button" @click="search">Search</b-button>
