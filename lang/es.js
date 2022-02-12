@@ -125,6 +125,8 @@ export default {
     toastGrabUnderpaid: "Grab underpaid",
     toastFeedbackPosted: "Feedback posted",
     // pages/account/pay/_ref && pages/account/underpay/_ref
+    lightning: "Lightning",
+    onChain: "On Chain",
     copyInvoice: "Copy Invoice",
     copyAddress: "Copy Address",
     copyAmount: "Copy Amount",

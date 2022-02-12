@@ -2,7 +2,7 @@
   <section class= "section container">
     <div v-if="countdown>0 && !paymentDetected">
       <b-tabs v-model="activeTab" position="is-centered" class="block" multiline>
-        <b-tab-item label="Lightning">
+        <b-tab-item :label="$t('lightning')">
           <div class="columns is-centered">
             <div class="column is-one-third">
               <figure class="image is-square">
@@ -19,7 +19,7 @@
             </div>
           </div>
         </b-tab-item>
-        <b-tab-item label="On Chain">
+        <b-tab-item :label="$t('onChain')">
           <div class="columns is-centered">
             <div class="column is-one-third">
               <figure class="image is-square">
