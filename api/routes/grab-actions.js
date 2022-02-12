@@ -57,7 +57,7 @@ router.post('/grab/actions/publish', authorizeUser, asyncHandler(async (req, res
         )
     )
 
-    res.status(201)
+    res.status(201).json({})
 }))
 
 router.post('/grab/actions/order/:ref', authorizeUser, asyncHandler(async (req, res) => {
@@ -152,7 +152,7 @@ router.post('/grab/actions/order/:ref', authorizeUser, asyncHandler(async (req, 
         text: emailContent.content,
       })
 
-    res.status(201)
+    res.status(201).json({})
 }))
 
 router.post('/grab/actions/remove/:ref', authorizeUser, asyncHandler(async (req, res) => {
@@ -184,7 +184,7 @@ router.post('/grab/actions/remove/:ref', authorizeUser, asyncHandler(async (req,
         q.Delete(q.Ref(q.Collection('grabs'), ref))
     )
 
-    res.status(204)
+    res.status(204).json({})
 }))
 
 router.post('/grab/actions/book/:ref', authorizeUser, asyncHandler(async (req, res) => {
@@ -264,7 +264,7 @@ router.post('/grab/actions/book/:ref', authorizeUser, asyncHandler(async (req, r
         text: emailContent.content,
     })
 
-    res.status(201)
+    res.status(201).json({})
 }))
 
 router.post('/grab/actions/dispute/:ref', authorizeUser, asyncHandler(async (req, res) => {
@@ -295,7 +295,7 @@ router.post('/grab/actions/dispute/:ref', authorizeUser, asyncHandler(async (req
         },
     }
 
-    const response = await client.query(
+    await client.query(
         q.Update(
             q.Ref(q.Collection('grabs'), ref),
             { data: props },
@@ -349,7 +349,7 @@ router.post('/grab/actions/dispute/:ref', authorizeUser, asyncHandler(async (req
 
 
 
-    res.status(201)
+    res.status(201).json({})
 }))
 
 router.post('/grab/actions/bought/:ref', authorizeUser, asyncHandler(async (req, res) => {
@@ -416,7 +416,7 @@ router.post('/grab/actions/bought/:ref', authorizeUser, asyncHandler(async (req,
         text: emailContent.content,
     })
 
-    res.status(201)
+    res.status(201).json({})
 }))
 
 router.post('/grab/actions/delivered/:ref', authorizeUser, asyncHandler(async (req, res) => {
@@ -483,7 +483,7 @@ router.post('/grab/actions/delivered/:ref', authorizeUser, asyncHandler(async (r
         text: emailContent.content,
     })
 
-    res.status(201)
+    res.status(201).json({})
 }))
 
 router.post('/grab/actions/release/:ref', authorizeUser, asyncHandler(async (req, res) => {
@@ -551,7 +551,7 @@ router.post('/grab/actions/release/:ref', authorizeUser, asyncHandler(async (req
         text: emailContent.content,
     })
 
-    res.status(201)
+    res.status(201).json({})
 }))
 
 router.post('/grab/actions/withdraw/:ref', authorizeUser, asyncHandler(async (req, res) => {
@@ -567,14 +567,24 @@ router.post('/grab/actions/withdraw/:ref', authorizeUser, asyncHandler(async (re
         const { data: rate } = await axios.get(`${baseUrl}/api/btc/rate/${grab.shop.currency}`)
         const btc_amount = Number(Math.round(parseFloat(grab.shop.price.total / rate.buy * 100000000 + 'e' + 0)) + 'e-' + 0)
         
-        await opennode.initiateExchange({ to: 'btc', btc_amount })
+        if (!grab.exchanged_at) {
+            await opennode.initiateExchange({ to: 'btc', btc_amount })
+
+            await client.query(
+                q.Update(
+                    q.Ref(q.Collection('grabs'), ref),
+                    { data: {
+                        exchanged_at: new Date().toISOString()
+                    }},
+                )
+            )
+        }
 
         const withdraw = await opennode.initiateWithdrawalAsync({
             type,
             address,
             amount: btc_amount,
-            callback_url: `${baseUrl}/api/btc/withdrawal/webhook`,
-            exchange_rate: rate.buy
+            callback_url: `${baseUrl}/api/btc/withdrawal/webhook`
         })
 
         const props = {
@@ -590,7 +600,7 @@ router.post('/grab/actions/withdraw/:ref', authorizeUser, asyncHandler(async (re
             )
         )
 
-        res.status(200)
+        res.status(200).json({})
         return
     }
     res.status(401).send('unauthorized')
