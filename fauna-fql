@@ -407,3 +407,54 @@ CreateIndex({
     }
   ]
 })
+
+CreateIndex({
+  name: "grabs_containing_withdraw_webhook",
+  source: [{
+    collection: Collection("grabs"),
+    fields: {
+      contains_withdraw_webhook: Query(
+        Lambda(
+          "doc",
+          ContainsPath( ["data", "withdraw", "webhook"], Var('doc'))
+        )
+      )
+    }
+  }],
+  terms: [
+    {
+      binding: 'contains_withdraw_webhook'
+    }
+  ]
+})
+
+CreateIndex({
+  name: "grabs_containing_charge",
+  source: [{
+    collection: Collection("grabs"),
+    fields: {
+      contains_charge: Query(
+        Lambda(
+          "doc",
+          ContainsPath( ["data", "charge"], Var('doc'))
+        )
+      )
+    }
+  }],
+  terms: [
+    {
+      binding: 'contains_charge'
+    }
+  ]
+})
+
+Map(
+  Paginate(
+      Match(Index("grabs_containing_charge"), true),
+    { size: 100000 }
+  ),
+  Lambda("ref", Get(Var("ref")))
+)
+
+Count(Match(Index("grabs_containing_charge"), true))
+

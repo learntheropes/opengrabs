@@ -219,6 +219,23 @@ router.post('/admin/charges/create-refund', authorizeUser, authorizeAdmin, async
   res.status(200).json(data)
 }))
 
+router.get('/admin/db/charges/webhook', authorizeUser, authorizeAdmin, asyncHandler(async (req,res) => {
+  const { data } = await client.query(
+    q.Map(
+      q.Paginate(
+          q.Match(q.Index("grabs_containing_charge"), true),
+        { size: 100000 }
+      ),
+      q.Lambda("ref", q.Get(q.Var("ref")))
+    )
+  )
+  const charges = data.map(({ data, ref: { value: { id }}}) => {
+    data.ref = id
+    return data
+  })
+  res.status(200).json(charges)
+}))
+
 router.get('/admin/charges/paid', authorizeUser, authorizeAdmin, asyncHandler(async (req,res) => {
   const { page = 1, pageSize = 2147483647, search = '' } = req.query
   const data = await opennode.listPaidCharges({ page, pageSize, search }) // max pageSize 2147483647
@@ -229,6 +246,23 @@ router.get('/admin/charges/:id', authorizeUser, authorizeAdmin, asyncHandler(asy
   const { id } = req.params
   const data = await opennode.chargeInfo(id)
   res.status(200).json(data)
+}))
+
+router.get('/admin/db/withdraws/webhook', authorizeUser, authorizeAdmin, asyncHandler(async (req,res) => {
+  const { data } = await client.query(
+    q.Map(
+      q.Paginate(
+          q.Match(q.Index("grabs_containing_withdraw_webhook"), true),
+        { size: 100000 }
+      ),
+      q.Lambda("ref", q.Get(q.Var("ref")))
+    )
+  )
+  const withdraws = data.map(({ data, ref: { value: { id }}}) => {
+    data.ref = id
+    return data
+  })
+  res.status(200).json(withdraws)
 }))
 
 router.get('/admin/withdrawals/list', authorizeUser, authorizeAdmin, asyncHandler(async (req,res) => {
