@@ -2,6 +2,7 @@
 ### Node template
 .env
 /.vscode
+.faunarc
 /.VSCodeCounter
 
 # Logs
