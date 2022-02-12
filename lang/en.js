@@ -124,6 +124,7 @@ export default {
     toastGrabPaid: "Grab paid",
     toastGrabUnderpaid: "Grab underpaid",
     toastFeedbackPosted: "Feedback posted",
+    toastWithdrawInitiated: "Withdraw initiated",
     // pages/account/pay/_ref && pages/account/underpay/_ref
     lightning: "Lightning",
     onChain: "On Chain",

@@ -29,7 +29,7 @@ class OpenNodeClient {
             return data.data;
 
         } catch (error) {
-            throw Exception(error.response.status, error.response.statusText, error.response.data.message)
+            return Exception(error.response.status, error.response.statusText, error.response.data.message)
         }
     }
 
@@ -40,7 +40,7 @@ class OpenNodeClient {
             return data.data
 
         } catch (error) {
-            throw Exception(error.response.status, error.response.statusText, error.response.data.message)
+            return Exception(error.response.status, error.response.statusText, error.response.data.message)
         }
     }
 
@@ -51,7 +51,7 @@ class OpenNodeClient {
             return data.data;
 
         } catch (error) {
-            throw Exception(error.response.status, error.response.statusText, error.response.data.message)
+            return Exception(error.response.status, error.response.statusText, error.response.data.message)
         }
     }
 
@@ -62,7 +62,7 @@ class OpenNodeClient {
             return data.data;
 
         } catch (error) {
-            throw Exception(error.response.status, error.response.statusText, error.response.data.message)
+            return Exception(error.response.status, error.response.statusText, error.response.data.message)
         }
     }
 
@@ -73,7 +73,7 @@ class OpenNodeClient {
             return data.data
 
         } catch (error) {
-            throw Exception(error.response.status, error.response.statusText, error.response.data.message)
+            return Exception(error.response.status, error.response.statusText, error.response.data.message)
         }
     }
 
@@ -84,7 +84,7 @@ class OpenNodeClient {
             return data.data
 
         } catch (error) {
-            throw Exception(error.response.status, error.response.statusText, error.response.data.message)
+            return Exception(error.response.status, error.response.statusText, error.response.data.message)
         }
     }
 
@@ -95,7 +95,7 @@ class OpenNodeClient {
             return data.data;
 
         } catch (error) {
-            throw Exception(error.response.status, error.response.statusText, error.response.data.message)
+            return Exception(error.response.status, error.response.statusText, error.response.data.message)
         }        
     }
 
@@ -106,7 +106,7 @@ class OpenNodeClient {
 
         }
         catch (error) {
-            throw Exception(error.response.status, error.response.statusText, error.response.data.message)
+            return Exception(error.response.status, error.response.statusText, error.response.data.message)
         }
     }
 
@@ -117,7 +117,7 @@ class OpenNodeClient {
             return data.data;
     
         } catch (error) {
-            throw Exception(error.response.status, error.response.statusText, error.response.data.message);
+            return Exception(error.response.status, error.response.statusText, error.response.data.message);
         }
     }
 
@@ -128,7 +128,7 @@ class OpenNodeClient {
             return data.data;
 
         } catch (error) {
-            throw Exception(error.response.status, error.response.statusText, error.response.data.message)
+            return Exception(error.response.status, error.response.statusText, error.response.data.message)
         }
     }
 
@@ -140,7 +140,7 @@ class OpenNodeClient {
 
         }
         catch (error) {
-            throw Exception(error.response.status, error.response.statusText, error.response.data.message)
+            return Exception(error.response.status, error.response.statusText, error.response.data.message)
         }
     }
 
@@ -152,7 +152,7 @@ class OpenNodeClient {
 
         }
         catch (error) {
-            throw Exception(error.response.status, error.response.statusText, error.response.data.message)
+            return Exception(error.response.status, error.response.statusText, error.response.data.message)
         }
     }
 
@@ -163,7 +163,7 @@ class OpenNodeClient {
             return data.data
 
         } catch (error) {
-            throw Exception(error.response.status, error.response.statusText, error.response.data.message)
+            return Exception(error.response.status, error.response.statusText, error.response.data.message)
         }
     }
 
@@ -174,7 +174,7 @@ class OpenNodeClient {
             return data.data
 
         } catch (error) {
-            throw Exception(error.response.status, error.response.statusText, error.response.data.message)
+            return Exception(error.response.status, error.response.statusText, error.response.data.message)
         }
     }
 
@@ -185,7 +185,7 @@ class OpenNodeClient {
             return data.data;
 
         } catch (error) {
-            throw Exception(error.response.status, error.response.statusText, error.response.data.message)
+            return Exception(error.response.status, error.response.statusText, error.response.data.message)
         }
     }
 
@@ -196,7 +196,7 @@ class OpenNodeClient {
             return data.data;
 
         } catch (error) {
-            throw Exception(error.response.status, error.response.statusText, error.response.data.message)
+            return Exception(error.response.status, error.response.statusText, error.response.data.message)
         }
     }
 
@@ -205,7 +205,7 @@ class OpenNodeClient {
             const { data } = await this.proxyInstance.post('/v2/exchanges', { to, fiat_amount, btc_amount })
             return data.data
         } catch (error) {
-            throw Exception(error.response.status, error.response.statusText, error.response.data.message)
+            return Exception(error.response.status, error.response.statusText, error.response.data.message)
         }
     }
 
@@ -221,10 +221,10 @@ class OpenNodeClient {
 }
 
 function Exception(statusCode, statusText, message) {
-    let error = new Error(message)
+    let error = {}
     error.name = statusText
     error.status = statusCode
-
+    error.message = message
     return error
 }
 

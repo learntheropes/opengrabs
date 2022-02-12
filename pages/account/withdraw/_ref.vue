@@ -103,7 +103,17 @@ export default {
           address: this.invoice.replace('lightning:', ''),
         })
         this.withdrawButtonClass = 'button is-primary is-outlined'
-        return withdraw
+        if (withdraw.error) {
+          this.addressType = 'is-danger'
+          this.addressError = withdraw.error.message
+        } else {
+          this.$buefy.toast.open({
+            duration: 3000,
+            message: this.$t('toastWithdrawInitiated'),
+            position: 'is-bottom',
+            type: 'is-primary'
+          })  
+        }
       }
     },
     async withdrawOnChain() {
@@ -118,7 +128,17 @@ export default {
           address: this.address.replace('bitcoin:', ''),
         })
         this.withdrawButtonClass = 'button is-primary is-outlined'
-        return withdraw
+        if (withdraw.error) {
+          this.addressType = 'is-danger'
+          this.addressError = withdraw.error.message
+        } else {
+          this.$buefy.toast.open({
+            duration: 3000,
+            message: this.$t('toastWithdrawInitiated'),
+            position: 'is-bottom',
+            type: 'is-primary'
+          })  
+        }
       }
     },
   },
