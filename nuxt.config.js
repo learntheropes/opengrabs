@@ -86,6 +86,7 @@ export default {
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
     '@nuxtjs/moment',
+    '@nuxtjs/google-analytics',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -134,6 +135,7 @@ export default {
     https: true,
     proxyHeaders: true
   },
+
   auth: {
     redirect: {
       callback: '/cb/',
@@ -158,6 +160,10 @@ export default {
       { src: '~/plugins/watchState.js', mode: 'client' }
     ]
   },
+
+  googleAnalytics: {
+    id: process.env.GOOGLE_ANALYTICS_ID,
+  }
 
   router: {
     middleware: ['auth']
