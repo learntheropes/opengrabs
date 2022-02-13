@@ -96,6 +96,12 @@ export default {
     '@nuxtjs/dotenv',
     '@nuxtjs/auth-next',
     '@nuxtjs/google-analytics',
+    ['nuxt-cookie-control', {
+      colors:{
+        barBackground: '#7957d5',
+        barPosition: 'bottom-left'
+      }
+    }]
   ],
 
   i18n: {
