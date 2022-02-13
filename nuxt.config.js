@@ -86,7 +86,6 @@ export default {
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
     '@nuxtjs/moment',
-    '@nuxtjs/google-analytics',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -95,7 +94,8 @@ export default {
     'nuxt-buefy',
     '@nuxtjs/axios',
     '@nuxtjs/dotenv',
-    '@nuxtjs/auth-next'
+    '@nuxtjs/auth-next',
+    '@nuxtjs/google-analytics',
   ],
 
   i18n: {
