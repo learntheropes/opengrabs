@@ -16,7 +16,7 @@ export default {
 
 <style>
 .tawk-mobile {
-  z-index: -1;
+  z-index: 500;
 }
 .is-tall {
   display: flex;
