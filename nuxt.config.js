@@ -99,13 +99,95 @@ export default {
     ['nuxt-cookie-control', {
       colors:{
         barBackground: '#7957d5',
+        modalButtonBackground: '#7957d5',
       },
-      barPosition: 'bottom-left',
+      // barPosition: 'bottom-left',
       controlButton: false,
       domain: process.env.URL || 'localhost:3000',
       locales: ['en', 'es', 'pt', 'ru'],
     }]
   ],
+
+  cookies: {
+    necessary: [
+      {
+        name: {
+          en: "Default cookies",
+          hr: "Osnovni kolačići"
+        },
+
+        description: {
+          en: "Used for cookie control."
+        },
+        cookies: [
+          "cookie_control_consent",
+          "cookie_control_enabled_cookies",
+          "auth._refresh_token_expiration.auth0",
+          "auth._refresh_token.auth0",
+          "auth.strategy",
+          "auth._token.auth0",
+          "auth._token_expiration.auth0",
+          "i18n_lang"
+        ]
+      },
+
+    ],
+    optional: [
+      {
+        name: {
+          en: "Google Analytics",
+          es: "Google Analytics",
+          pt: "Google Analytics",
+          ru: "Google Analytics",
+        },
+        description: {
+          en: "Google Analytics is a web analytics service offered by Google that tracks and reports website traffic.",
+          es: "Google Analytics is a web analytics service offered by Google that tracks and reports website traffic.",
+          pt: "Google Analytics is a web analytics service offered by Google that tracks and reports website traffic.",
+          ru: "Google Analytics is a web analytics service offered by Google that tracks and reports website traffic."
+        },
+        async: true,
+        cookies: [
+          "_ga",
+          "_gat",
+          "_gid"
+        ],
+        accepted: () => {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+        }
+      },
+      {
+        name: {
+          en: "Tawk.to",
+          es: "Tawk.to",
+          pt: "Tawk.to",
+          ru: "Tawk.to",
+        },
+        description: {
+          en: "Google Analytics is a web analytics service offered by Google that tracks and reports website traffic.",
+          es: "Google Analytics is a web analytics service offered by Google that tracks and reports website traffic.",
+          pt: "Google Analytics is a web analytics service offered by Google that tracks and reports website traffic.",
+          ru: "Google Analytics is a web analytics service offered by Google that tracks and reports website traffic."
+        },
+        async: true,
+        cookies: [
+          "ss",
+          "TawkConnectionTime",
+          "__tawkuuid",
+          "tawkUUID"
+        ],
+        accepted: () => {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+        }
+      }
+    ]
+  },
 
   i18n: {
     locales: [
