@@ -100,11 +100,18 @@ export default {
       colors:{
         barBackground: '#7957d5',
         modalButtonBackground: '#7957d5',
+        barButtonHoverBackground: '#BCABEA',
+        modalButtonHoverBackground: '#BCABEA', // #6045aa
+        checkboxDisabledBackground: '#BCABEA',
+        checkboxActiveBackground: '#7957d5',
+        checkboxInactiveBackground: '#7957d5'
       },
-      // barPosition: 'bottom-left',
       controlButton: false,
       domain: process.env.URL || 'localhost:3000',
       locales: ['en', 'es', 'pt', 'ru'],
+      blockIframe: {
+        initialState: false
+      }  
     }]
   ],
 
