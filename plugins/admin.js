@@ -8,6 +8,10 @@ export default ({ $axios, store }, inject) => {
             const { data } = await $axios.get('/api/admin/is-resolve-dispute')
             return data
         },
+        isProcessRefund: async () => {
+            const { data } = await $axios.get('/api/admin/is-process-refund')
+            return data
+        },
         grabs: {
             list: async () => {
                 const { data } = await $axios.get('/api/admin/grabs/list')

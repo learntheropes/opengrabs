@@ -38,8 +38,18 @@ export const authorizeAdmin = asyncHandler(async (req, res, next) => {
 
 export const authorizeDispute = asyncHandler(async (req, res, next) => {
   const { jwt } = req.body
-  const isAdmin = jwt['https://opengrabs.com/roles'].includes('resolve_dispute')
-  if (!isAdmin) {
+  const isResolveDispute = jwt['https://opengrabs.com/roles'].includes('resolve_dispute')
+  if (!isResolveDispute) {
+    res.status(401).send('unauthorized')
+    return 
+  }
+  next()
+})
+
+export const authorizeRefund = asyncHandler(async (req, res, next) => {
+  const { jwt } = req.body
+  const isProcessRefund = jwt['https://opengrabs.com/roles'].includes('process_refund')
+  if (!isProcessRefund) {
     res.status(401).send('unauthorized')
     return 
   }

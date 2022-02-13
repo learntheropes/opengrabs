@@ -4,7 +4,7 @@
             <div class="column is-narrow">
                 <admin-side-bar />
             </div>
-            <div class="column">
+            <div v-if="isProcessRefund" class="column">
                 <h1 class="title">Create Refund</h1>
                 <b-field label="Charge ID">
                     <b-input v-model="checkout_id" />
@@ -29,8 +29,11 @@ export default {
     layout: 'admin',
     middleware: 'auth',
     async asyncData({ app }) {
-        const isAdmin = await app.$admin.isAdmin()
-        return { isAdmin }
+        const [isAdmin, isProcessRefund] = await Promise.all([
+            app.$admin.isAdmin(),
+            app.$admin.isProcessRefund()
+        ])
+        return { isAdmin, isProcessRefund }
     },
     data: () => ({
         address: null,

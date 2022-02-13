@@ -2,7 +2,7 @@ import asyncHandler from 'express-async-handler'
 import { q, client } from '../db'
 import opennode from '../btc'
 import { Router } from 'express'
-import { authorizeUser, authorizeAdmin, authorizeDispute } from '../auth'
+import { authorizeUser, authorizeAdmin, authorizeDispute, authorizeRefund } from '../auth'
 const router = Router()
 
 Date.prototype.addHours = function(h) {
@@ -24,6 +24,12 @@ router.get('/admin/is-resolve-dispute', authorizeUser, authorizeAdmin, asyncHand
   const { jwt } = req.body
   const isResolveDispute = jwt['https://opengrabs.com/roles'].includes('resolve_dispute')
   res.status(200).json(isResolveDispute)
+}))
+
+router.get('/admin/is-process-refund', authorizeUser, authorizeAdmin, asyncHandler(async (req,res) => {
+  const { jwt } = req.body
+  const isProcessRefund = jwt['https://opengrabs.com/roles'].includes('process_refund')
+  res.status(200).json(isProcessRefund)
 }))
 
 router.get('/admin/grabs/list', authorizeUser, authorizeAdmin, asyncHandler(async (req,res) => {
@@ -213,7 +219,7 @@ router.post('/admin/grab/update-attention/:ref/:hours', authorizeUser, authorize
   res.status(201).json(response)
 }))
 
-router.post('/admin/charges/create-refund', authorizeUser, authorizeAdmin, asyncHandler(async (req,res) => {
+router.post('/admin/charges/create-refund', authorizeUser, authorizeAdmin, authorizeRefund, asyncHandler(async (req,res) => {
   const { address, checkout_id, email } = req.body
   const data = await opennode.createRefund({ address, checkout_id, email })
   res.status(200).json(data)
