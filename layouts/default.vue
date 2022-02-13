@@ -16,7 +16,7 @@ export default {
 
 <style>
 .cookieControl {
-  z-index: 1000;
+  z-index: 2000001;
 }
 .tawk-mobile {
   z-index: 500;
