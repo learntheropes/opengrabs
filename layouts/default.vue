@@ -15,6 +15,9 @@ export default {
 </script>
 
 <style>
+.tawk-mobile {
+  z-index: -1;
+}
 .is-tall {
   display: flex;
   min-height: 100vh;
