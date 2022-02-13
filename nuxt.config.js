@@ -99,7 +99,9 @@ export default {
     ['nuxt-cookie-control', {
       colors:{
         barBackground: '#7957d5',
-        barPosition: 'bottom-left'
+        barPosition: 'bottom-left',
+        domain: process.env.URL || 'localhost',
+        locales: ['en', 'es', 'pt', 'ru'],
       }
     }]
   ],
@@ -137,7 +139,7 @@ export default {
   // https://stackoverflow.com/questions/56966137/how-to-run-nuxt-npm-run-dev-with-https-in-localhost
   axios: {
     debug: (process.env.URL) ? false : true,
-    baseURL: (process.env.URL) ? process.env.URL : 'https://localhost:3000',
+    baseURL: (process.env.URL) ? `https://${process.env.URL}` : 'https://localhost:3000',
     https: true,
     proxyHeaders: true
   },
@@ -158,7 +160,7 @@ export default {
         grantType: 'authorization_code',
         codeChallengeMethod: 'S256',
         rewriteRedirects: true,
-        logoutRedirectUri: (process.env.URL) ? `${process.env.URL}` : 'https://localhost:3000'
+        logoutRedirectUri: (process.env.URL) ? `https://${process.env.URL}` : 'https://localhost:3000'
       }
     },
     plugins: [

@@ -1,6 +1,6 @@
 import dotenv from 'dotenv'
 dotenv.config()
-const baseUrl = process.env.URL ? process.env.URL : 'https://localhost:3000'
+const baseUrl = process.env.URL ? `https://${process.env.URL}` : 'https://localhost:3000'
 
 export const emailConfirmationCode = (code) => {
     return {

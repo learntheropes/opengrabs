@@ -69,7 +69,7 @@
 
 <script>
 import Qrcode from '@chenfengyuan/vue-qrcode'
-const baseUrl = (process.env.URL) ? process.env.URL : 'https://localhost:3000'
+const baseUrl = (process.env.URL) ? `https://${process.env.URL}` : 'https://localhost:3000'
 export default {
   name: 'PayRef',
   components: {
