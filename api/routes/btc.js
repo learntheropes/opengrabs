@@ -70,7 +70,21 @@ router.post('/btc/charge/webhook', asyncHandler(async (req, res) => {
         { data: req.body },
       )
     )
-    if (req.body.status === 'paid' || req.body.status === 'underpaid') {
+    
+    if (req.body.status === 'underpaid') {
+      await client.query(
+        q.Update(
+          q.Ref(q.Collection('grabs'), req.body.order_id),
+          { data: {
+            status: req.body.status,
+            charge: req.body,
+            underpaid_at: new Date().toISOString()
+          }},
+        )
+      )
+    }
+
+    if (req.body.status === 'paid') {
       await client.query(
         q.Update(
           q.Ref(q.Collection('grabs'), req.body.order_id),
