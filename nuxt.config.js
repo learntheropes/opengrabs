@@ -99,10 +99,11 @@ export default {
     ['nuxt-cookie-control', {
       colors:{
         barBackground: '#7957d5',
-        barPosition: 'bottom-left',
-        domain: process.env.URL || 'localhost',
-        locales: ['en', 'es', 'pt', 'ru'],
-      }
+      },
+      barPosition: 'bottom-left',
+      controlButton: false,
+      domain: process.env.URL || 'localhost:3000',
+      locales: ['en', 'es', 'pt', 'ru'],
     }]
   ],
 
