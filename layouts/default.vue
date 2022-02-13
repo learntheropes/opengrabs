@@ -18,9 +18,6 @@ export default {
 .cookieControl {
   z-index: 2000000001;
 }
-.tawk-mobile {
-  z-index: 500;
-}
 .is-tall {
   display: flex;
   min-height: 100vh;
