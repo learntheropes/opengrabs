@@ -74,6 +74,11 @@ export default {
       if (!this.$Tawk) {
         this.$router.go(0)
       }
+    console.log(this.$cookies.modal)
+    if (this.$cookies.modal) {
+      window.Tawk_API.hideWidget()
+      console.log(window.Tawk_API.isChatHidden())
+      }
     }
   },
   methods: {
