@@ -41,7 +41,7 @@
               {{ $t('refundedAt') }} {{ $moment(order.refunded_at).fromNow() }}
             </div>
           </div>
-          <footer class="card-footer">
+          <footer v-if="order.paid_at" class="card-footer">
             <nuxt-link :to="{ name: 'account-withdraw-ref', params: { ref: order.ref }}" class="card-footer-item">{{ $t('withdraw') }}</nuxt-link>
           </footer>
         </div>

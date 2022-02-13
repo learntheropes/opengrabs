@@ -563,7 +563,8 @@ router.post('/grab/actions/withdraw/:ref', authorizeUser, asyncHandler(async (re
         q.Get(q.Ref(q.Collection('grabs'), ref))
     )
 
-    if ((grab.traveler.sub === jwt.sub && grab.status === 'released' && grab.withdrawn === false) || (grab.buyer.sub === jwt.sub && grab.status === 'refunded' && grab.withdrawn === false)) {
+    if ((grab.traveler.sub === jwt.sub && grab.status === 'released' && grab.paid_at && grab.withdrawn === false) ||
+    (grab.buyer.sub === jwt.sub && grab.status === 'refunded' && grab.paid_at && grab.withdrawn === false)) {
         const { data: rate } = await axios.get(`${baseUrl}/api/btc/rate/${grab.shop.currency}`)
         const btc_amount = Number(Math.round(parseFloat(grab.shop.price.total / rate.buy * 100000000 + 'e' + 0)) + 'e-' + 0)
         

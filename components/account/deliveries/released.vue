@@ -39,7 +39,7 @@
               {{ $moment(delivery.released_at).fromNow() }}
             </div>
           </div>
-          <footer class="card-footer">
+          <footer v-if="delivery.paid_at" class="card-footer">
             <nuxt-link :to="{ name: 'account-withdraw-ref', params: { ref: delivery.ref }}" class="card-footer-item">{{ $t('withdraw') }}</nuxt-link>
           </footer>
         </div>
