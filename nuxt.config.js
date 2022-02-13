@@ -120,11 +120,9 @@ export default {
       {
         name: {
           en: "Default cookies",
-          hr: "Osnovni kolačići"
         },
-
         description: {
-          en: "Used for cookie control."
+          en: "Used for cookie control, authentication and language setting."
         },
         cookies: [
           "cookie_control_consent",
@@ -143,43 +141,33 @@ export default {
       {
         name: {
           en: "Google Analytics",
-          es: "Google Analytics",
-          pt: "Google Analytics",
-          ru: "Google Analytics",
+          es: "Google Analytics"
         },
         description: {
           en: "Google Analytics is a web analytics service offered by Google that tracks and reports website traffic.",
-          es: "Google Analytics is a web analytics service offered by Google that tracks and reports website traffic.",
-          pt: "Google Analytics is a web analytics service offered by Google that tracks and reports website traffic.",
-          ru: "Google Analytics is a web analytics service offered by Google that tracks and reports website traffic."
         },
-        async: true,
+        identifier: 'ga',
         cookies: [
           "_ga",
           "_gat",
           "_gid"
         ],
         accepted: () => {
-          window.dataLayer = window.dataLayer || [];
-          function gtag() {
-            dataLayer.push(arguments);
-          }
-        }
+          window.$nuxt.$ga.enable() // Activate module
+          window.$nuxt.$ga.page(window.$nuxt.$route.path) // Track current route
+        },
+        declined: () => {
+            window.$nuxt.$cookies.remove('ga') // Remove any existing Google Analytics cookies
+        },
       },
       {
         name: {
-          en: "Tawk.to",
-          es: "Tawk.to",
-          pt: "Tawk.to",
-          ru: "Tawk.to",
+          en: "Tawk.to"
         },
         description: {
-          en: "Google Analytics is a web analytics service offered by Google that tracks and reports website traffic.",
-          es: "Google Analytics is a web analytics service offered by Google that tracks and reports website traffic.",
-          pt: "Google Analytics is a web analytics service offered by Google that tracks and reports website traffic.",
-          ru: "Google Analytics is a web analytics service offered by Google that tracks and reports website traffic."
+          en: "Tawk.to is to chat with support."
         },
-        async: true,
+        // async: true,
         cookies: [
           "ss",
           "TawkConnectionTime",
@@ -191,7 +179,9 @@ export default {
           function gtag() {
             dataLayer.push(arguments);
           }
-        }
+        },
+        declined: () =>{
+        }  
       }
     ]
   },
@@ -261,6 +251,7 @@ export default {
 
   googleAnalytics: {
     id: process.env.GOOGLE_ANALYTICS_ID,
+    disabled: true,
   },
 
   router: {

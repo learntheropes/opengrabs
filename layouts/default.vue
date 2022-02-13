@@ -9,8 +9,19 @@
 </template>
 
 <script>
+import { onAnalyticsReady } from 'vue-analytics'
+
 export default {
   name: 'DefaultLayout',
+  mounted() {
+    onAnalyticsReady().then(() => {
+      const hasConsent = this.$cookies.isEnabled('ga')
+      if (hasConsent) {
+        this.$ga.enable() // Activate module
+        this.$ga.page(this.$route.path) // Track current route
+      }
+    })
+},
 }
 </script>
 
