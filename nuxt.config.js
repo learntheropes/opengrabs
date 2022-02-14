@@ -109,7 +109,7 @@ export default {
       controlButton: false,
       domain: process.env.URL || 'localhost:3000',
       locales: ['en', 'es', 'pt', 'ru'],
-      blockIframe: true,  
+      // blockIframe: true,  
     }]
   ],
 
@@ -174,16 +174,14 @@ export default {
         ],
         accepted: () => {
           console.log(window.Tawk_API)
-          console.log(window.Tawk_API.isInit())
-          if (process.env.URL && window.Tawk_API && window.Tawk_API.isInit()) {
+          if (process.env.URL && window.Tawk_API) {
             console.log('showWidget')
             window.Tawk_API.showWidget()
           }
         },
         declined: () => {
           console.log(window.Tawk_API)
-          console.log(window.Tawk_API.isInit())
-          if (process.env.URL && window.$nuxt.$tawk && window.$nuxt.$tawk.$isInit()) {
+          if (process.env.URL && window.$nuxt.$tawk) {
             console.log('hideWidget')
             window.Tawk_API.hideWidget()
           }
