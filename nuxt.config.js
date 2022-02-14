@@ -152,21 +152,19 @@ export default {
         ],
         accepted: () => {
           if (process.env.URL && window.Tawk_API) {
-            console.log('showWidget')
-            console.log(window.Tawk_API)
-            window.Tawk_API.showWidget()
+            setTimeout(function(){
+              window.Tawk_API.showWidget()
+            }, 2000)
           }
         },
         declined: () => {
           if (process.env.URL && window.Tawk_API) {
             setTimeout(function(){
-              console.log('hideWidget')
-              console.log(typeof window.Tawk_API.hideWidget)
               window.Tawk_API.hideWidget()
+              window.$nuxt.$cookies.remove('tawk')
             }, 2000)
           }
-          console.log('remove rawk')
-          window.$nuxt.$cookies.remove('tawk')
+          
         }
       },
       {
