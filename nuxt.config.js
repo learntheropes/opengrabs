@@ -161,7 +161,7 @@ export default {
         declined: () => {
           if (process.env.URL && window.Tawk_API) {
             console.log('hideWidget')
-            console.log(window.Tawk_API)
+            console.log(typeof window.Tawk_API.hideWidget === 'function')
             window.Tawk_API.hideWidget()
           }
           console.log('remove rawk')
