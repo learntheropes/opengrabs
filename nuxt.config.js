@@ -173,6 +173,7 @@ export default {
           "tawkUUID"
         ],
         accepted: () => {
+          console.log(window.$nuxt)
           window.$nuxt.$tawk.$createChat()
         },
         declined: () => {
