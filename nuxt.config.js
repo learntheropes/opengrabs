@@ -180,7 +180,7 @@ export default {
             window.Tawk_API.showWidget()
           }
         },
-        async declined: () => {
+        declined: async () => {
           console.log(window.Tawk_API)
           if (process.env.URL && window.Tawk_API) {
             console.log('hideWidget')
