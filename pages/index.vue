@@ -48,7 +48,7 @@
         </div>
       </div>
     </div>
-    <CookieControl :locale="$i18n.locale"/>
+    <!-- <CookieControl :locale="$i18n.locale"/> -->
   </section>
 </template>
 
