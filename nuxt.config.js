@@ -144,7 +144,6 @@ export default {
           en: "Tawk.to is the widget to chat with support.",
         },
         identifier: 'tawk',
-        async: true,
         cookies: [
           "ss",
           "TawkConnectionTime",
@@ -160,9 +159,11 @@ export default {
         },
         declined: () => {
           if (process.env.URL && window.Tawk_API) {
-            console.log('hideWidget')
-            console.log(typeof window.Tawk_API.hideWidget)
-            window.Tawk_API.hideWidget()
+            setTimeout(function(){
+              console.log('hideWidget')
+              console.log(typeof window.Tawk_API.hideWidget)
+              window.Tawk_API.hideWidget()
+            }, 2000)
           }
           console.log('remove rawk')
           window.$nuxt.$cookies.remove('tawk')
