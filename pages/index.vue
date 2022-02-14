@@ -64,18 +64,6 @@ export default {
       return this.$store.state.auth.loggedIn
     }
   },
-  async mounted() {
-    const sleep = (ms) => {
-      return new Promise(resolve => setTimeout(resolve, ms));
-    }
-    // This is only to mount the tawk.to chat to new users
-    // if (process.env.URL) {
-    //   await sleep(1000)
-    //   if (!this.$Tawk) {
-    //     this.$router.go(0)
-    //   }
-    // }
-  },
   methods: {
     addOrder() {
       this.$router.push(`${this.$i18n.locale}/account/new/order`)      
