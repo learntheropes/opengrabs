@@ -138,28 +138,6 @@ export default {
     optional: [
       {
         name: {
-          en: "Google Analytics",
-        },
-        description: {
-          en: "Google Analytics is a web analytics service offered by Google that tracks and reports website traffic.",
-        },
-        identifier: 'ga',
-        cookies: [
-          "_ga",
-          "_gat",
-          "_gid"
-        ],
-        // https://stackoverflow.com/questions/64360036/how-to-control-google-analytics-tracking-in-nuxt-based-on-consent-cookies
-        accepted: () => {
-          window.$nuxt.$ga.enable()
-          window.$nuxt.$ga.page(window.$nuxt.$route.path)
-        },
-        declined: () => {
-          window.$nuxt.$cookies.remove('ga')
-        }
-      },
-      {
-        name: {
           en: "Tawk.to",
         },
         description: {
@@ -184,6 +162,28 @@ export default {
             window.Tawk_API.hideWidget()
           }
           window.$nuxt.$cookies.remove('tawk')
+        }
+      },
+      {
+        name: {
+          en: "Google Analytics",
+        },
+        description: {
+          en: "Google Analytics is a web analytics service offered by Google that tracks and reports website traffic.",
+        },
+        identifier: 'ga',
+        cookies: [
+          "_ga",
+          "_gat",
+          "_gid"
+        ],
+        // https://stackoverflow.com/questions/64360036/how-to-control-google-analytics-tracking-in-nuxt-based-on-consent-cookies
+        accepted: () => {
+          window.$nuxt.$ga.enable()
+          window.$nuxt.$ga.page(window.$nuxt.$route.path)
+        },
+        declined: () => {
+          window.$nuxt.$cookies.remove('ga')
         }
       }
     ]
