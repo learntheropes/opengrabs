@@ -19,6 +19,8 @@ export default {
     if (process.env.URL && hasTawkConsent && this.$tawk && this.$tawk.$isInit()) {
        this.$tawk.$showWidget()
     } else if (process.env.URL && !hasTawkConsent && this.$tawk && this.$tawk.$isInit()) {
+      console.log(this.$tawk.$isInit())
+      console.log(this.$tawk)
       this.$tawk.$hideWidget()
       this.$cookies.remove('tawk')
     }
