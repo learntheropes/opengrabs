@@ -14,6 +14,7 @@ import { onAnalyticsReady } from 'vue-analytics'
 export default {
   name: 'DefaultLayout',
   mounted() {
+    // https://stackoverflow.com/questions/64360036/how-to-control-google-analytics-tracking-in-nuxt-based-on-consent-cookies
     onAnalyticsReady().then(() => {
       const hasConsent = this.$cookies.isEnabled('ga')
       if (hasConsent) {

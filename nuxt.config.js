@@ -152,6 +152,7 @@ export default {
           "_gat",
           "_gid"
         ],
+        // https://stackoverflow.com/questions/64360036/how-to-control-google-analytics-tracking-in-nuxt-based-on-consent-cookies
         accepted: () => {
           window.$nuxt.$ga.enable() // Activate module
           window.$nuxt.$ga.page(window.$nuxt.$route.path) // Track current route
