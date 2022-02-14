@@ -173,10 +173,14 @@ export default {
           "tawkUUID"
         ],
         accepted: () => {
-          window.$nuxt.$tawk.$showWidget()
+          if (process.env.URL && window.$nuxt.$tawk && window.$nuxt.$tawk.$isInit()) {
+            window.$nuxt.$tawk.$showWidget()
+          }
         },
         declined: () => {
-          window.$nuxt.$tawk.$hideWidget()
+          if (process.env.URL && window.$nuxt.$tawk && window.$nuxt.$tawk.$isInit()) {
+            window.$nuxt.$tawk.$hideWidget()
+          }
           window.$nuxt.$cookies.remove('tawk')
         }
       }
