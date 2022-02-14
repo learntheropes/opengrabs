@@ -152,6 +152,7 @@ export default {
           "tawkUUID"
         ],
         accepted: () => {
+          console.log(window.$nuxt.$tawk)
           console.log(window.Tawk_API)
           if (process.env.URL && window.Tawk_API) {
             console.log('showWidget')
@@ -159,6 +160,7 @@ export default {
           }
         },
         declined: () => {
+          console.log(window.$nuxt.$tawk)
           console.log(window.Tawk_API)
           if (process.env.URL && window.Tawk_API) {
             console.log('hideWidget')
