@@ -173,23 +173,23 @@ export default {
           "tawkUUID"
         ],
         async: true,
-        accepted: () => {
+        accepted: async () => {
+          const sleep = (ms) => {
+            return new Promise(resolve => setTimeout(resolve, ms));
+          }
+          await sleep(5000)
           console.log(window.Tawk_API)
           if (process.env.URL && window.Tawk_API) {
             console.log('showWidget')
             window.Tawk_API.showWidget()
           }
         },
-        declined: async () => {
+        declined: () => {
           console.log(window.Tawk_API)
           if (process.env.URL && window.Tawk_API) {
             console.log('hideWidget')
             window.Tawk_API.hideWidget()
           }
-          const sleep = (ms) => {
-            return new Promise(resolve => setTimeout(resolve, ms));
-          }
-          await sleep(3000)
           console.log('removeCookies')
           console.log('isEnables', window.$nuxt.$cookies.isEnabled('tawk'))
           window.$nuxt.$cookies.remove('tawk')
