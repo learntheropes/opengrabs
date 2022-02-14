@@ -172,6 +172,7 @@ export default {
           "__tawkuuid",
           "tawkUUID"
         ],
+        async: true,
         accepted: () => {
           console.log(window.Tawk_API)
           if (process.env.URL && window.Tawk_API) {
