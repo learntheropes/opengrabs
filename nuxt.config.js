@@ -144,6 +144,7 @@ export default {
           en: "Tawk.to is the widget to chat with support.",
         },
         identifier: 'tawk',
+        async: true,
         cookies: [
           "ss",
           "TawkConnectionTime",
