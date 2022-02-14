@@ -161,6 +161,7 @@ export default {
           if (process.env.URL && window.Tawk_API) {
             setTimeout(function(){
               window.Tawk_API.hideWidget()
+              window.$nuxt.$cookies.remove('tawk')
             }, 1000)
           }
         }
