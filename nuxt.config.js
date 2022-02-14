@@ -181,7 +181,7 @@ export default {
         },
         declined: () => {
           console.log(window.Tawk_API)
-          if (process.env.URL && window.$nuxt.$tawk) {
+          if (process.env.URL && window.Tawk_API) {
             console.log('hideWidget')
             window.Tawk_API.hideWidget()
           }
