@@ -49,7 +49,6 @@ export default {
             app.$admin.isAdmin(),
             app.$axios.get('/api/admin/db/charges/webhook')
         ])
-        console.log(charges)
         return { isAdmin, charges }
     }
 }

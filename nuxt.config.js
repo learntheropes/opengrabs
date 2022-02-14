@@ -161,10 +161,10 @@ export default {
           if (process.env.URL && window.Tawk_API) {
             setTimeout(function(){
               window.Tawk_API.hideWidget()
-              console.log(window.$nuxt.$cookies.remove('tawk'))
+              window.$nuxt.$cookies.remove('tawk')
               window.$nuxt.$auth.$storage.removeCookie('ss', false)
-              window.$nuxt.$auth.$storage.removeCookie('TawkConnectionTime', false)
-              window.$nuxt.$auth.$storage.removeCookie('__tawkuuid', false)
+              console.log(window.$nuxt.$auth.$storage.removeCookie('TawkConnectionTime', false))
+              console.log(window.$nuxt.$auth.$storage.removeCookie('__tawkuuid', false))
               window.$nuxt.$auth.$storage.removeCookie('tawkUUID', false)
             }, 1000)
           }
