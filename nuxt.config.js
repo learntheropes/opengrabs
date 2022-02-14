@@ -173,10 +173,10 @@ export default {
           "tawkUUID"
         ],
         accepted: () => {
-          console.log(window.$nuxt)
-          window.$nuxt.$tawk.$createChat()
+          window.$nuxt.$tawk.$showWidget()
         },
         declined: () => {
+          window.$nuxt.$tawk.$hideWidget()
           window.$nuxt.$cookies.remove('tawk')
         }
       }

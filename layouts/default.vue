@@ -15,8 +15,11 @@ export default {
   name: 'DefaultLayout',
   mounted() {
     const hasTawkConsent = this.$cookies.isEnabled('tawk')
-    if (hasTawkConsent) {
-       this.$tawk.$createChat()
+    if (process.env.URL && hasTawkConsent && this.$tawk.$isInit()) {
+       this.$tawk.$showWidget()
+    } else if (process.env.URL && !hasTawkConsent && this.$tawk.$isInit()) {
+      this.$tawk.$hideWidget()
+      this.$cookies.remove('tawk')
     }
     // https://stackoverflow.com/questions/64360036/how-to-control-google-analytics-tracking-in-nuxt-based-on-consent-cookies
     onAnalyticsReady().then(() => {
