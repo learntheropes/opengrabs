@@ -189,7 +189,7 @@ export default {
           const sleep = (ms) => {
             return new Promise(resolve => setTimeout(resolve, ms));
           }
-          await sleep(1000)
+          await sleep(3000)
           console.log('removeCookies')
           console.log('isEnables', window.$nuxt.$cookies.isEnabled('tawk'))
           window.$nuxt.$cookies.remove('tawk')
