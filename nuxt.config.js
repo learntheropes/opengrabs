@@ -173,17 +173,19 @@ export default {
           "tawkUUID"
         ],
         accepted: () => {
-          console.log(window.$nuxt.$tawk)
-          if (process.env.URL && window.$nuxt.$tawk && window.$nuxt.$tawk.$isInit()) {
+          console.log(window.Tawk_API)
+          console.log(window.Tawk_API.isInit())
+          if (process.env.URL && window.Tawk_API && window.Tawk_API.isInit()) {
             console.log('showWidget')
-            window.$nuxt.$tawk.$showWidget()
+            window.Tawk_API.showWidget()
           }
         },
         declined: () => {
-          console.log(window.$nuxt.$tawk)
+          console.log(window.Tawk_API)
+          console.log(window.Tawk_API.isInit())
           if (process.env.URL && window.$nuxt.$tawk && window.$nuxt.$tawk.$isInit()) {
             console.log('hideWidget')
-            window.$nuxt.$tawk.$hideWidget()
+            window.Tawk_API.hideWidget()
           }
           console.log('removeCookies')
           window.$nuxt.$cookies.remove('tawk')
