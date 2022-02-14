@@ -15,9 +15,9 @@ export default {
   name: 'DefaultLayout',
   mounted() {
     const hasTawkConsent = this.$cookies.isEnabled('tawk')
-    if (process.env.URL && hasTawkConsent && this.$tawk.$isInit()) {
+    if (process.env.URL && hasTawkConsent && this.$tawk && this.$tawk.$isInit()) {
        this.$tawk.$showWidget()
-    } else if (process.env.URL && !hasTawkConsent && this.$tawk.$isInit()) {
+    } else if (process.env.URL && !hasTawkConsent && this.$tawk && this.$tawk.$isInit()) {
       this.$tawk.$hideWidget()
       this.$cookies.remove('tawk')
     }
