@@ -164,6 +164,7 @@ export default {
         name: {
           en: "Tawk.to"
         },
+        identifier: 'tawk',
         description: {
           en: "Tawk.to is to chat with support."
         },
