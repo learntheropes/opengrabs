@@ -44,9 +44,9 @@ export default {
         usernameMessage() {
             if (this.usernameError === 'Field required') return this.$t('requiredField')
             else if (this.usernameError === 'Invalid username') return this.$t('invalidUsername')
-            else if (this.usernameError === 'Username already in use') return this.$t('UsernameAlreadyInUse')
+            else if (this.usernameError === 'Username already in use') return this.$t('usernameAlreadyInUse')
             else if (this.usernameError === "You can't change username") return this.$t('youCantChangeUsername')
-            else return this.$t('UsernameAlphaNumericBetween5and15Caracters')         
+            else return this.$t('usernameAlphaNumericBetween5and15Caracters')         
         }     
     },
     methods: {

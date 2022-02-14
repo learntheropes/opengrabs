@@ -122,7 +122,7 @@ export default {
           en: "Default cookies",
         },
         description: {
-          en: "Used for cookie control, authentication and language setting."
+          en: "Used for cookie control, authentication, language setting and communicate with support via chat."
         },
         cookies: [
           "cookie_control_consent",
@@ -132,7 +132,11 @@ export default {
           "auth.strategy",
           "auth._token.auth0",
           "auth._token_expiration.auth0",
-          "i18n_lang"
+          "i18n_lang",
+          "ss",
+          "TawkConnectionTime",
+          "__tawkuuid",
+          "tawkUUID"
         ]
       },
 
@@ -141,7 +145,6 @@ export default {
       {
         name: {
           en: "Google Analytics",
-          es: "Google Analytics"
         },
         description: {
           en: "Google Analytics is a web analytics service offered by Google that tracks and reports website traffic.",
@@ -159,31 +162,7 @@ export default {
         },
         declined: () => {
             window.$nuxt.$cookies.remove('ga') // Remove any existing Google Analytics cookies
-        },
-      },
-      {
-        name: {
-          en: "Tawk.to"
-        },
-        identifier: 'tawk',
-        description: {
-          en: "Tawk.to is to chat with support."
-        },
-        // async: true,
-        cookies: [
-          "ss",
-          "TawkConnectionTime",
-          "__tawkuuid",
-          "tawkUUID"
-        ],
-        accepted: () => {
-          window.dataLayer = window.dataLayer || [];
-          function gtag() {
-            dataLayer.push(arguments);
-          }
-        },
-        declined: () =>{
-        }  
+        }
       }
     ]
   },

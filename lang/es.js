@@ -220,7 +220,7 @@ export default {
     missingUsernameWarning: "Please choose an username before proceeding",
     usernameLabel: "Choose an username",
     invalidUsername: "Invalid username",
-    UsernameAlreadyInUse: "Username already in use",
+    usernameAlreadyInUse: "Username already in use",
     youCantChangeUsername: "You can't change username",
-    UsernameAlphaNumericBetween5and15Caracters: "Choose an alphanumberic username between 5 and 15 caracters"
+    usernameAlphaNumericBetween5and15Caracters: "Choose an alphanumberic username between 5 and 15 caracters"
 }
