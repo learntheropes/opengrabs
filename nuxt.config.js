@@ -96,7 +96,6 @@ export default {
     '@nuxtjs/dotenv',
     '@nuxtjs/auth-next',
     '@nuxtjs/google-analytics',
-    ['cookie-universal-nuxt', { alias: 'cookiz' }]
     ['@giovannilaperna/nuxt-cookie-control', {
       colors:{
         barBackground: '#7957d5',
@@ -162,11 +161,6 @@ export default {
           if (process.env.URL && window.Tawk_API) {
             setTimeout(function(){
               window.Tawk_API.hideWidget()
-              // window.$nuxt.$cookies.remove('tawk')
-              window.$nuxt.$cookiz.remove('ss')
-              window.$nuxt.$cookiz.remove('TawkConnectionTime')
-              window.$nuxt.$cookiz.remove('__tawkuuid')
-              window.$nuxt.$cookiz.remove('tawkUUID')
             }, 1000)
           }
         }
