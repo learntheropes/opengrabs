@@ -109,9 +109,7 @@ export default {
       controlButton: false,
       domain: process.env.URL || 'localhost:3000',
       locales: ['en', 'es', 'pt', 'ru'],
-      blockIframe: {
-        initialState: false
-      }  
+      blockIframe: true,  
     }]
   ],
 
@@ -122,7 +120,7 @@ export default {
           en: "Default cookies",
         },
         description: {
-          en: "Used for cookie control, authentication, language setting and communicate with support via chat."
+          en: "Used for cookie control, authentication and language setting."
         },
         cookies: [
           "cookie_control_consent",
@@ -132,11 +130,7 @@ export default {
           "auth.strategy",
           "auth._token.auth0",
           "auth._token_expiration.auth0",
-          "i18n_lang",
-          "ss",
-          "TawkConnectionTime",
-          "__tawkuuid",
-          "tawkUUID"
+          "i18n_lang"
         ]
       },
 
@@ -157,11 +151,32 @@ export default {
         ],
         // https://stackoverflow.com/questions/64360036/how-to-control-google-analytics-tracking-in-nuxt-based-on-consent-cookies
         accepted: () => {
-          window.$nuxt.$ga.enable() // Activate module
-          window.$nuxt.$ga.page(window.$nuxt.$route.path) // Track current route
+          window.$nuxt.$ga.enable()
+          window.$nuxt.$ga.page(window.$nuxt.$route.path)
         },
         declined: () => {
-            window.$nuxt.$cookies.remove('ga') // Remove any existing Google Analytics cookies
+          window.$nuxt.$cookies.remove('ga')
+        }
+      },
+      {
+        name: {
+          en: "Tawk.to",
+        },
+        description: {
+          en: "Tawk.to is the widget to chat with support.",
+        },
+        identifier: 'tawk',
+        cookies: [
+          "ss",
+          "TawkConnectionTime",
+          "__tawkuuid",
+          "tawkUUID"
+        ],
+        accepted: () => {
+          window.$nuxt.$tawk.$createChat()
+        },
+        declined: () => {
+          window.$nuxt.$cookies.remove('tawk')
         }
       }
     ]

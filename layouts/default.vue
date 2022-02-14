@@ -14,12 +14,16 @@ import { onAnalyticsReady } from 'vue-analytics'
 export default {
   name: 'DefaultLayout',
   mounted() {
+    const hasTawkConsent = this.$cookies.isEnabled('tawk')
+    if (hasTawkConsent) {
+       this.$tawk.$createChat()
+    }
     // https://stackoverflow.com/questions/64360036/how-to-control-google-analytics-tracking-in-nuxt-based-on-consent-cookies
     onAnalyticsReady().then(() => {
-      const hasConsent = this.$cookies.isEnabled('ga')
-      if (hasConsent) {
-        this.$ga.enable() // Activate module
-        this.$ga.page(this.$route.path) // Track current route
+      const hasGaConsent = this.$cookies.isEnabled('ga')
+      if (hasGaConsent) {
+        this.$ga.enable()
+        this.$ga.page(this.$route.path)
       }
     })
 },

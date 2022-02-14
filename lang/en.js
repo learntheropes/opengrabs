@@ -223,4 +223,11 @@ export default {
     usernameAlreadyInUse: "Username already in use",
     youCantChangeUsername: "You can't change username",
     usernameAlphaNumericBetween5and15Caracters: "Choose an alphanumberic username between 5 and 15 caracters",
+    // nuxt-cookie-control
+    cookieControl: {
+        defaultName: "Default cookies",
+        defaultDescription: "Used for cookie control, authentication, language setting and communicate with support via chat.",
+        gaName: "Google Analytics",
+        gaDescription: "Google Analytics is a web analytics service offered by Google that tracks and reports website traffic."
+    }
 }
