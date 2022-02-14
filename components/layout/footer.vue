@@ -26,6 +26,9 @@
         <div class="level-item">
           <nuxt-link :to="localePath({ name: 'legal-terms-of-service'})">{{ $t('termsOfService') }}</nuxt-link>
         </div>
+        <div class="level-item">
+          <a href="#" @click="showCookieControl">{{ $t('changeCookieSetting')}}</a>
+        </div>
       </div>
       <div class="level-right">
         <div class="level-item">
@@ -52,6 +55,11 @@ export default {
   computed: {
     availableLocales() {
       return this.$i18n.locales.filter((i) => i.code !== this.$i18n.locale)
+    }
+  },
+  methods:{
+    showCookieControl: () => {
+      this.$cookies.modal = true
     }
   }
 }

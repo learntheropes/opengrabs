@@ -14,7 +14,7 @@ import { onAnalyticsReady } from 'vue-analytics'
 
 export default {
   name: 'DefaultLayout',
-  mounted() {
+  async mounted() {
     const hasTawkConsent = this.$cookies.isEnabled('tawk')
     if (process.env.URL && hasTawkConsent && this.$tawk && this.$tawk.$isInit()) {
        this.$tawk.$showWidget()

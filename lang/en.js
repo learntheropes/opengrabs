@@ -35,6 +35,7 @@ export default {
     // components/layout/footer
     privacyPolicy: "Privacy policy",
     termsOfService: "Terms of service",
+    changeCookieSetting: "Change cookies setting",
     // components/order-card
     book: "Book",
     loginToBook: "Sign in to book",
