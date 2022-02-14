@@ -15,15 +15,15 @@ import { onAnalyticsReady } from 'vue-analytics'
 export default {
   name: 'DefaultLayout',
   async mounted() {
-    const hasTawkConsent = this.$cookies.isEnabled('tawk')
-    if (process.env.URL && hasTawkConsent && this.$tawk && this.$tawk.$isInit()) {
-       this.$tawk.$showWidget()
-    } else if (process.env.URL && !hasTawkConsent && this.$tawk && this.$tawk.$isInit()) {
-      console.log(this.$tawk.$isInit())
-      console.log(this.$tawk)
-      this.$tawk.$hideWidget()
-      this.$cookies.remove('tawk')
-    }
+    // const hasTawkConsent = this.$cookies.isEnabled('tawk')
+    // if (process.env.URL && hasTawkConsent && this.$tawk && this.$tawk.$isInit()) {
+    //    this.$tawk.$showWidget()
+    // } else if (process.env.URL && !hasTawkConsent && this.$tawk && this.$tawk.$isInit()) {
+    //   console.log(this.$tawk.$isInit())
+    //   console.log(this.$tawk)
+    //   this.$tawk.$hideWidget()
+    //   this.$cookies.remove('tawk')
+    // }
     // https://stackoverflow.com/questions/64360036/how-to-control-google-analytics-tracking-in-nuxt-based-on-consent-cookies
     onAnalyticsReady().then(() => {
       const hasGaConsent = this.$cookies.isEnabled('ga')

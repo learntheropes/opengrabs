@@ -59,6 +59,7 @@ export default {
   },
   methods:{
     showCookieControl: () => {
+      console.log(this)
       this.$cookies.modal = true
     }
   }
