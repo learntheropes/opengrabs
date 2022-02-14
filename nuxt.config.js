@@ -154,7 +154,7 @@ export default {
           if (process.env.URL && window.Tawk_API) {
             setTimeout(function(){
               window.Tawk_API.showWidget()
-            }, 2000)
+            }, 1000)
           }
         },
         declined: () => {
@@ -162,7 +162,7 @@ export default {
             setTimeout(function(){
               window.Tawk_API.hideWidget()
               window.$nuxt.$cookies.remove('tawk')
-            }, 2000)
+            }, 1000)
           }
           
         }
