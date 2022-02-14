@@ -152,18 +152,16 @@ export default {
           "tawkUUID"
         ],
         accepted: () => {
-          console.log(window.$nuxt.$tawk)
-          console.log(window.Tawk_API)
           if (process.env.URL && window.Tawk_API) {
             console.log('showWidget')
+            console.log(window.Tawk_API)
             window.Tawk_API.showWidget()
           }
         },
         declined: () => {
-          console.log(window.$nuxt.$tawk)
-          console.log(window.Tawk_API)
           if (process.env.URL && window.Tawk_API) {
             console.log('hideWidget')
+            console.log(window.Tawk_API)
             window.Tawk_API.hideWidget()
           }
           console.log('remove rawk')
