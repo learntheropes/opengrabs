@@ -107,7 +107,7 @@ export default {
         checkboxInactiveBackground: '#7957d5'
       },
       controlButton: false,
-      domain: process.env.URL || 'localhost:3000',
+      // domain: process.env.URL || 'localhost:3000',
       locales: ['en', 'es', 'pt', 'ru'],
       // blockIframe: true,  
     }]
