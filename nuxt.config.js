@@ -173,12 +173,14 @@ export default {
           "tawkUUID"
         ],
         accepted: () => {
+          console.log(window.$nuxt.$tawk)
           if (process.env.URL && window.$nuxt.$tawk && window.$nuxt.$tawk.$isInit()) {
             console.log('showWidget')
             window.$nuxt.$tawk.$showWidget()
           }
         },
         declined: () => {
+          console.log(window.$nuxt.$tawk)
           if (process.env.URL && window.$nuxt.$tawk && window.$nuxt.$tawk.$isInit()) {
             console.log('hideWidget')
             window.$nuxt.$tawk.$hideWidget()
