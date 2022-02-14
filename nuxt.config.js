@@ -180,12 +180,16 @@ export default {
             window.Tawk_API.showWidget()
           }
         },
-        declined: () => {
+        async declined: () => {
           console.log(window.Tawk_API)
           if (process.env.URL && window.Tawk_API) {
             console.log('hideWidget')
             window.Tawk_API.hideWidget()
           }
+          const sleep = (ms) => {
+            return new Promise(resolve => setTimeout(resolve, ms));
+          }
+          await sleep(1000)
           console.log('removeCookies')
           console.log('isEnables', window.$nuxt.$cookies.isEnabled('tawk'))
           window.$nuxt.$cookies.remove('tawk')
