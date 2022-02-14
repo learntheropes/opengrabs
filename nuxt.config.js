@@ -179,6 +179,7 @@ export default {
             console.log('showWidget')
             window.Tawk_API.showWidget()
           }
+          window.$nuxt.$router.go(0)
         },
         declined: () => {
           console.log(window.Tawk_API)
