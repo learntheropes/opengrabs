@@ -96,7 +96,7 @@ export default {
     '@nuxtjs/dotenv',
     '@nuxtjs/auth-next',
     '@nuxtjs/google-analytics',
-    ['nuxt-cookie-control', {
+    ['@giovannilaperna/nuxt-cookie-control', {
       colors:{
         barBackground: '#7957d5',
         modalButtonBackground: '#7957d5',
