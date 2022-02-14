@@ -174,14 +174,14 @@ export default {
         ],
         accepted: () => {
           if (process.env.URL && window.$nuxt.$tawk && window.$nuxt.$tawk.$isInit()) {
-            window.$nuxt.$tawk.$hideWidget()
+            window.$nuxt.$tawk.$showWidget()
           }
-          window.$nuxt.$cookies.remove('tawk')
         },
         declined: () => {
           if (process.env.URL && window.$nuxt.$tawk && window.$nuxt.$tawk.$isInit()) {
-            window.$nuxt.$tawk.$showWidget()
+            window.$nuxt.$tawk.$hideWidget()
           }
+          window.$nuxt.$cookies.remove('tawk')
         }
       }
     ]
