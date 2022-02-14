@@ -187,6 +187,7 @@ export default {
             window.Tawk_API.hideWidget()
           }
           console.log('removeCookies')
+          console.log('isEnables', window.$nuxt.$cookies.isEnabled('tawk'))
           window.$nuxt.$cookies.remove('tawk')
         }
       }
