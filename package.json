@@ -24,6 +24,7 @@
     "@nuxtjs/i18n": "^7.2.0",
     "@nuxtjs/moment": "^1.6.1",
     "base64-url": "^2.3.3",
+    "cookie-universal-nuxt": "^2.1.5",
     "core-js": "^3.19.3",
     "encoding": "^0.1.13",
     "express": "^4.17.2",
