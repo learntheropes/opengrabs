@@ -162,10 +162,10 @@ export default {
             setTimeout(function(){
               window.Tawk_API.hideWidget()
               // window.$nuxt.$cookies.remove('tawk')
-              window.$nuxt.$cookies.delete('ss')
-              window.$nuxt.$cookies.delete('TawkConnectionTime')
-              window.$nuxt.$cookies.delete('__tawkuuid')
-              window.$nuxt.$cookies.delete('tawkUUID')
+              window.$nuxt.$cookies.remove('ss')
+              window.$nuxt.$cookies.remove('TawkConnectionTime')
+              window.$nuxt.$cookies.remove('__tawkuuid')
+              window.$nuxt.$cookies.remove('tawkUUID')
             }, 1000)
           }
         }
