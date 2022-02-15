@@ -23,7 +23,7 @@ export default {
         this.$ga.page(this.$route.path)
       }
     })
-    const sleep = ms => new Promise(r => setTimeout(r, ms))
+    const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
     await sleep(2000)
     const path = this.$route.path.split('/')
     if (path.length >= 2 && path[1] === 'account' && process.env.URL && !this.$store.state.account.tawk.initiated) {
@@ -78,7 +78,7 @@ a.disabled {
   align-items: center;
   height: 210px;
   background-size: cover;
-  background-color: black;
+  background-color: white;
   overflow: hidden;
 }
 </style>

@@ -5,7 +5,7 @@
         </header> 
         <div class="card-image">
             <figure :style="'background-color:grey;'" class="image">
-                <img :src="order.shop.image" :alt="'Image of ' + order.shop.title"/>
+                <img :src="getImage" :alt="'Image of ' + order.shop.title"/>
             </figure>
         </div>
         <div class="card-content">
@@ -45,6 +45,7 @@
     </div>
 </template>
 
+
 <script>
 export default {
     name: 'OrderCard',
@@ -61,6 +62,9 @@ export default {
         authenticatedUserId() {
             return this.$store.state.auth.loggedIn ? this.$store.state.auth.user.sub : false
         },
+        getImage() {
+            return this.order.shop.image.replace('https://m.media-amazon.com/images/I/', 'https://res.cloudinary.com/opengrabs/image/upload/h_210/amazon/')
+        }
     },
     methods: {
         login() {
