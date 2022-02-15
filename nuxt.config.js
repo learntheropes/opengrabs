@@ -94,6 +94,7 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxt/content',
     '@nuxtjs/i18n',
     'nuxt-buefy',
     '@nuxtjs/axios',
