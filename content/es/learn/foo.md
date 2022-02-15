@@ -6,4 +6,4 @@ tags:
   - i18n
   - markdown
 ---
-## Dit is de eerste blog post op je gloednieuwe website in meerdere talen
+## Dit is de eerste blog post op je gloednieuwe website in meerdere talen foo
