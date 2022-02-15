@@ -26,7 +26,7 @@
             <b-input v-model="url" type="text" expanded></b-input>
           </b-field>
           <b-field :label="rewardLabel" :message="rewardMessage">
-            <b-slider v-model="travelReward" :min="5" :max="50" :step="5" ticks :custom-formatter="(val) => val + '%'" :tooltip="false" indicator />
+            <b-slider v-model="reward" :min="5" :max="50" :step="5" ticks :custom-formatter="(val) => val + '%'" :tooltip="false" indicator />
           </b-field>
           <button :class="loadAmazonButtonClass" @click="loadAmazonButton">{{ $t('getProductInfo')}}</button>
         </div>
@@ -38,17 +38,10 @@
           </header> 
           <div class="card-image">
             <figure style="background-color: grey" class="image">
-              <img :src="image" :alt="'Image of ' + title" />
+              <img :src="getImage" :alt="'Image of ' + title" />
             </figure>
           </div>
           <div class="card-content">
-            <div class="media">
-              <div class="media-content">
-                <p class="title is-4">
-                  {{ title }}
-                </p>
-              </div>
-            </div>
             <div class="content">
               <div class="columns is-mobile">
                 <div class="column">
@@ -179,9 +172,12 @@ export default {
     },
     rewardMessage() {
       return this.$t('rewardMessage')      
+    },
+    getImage() {
+      return this.image.replace('https://m.media-amazon.com/images/I/', 'https://res.cloudinary.com/opengrabs/image/upload/h_210/amazon/')
     }
   },
-  async created() {
+  created() {
     this.$nuxt.$on('updateUser', ($event) => this.updateUser($event))
   },
   methods: {
@@ -291,7 +287,7 @@ export default {
         shipping: 0.0,
         reward: this.$utils.round(price * 1.06 * (this.reward / 100), 2),
       }
-      this.setCurrencyReferralPrice(this.domain, this.price)
+      this.setCurrencyReferralPrice(this.domain, price)
       this.scrapedProduct = true
     },
     async loadAmazonButton() {
