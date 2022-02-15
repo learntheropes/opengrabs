@@ -94,13 +94,11 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    '@nuxt/content',
     '@nuxtjs/i18n',
     'nuxt-buefy',
     '@nuxtjs/axios',
     '@nuxtjs/dotenv',
     '@nuxtjs/auth-next',
-    '@nuxtjs/markdownit',
     '@nuxtjs/google-analytics',
     ['@giovannilaperna/nuxt-cookie-control', {
       colors:{
