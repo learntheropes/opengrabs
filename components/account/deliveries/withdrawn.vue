@@ -8,7 +8,7 @@
           </header> 
           <div class="card-image">
             <figure :style="'background-color:grey;'" class="image">
-              <img :src="delivery.shop.image" :alt="'Image of ' + delivery.shop.title"/>
+              <img :src="getImage" :alt="'Image of ' + delivery.shop.title"/>
             </figure>
           </div>
           <div class="card-content">
@@ -53,6 +53,11 @@ export default {
       type: Array,
       default: () => [],
     },
+  },
+  computed: {
+    getImage() {
+      return this.delivery.shop.image.replace('https://m.media-amazon.com/images/I/', 'https://res.cloudinary.com/opengrabs/image/upload/h_210/amazon/')
+    }
   },
 }
 </script>
