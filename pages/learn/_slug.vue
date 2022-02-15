@@ -8,6 +8,7 @@
 <script>
 export default {
   name: 'BlogSlug',
+  auth: false,
   async asyncData({ $content, params, app, error }) {
     const post = await $content(app.i18n.locale, 'learn', params.slug)
       .fetch()

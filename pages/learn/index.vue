@@ -10,6 +10,7 @@
 <script>
 export default {
   name: 'BlogOverview',
+  auth: false,
   async asyncData({ $content, app, error }) {
     const posts = await $content(app.i18n.locale, 'learn')
       .only(['short', 'path'])
@@ -19,7 +20,7 @@ export default {
         error({ statusCode: 404, message: 'Page not found' })
       })
 
-    return { post }
+    return { posts }
   },
 }
 </script>
