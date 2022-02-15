@@ -99,7 +99,7 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/dotenv',
     '@nuxtjs/auth-next',
-    '@nuxt/content',
+    '@nuxtjs/markdownit',
     '@nuxtjs/google-analytics',
     ['@giovannilaperna/nuxt-cookie-control', {
       colors:{

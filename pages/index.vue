@@ -44,7 +44,7 @@
             {{ $t('weDontChargeFeeBecauseAmazon') }}<br>
             {{ $t('thanksToBitcoin') }}
           </p>
-          <nuxt-link :to="localePath({ name: 'learn-slug', params: { slug: 'fees' }})" class="button is-primary">{{ $t('viewComparisionFees') }}</nuxt-link>
+          <nuxt-link :to="'/'+$i18n.locale+'/learn/fees'" class="button is-primary">{{ $t('viewComparisionFees') }}</nuxt-link>
         </div>
       </div>
     </div>
