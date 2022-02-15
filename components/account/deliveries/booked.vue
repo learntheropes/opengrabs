@@ -8,7 +8,7 @@
           </header> 
           <div class="card-image">
             <figure :style="'background-color:grey;'" class="image">
-              <img :src="getImage" :alt="'Image of ' + delivery.shop.title"/>
+              <img :src="getImage(delivery)" :alt="'Image of ' + delivery.shop.title"/>
             </figure>
           </div>
           <div class="card-content">
@@ -75,12 +75,10 @@ export default {
   data: () => ({
     disputeButtonClass: 'card-footer-item'
   }),
-  computed: {
-    getImage() {
-      return this.delivery.shop.image.replace('https://m.media-amazon.com/images/I/', 'https://res.cloudinary.com/opengrabs/image/upload/h_210/amazon/')
-    }
-  },
   methods: {
+    getImage(delivery) {
+      return delivery.shop.image.replace('https://m.media-amazon.com/images/I/', 'https://res.cloudinary.com/opengrabs/image/upload/h_210/amazon/')
+    },
     async dispute(ref) {
       this.disputeButtonClass = 'card-footer-item disabled'
       await this.$grab.dispute({ ref })

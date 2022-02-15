@@ -8,7 +8,7 @@
                     </header>
                     <div class="card-image card-image-equal-height">
                         <figure style="background-color: grey" class="image">
-                            <img :src="getImage" :alt="'Image of ' + travel.destination_city" />
+                            <img :src="getImage(travel)" :alt="'Image of ' + travel.destination_city" />
                         </figure>
                     </div>
                     <div class="card-content">
@@ -47,12 +47,10 @@ export default {
     data: () => ({
         removeButtonClass: 'card-footer-item'
     }),
-    computed: {
-        getImage() {
-            return this.travel.destination_photo.replace('https://lh3.googleusercontent.com/places/', 'https://res.cloudinary.com/opengrabs/image/upload/h_210/places/')
-        }
-    },
     methods: {
+        getImage(travel) {
+            return travel.destination_photo.replace('https://lh3.googleusercontent.com/places/', 'https://res.cloudinary.com/opengrabs/image/upload/h_210/places/')
+        },
         async remove(ref) {
             this.removeButtonClass = 'card-footer-item disabled'
             await this.$travel.remove(ref)
