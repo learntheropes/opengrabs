@@ -5,7 +5,7 @@
         </header> 
         <div class="card-image">
             <figure style="background-color: grey" class="image">
-                <img :src="travel.destination_photo" :alt="'Image of ' + travel.destination_city" />
+                <img :src="getImage" :alt="'Image of ' + travel.destination_city" />
             </figure>
         </div>
         <div class="card-content">
@@ -47,6 +47,9 @@ export default {
         authenticatedUserId() {
             return this.$store.state.auth.loggedIn ? this.$store.state.auth.user.sub : false
         },
+        getImage() {
+            return this.travel.destination_photo.replace('https://lh3.googleusercontent.com/places/', 'https://res.cloudinary.com/opengrabs/image/upload/h_210/places/')
+        }
     },
     methods: {
         login() {
