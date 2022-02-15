@@ -15,17 +15,10 @@
                 <div class="card">
                     <div class="card-image">
                         <figure style="background-color: grey" class="image">
-                            <img :src="image" :alt="'Image of ' + title" />
+                            <img :src="getImage" :alt="'Image of ' + title" />
                         </figure>
                     </div>
                     <div class="card-content">
-                        <div class="media">
-                            <div class="media-content">
-                            <p class="title is-4">
-                                {{ title }}
-                            </p>
-                            </div>
-                        </div>
                         <div class="content">
                             <div class="columns is-mobile">
                             <div class="column">
@@ -124,14 +117,27 @@ export default {
             else if (this.amazonUrlError === 'Invalid url') return this.$t('invalidUrl')
             else if (this.amazonUrlError === 'Invalid shop') return this.$t('invaliShop')
             else return `${this.$t('amazonUrlMessage1')} ${this.supportedShops.join(', ')}`
-        },        
+        },
+        getImage() {
+            return this.image.replace('https://m.media-amazon.com/images/I/', 'https://res.cloudinary.com/opengrabs/image/upload/h_210/amazon/')
+        }      
     },
-    async created() {
+    created() {
         this.$nuxt.$on('updateUser', ($event) => this.updateUser($event))
     },
     methods: {
-        updateUser(user) {
+        async updateUser(user) {
             this.user = user
+            if (process.env.URL && user.username && user.email && this.$Tawk.$isInit() && !this.$store.state.account.tawk.initiated) {
+                const { data: { hash }} = await this.$axios.get(`/api/crypto/sha256/${user.email}`)
+                this.$Tawk.$updateChatUser({ name: user.username, email: user.email, hash })
+                const attributes = {
+                    'user-sub': this.$store.$auth.user.sub,
+                    'bitcoin-network': (process.env.BTC_CHAIN === 'test3') ? 'testnet': 'mainnet'
+                }
+                this.$Tawk.$setAttribute(attributes)
+                this.$store.commit('account/tawk/setInitiated', true)
+            }
         },
         setCurrencyReferralPrice(domain, price) {
             switch (domain) {
@@ -206,7 +212,7 @@ export default {
                 shipping: 0.0,
                 reward: this.$utils.round(price * 1.06 * (this.reward / 100), 2),
             }
-            this.setCurrencyReferralPrice(this.domain, this.price)
+            this.setCurrencyReferralPrice(this.domain, price)
             this.scrapedProduct = true
         },
         async loadAmazonButton() {
