@@ -48,7 +48,7 @@
                     </header> 
                     <div class="card-image">
                         <figure style="background-color: grey" class="image">
-                            <img :src="destinationPhoto" :alt="'Image of ' + destinationCity" />
+                            <img :src="getImage" :alt="'Image of ' + destinationCity" />
                         </figure>
                     </div>
                     <div class="card-content">
@@ -179,9 +179,12 @@ export default {
                 default:
                     return null
             }            
+        },
+        getImage() {
+            return this.destinationPhoto.replace('https://lh3.googleusercontent.com/places/', 'https://res.cloudinary.com/opengrabs/image/upload/h_210/places/')
         }
     },
-    async created() {
+    created() {
         this.$nuxt.$on('updateUser', ($event) => this.updateUser($event))
     },
     methods: {
