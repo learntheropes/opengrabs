@@ -59,6 +59,10 @@ export default {
     dirs: [
       '~/components',
       {
+        path  : '~/components/content',
+        prefix: 'Content'
+      },
+      {
         path  : '~/components/layout',
         prefix: 'Layout'
       },
@@ -95,6 +99,7 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/dotenv',
     '@nuxtjs/auth-next',
+    '@nuxt/content',
     '@nuxtjs/google-analytics',
     ['@giovannilaperna/nuxt-cookie-control', {
       colors:{
@@ -107,9 +112,7 @@ export default {
         checkboxInactiveBackground: '#7957d5'
       },
       controlButton: false,
-      // domain: process.env.URL || 'localhost:3000',
       locales: ['en', 'es', 'pt', 'ru'],
-      // blockIframe: true,  
     }]
   ],
 
@@ -266,6 +269,13 @@ export default {
   moment: {
     timezone: true,
     locales: ['es', 'pt', 'ru']
+  },
+
+  // https://image.nuxtjs.org/providers/cloudinary
+  image: {
+    cloudinary: {
+      baseURL: 'https://res.cloudinary.com/opengrabs/image/upload/'
+    }
   },
 
   serverMiddleware: [

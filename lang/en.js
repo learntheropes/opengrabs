@@ -224,6 +224,8 @@ export default {
     usernameAlreadyInUse: "Username already in use",
     youCantChangeUsername: "You can't change username",
     usernameAlphaNumericBetween5and15Caracters: "Choose an alphanumberic username between 5 and 15 caracters",
+    // pages/learn/index
+    read: "Read",
     // nuxt-cookie-control
     cookieControl: {
         defaultName: "Default cookies",

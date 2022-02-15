@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="section">
     <div :class="heroClass">
       <div class="hero-body">
         <div class="container has-text-right">
@@ -44,7 +44,7 @@
             {{ $t('weDontChargeFeeBecauseAmazon') }}<br>
             {{ $t('thanksToBitcoin') }}
           </p>
-          <nuxt-link :to="localePath({ name: 'fees' })" class="button is-primary">{{ $t('viewComparisionFees') }}</nuxt-link>
+          <nuxt-link :to="localePath({ name: 'learn-slug', params: { slug: 'fees' }})" class="button is-primary">{{ $t('viewComparisionFees') }}</nuxt-link>
         </div>
       </div>
     </div>

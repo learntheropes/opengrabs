@@ -16,6 +16,7 @@
     "@chenfengyuan/vue-qrcode": "^1.0.2",
     "@giovannilaperna/nuxt-cookie-control": "^1.2.4",
     "@giovannilaperna/vue-tawk-multiple-languages": "^1.2.8",
+    "@nuxt/content": "^1.15.1",
     "@nuxtjs/auth-next": "^5.0.0-1642152945.3bb6b5f",
     "@nuxtjs/axios": "^5.13.6",
     "@nuxtjs/dotenv": "^1.4.1",
