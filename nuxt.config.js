@@ -3,8 +3,10 @@ import fs from 'fs'
 
 export default {
   // Target: https://go.nuxtjs.dev/config-target
-  ssr: false,
-  target: 'server',
+  // ssr: false,
+  // target: 'server',
+  mode: 'spa',
+  target: 'static',
 
   env: {
     BTC_CHAIN: process.env.BTC_CHAIN,
