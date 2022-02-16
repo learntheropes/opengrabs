@@ -51,7 +51,7 @@
           </b-field>
           <div v-for="(msg, index) in messages" :key="index" class="content">
             <div v-if="msg.user_sub === 'admin|0'" class="notification has-text-centered is-primary is-light">
-              <span class="has-text-weight-semibold has-text-grey-light">{{ $t('admin') }} </span>,<br>
+              <span class="has-text-weight-semibold has-text-grey-light">{{ $t('admin') }} </span><br>
               <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
               <p v-if="msg.content === 'published'">{{ $t('statusPublished') }}</p>
               <p v-if="msg.content === 'removed'">{{ $t('statusRemoved') }}</p>
