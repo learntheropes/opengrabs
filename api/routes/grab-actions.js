@@ -143,7 +143,7 @@ router.post('/grab/actions/order/:ref', authorizeUser, asyncHandler(async (req, 
         case 'ru':
             emailContent = ru.emailOrder(travelerUser.locale,id)
         default:
-            emailContent = en.emailOrder(travelerUser.locale,id)
+            emailContent = en.emailOrder('en',id)
     }
 
     await transporter.sendMail({
@@ -255,7 +255,7 @@ router.post('/grab/actions/book/:ref', authorizeUser, asyncHandler(async (req, r
         case 'ru':travelerUser
             emailContent = ru.emailBook(buyerUser.locale,ref)
         default:
-            emailContent = en.emailBook(buyerUser.locale,ref)
+            emailContent = en.emailBook('en',ref)
     }
 
     await transporter.sendMail({
@@ -338,7 +338,7 @@ router.post('/grab/actions/dispute/:ref', authorizeUser, asyncHandler(async (req
         case 'ru':
             emailContent = ru.emailDispute(userNotifyObject.locale,ref)
         default:
-            emailContent = en.emailDispute(userNotifyObject.locale,ref)
+            emailContent = en.emailDispute('en',ref)
     }
 
     await transporter.sendMail({
@@ -407,7 +407,7 @@ router.post('/grab/actions/bought/:ref', authorizeUser, asyncHandler(async (req,
         case 'ru':
             emailContent = ru.emailBought(buyerUser.locale,ref)
         default:
-            emailContent = en.emailBought(buyerUser.locale,ref)
+            emailContent = en.emailBought('en',ref)
     }
 
     await transporter.sendMail({
@@ -474,7 +474,7 @@ router.post('/grab/actions/delivered/:ref', authorizeUser, asyncHandler(async (r
         case 'ru':
             emailContent = ru.emailDelivered(buyerUser.locale,ref)
         default:
-            emailContent = en.emailDelivered(buyerUser.locale,ref)
+            emailContent = en.emailDelivered('en',ref)
     }
 
     await transporter.sendMail({
@@ -542,7 +542,7 @@ router.post('/grab/actions/release/:ref', authorizeUser, asyncHandler(async (req
         case 'ru':
             emailContent = ru.emailReleased(travelerUser.locale,ref)
         default:
-            emailContent = en.emailReleased(travelerUser.locale,ref)
+            emailContent = en.emailReleased('en',ref)
     }
 
     await transporter.sendMail({
