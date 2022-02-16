@@ -35,6 +35,9 @@
               </div>
             </div>
             <div class="content">
+              {{ delivery.shop.packaging ? $t('withPackaging') : $t('withoutPackaging') }}
+            </div>
+            <div class="content">
               {{ $t('deliveryTo') }} {{ delivery.destination.city }} [{{ delivery.destination.country }}]<br>
               {{ $moment(delivery.delivery.date).fromNow() }} [{{ $utils.momentDate(delivery.delivery.date) }}]
             </div>

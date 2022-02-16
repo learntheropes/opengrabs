@@ -32,6 +32,9 @@
                     <b-field :label="$t('travelRewardLabel')" :message="$t('travelRewardMessage')">
                         <b-slider v-model="travelReward" :min="5" :max="50" :step="5" ticks :custom-formatter="(val) => val + '%'" :tooltip="false" indicator />
                     </b-field>
+                    <b-field :label="$t('packagingLabel')">
+                        <b-switch v-model="packaging" type='is-primary'>{{ packaging ? $t('withPackaging') : $t('withoutPackaging') }}</b-switch>
+                    </b-field>
                     <b-field :label="$t('travelBudgetLabel')" :type="travelBudgetType" :message="travelBudgetMessage">
                         <b-input v-model="travelBudget" type="text" expanded></b-input>
                         <p class="control">
@@ -110,6 +113,7 @@ export default {
         travelDateError: false,
         travelDateType: null,
         travelReward: null,
+        packaging: false,
         travelBudget: null,
         travelBudgetError: false,
         travelBudgetType: null,
@@ -282,6 +286,7 @@ export default {
             this.travelDateError = false
             this.travelDateType = null
             this.travelReward = null
+            this.packaging = false
             this.travelBudget = null
             this.travelBudgetError = false
             this.travelBudgetType = null
@@ -298,6 +303,7 @@ export default {
                 destination_city: this.destinationCity,
                 destination_photo: this.destinationPhoto,
                 date: this.travelDate.toISOString(),
+                packaging: this.packaging,
                 reward: this.travelReward,
                 budget: parseFloat(this.travelBudget),
                 currency: this.travelCurrency,

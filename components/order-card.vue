@@ -29,6 +29,9 @@
                 </div>
             </div>
             <div class="content">
+                {{ order.shop.packaging ? $t('withPackaging') : $t('withoutPackaging') }}
+            </div>
+            <div class="content">
                 {{ $t('deliveryTo') }} {{ order.destination.city }} [{{ order.destination.country }}]<br>
                 {{ $moment(order.destination.max_delivery_date).fromNow() }} [{{ $utils.momentDate(order.destination.max_delivery_date) }}]
             </div>

@@ -28,6 +28,9 @@
           <b-field :label="rewardLabel" :message="rewardMessage">
             <b-slider v-model="reward" :min="5" :max="50" :step="5" ticks :custom-formatter="(val) => val + '%'" :tooltip="false" indicator />
           </b-field>
+          <b-field :label="packagingLabel">
+            <b-switch v-model="packaging" type='is-primary'>{{ packaging ? $t('withPackaging') : $t('withoutPackaging') }}</b-switch>
+          </b-field>
           <button :class="loadAmazonButtonClass" @click="loadAmazonButton">{{ $t('getProductInfo')}}</button>
         </div>
       </div>
@@ -45,31 +48,34 @@
             <div class="content">
               <div class="columns is-mobile">
                 <div class="column">
-                  <p>{{ $t('product')}}:</p>
-                  <p>{{ $t('shipping')}}:</p>
-                  <p>{{ $t('taxes') }}:</p>
-                  <p>{{ $t('reward')}}:</p>
-                  <p class="has-text-weight-bold">Total:</p>
+                  <p>{{ $t('product')}}:<br>
+                  {{ $t('shipping')}}:<br>
+                  {{ $t('taxes') }}:<br>
+                  {{ $t('reward')}}:<br>
+                  {{ $t('total')}}:</p>
                 </div>
                 <div class="column" align="right">
-                  <p>{{ price.product.toFixed(2) }}</p>
-                  <p>{{ price.shipping.toFixed(2) }}</p>
-                  <p>{{ price.taxes.toFixed(2) }}</p>
-                  <p>{{ price.reward.toFixed(2) }}</p>
-                  <p class="has-text-weight-bold">{{ price.total.toFixed(2) }}</p>
+                  <p>{{ price.product.toFixed(2) }}<br>
+                  {{ price.shipping.toFixed(2) }}<br>
+                  {{ price.taxes.toFixed(2) }}<br>
+                  {{ price.reward.toFixed(2) }}<br>
+                  {{ price.total.toFixed(2) }}</p>
                 </div>
                 <div class="column">
-                  <p>{{ currency }}</p>
-                  <p>{{ currency }}</p>
-                  <p>{{ currency }}</p>
-                  <p>{{ currency }}</p>
-                  <p class="has-text-weight-bold">{{ currency }}</p>
+                  <p>{{ currency }}<br>
+                  {{ currency }}<br>
+                  {{ currency }}<br>
+                  {{ currency }}<br>
+                  {{ currency }}</p>
                 </div>
               </div>
             </div>
             <div class="content">
-              {{ $t('deliveryTo')}} <strong>{{ city }} [{{ country }}]</strong><br>
-              {{ $moment(max_delivery_date.toISOString()).fromNow() }} <strong>[{{ $utils.momentDate(max_delivery_date.toISOString()) }}]</strong>
+              {{ packaging ? $t('withPackaging') : $t('withoutPackaging') }}
+            </div>
+            <div class="content">
+              {{ $t('deliveryTo')}} {{ city }} [{{ country }}]<br>
+              {{ $moment(max_delivery_date.toISOString()).fromNow() }} [{{ $utils.momentDate(max_delivery_date.toISOString()) }}]
             </div>
           </div>
           <footer class="card-footer">
@@ -112,6 +118,7 @@ export default {
     image: null,
     price: {},
     currency: null,
+    packaging: false,
     countryError: false,
     countryType: null,
     cityError: false,
@@ -172,6 +179,9 @@ export default {
     },
     rewardMessage() {
       return this.$t('rewardMessage')      
+    },
+    packagingLabel() {
+      return this.$t('packagingLabel')
     },
     getImage() {
       return this.image.replace('https://m.media-amazon.com/images/I/', 'https://res.cloudinary.com/opengrabs/image/upload/h_210/amazon/')
@@ -321,6 +331,7 @@ export default {
         image: this.image,
         price: this.price,
         currency: this.currency,
+        packaging: this.packaging
       }
       const destination = {
         country: this.country,
@@ -336,6 +347,7 @@ export default {
       this.max_delivery_date = null
       this.url = null
       this.reward = 5
+      this.packaging = false
     },
     async publishButton() {
       try {

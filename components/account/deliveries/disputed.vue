@@ -35,6 +35,9 @@
               </div>
             </div>
             <div class="content">
+              {{ delivery.shop.packaging ? $t('withPackaging') : $t('withoutPackaging') }}
+            </div>
+            <div class="content">
               {{ $t('deliveryTo') }} {{ delivery.destination.city }} [{{ delivery.destination.country }}]<br>
             </div>
             <div class="content">

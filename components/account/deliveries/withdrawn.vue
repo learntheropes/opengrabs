@@ -35,6 +35,9 @@
               </div>
             </div>
             <div class="content">
+              {{ delivery.shop.packaging ? $t('withPackaging') : $t('withoutPackaging') }}
+            </div>
+            <div class="content">
               {{ $t('withdrawnAt') }} {{ $moment(delivery.withdrawn_at).fromNow() }}
             </div>
           </div>

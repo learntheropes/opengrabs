@@ -35,6 +35,9 @@
               </div>
             </div>
             <div class="content">
+              {{ delivery.shop.packaging ? $t('withPackaging') : $t('withoutPackaging') }}
+            </div>
+            <div class="content">
               {{ $t('releasedBy') }} <nuxt-link :to="localePath({ name: 'user-username', params: { username: delivery.buyer.username }})">{{ delivery.buyer.username }}</nuxt-link><br>
               {{ $moment(delivery.released_at).fromNow() }}
             </div>

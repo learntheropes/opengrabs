@@ -188,6 +188,9 @@ export default {
     shipping: "shipping",
     taxes: "Taxes",
     publish: "Publica",
+    packagingLabel: "Packaging",
+    withPackaging: "With packaging",
+    withoutPackaging: "Without packaging",
     toastOrderPublished: "Order published",
     // components/account/new/travel
     originCountryLabel: "Country of departure",

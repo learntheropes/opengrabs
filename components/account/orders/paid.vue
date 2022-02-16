@@ -35,6 +35,9 @@
               </div>
             </div>
             <div class="content">
+              {{ order.shop.packaging ? $t('withPackaging') : $t('withoutPackaging') }}
+            </div>
+            <div class="content">
               {{ $t('deliveryTo') }} {{ order.destination.city }} [{{ order.destination.country }}]<br>
               {{ $t('bookedBy') }} <nuxt-link :to="localePath({ name: 'user-username', params: { username: order.traveler.username }})">{{ order.traveler.username }}</nuxt-link><br>
               {{ $moment(order.delivery.date).fromNow() }} [{{ $utils.momentDate(order.delivery.date) }}]
