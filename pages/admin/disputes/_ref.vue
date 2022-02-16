@@ -67,19 +67,19 @@
                                 <div :else-if="msg.user_sub.split('|')[0] === 'admin'  && msg.user_sub.split('|')[1] !== '0'" class="notification has-text-centered is-primary is-light">
                                     <span class="has-text-weight-semibold has-text-grey-light">Admin</span><br>
                                     <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
-                                    <p>{{ msg.content }}</p>
+                                    <p class="has-new-line">{{ msg.content }}</p>
                                 </div>
                                 <div v-if="msg.user_sub === grab.buyer.sub" class="notification">
                                     <span class="has-text-weight-semibold has-text-grey-light">{{ msg.user_username }}</span><br>
                                     <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
-                                    <p>{{ msg.content }}</p>
+                                    <p class="has-new-line">{{ msg.content }}</p>
                                 </div>
                                 <div v-if="msg.user_sub === grab.traveler.sub" class="notification has-text-right">
                                     <p>
                                         <span class="has-text-weight-semibold has-text-grey-light">{{ msg.user_username }}</span><br>
                                         <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
                                     </p>
-                                    <p>{{ msg.content }}</p>
+                                    <p class="has-new-line">{{ msg.content }}</p>
                                 </div>
                             </div>
                         </div>
@@ -211,3 +211,9 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+.has-new-line {
+  white-space: pre-wrap;
+}
+</style>

@@ -72,14 +72,14 @@
             <div v-if="msg.user_sub === me" class="notification">
               <span class="has-text-weight-semibold has-text-grey-light">{{ $t('me') }} </span>,<br>
               <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
-              <p>{{ msg.content }}</p>
+              <p class="has-new-line">{{ msg.content }}</p>
             </div>
             <div v-if="msg.user_sub !== me && msg.user_sub.split('|')[0] !== 'admin'" class="notification has-text-right">
               <p>
                 <span class="has-text-weight-semibold has-text-grey-light">{{ msg.user_username }} </span>,<br>
                 <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
               </p>
-              <p>{{ msg.content }}</p>
+              <p class="has-new-line">{{ msg.content }}</p>
             </div>
           </div>
         </div>
@@ -268,3 +268,9 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.has-new-line {
+  white-space: pre-wrap;
+}
+</style>
