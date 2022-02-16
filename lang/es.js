@@ -80,7 +80,7 @@ export default {
     // pages/account/grab/_ref
     grab: "Grab",
     buyer: "Buyer",
-    traveler: "Product",
+    traveler: "Traveler",
     price: "Price",
     deliveryDate: "Delivery date",
     publishedAt: "Published",

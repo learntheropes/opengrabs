@@ -3,10 +3,10 @@
     <h1 class="title">{{ $t('grab') }} {{ ref }}</h1>
     <div v-if="isBuyerOrTraveler" class="columns">
       <div class="column is-half">
-        <div class="box">
+        <div class="block">
           <div class="content">
-            <p v-if="grab.buyer">{{ $t('buyer') }}: {{ grab.buyer.name }}</p>
-            <p v-if="grab.traveler">{{ $t('traveler') }}: {{ grab.traveler.name }}</p>
+            <p v-if="grab.buyer">{{ $t('buyer') }}: <nuxt-link :to="localePath({ name: 'user-username', params: { username: grab.buyer.username }})">{{ grab.buyer.username }}</nuxt-link></p>
+            <p v-if="grab.traveler">{{ $t('traveler') }}: <nuxt-link :to="localePath({ name: 'user-username', params: { username: grab.traveler.username }})">{{ grab.traveler.username }}</nuxt-link></p>
             <p>{{ $t('product') }}: <a :href="grab.shop.url" target="_blank">{{ grab.shop.slug.replace(/-/g,' ') || grab.shop.title }}</a></p>
             <p>{{ $t('price') }}: {{ grab.shop.price.total.toFixed(2) }} {{ grab.shop.currency }}</p>
             <p v-if="grab.delivery">{{ $t('deliveryDate') }}: {{ $moment(grab.delivery.date).fromNow() }} [{{ $utils.momentDate(grab.delivery.date) }}]</p>
