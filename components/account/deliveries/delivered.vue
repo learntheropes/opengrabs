@@ -50,7 +50,7 @@
             </div>
           </div>
           <footer class="card-footer">
-            <nuxt-link :to="{ name: 'account-grab-ref', params: { ref: delivery.ref }}" class="card-footer-item">{{ $t('chat') }}</nuxt-link>
+            <nuxt-link :to="localePath({ name: 'account-grab-ref', params: { ref: delivery.ref }})" class="card-footer-item">{{ $t('chat') }}</nuxt-link>
             <a href="#" :class="disputeButtonClass" @click="dispute(delivery.ref)">{{ $t('dispute') }}</a>
           </footer>
         </div>

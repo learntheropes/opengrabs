@@ -18,7 +18,7 @@ router.get('/db/isbuyerortraveler/:ref', authorizeUser, asyncHandler (async (req
     res.status(200).send(true)
     return
   } else {
-    res.status(200).send(false)
+    res.status(401).send('unauthorized')
     return
   }
 }))
@@ -161,19 +161,22 @@ router.get('/db/messages/filter/grab/:ref', authorizeUser, asyncHandler(async (r
     return
   }
 
-  const { data } = await client.query(
-    q.Paginate(
-      q.Match(q.Index('messages_by_grab_id'), ref),
-      { size: 100000 }
+  let { data: messages } = await client.query(
+    q.Map(
+      q.Paginate(
+        q.Match(q.Index('messages_by_grab_id'), ref),
+        { size: 1000 }
+      ),
+      q.Lambda(["posted_at", "ref"], q.Get(q.Var("ref")))
     )
   )
 
-  const grabs = data.map(({ data, ref: { value: { id }}}) => {
+  messages = messages.map(({ data, ref: { value: { id }}}) => {
     data.ref = id
     return data
   })
 
-  res.status(200).json(grabs)
+  res.status(200).json(messages)
 }))
 
 router.post('/db/messages/create', authorizeUser, asyncHandler(async (req, res) => {

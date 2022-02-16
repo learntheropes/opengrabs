@@ -47,11 +47,10 @@
             </div>
           </div>
           <footer class="card-footer">
-            <a :href="product.shop.url" target="_blank" class="card-footer-item">Buy on {{ $utils.capitalize(delivery.shop.name) }}</a>
-            <nuxt-link :to="{ name: 'account-grab-ref', params: { ref: delivery.ref }}" class="card-footer-item">Chat</nuxt-link>
+            <a :href="order.shop.url" target="_blank" class="card-footer-item">{{ order.shop.name }}.{{ order.shop.domain }}</a>
+            <nuxt-link :to="localePath({ name: 'account-grab-ref', params: { ref: delivery.ref }})" class="card-footer-item">Chat</nuxt-link>
           </footer>
           <footer class="card-footer">
-            <a :href="order.shop.url" target="_blank" class="card-footer-item">{{ order.shop.name }}.{{ order.shop.domain }}</a>
             <a href="#" :class="boughtButtonClass" @click="bought(delivery.ref)">{{ $t('bought') }}</a>
             <a href="#" :class="disputeButtonClass" @click="dispute(delivery.ref)">{{ $t('dispute') }}</a>
           </footer>

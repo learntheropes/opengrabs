@@ -65,7 +65,7 @@ router.get('/admin/messages/list/:ref', authorizeUser, authorizeAdmin, asyncHand
 
   const { ref } = req.params
 
-  const { data } = await client.query(
+  let { data: messages } = await client.query(
     q.Map(
       q.Paginate(
         q.Match(q.Index('messages_by_grab_id'), ref),
@@ -75,7 +75,7 @@ router.get('/admin/messages/list/:ref', authorizeUser, authorizeAdmin, asyncHand
     )
   )
 
-  const messages = data.map(({ data, ref: { value: { id }}}) => {
+  messages = messages.map(({ data, ref: { value: { id }}}) => {
     data.ref = id
     return data
   })

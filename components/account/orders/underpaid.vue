@@ -46,8 +46,8 @@
             </div>
           </div>
           <footer class="card-footer">
-            <nuxt-link :to="{ name: 'account-grab-ref', params: { ref: order.ref }}" class="card-footer-item">{{ $t('chat') }}</nuxt-link>
-            <nuxt-link :to="{ name: 'account-underpay-ref', params: { ref: order.ref }}" class="card-footer-item">{{ $t('completePayment') }}</nuxt-link>
+            <nuxt-link :to="localePath({ name: 'account-grab-ref', params: { ref: order.ref }})" class="card-footer-item">{{ $t('chat') }}</nuxt-link>
+            <nuxt-link :to="localePath({ name: 'account-underpay-ref', params: { ref: order.ref }})" class="card-footer-item">{{ $t('completePayment') }}</nuxt-link>
           </footer>
         </div>
       </div>

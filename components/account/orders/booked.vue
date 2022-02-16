@@ -48,8 +48,10 @@
           </div>
           <footer class="card-footer">
             <a :href="order.shop.url" target="_blank" class="card-footer-item">{{ order.shop.name }}.{{ order.shop.domain }}</a>
-            <nuxt-link :to="{ name: 'account-grab-ref', params: { ref: order.ref }}" class="card-footer-item">{{ $t('chat') }}</nuxt-link>
-            <nuxt-link :to="{ name: 'account-pay-ref', params: { ref: order.ref }}" class="card-footer-item">{{ $t('pay') }}</nuxt-link>
+          </footer>
+          <footer class="card-footer">
+            <nuxt-link :to="localePath({ name: 'account-grab-ref', params: { ref: order.ref }})" class="card-footer-item">{{ $t('chat') }}</nuxt-link>
+            <nuxt-link :to="localePath({ name: 'account-pay-ref', params: { ref: order.ref }})" class="card-footer-item">{{ $t('pay') }}</nuxt-link>
           </footer>
         </div>
       </div>

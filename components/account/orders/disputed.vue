@@ -46,7 +46,7 @@
           </div>
           <footer class="card-footer">
             <a :href="order.shop.url" target="_blank" class="card-footer-item">{{ order.shop.name }}.{{ order.shop.domain }}</a>
-            <nuxt-link :to="{ name: 'account-grab-ref', params: { ref: order.ref }}" class="card-footer-item">Chat</nuxt-link>
+            <nuxt-link :to="localePath({ name: 'account-grab-ref', params: { ref: order.ref }})" class="card-footer-item">Chat</nuxt-link>
           </footer>
         </div>
       </div>

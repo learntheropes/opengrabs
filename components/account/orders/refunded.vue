@@ -45,7 +45,7 @@
             </div>
           </div>
           <footer v-if="order.paid_at" class="card-footer">
-            <nuxt-link :to="{ name: 'account-withdraw-ref', params: { ref: order.ref }}" class="card-footer-item">{{ $t('withdraw') }}</nuxt-link>
+            <nuxt-link :to="localePath({ name: 'account-withdraw-ref', params: { ref: order.ref }})" class="card-footer-item">{{ $t('withdraw') }}</nuxt-link>
           </footer>
         </div>
       </div>

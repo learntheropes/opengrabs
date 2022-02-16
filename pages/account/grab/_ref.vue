@@ -1,8 +1,8 @@
 <template>
   <section class="section container">
+    <h1 class="title">{{ $t('grab') }} {{ ref }}</h1>
     <div v-if="isBuyerOrTraveler" class="columns">
       <div class="column is-half">
-        <h1 class="title">{{ $t('grab') }} {{ ref }}</h1>
         <div class="box">
           <div class="content">
             <p v-if="grab.buyer">{{ $t('buyer') }}: {{ grab.buyer.name }}</p>
@@ -50,7 +50,7 @@
             <button :class="chatButtonClass" @click="postChatMessage">{{ $t('postChatMessage') }}</button>
           </b-field>
           <div v-for="(msg, index) in messages" :key="index" class="content">
-            <div v-if="msg.user_sub === 'admin|0'" class="notification has-text-centered is-primary">
+            <div v-if="msg.user_sub === 'admin|0'" class="notification has-text-centered is-primary is-light">
               <span class="has-text-weight-semibold has-text-grey-light">{{ $t('admin') }} </span>,<br>
               <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
               <p v-if="msg.content === 'published'">{{ $t('statusPublished') }}</p>
@@ -64,7 +64,7 @@
               <p v-if="msg.content === 'withdrawn'">{{ $t('statusWithdrawn') }}</p>
               <p v-if="msg.content === 'refunded'">{{ $t('statusRefunded') }}</p>       
             </div>
-            <div else-if="msg.user_sub.split('|')[0] === 'admin'" class="notification has-text-centered is-primary">
+            <div v-if="msg.user_sub.split('|')[0] === 'admin' && msg.user_sub.split('|')[1] !== '0'" class="notification has-text-centered is-primary is-light">
               <span class="has-text-weight-semibold has-text-grey-light">{{ $t('admin') }} </span>,<br>
               <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
               <p>{{ msg.content }}</p>
@@ -74,7 +74,7 @@
               <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
               <p>{{ msg.content }}</p>
             </div>
-            <div v-else class="notification has-text-right">
+            <div v-if="msg.user_sub !== me && msg.user_sub.split('|')[0] !== 'admin'" class="notification has-text-right">
               <p>
                 <span class="has-text-weight-semibold has-text-grey-light">{{ msg.user_username }} </span>,<br>
                 <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
@@ -159,7 +159,7 @@ export default {
       else return null    
     }
   },
-  async created() {
+  created() {
     setInterval(async () => {
       const messages = await this.$db.messages.filter(this.ref)
       this.messages = messages

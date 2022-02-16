@@ -50,7 +50,7 @@
             <a :href="order.shop.url" target="_blank" class="card-footer-item">{{ order.shop.name }}.{{ order.shop.domain }}</a>
           </footer>
           <footer class="card-footer">
-            <nuxt-link :to="{ name: 'account-order-by-ref', params: { ref: order.ref }}" class="card-footer-item">{{ $t('chat') }}</nuxt-link>
+            <nuxt-link :to="localePath({ name: 'account-order-by-ref', params: { ref: order.ref }})" class="card-footer-item">{{ $t('chat') }}</nuxt-link>
             <a href="#" :class="disputeButtonClass" @click="dispute(order.ref)">{{ $t('dispute') }}</a>
           </footer>
         </div>

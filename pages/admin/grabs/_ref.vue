@@ -29,7 +29,7 @@
                     <div class="column is-half">
                         <div class="box">
                             <div v-for="(msg, index) in messages" :key="index" class="content">
-                                <div v-if="msg.user_sub === 'admin|0'" class="notification has-text-centered is-primary">
+                                <div v-if="msg.user_sub === 'admin|0'" class="notification has-text-centered is-primary is-light">
                                     <span class="has-text-weight-semibold has-text-grey-light">Admin</span><br>
                                     <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
                                     <p v-if="msg.content === 'published'">Published</p>
@@ -43,7 +43,7 @@
                                     <p v-if="msg.content === 'withdrawn'">Withdrawn</p> 
                                     <p v-if="msg.content === 'refunded'">Refunded</p>        
                                 </div>
-                                <div :else-if="msg.user_sub.split('|')[0] === 'admin'" class="notification has-text-centered is-primary">
+                                <div v-if="msg.user_sub.split('|')[0] === 'admin' && msg.user_sub.split('|')[1] !== '0'" class="notification has-text-centered is-primary is-light">
                                     <span class="has-text-weight-semibold has-text-grey-light">Admin</span><br>
                                     <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
                                     <p>{{ msg.content }}</p>
