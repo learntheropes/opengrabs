@@ -25,6 +25,9 @@
           <b-field :label="amazonUrlLabel" :type="amazonUrlType" :message="amazonUrlMessage">
             <b-input v-model="url" type="text" expanded></b-input>
           </b-field>
+          <b-field :label="quantityLabel" :type="quantityType" :message="quantityMessage">
+            <b-numberinput v-model="quantity" :min="1" :max="10" type="is-light"></b-numberinput>
+          </b-field>
           <b-field :label="rewardLabel" :message="rewardMessage">
             <b-slider v-model="reward" :min="5" :max="50" :step="5" ticks :custom-formatter="(val) => val + '%'" :tooltip="false" indicator />
           </b-field>
@@ -45,6 +48,9 @@
             </figure>
           </div>
           <div class="card-content">
+            <div class="content">
+              {{ quantity }} {{ $t('items') }}
+            </div>
             <div class="content">
               <div class="columns is-mobile">
                 <div class="column">
@@ -112,6 +118,7 @@ export default {
     slug: null,
     dp: null,
     referral: null,
+    quantity: 1,
     reward: 5,
     title: null,
     weight: null,
@@ -127,6 +134,7 @@ export default {
     dateType: null,
     amazonUrlError: false,
     amazonUrlType: null,
+    quantityType: null,
   }),
   computed: {
     countries() {
@@ -174,6 +182,13 @@ export default {
       else if (this.amazonUrlError === 'Invalid url') return this.$t('invalidUrl')
       else return this.$t('amazonUrlMessage')
     },
+    quantityLabel() {
+      return this.$t('quantityLabel') 
+    },
+    quantityMessage() {
+      if (this.quantity < 1 || this.quantity > 10) return this.$t('invalidQuantity')
+      else return this.$t('quantityMessage')
+    },
     rewardLabel() {
       return this.$t('rewardLabel')      
     },
@@ -210,37 +225,37 @@ export default {
           this.currency = 'EUR'
           this.referral = ''
           this.price.taxes = 0
-          this.price.total = this.$utils.round(price * (this.reward / 100 + 1),2)
+          this.price.total = this.$utils.round((price * 1.06 * (this.reward / 100 + 1)) * this.quantity,2)
           break
         case 'de':
           this.currency = 'EUR'
           this.referral = ''
           this.price.taxes = 0
-          this.price.total = this.$utils.round(price * (this.reward / 100 + 1),2)
+          this.price.total = this.$utils.round((price * 1.06 * (this.reward / 100 + 1)) * this.quantity,2)
           break
         case 'it':
           this.currency = 'EUR'
           this.referral = ''
           this.price.taxes = 0
-          this.price.total = this.$utils.round(price * (this.reward / 100 + 1),2)
+          this.price.total = this.$utils.round((price * 1.06 * (this.reward / 100 + 1)) * this.quantity,2)
           break
         case 'es':
           this.currency = 'EUR'
           this.referral = ''
           this.price.taxes = 0
-          this.price.total = this.$utils.round(price * (this.reward / 100 + 1),2)
+          this.price.total = this.$utils.round((price * 1.06 * (this.reward / 100 + 1)) * this.quantity,2)
           break
         case 'co.uk':
           this.currency = 'GBP'
           this.referral = ''
           this.price.taxes = 0
-          this.price.total = this.$utils.round(price * (this.reward / 100 + 1),2)
+          this.price.total = this.$utils.round((price * 1.06 * (this.reward / 100 + 1)) * this.quantity,2)
           break
         case 'com':
           this.currency = 'USD'
           this.referral = 'opengrabs-20'
-          this.price.taxes = this.$utils.round(price * 0.06, 2)
-          this.price.total = this.$utils.round(price * 1.06 * (this.reward / 100 + 1),2)
+          this.price.taxes = this.$utils.round(price * 0.06 * this.quantity, 2)
+          this.price.total = this.$utils.round((price * 1.06 * (this.reward / 100 + 1)) * this.quantity,2)
           break
       }
     },
@@ -283,6 +298,12 @@ export default {
       }
       return true
     },
+    validateQuantity() {
+      if (this.quantity < 1 || this.quantity > 10) {
+        return false
+      }
+      return true
+    },
     async loadAmazonData() {
       const match = this.url.match(/(?:amazon.)(?<domain>fr|de|it|es|co.uk|com)(?:\/|\?)(?<slug>.+)(?:\/dp\/)(?<dp>\w+)(?:\/|\?|$)/)
       this.domain = match.groups.domain
@@ -293,9 +314,9 @@ export default {
       this.weight = weight
       this.image = image
       this.price = {
-        product: price,
+        product: price * this.quantity,
         shipping: 0.0,
-        reward: this.$utils.round(price * 1.06 * (this.reward / 100), 2),
+        reward: this.$utils.round((price * 1.06 * (this.reward / 100)) * this.quantity, 2),
       }
       this.setCurrencyReferralPrice(this.domain, price)
       this.scrapedProduct = true
@@ -313,7 +334,8 @@ export default {
       const validCity = this.validateCity()
       const validDate = this.validateDate()
       const validUrl = this.validateAmazonLink()
-      if (validCountry && validCity && validDate && validUrl) {
+      const validQuantity =this.validateQuantity()
+      if (validCountry && validCity && validDate && validUrl && validQuantity) {
         this.loadAmazonButtonClass = 'button is-primary is-outlined is-loading'
         await this.loadAmazonData()
         this.loadAmazonButtonClass = 'button is-primary is-outlined'        
@@ -329,6 +351,7 @@ export default {
         title: this.title,
         weight: this.weight,
         image: this.image,
+        quantity: this.quantity,
         price: this.price,
         currency: this.currency,
         packaging: this.packaging
@@ -347,6 +370,7 @@ export default {
       this.max_delivery_date = null
       this.url = null
       this.reward = 5
+      this.quantity = 1
       this.packaging = false
     },
     async publishButton() {
@@ -355,6 +379,7 @@ export default {
         await this.publishGrab()
         const published = await this.$db.account.orders.filter('published')
         this.$store.commit('account/orders/setPublished', published)
+        this.$store.commit('orders/setInitiated', false)
         this.publishButtonClass = 'card-footer-item'
         this.$buefy.toast.open({
           duration: 3000,

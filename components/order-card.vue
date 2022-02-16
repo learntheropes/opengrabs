@@ -10,6 +10,9 @@
         </div>
         <div class="card-content">
             <div class="content">
+              {{ order.shop.quantity }} {{ $t('items') }}
+            </div>
+            <div class="content">
                 <div class="columns is-mobile">
                     <div class="column">
                         <p>{{ $t('product') }}:<br>

@@ -63,6 +63,9 @@
                             {{ $t('travelBudget') }} {{ parseFloat(travelBudget).toFixed(0) }} {{ originObject.currency }}
                         </div>
                         <div class="content">
+                            {{ packaging ? $t('withPackaging') : $t('withoutPackaging') }}
+                        </div>
+                        <div class="content">
                             {{ $t('publishedBy') }} {{ user.username }}<br>
                             {{ $moment(travelPublishedAt).fromNow() }} 
                         </div>

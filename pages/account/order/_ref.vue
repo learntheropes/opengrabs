@@ -8,17 +8,26 @@
                     <b-field :label="$t('amazonUrlLabel')" :type="amazonUrlType" :message="amazonUrlMessage">
                         <b-input v-model="url" type="text" expanded></b-input>
                     </b-field>
+                    <b-field :label="$t('quantityLabel')" :type="quantityType" :message="quantityMessage">
+                        <b-numberinput v-model="quantity" :min="1" :max="10" type="is-light"></b-numberinput>
+                    </b-field>
                     <button :class="loadAmazonButtonClass" @click="loadAmazonButton">{{ $t('getProductInfo')}}</button>
                 </div>
             </div>
             <div v-if="scrapedProduct" class="column is-half">
                 <div class="card">
+                    <header class="card-header">
+                        <p class="card-header-title">{{ slug.replace(/-/g,' ')}}</p>
+                    </header> 
                     <div class="card-image">
                         <figure style="background-color: grey" class="image">
                             <img :src="getImage" :alt="'Image of ' + title" />
                         </figure>
                     </div>
                     <div class="card-content">
+                        <div class="content">
+                            {{ quantity }} {{ $t('items') }}
+                        </div>
                         <div class="content">
                             <div class="columns is-mobile">
                             <div class="column">
@@ -45,8 +54,11 @@
                             </div>
                         </div>
                         <div class="content">
+                            {{ packaging ? $t('withPackaging') : $t('withoutPackaging') }}
+                        </div>
+                        <div class="content">
                             {{ $t('deliveryTo')}} {{ city }} [{{ country }}]<br>
-                            {{ $moment(max_delivery_date.toISOString()).fromNow() }} [{{ $utils.momentDate(max_delivery_date.toISOString()) }}]
+                            {{ $moment(max_delivery_date).fromNow() }} [{{ $utils.momentDate(max_delivery_date) }}]
                         </div>
                     </div>
                     <footer class="card-footer">
@@ -105,12 +117,14 @@ export default {
         slug: null,
         dp: null,
         referral: null,
+        quantity: 1,
         title: null,
         weight: null,
         image: null,
         price: {},
         amazonUrlError: false,
         amazonUrlType: null,
+        quantityType: null,
     }),
     computed: {
         amazonUrlMessage() {
@@ -118,6 +132,10 @@ export default {
             else if (this.amazonUrlError === 'Invalid url') return this.$t('invalidUrl')
             else if (this.amazonUrlError === 'Invalid shop') return this.$t('invaliShop')
             else return `${this.$t('amazonUrlMessage1')} ${this.supportedShops.join(', ')}`
+        },
+        quantityMessage() {
+            if (this.quantity < 1 || this.quantity > 10) return this.$t('invalidQuantity')
+            else return this.$t('quantityMessage')
         },
         getImage() {
             return this.image.replace('https://m.media-amazon.com/images/I/', 'https://res.cloudinary.com/opengrabs/image/upload/h_210/amazon/')
@@ -146,37 +164,37 @@ export default {
                     this.currency = 'EUR'
                     this.referral = ''
                     this.price.taxes = 0
-                    this.price.total = this.$utils.round(price * (this.reward / 100 + 1),2)
+                    this.price.total = this.$utils.round((price * 1.06 * (this.reward / 100 + 1)) * this.quantity,2)
                     break
                 case 'de':
                     this.currency = 'EUR'
                     this.referral = ''
                     this.price.taxes = 0
-                    this.price.total = this.$utils.round(price * (this.reward / 100 + 1),2)
+                    this.price.total = this.$utils.round((price * 1.06 * (this.reward / 100 + 1)) * this.quantity,2)
                     break
                 case 'it':
                     this.currency = 'EUR'
                     this.referral = ''
                     this.price.taxes = 0
-                    this.price.total = this.$utils.round(price * (this.reward / 100 + 1),2)
+                    this.price.total = this.$utils.round((price * 1.06 * (this.reward / 100 + 1)) * this.quantity,2)
                     break
                 case 'es':
                     this.currency = 'EUR'
                     this.referral = ''
                     this.price.taxes = 0
-                    this.price.total = this.$utils.round(price * (this.reward / 100 + 1),2)
+                    this.price.total = this.$utils.round((price * 1.06 * (this.reward / 100 + 1)) * this.quantity,2)
                     break
                 case 'co.uk':
                     this.currency = 'GBP'
                     this.referral = ''
                     this.price.taxes = 0
-                    this.price.total = this.$utils.round(price * (this.reward / 100 + 1),2)
+                    this.price.total = this.$utils.round((price * 1.06 * (this.reward / 100 + 1)) * this.quantity,2)
                     break
                 case 'com':
                     this.currency = 'USD'
                     this.referral = 'opengrabs-20'
-                    this.price.taxes = this.$utils.round(price * 0.06, 2)
-                    this.price.total = this.$utils.round(price * 1.06 * (this.reward / 100 + 1),2)
+                    this.price.taxes = this.$utils.round(price * 0.06 * this.quantity, 2)
+                    this.price.total = this.$utils.round((price * 1.06 * (this.reward / 100 + 1)) * this.quantity,2)
                     break
             }
         },
@@ -191,11 +209,17 @@ export default {
                     this.amazonUrlType = 'is-danger'
                     this.amazonUrlError = this.$t('invalidUrl')
                 return false
-                } else if (match.group.domain !== this.domain) {
+                } else if (match.groups.domain !== this.domain) {
                     this.amazonUrlType = 'is-danger'
                     this.amazonUrlError = this.$t('invalidShop')
                     return false
                 }
+            }
+            return true
+        },
+        validateQuantity() {
+            if (this.quantity < 1 || this.quantity > 10) {
+                return false
             }
             return true
         },
@@ -209,9 +233,9 @@ export default {
             this.weight = weight
             this.image = image
             this.price = {
-                product: price,
+                product: price * this.quantity,
                 shipping: 0.0,
-                reward: this.$utils.round(price * 1.06 * (this.reward / 100), 2),
+                reward: this.$utils.round((price * 1.06 * (this.reward / 100)) * this.quantity, 2),
             }
             this.setCurrencyReferralPrice(this.domain, price)
             this.scrapedProduct = true
@@ -220,7 +244,8 @@ export default {
             this.amazonUrlError = false
             this.amazonUrlType = null
             const validUrl = this.validateAmazonUrl()
-            if (validUrl) {
+            const validQuantity =this.validateQuantity()
+            if (validUrl && validQuantity) {
                 this.loadAmazonButtonClass = 'button is-primary is-outlined is-loading'
                 await this.loadAmazonData()
                 this.loadAmazonButtonClass = 'button is-primary is-outlined'        
@@ -236,6 +261,7 @@ export default {
                 title: this.title,
                 weight: this.weight,
                 image: this.image,
+                quantity: this.quantity,
                 price: this.price,
                 currency: this.currency,
                 packaging: this.packaging
@@ -261,6 +287,7 @@ export default {
             this.title = null
             this.weight = null
             this.image = null
+            this.quantity = 1
             this.price = {}
         },
         async publishButton() {
