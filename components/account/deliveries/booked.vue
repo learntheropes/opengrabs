@@ -13,12 +13,6 @@
           </div>
           <div class="card-content">
             <div class="content">
-              <p>{{ delivery.shop.title }}</p>
-            </div>
-            <div class="content">
-              <a :href="delivery.shop.url" target="_blank" class="card-footer-item">{{ delivery.shop.name }}.{{ delivery.shop.domain }}</a>
-            </div>
-            <div class="content">
               <div class="columns is-mobile">
                 <div class="column">
                   <p>{{ $t('product') }}:<br>
@@ -55,6 +49,9 @@
               {{ $t('bookedAt') }} {{ $moment(delivery.booked_at).fromNow() }}
             </div>
           </div>
+          <footer class="card-footer">
+            <a :href="delivery.shop.url" target="_blank" class="card-footer-item">{{ delivery.shop.name }}.{{ delivery.shop.domain }}</a>
+          </footer>
           <footer class="card-footer">
             <nuxt-link :to="localePath({ name: 'account-grab-ref', params: { ref: delivery.ref }})" class="card-footer-item">{{ $t('chat') }}</nuxt-link>
             <a href="#" :class="disputeButtonClass" @click="dispute(delivery.ref)">{{ $t('dispute') }}</a>
