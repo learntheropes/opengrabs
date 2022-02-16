@@ -51,7 +51,7 @@
           </b-field>
           <div v-for="(msg, index) in messages" :key="index" class="content">
             <div v-if="msg.user_sub === 'admin|0'" class="notification has-text-centered is-primary is-light">
-              <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
+              <p><span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span></p>
               <p v-if="msg.content === 'published'">{{ $t('statusPublished') }}</p>
               <p v-if="msg.content === 'removed'">{{ $t('statusRemoved') }}</p>
               <p v-if="msg.content === 'booked'">{{ $t('statusBooked') }}</p>
@@ -64,13 +64,17 @@
               <p v-if="msg.content === 'refunded'">{{ $t('statusRefunded') }}</p>       
             </div>
             <div v-if="msg.user_sub.split('|')[0] === 'admin' && msg.user_sub.split('|')[1] !== '0'" class="notification has-text-centered is-primary is-light">
-              <span class="has-text-weight-semibold has-text-grey-light">{{ $t('admin') }} </span><br>
-              <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
+              <p>
+                <span class="has-text-weight-semibold has-text-grey-light">{{ $t('admin') }} </span><br>
+                <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
+              </p>
               <p class="has-new-line">{{ msg.content }}</p>
             </div>
             <div v-if="msg.user_sub === me" class="notification has-text-right">
-              <span class="has-text-weight-semibold has-text-grey-light">{{ $t('me') }} </span><br>
-              <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
+              <p>
+                <span class="has-text-weight-semibold has-text-grey-light">{{ $t('me') }} </span><br>
+                <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
+              </p>
               <p class="has-new-line">{{ msg.content }}</p>
             </div>
             <div v-if="msg.user_sub !== me && msg.user_sub.split('|')[0] !== 'admin'" class="notification">
