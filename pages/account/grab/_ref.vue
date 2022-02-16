@@ -65,18 +65,18 @@
               <p v-if="msg.content === 'refunded'">{{ $t('statusRefunded') }}</p>       
             </div>
             <div v-if="msg.user_sub.split('|')[0] === 'admin' && msg.user_sub.split('|')[1] !== '0'" class="notification has-text-centered is-primary is-light">
-              <span class="has-text-weight-semibold has-text-grey-light">{{ $t('admin') }} </span>,<br>
-              <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
-              <p>{{ msg.content }}</p>
-            </div>
-            <div v-if="msg.user_sub === me" class="notification">
-              <span class="has-text-weight-semibold has-text-grey-light">{{ $t('me') }} </span>,<br>
+              <span class="has-text-weight-semibold has-text-grey-light">{{ $t('admin') }} </span><br>
               <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
               <p class="has-new-line">{{ msg.content }}</p>
             </div>
-            <div v-if="msg.user_sub !== me && msg.user_sub.split('|')[0] !== 'admin'" class="notification has-text-right">
+            <div v-if="msg.user_sub === me" class="notification has-text-right">
+              <span class="has-text-weight-semibold has-text-grey-light">{{ $t('me') }} </span><br>
+              <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
+              <p class="has-new-line">{{ msg.content }}</p>
+            </div>
+            <div v-if="msg.user_sub !== me && msg.user_sub.split('|')[0] !== 'admin'" class="notification">
               <p>
-                <span class="has-text-weight-semibold has-text-grey-light">{{ msg.user_username }} </span>,<br>
+                <span class="has-text-weight-semibold has-text-grey-light">{{ msg.user_username }} </span><br>
                 <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
               </p>
               <p class="has-new-line">{{ msg.content }}</p>
