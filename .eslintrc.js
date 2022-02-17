@@ -47,7 +47,8 @@ module.exports = {
       "logins_count",
       "user_username",
       "destination_photo",
-      "public_id"
+      "public_id",
+      "public_ids"
     ]}],
   },
 }

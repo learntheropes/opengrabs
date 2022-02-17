@@ -47,16 +47,18 @@
           <b-field :type="postType" :message="postMessage">
             <b-input v-model="message" maxlength="400" type="textarea"></b-input>
           </b-field>
-          <div v-if="attachment" class="block">
-            {{attachment.name}}
+          <div v-if="attachments && attachments.length" class="columns is-multiline is-mobile">
+            <div v-for="(attachment, i) in attachments" :key="i"  class="column is-narrow">
+              {{attachment.name}}
+            </div>
           </div>
           <b-field grouped group-multiline>
             <p class="control">
-              <button class="button is-text" @click="fileReset">{{$t('resetAttachment')}}</button>
+              <button class="button is-text" @click="fileReset">{{$t('resetAttachments')}}</button>
             </p>
             <p class="control">
               <input ref="fileInput" style="display:none" type="file" multiple="multiple" @change="onFileSelected">
-              <a class="button" @click="$refs.fileInput.click()">{{$t('uploadAttachment')}}</a>
+              <a class="button" @click="$refs.fileInput.click()">{{$t('uploadAttachments')}}</a>
             </p>
             <p class="control">
               <button :class="chatButtonClass" @click="postChatMessage">{{ $t('postChatMessage') }}</button>
@@ -82,9 +84,17 @@
                 <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
               </p>
               <p class="has-new-line">{{ msg.content }}</p>
-              <figure v-if="msg.attachment" class="image">
-                <img :src="'https://res.cloudinary.com/opengrabs/image/upload/'+msg.attachment">
-              </figure> 
+              <div v-if="msg.attachments && msg.attachments.length" class="columns is-multiline is-mobile">
+                <div v-for="(attachment, i) in msg.attachments" :key="'a'+i"  class="column is-narrow">
+                  <figure class="image is-128x128">
+                    <img
+                      :src="'https://res.cloudinary.com/opengrabs/image/upload/w_400/'+attachment"
+                      :alt="attachment.name"
+                      @click="activateModal(attachment)"
+                    >
+                  </figure> 
+                </div>
+              </div>
             </div>
             <div v-if="msg.user_sub === me" class="notification has-text-right">
               <p>
@@ -92,9 +102,17 @@
                 <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
               </p>
               <p class="has-new-line">{{ msg.content }}</p>
-              <figure v-if="msg.attachment" class="image">
-                <img :src="'https://res.cloudinary.com/opengrabs/image/upload/'+msg.attachment">
-              </figure> 
+              <div v-if="msg.attachments && msg.attachments.length" class="columns is-multiline is-mobile">
+                <div v-for="(attachment, i) in msg.attachments" :key="'b'+i"  class="column is-narrow">
+                  <figure class="image is-128x128">
+                    <img
+                      :src="'https://res.cloudinary.com/opengrabs/image/upload/w_400/'+attachment"
+                      :alt="attachment.name"
+                      @click="activateModal(attachment)"
+                    >
+                  </figure> 
+                </div>
+              </div>
             </div>
             <div v-if="msg.user_sub !== me && msg.user_sub.split('|')[0] !== 'admin'" class="notification">
               <p>
@@ -102,14 +120,27 @@
                 <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
               </p>
               <p class="has-new-line">{{ msg.content }}</p>
-              <figure v-if="msg.attachment" class="image">
-                <img :src="'https://res.cloudinary.com/opengrabs/image/upload/'+msg.attachment">
-              </figure> 
+              <div v-if="msg.attachments && msg.attachments.length" class="columns is-multiline is-mobile">
+                <div v-for="(attachment, i) in msg.attachments" :key="'c'+i"  class="column is-narrow">
+                  <figure class="image is-128x128">
+                    <img
+                      :src="'https://res.cloudinary.com/opengrabs/image/upload/w_400/'+attachment"
+                      :alt="attachment.name"
+                      @click="activateModal(attachment)"
+                    >
+                  </figure> 
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <b-modal :width="width" :active.sync="isImageModalActive">
+      <p class="image">
+        <img :src="'https://res.cloudinary.com/opengrabs/image/upload/w_'+width+'/'+modalPic">
+      </p>
+    </b-modal>
   </section>
 </template>
 
@@ -134,12 +165,15 @@ export default {
     chatButtonClass: 'button is-primary is-outlined',
     feedbackButtonClass: 'button is-primary is-outlined',
     message: null,
-    attachment: null,
-    public_id: null,
+    attachments: null,
+    public_ids: [],
     postType: null,
     postError: false,
     rate: null,
-    feedback: null
+    feedback: null,
+    isImageModalActive: false,
+    modalPic: null,
+    width: (process.client) ? parseInt(window.innerWidth*0.7) : 300
   }),
   computed: {
     postMessage() {
@@ -208,10 +242,10 @@ export default {
       return true
     },
     fileReset() {
-      this.attachment = null
+      this.attachments = null
     },    
     onFileSelected(event) {
-      this.attachment = event.target.files[0]
+      this.attachments = Array.from(event.target.files)
     },
     async postChatMessage() {
       this.postType = null
@@ -219,19 +253,21 @@ export default {
       const validPost = this.validatePost()
       if (validPost) {
         this.chatButtonClass = 'button is-primary is-outlined is-loading'
-        if (this.attachment) {
-          const fd = new FormData()
-          fd.append('file', this.attachment)
-          fd.append('upload_preset','clvrfqxc')
-          fd.append('public_id', uniqueString())
-          fd.append('tags', this.ref)
-          const { data: { public_id }} = await axios.post('https://api.cloudinary.com/v1_1/opengrabs/image/upload', fd) 
-          this.public_id = public_id         
+        if (this.attachments) {
+          for (const attachment of this.attachments) {
+            const fd = new FormData()
+            fd.append('file', attachment)
+            fd.append('upload_preset','clvrfqxc')
+            fd.append('public_id', uniqueString())
+            fd.append('tags', this.ref)
+            const { data: { public_id }} = await axios.post('https://api.cloudinary.com/v1_1/opengrabs/image/upload', fd) 
+            this.public_ids.push(public_id)
+          }      
         }
         const props = {
           posted_at: new Date().toISOString(),
           content: this.message,
-          attachment: (this.attachment) ? this.public_id : null,
+          attachments: (this.attachments) ? this.public_ids : [],
           grab_id: this.ref,
           user_sub: this.$store.state.auth.user.sub,
           user_username: this.getUsername(),
@@ -241,7 +277,13 @@ export default {
         const messages = await this.$db.messages.filter(this.ref)
         this.messages = messages
         this.message = null
+        this.attachments = null
+        this.public_ids = []
       }
+    },
+    activateModal (attachment) {
+      this.isImageModalActive = true
+      this.modalPic = attachment
     },
     async dispute() {
       this.disputeButtonClass = 'button is-primary is-outlined is-loading'
