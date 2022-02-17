@@ -8,7 +8,7 @@
                 <h1 class="title">Grab {{ ref }}</h1>
                 <div class="columns">
                     <div class="column is-half">
-                        <div class="box">
+                        <div class="block">
                             <div class="content">
                                 <p>Buyer: {{ grab.buyer.username }}</p>
                                 <p>Traveler: {{ grab.traveler.username }}</p>
@@ -34,10 +34,9 @@
                     </div>
                     <div class="column is-half">
                         <div v-if="isChatable" class="box">
-                            <b-field :type="postType" :message="postMessage">
+                            <b-field label="Message" :type="postType" :message="postMessage">
                                 <b-input v-model="message" maxlength="400" type="textarea"></b-input>
                             </b-field>
-
                             <b-field label="Attention required" :type="attentionType" :message="attentionMessage">
                                 <b-select v-model="attention" expanded>
                                     <option v-for="hour in hours" :key="hour.value" :value="hour.value">
@@ -45,9 +44,20 @@
                                     </option>
                                 </b-select>
                             </b-field>
-
-                            <b-field>
-                                <button class="button is-primary" @click="postChatMessage">Post chat message</button>
+                            <div v-if="attachment" class="block">
+                                {{attachment.name}}
+                            </div>
+                            <b-field grouped group-multiline>
+                                <p class="control">
+                                    <button class="button is-text" @click="fileReset">{{$t('resetAttachment')}}</button>
+                                </p>
+                                <p class="control">
+                                    <input ref="fileInput" style="display:none" type="file" multiple="multiple" @change="onFileSelected">
+                                    <a class="button" @click="$refs.fileInput.click()">{{$t('uploadAttachment')}}</a>
+                                </p>
+                                <p class="control">
+                                    <button class="button is-primary" @click="postChatMessage">Post chat message</button>
+                                </p>
                             </b-field>
                             <div v-for="(msg, index) in messages" :key="index" class="content">
                                 <div v-if="msg.user_sub === 'admin|0'" class="notification has-text-centered is-primary is-light">
@@ -64,15 +74,21 @@
                                     <p v-if="msg.content === 'withdrawn'">Withdrawn</p> 
                                     <p v-if="msg.content === 'refunded'">Refunded</p>        
                                 </div>
-                                <div :else-if="msg.user_sub.split('|')[0] === 'admin'  && msg.user_sub.split('|')[1] !== '0'" class="notification has-text-centered is-primary is-light">
+                                <div :else-if="msg.user_sub.split('|')[0] === 'admin' && msg.user_sub.split('|')[1] !== '0'" class="notification has-text-centered is-primary is-light">
                                     <span class="has-text-weight-semibold has-text-grey-light">Admin</span><br>
                                     <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
                                     <p class="has-new-line">{{ msg.content }}</p>
+                                    <figure v-if="msg.attachment" class="image">
+                                        <img :src="'https://res.cloudinary.com/opengrabs/image/upload/'+msg.attachment">
+                                    </figure> 
                                 </div>
                                 <div v-if="msg.user_sub === grab.buyer.sub" class="notification">
                                     <span class="has-text-weight-semibold has-text-grey-light">{{ msg.user_username }}</span><br>
                                     <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
                                     <p class="has-new-line">{{ msg.content }}</p>
+                                    <figure v-if="msg.attachment" class="image">
+                                        <img :src="'https://res.cloudinary.com/opengrabs/image/upload/'+msg.attachment">
+                                    </figure> 
                                 </div>
                                 <div v-if="msg.user_sub === grab.traveler.sub" class="notification has-text-right">
                                     <p>
@@ -80,6 +96,9 @@
                                         <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
                                     </p>
                                     <p class="has-new-line">{{ msg.content }}</p>
+                                    <figure v-if="msg.attachment" class="image">
+                                        <img :src="'https://res.cloudinary.com/opengrabs/image/upload/'+msg.attachment">
+                                    </figure> 
                                 </div>
                             </div>
                         </div>
@@ -91,8 +110,10 @@
 </template>
 
 <script>
+import uniqueString from 'unique-string'
+import axios from "axios"
 export default {
-    name: 'GrabByRef',
+    name: 'DisputeByRef',
     nuxtI18n: false,
     layout: 'admin',
     middleware: 'auth',
@@ -107,6 +128,8 @@ export default {
     },
     data: () => ({
         message: null,
+        attachment: null,
+        public_id: null,
         postType: null,
         postError: false,
         hours: [
@@ -158,7 +181,7 @@ export default {
     },
     methods: {
         validatePost() {
-            if (!this.message) {
+            if (!this.message && !this.attachment) {
                 this.postType = 'is-danger'
                 this.postError = 'Field required'
                 return false
@@ -173,17 +196,33 @@ export default {
             }
             return true
         },
+        fileReset() {
+            this.attachment = null
+        },    
+        onFileSelected(event) {
+            this.attachment = event.target.files[0]
+        },
         async postChatMessage() {
             this.postType = null
             this.postError = false
             this.attentionType = null
             this.attentionError = false
             const validPost = this.validatePost()
-            const validateAttention = this.validateAttention()
-            if (validPost && validateAttention) {
+            const validAttention = this.validateAttention()
+            if (validPost && validAttention) {
+                if (this.attachment) {
+                    const fd = new FormData()
+                    fd.append('file', this.attachment)
+                    fd.append('upload_preset','clvrfqxc')
+                    fd.append('public_id', uniqueString())
+                    fd.append('tags', this.ref)
+                    const { data: { public_id }} = await axios.post('https://api.cloudinary.com/v1_1/opengrabs/image/upload', fd) 
+                    this.public_id = public_id         
+                }
                 const props = {
                     posted_at: new Date().toISOString(),
                     content: this.message,
+                    attachment: (this.attachment) ? this.public_id : null,
                     grab_id: this.ref,
                     user_sub: this.$store.state.auth.user.sub.split('|').shift().unshift('admin').join('|'),
                 }
