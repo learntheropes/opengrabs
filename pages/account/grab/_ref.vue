@@ -136,9 +136,9 @@
         </div>
       </div>
     </div>
-    <b-modal :width="width" :active.sync="isImageModalActive">
+    <b-modal :width="width" :active.sync="isAttachmentModalActive">
       <p class="image">
-        <img :src="'https://res.cloudinary.com/opengrabs/image/upload/w_'+width+'/'+modalPic">
+        <img :src="'https://res.cloudinary.com/opengrabs/image/upload/w_'+width+'/'+modalAttachment">
       </p>
     </b-modal>
   </section>
@@ -171,8 +171,8 @@ export default {
     postError: false,
     rate: null,
     feedback: null,
-    isImageModalActive: false,
-    modalPic: null,
+    isAttachmentModalActive: false,
+    modalAttachment: null,
     width: (process.client) ? parseInt(window.innerWidth*0.7) : 300
   }),
   computed: {
@@ -282,8 +282,8 @@ export default {
       }
     },
     activateModal (attachment) {
-      this.isImageModalActive = true
-      this.modalPic = attachment
+      this.isAttachmentModalActive = true
+      this.modalAttachment = attachment
     },
     async dispute() {
       this.disputeButtonClass = 'button is-primary is-outlined is-loading'
