@@ -220,16 +220,12 @@ export default {
                     const { data: { public_id }} = await axios.post('https://api.cloudinary.com/v1_1/opengrabs/image/upload', fd) 
                     this.public_id = public_id         
                 }
-                let user_sub = clone(this.$store.state.auth.user.sub).split('|')
-                user_sub.unshift('admin')
-                user_sub = user_sub.join('|')
-                console.log(user_sub)
                 const props = {
                     posted_at: new Date().toISOString(),
                     content: this.message,
                     attachment: (this.attachment) ? this.public_id : null,
                     grab_id: this.ref,
-                    user_sub
+                    user_sub: `admin|${this.$store.state.auth.user.sub}`
                 }
                 await this.$admin.grabs.attention(this.ref, this.attention)
                 await this.$db.messages.create({ props })
