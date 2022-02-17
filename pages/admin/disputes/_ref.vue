@@ -62,7 +62,6 @@
                             </b-field>
                             <div v-for="(msg, index) in messages" :key="index" class="content">
                                 <div v-if="msg.user_sub === 'admin|0'" class="notification has-text-centered is-primary is-light">
-                                    <span class="has-text-weight-semibold has-text-grey-light">Admin</span><br>
                                     <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
                                     <p v-if="msg.content === 'published'">Published</p>
                                     <p v-if="msg.content === 'removed'">Removed</p>
@@ -75,8 +74,8 @@
                                     <p v-if="msg.content === 'withdrawn'">Withdrawn</p> 
                                     <p v-if="msg.content === 'refunded'">Refunded</p>        
                                 </div>
-                                <div :else-if="msg.user_sub.split('|')[0] === 'admin' && msg.user_sub.split('|')[1] !== '0'" class="notification has-text-centered is-primary is-light">
-                                    <span class="has-text-weight-semibold has-text-grey-light">Admin</span><br>
+                                <div v-if="msg.user_sub.split('|')[0] === 'admin' && msg.user_sub.split('|')[1] !== '0'" class="notification has-text-centered is-primary is-light">
+                                    <span class="has-text-weight-semibold has-text-grey-light">{{msg.user_sub}}</span><br>
                                     <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
                                     <p class="has-new-line">{{ msg.content }}</p>
                                     <figure v-if="msg.attachment" class="image">
@@ -113,6 +112,7 @@
 <script>
 import uniqueString from 'unique-string'
 import axios from "axios"
+import clone from 'lodash.clone'
 export default {
     name: 'DisputeByRef',
     nuxtI18n: false,
@@ -161,14 +161,14 @@ export default {
         ],
         attention: null,
         attentionType: null,
-        attentionError: false
+        attentionError: false,
     }),
     computed: {
         postMessage() {
             if (this.postError === 'Field required') return 'Field required'
             else return null 
         },
-        attentionMassage() {
+        attentionMessage() {
             if (this.attentionError === 'Field required') return 'Field required'
             else return null 
         },
@@ -220,12 +220,17 @@ export default {
                     const { data: { public_id }} = await axios.post('https://api.cloudinary.com/v1_1/opengrabs/image/upload', fd) 
                     this.public_id = public_id         
                 }
+                let user_sub = clone(this.$store.state.auth.user.sub).split('|')
+                user_sub.shift()
+                user_sub.unshift('admin')
+                user_sub = user_sub.join('|')
+                console.log(user_sub)
                 const props = {
                     posted_at: new Date().toISOString(),
                     content: this.message,
                     attachment: (this.attachment) ? this.public_id : null,
                     grab_id: this.ref,
-                    user_sub: this.$store.state.auth.user.sub.split('|').shift().unshift('admin').join('|'),
+                    user_sub
                 }
                 await this.$admin.grabs.attention(this.ref, this.attention)
                 await this.$db.messages.create({ props })
