@@ -12,6 +12,7 @@
             <p v-if="grab.delivery">{{ $t('deliveryDate') }}: {{ $moment(grab.delivery.date).fromNow() }} [{{ $utils.momentDate(grab.delivery.date) }}]</p>
             <p v-if="grab.published_at">{{ $t('publishedAt') }} {{ $moment(grab.published_at).fromNow() }}</p>
             <p v-if="grab.booked_at">{{ $t('bookedAt') }} {{ $moment(grab.booked_at).fromNow() }}</p>
+            <p v-if="grab.disputed_at">{{ $t('disputedAt') }} {{ $moment(grab.disputed_at).fromNow() }}</p>
             <p v-if="grab.paid_at">{{ $t('paidAt') }} {{ $moment(grab.paid_at).fromNow() }}</p>
             <p v-if="grab.bought_at">{{ $t('boughtAt') }} {{ $moment(grab.bought_at).fromNow() }}</p>
             <p v-if="grab.delivered_at">{{ $t('deliveredAt') }} {{ $moment(grab.delivered_at).fromNow() }}</p>

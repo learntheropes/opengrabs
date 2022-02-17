@@ -17,6 +17,7 @@
                                 <p>Delivery date: {{ $moment(grab.delivery.date).fromNow() }} [{{ $utils.momentDate(grab.delivery.date) }}]</p>
                                 <p v-if="grab.published_at">Published {{ $moment(grab.published_at).fromNow() }} [{{ $moment(grab.published_at).format('MMMM Do YYYY HH:mm') }}]</p>
                                 <p v-if="grab.booked_at">Booked {{ $moment(grab.booked_at).fromNow() }} [{{ $moment(grab.booked_at).format('MMMM Do YYYY HH:mm') }}]</p>
+                                <p v-if="grab.disputed_at">Disputed {{ $moment(grab.disputed_at).fromNow() }} [{{ $moment(grab.disputed_at).format('MMMM Do YYYY HH:mm') }}]</p>
                                 <p v-if="grab.paid_at">Paid {{ $moment(grab.paid_at).fromNow() }} [{{ $moment(grab.paid_at).format('MMMM Do YYYY HH:mm') }}]</p>
                                 <p v-if="grab.bought_at">Bought {{ $moment(grab.bought_at).fromNow() }} [{{ $moment(grab.bought_at).format('MMMM Do YYYY HH:mm') }}]</p>
                                 <p v-if="grab.delivered_at">Delivered {{ $moment(grab.delivered_at).fromNow() }} [{{ $moment(grab.delivered_at).format('MMMM Do YYYY HH:mm') }}]</p>
