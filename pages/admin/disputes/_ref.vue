@@ -221,7 +221,6 @@ export default {
                     this.public_id = public_id         
                 }
                 let user_sub = clone(this.$store.state.auth.user.sub).split('|')
-                user_sub.shift()
                 user_sub.unshift('admin')
                 user_sub = user_sub.join('|')
                 console.log(user_sub)
