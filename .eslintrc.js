@@ -46,7 +46,8 @@ module.exports = {
       "jwt_decode",
       "logins_count",
       "user_username",
-      "destination_photo"
+      "destination_photo",
+      "public_id"
     ]}],
   },
 }

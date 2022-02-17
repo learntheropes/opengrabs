@@ -46,8 +46,20 @@
           <b-field :type="postType" :message="postMessage">
             <b-input v-model="message" maxlength="400" type="textarea"></b-input>
           </b-field>
-          <b-field>
-            <button :class="chatButtonClass" @click="postChatMessage">{{ $t('postChatMessage') }}</button>
+          <div v-if="attachment" class="block">
+            {{attachment.name}}
+          </div>
+          <b-field grouped group-multiline>
+            <p class="control">
+              <button class="button is-text" @click="fileReset">{{$t('resetAttachment')}}</button>
+            </p>
+            <p class="control">
+              <input ref="fileInput" style="display:none" type="file" multiple="multiple" @change="onFileSelected">
+              <a class="button" @click="$refs.fileInput.click()">{{$t('uploadAttachment')}}</a>
+            </p>
+            <p class="control">
+              <button :class="chatButtonClass" @click="postChatMessage">{{ $t('postChatMessage') }}</button>
+            </p>
           </b-field>
           <div v-for="(msg, index) in messages" :key="index" class="content">
             <div v-if="msg.user_sub === 'admin|0'" class="notification has-text-centered is-primary is-light">
@@ -69,6 +81,9 @@
                 <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
               </p>
               <p class="has-new-line">{{ msg.content }}</p>
+              <figure v-if="msg.attachment" class="image">
+                <img :src="'https://res.cloudinary.com/opengrabs/image/upload/'+msg.attachment">
+              </figure> 
             </div>
             <div v-if="msg.user_sub === me" class="notification has-text-right">
               <p>
@@ -76,6 +91,9 @@
                 <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
               </p>
               <p class="has-new-line">{{ msg.content }}</p>
+              <figure v-if="msg.attachment" class="image">
+                <img :src="'https://res.cloudinary.com/opengrabs/image/upload/'+msg.attachment">
+              </figure> 
             </div>
             <div v-if="msg.user_sub !== me && msg.user_sub.split('|')[0] !== 'admin'" class="notification">
               <p>
@@ -83,6 +101,9 @@
                 <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
               </p>
               <p class="has-new-line">{{ msg.content }}</p>
+              <figure v-if="msg.attachment" class="image">
+                <img :src="'https://res.cloudinary.com/opengrabs/image/upload/'+msg.attachment">
+              </figure> 
             </div>
           </div>
         </div>
@@ -92,6 +113,8 @@
 </template>
 
 <script>
+import uniqueString from 'unique-string'
+import axios from "axios"
 export default {
   name: 'GrabRef',
   async asyncData({ app, params: { ref }}) {
@@ -110,6 +133,8 @@ export default {
     chatButtonClass: 'button is-primary is-outlined',
     feedbackButtonClass: 'button is-primary is-outlined',
     message: null,
+    attachment: null,
+    public_id: null,
     postType: null,
     postError: false,
     rate: null,
@@ -174,12 +199,18 @@ export default {
       else if (this.$store.state.auth.user.sub === this.grab.traveler.sub) return this.grab.traveler.username
     },
     validatePost() {
-      if (!this.message) {
+      if (!this.message && !this.attachment) {
         this.postType = 'is-danger'
         this.postError = 'Field required'
         return false
       }
       return true
+    },
+    fileReset() {
+      this.attachment = null
+    },    
+    onFileSelected(event) {
+      this.attachment = event.target.files[0]
     },
     async postChatMessage() {
       this.postType = null
@@ -187,9 +218,19 @@ export default {
       const validPost = this.validatePost()
       if (validPost) {
         this.chatButtonClass = 'button is-primary is-outlined is-loading'
+        if (this.attachment) {
+          const fd = new FormData()
+          fd.append('file', this.attachment)
+          fd.append('upload_preset','clvrfqxc')
+          fd.append('public_id', uniqueString())
+          fd.append('tags', this.ref)
+          const { data: { public_id }} = await axios.post('https://api.cloudinary.com/v1_1/opengrabs/image/upload', fd) 
+          this.public_id = public_id         
+        }
         const props = {
           posted_at: new Date().toISOString(),
           content: this.message,
+          attachment: (this.attachment) ? this.public_id : null,
           grab_id: this.ref,
           user_sub: this.$store.state.auth.user.sub,
           user_username: this.getUsername(),

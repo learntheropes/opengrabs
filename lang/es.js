@@ -98,6 +98,8 @@ export default {
     markAsBought: "Mark as bought",
     release: "Release",
     withdraw: "Withdraw",
+    resetAttachment: "Remove file",
+    uploadAttachment: "Attach file",
     postChatMessage: "Post chat message",
     statusPublished: "Grab published",
     statusRemoved: "Grab removed",
