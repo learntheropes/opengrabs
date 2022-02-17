@@ -197,11 +197,8 @@ router.post('/admin/disputes/actions/refund/:ref', authorizeUser, authorizeAdmin
   res.status(201).json(response)
 }))
 
-router.post('/admin/grab/update-attention/:ref/:hours', authorizeUser, authorizeAdmin, asyncHandler(async (req,res) => {
-  const { ref, hours } = req.params
-  const { data: grab } = await client.query(
-    q.Get(q.Ref(q.Collection('grabs'), ref))
-  )
+router.post('/admin/grab/update-attention', authorizeUser, authorizeAdmin, asyncHandler(async (req,res) => {
+  const { ref, hours } = req.body
 
   const props = {
     dispute: {

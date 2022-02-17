@@ -22,7 +22,9 @@ export default ({ $axios, store }, inject) => {
                 return data
             },
             attention: async (ref, hours) => {
-                const { data } = await $axios.get(`/api/admin/grabs/get/${ref}/${hours}`)
+                const { data } = await $axios.post('/api/admin/grab/update-attention', {
+                    ref, hours
+                })
                 return data                
             }
         },
