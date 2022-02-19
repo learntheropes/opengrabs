@@ -270,13 +270,6 @@ export default {
     locales: ['es', 'pt', 'ru']
   },
 
-  // https://image.nuxtjs.org/providers/cloudinary
-  image: {
-    cloudinary: {
-      baseURL: 'https://res.cloudinary.com/opengrabs/image/upload/'
-    }
-  },
-
   serverMiddleware: [
     // https://stackoverflow.com/questions/56629722/redirect-all-routes-to-https-in-nuxt-project-hosted-in-heroku
     'redirect-ssl',
