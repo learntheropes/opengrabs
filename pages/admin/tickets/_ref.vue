@@ -8,8 +8,18 @@
                 <h1 class="title">Ticket {{ ref }}</h1>
                 <h2 class="subtitle">Username: {{ ticket.user.username }} | Title: {{ ticket.subject }}</h2>
                 <div class="block">
+                    <b-field label="Change language" grouped>
+                        <b-select v-model="ticket.language">
+                            <option v-for="language in languages" :value="language" :key="language">{{ language }}</option>
+                        </b-select>
+                        <p class="control">
+                            <b-button label="Update language" @click="updateTicketLanguage" />
+                        </p>
+                    </b-field>
+                </div>
+                <div class="block">
                     <b-field :type="messageType" :message="messageMessage">
-                        <b-input v-model="content" maxlength="400" type="textarea"></b-input>
+                        <b-input v-model="content" maxlength="1000" rows=6 type="textarea"></b-input>
                     </b-field>
                     <b-field grouped group-multiline>
                         <p class="control">
@@ -78,11 +88,22 @@ export default {
             app.$admin.tickets.get(ref),
             app.$admin.tickets.messages.filter(ref)
         ])
-        return { isAdmin, ref, ticket, messages }
+        const content = `Hi ${ticket.user.username},
+
+
+
+Best Regards,
+Opengrabs`
+        return { isAdmin, ref, ticket, messages, content }
     },
     data: () => ({
+        languages: [
+            'en',
+            'es',
+            'pt',
+            'ru'
+        ],
         messageButtonClass: 'button',
-        content: null,
         attachments: [],
         messageType: null,
         messageError: false,
@@ -125,6 +146,10 @@ export default {
                 this.messages = await this.$admin.tickets.messages.filter(this.ref) 
                 this.messageButtonClass = 'button' 
             }         
+        },
+        async updateTicketLanguage() {
+            await this.$axios.post(`/api/admin/tickets/update-language/${this.ref}/${this.ticket.language}`)
+            this.ticket = await this.$admin.tickets.get(this.ref)
         },
         activateModal (attachment) {
             this.isAttachmentModalActive = true

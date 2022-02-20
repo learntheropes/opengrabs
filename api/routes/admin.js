@@ -169,6 +169,23 @@ router.post('/admin/ticket/messages/create/:ref', authorizeUser, authorizeAdmin,
   res.status(201).json({}) 
 }))
 
+router.post('/admin/tickets/update-language/:ref/:language', authorizeUser, authorizeAdmin, asyncHandler(async (req, res) => {
+  const { ref, language } = req.params
+
+  await client.query(
+      q.Update(
+          q.Ref(q.Collection('tickets'), ref),
+          {
+            data: {
+              language,
+            }
+          },
+      )
+  )
+
+  res.status(201).json({}) 
+}))
+
 router.get('/admin/disputes/filter/:status', authorizeUser, authorizeAdmin, asyncHandler(async (req,res) => {
   const { status } = req.params
 
