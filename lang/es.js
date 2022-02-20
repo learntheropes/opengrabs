@@ -265,8 +265,6 @@ export default {
         defaultName: "Default cookies",
         defaultDescription: "Used for cookie control, authentication and language setting.",
         gaName: "Google Analytics",
-        gaDescription: "Google Analytics is a web analytics service offered by Google that tracks and reports website traffic.",
-        tawkName: "Tawk.to",
-        tawkDescription: "Tawk.to is the widget to chat with support."
+        gaDescription: "Google Analytics is a web analytics service offered by Google that tracks and reports website traffic."
     }
 }

@@ -273,18 +273,5 @@ router.post('/user/management/lang', authorizeUser, asyncHandler(async (req,res)
   res.status(200).json(data)
 }))
 
-router.get('/crypto/sha256', authorizeUser, asyncHandler(async (req,res) => {
-  const { jwt } = req.body
-  const { data: user } = await client.query(
-    q.Get(
-      q.Match(q.Index('user_by_sub'), jwt.sub)
-    )
-  )
-  const hmac = crypto.createHmac('sha256', process.env.TAWK_API_KEY)
-  hmac.update(user.email)
-  const hash = hmac.digest('hex')
-  res.status(200).json({ hash })
-}))
-
 module.exports = router
   

@@ -195,18 +195,8 @@ export default {
         this.$nuxt.$on('updateUser', ($event) => this.updateUser($event))
     },
     methods: {
-        async updateUser(user) {
+        updateUser(user) {
             this.user = user
-            if (process.env.URL && user.username && user.email && this.$Tawk.$isInit() && !this.$store.state.account.tawk.initiated) {
-                const { data: { hash }} = await this.$axios.get(`/api/crypto/sha256`)
-                this.$Tawk.$updateChatUser({ name: user.username, email: user.email, hash })
-                const attributes = {
-                    'user-sub': this.$store.$auth.user.sub,
-                    'bitcoin-network': (process.env.BTC_CHAIN === 'test3') ? 'testnet': 'mainnet'
-                }
-                this.$Tawk.$setAttribute(attributes)
-                this.$store.commit('account/tawk/setInitiated', true)
-            }
         },
         validateOriginCountry() {
             if (!this.originCountry) {

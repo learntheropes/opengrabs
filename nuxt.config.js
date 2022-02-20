@@ -42,7 +42,6 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '~/plugins/tawk.client.js',
     '~/plugins/db.js',
     '~/plugins/user.js',
     '~/plugins/feedback.js',
@@ -103,7 +102,7 @@ export default {
     '@nuxtjs/dotenv',
     '@nuxtjs/auth-next',
     '@nuxtjs/google-analytics',
-    ['@giovannilaperna/nuxt-cookie-control', {
+    ['nuxt-cookie-control', {
       colors:{
         barBackground: '#7957d5',
         modalButtonBackground: '#7957d5',
@@ -141,36 +140,6 @@ export default {
 
     ],
     optional: [
-      {
-        name: {
-          en: "Tawk.to",
-        },
-        description: {
-          en: "Tawk.to is the widget to chat with support.",
-        },
-        identifier: 'tawk',
-        cookies: [
-          "ss",
-          "TawkConnectionTime",
-          "__tawkuuid",
-          "tawkUUID"
-        ],
-        accepted: () => {
-          if (process.env.URL && window.Tawk_API) {
-            setTimeout(function(){
-              window.Tawk_API.showWidget()
-            }, 1000)
-          }
-        },
-        declined: () => {
-          if (process.env.URL && window.Tawk_API) {
-            setTimeout(function(){
-              window.Tawk_API.hideWidget()
-              window.$nuxt.$cookies.remove('tawk')
-            }, 1000)
-          }
-        }
-      },
       {
         name: {
           en: "Google Analytics",
