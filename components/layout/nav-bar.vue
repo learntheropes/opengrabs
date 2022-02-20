@@ -50,6 +50,7 @@ export default {
         this.$Tawk.$endChat()
       }
       this.$auth.logout()
+      this.$router.push('/')
     },
   },
 }
