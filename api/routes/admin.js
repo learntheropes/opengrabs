@@ -171,9 +171,6 @@ router.post('/admin/ticket/messages/create/:ref', authorizeUser, authorizeAdmin,
       )
   )
 
-  console.log('ticket', ticket)
-  console.log('language', ticket.language)
-
   let emailContent
   switch (ticket.language) {
     case 'en':
