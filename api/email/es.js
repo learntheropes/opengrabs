@@ -12,7 +12,7 @@ Hi ${username},
 Your email confirmation code is ${code}
 
 Cheers,
-Opengrabs
+${process.env.URL}
 `
 :
 `
@@ -21,7 +21,7 @@ Hi,
 Your email confirmation code is ${code}
 
 Cheers,
-Opengrabs
+${process.env.URL}
 `
     }
 };
@@ -38,7 +38,7 @@ You can view it here:
 ${baseUrl}/${locale}/account/grab/${grabId}
 
 Cheers,
-Opengrabs
+${process.env.URL}
 `
     }
 };
@@ -55,7 +55,7 @@ You can view more here:
 ${baseUrl}/${locale}/account/grab/${grabId}
 
 Cheers,
-Opengrabs
+${process.env.URL}
 `
     }
 };
@@ -72,7 +72,7 @@ You can view more here:
 ${baseUrl}/${locale}/account/grab/${grabId}
 
 Cheers,
-Opengrabs
+${process.env.URL}
 `
     }
 };
@@ -89,7 +89,7 @@ You can view more here:
 ${baseUrl}/${locale}/account/grab/${grabId}
 
 Cheers,
-Opengrabs
+${process.env.URL}
 `
     } 
 };
@@ -106,7 +106,7 @@ You can view more here:
 ${baseUrl}/${locale}/account/grab/${grabId}
 
 Cheers,
-Opengrabs
+${process.env.URL}
 `
     } 
 };
@@ -123,7 +123,7 @@ You can view more here:
 ${baseUrl}/${locale}/account/grab/${grabId}
 
 Cheers,
-Opengrabs
+${process.env.URL}
 `
     } 
 };
@@ -140,7 +140,7 @@ You can view more here:
 ${baseUrl}/${locale}/account/grab/${grabId}
 
 Cheers,
-Opengrabs
+${process.env.URL}
 `
     } 
 };
@@ -157,7 +157,24 @@ You can view more here:
 ${baseUrl}/${locale}/account/tickets/${ticketId}
 
 Cheers,
-Opengrabs
+${process.env.URL}
+`
+    } 
+};
+
+export const emailDisputeUpdated = (locale, grabId, username) => {
+    return {
+        subject: 'Your dispute has been update',
+        content:
+`
+Hi ${username},
+
+Your dispute has been updated by an admin.
+You can view more here:
+${baseUrl}/${locale}/account/grab/${grabId}
+
+Cheers,
+${process.env.URL}
 `
     } 
 };
