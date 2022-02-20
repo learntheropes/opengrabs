@@ -48,7 +48,9 @@ module.exports = {
       "user_username",
       "destination_photo",
       "public_id",
-      "public_ids"
+      "public_ids",
+      "updated_at",
+      "created_at"
     ]}],
   },
 }

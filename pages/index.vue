@@ -65,10 +65,10 @@ export default {
   },
   methods: {
     addOrder() {
-      this.$router.push(`${this.$i18n.locale}/account/new/order`)      
+      this.$router.push(`/${this.$i18n.locale}/account/new/order`)      
     },
     addTravel() {
-      this.$router.push(`${this.$i18n.locale}/account/new/travel`)      
+      this.$router.push(`/${this.$i18n.locale}/account/new/travel`)      
     },
     loginNewOrder() {
       this.$auth.$storage.setUniversal('redirect', `/${this.$i18n.locale}/account/new/order`)

@@ -110,7 +110,7 @@ export default {
       return this.$moment.utc(this.countdown).format('mm:ss')
     }
   },
-  async created () {
+  created () {
     const checkConfirmations = () => {
       this.countdown = this.countdown -1000
       if (this.countdown % 5000 === 0) {
@@ -131,7 +131,7 @@ export default {
               type: 'is-primary'
             })
           }  else if (data.status === 'underpaid') {
-            this.$router.push(`${this.$i18n.locale}/underpaid/${this.ref}`)
+            this.$router.push(`/${this.$i18n.locale}/underpaid/${this.ref}`)
             clearInterval(refreshIntervalId)
             this.$buefy.toast.open({
               duration: 3000,

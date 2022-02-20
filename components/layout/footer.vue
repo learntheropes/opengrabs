@@ -8,17 +8,8 @@
         <div class="level-item">
           <nuxt-link :to="localePath({ name: 'exchange-rates' })">{{ $t('exchangeRate') }}</nuxt-link>
         </div>
-        <div v-if="$i18n.locale==='en'" class="level-item">
-          <a href="https://opengrabs.tawk.help/" target="_blank">Help</a>
-        </div>
-        <div v-if="$i18n.locale==='es'" class="level-item">
-          <a href="https://opengrabs.tawk.help/es" target="_blank">Ayuda</a>
-        </div>
-        <div v-if="$i18n.locale==='pt'" class="level-item">
-          <a href="https://opengrabs.tawk.help/pt" target="_blank">Ajuda</a>
-        </div>
-        <div v-if="$i18n.locale==='ru'" class="level-item">
-          <a href="https://opengrabs.tawk.help/ru" target="_blank">помощь</a>
+        <div class="level-item">
+          <nuxt-link :to="localePath({ name: 'help'})">{{ $t('help') }}</nuxt-link>
         </div>
         <div class="level-item">
           <nuxt-link :to="localePath({ name: 'legal-privacy-policy'})">{{ $t('privacyPolicy') }}</nuxt-link>

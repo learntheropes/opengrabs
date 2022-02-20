@@ -45,6 +45,7 @@ export default {
     '~/plugins/db.js',
     '~/plugins/user.js',
     '~/plugins/feedback.js',
+    '~/plugins/ticket.js',
     '~/plugins/admin.js',
     '~/plugins/utils.js',
     '~/plugins/vue-qrcode.js',

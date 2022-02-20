@@ -6,6 +6,8 @@ CreateCollection({ name: "users" })
 CreateCollection({ name: "withdrawal_webhooks" })
 CreateCollection({ name: "travels" })
 CreateCollection({ name: "feedback" })
+CreateCollection({ name: "tickets" })
+CreateCollection({ name: "ticket_messages" })
 
 CreateIndex({
   name: "travels_search_by_traveler_sub_and_date",
@@ -457,4 +459,44 @@ Map(
 )
 
 Count(Match(Index("grabs_containing_charge"), true))
+
+CreateIndex({
+  name: "tickets_search_by_buyer_sub_sort_by_created_at_desc",
+  source: {
+    collection: Collection("tickets")
+  },
+  terms: [
+    {
+      field: ["data", "user", "sub"]
+    },
+  ],
+  values: [
+    {
+       field: ["data", "created_at"], reverse: true
+    },
+    {
+      field: ["ref"]
+    }
+  ]
+})
+
+CreateIndex({
+  name: "ticket_messages_search_by_ticket_ref_sort_by_posted_at_desc",
+  source: {
+    collection: Collection("ticket_messages")
+  },
+  terms: [
+    {
+      field: ["data", "ticket"]
+    },
+  ],
+  values: [
+    {
+       field: ["data", "posted_at"], reverse: true
+    },
+    {
+      field: ["ref"]
+    }
+  ]
+})
 

@@ -30,9 +30,11 @@ export default {
     myOrders: "My Orders",
     myDeliveries: "My Deliveries",
     myTravels: "My Travels",
+    support: "Support",
     login: "Sign In",
     logout: "Sign Out",
     // components/layout/footer
+    help: "Help",
     privacyPolicy: "Privacy policy",
     termsOfService: "Terms of service",
     changeCookieSetting: "Change cookies setting",
@@ -61,6 +63,12 @@ export default {
     weDontChargeFeeBecauseAmazon: "We don't charge service fee because Amazon may pay us a referral fee.",
     thanksToBitcoin: "Thanks to Bitcoin lightning network we don't charge any payment processor fee.",
     viewComparisionFees: "View comparision fees",
+    // pages/help
+    visitThe: "Visit the",
+    page: "page",
+    loginAndOpenA: "Please sign in and visit the",
+    ifYouCantLoginWriteUsAn: "If you can't sign in, write us an",
+    email: "email",
     // pages/orders
     byCountry: "By country",
     byCity: "By city",
@@ -233,6 +241,20 @@ export default {
     usernameAlreadyInUse: "Username already in use",
     youCantChangeUsername: "You can't change username",
     usernameAlphaNumericBetween5and15Caracters: "Choose an alphanumberic username between 5 and 15 caracters",
+    // pages/account/tickets/index
+    subjectPlaceholder: "Ticket title",
+    subjectMessage: "Choose a title for your ticket",
+    tickets: "Tickets",
+    ticketTopic: "Ticket topic",
+    openNewTicket: "Open new ticket",
+    view: "View",
+    subject: "Subject",
+    createdAt: "Created at",
+    updatedAt: "Updated at",
+    status: "Status",
+    // pages/account/tickets/_ref
+    ticket: "Ticket",
+    postNewMessage: "New message",
     // pages/fees
     fees: {
         title: "Fees comparision",

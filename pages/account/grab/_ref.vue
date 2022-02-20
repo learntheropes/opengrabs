@@ -234,7 +234,7 @@ export default {
       else if (this.$store.state.auth.user.sub === this.grab.traveler.sub) return this.grab.traveler.username
     },
     validatePost() {
-      if (!this.message && !this.attachment) {
+      if (!this.message && !this.attachments.length) {
         this.postType = 'is-danger'
         this.postError = 'Field required'
         return false
