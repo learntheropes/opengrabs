@@ -5,7 +5,7 @@
         </header> 
         <div class="card-image">
             <figure style="background-color: grey" class="image">
-                <img :src="getImage" :alt="'Image of ' + travel.destination_city" :title="'Image of ' + order.shop.title" loading="lazy" />
+                <img :src="getImage" :alt="'Image of ' + travel.destination_city" :title="'Image of ' + travel.destination_city" loading="lazy" />
             </figure>
         </div>
         <div class="card-content">
