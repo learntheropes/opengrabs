@@ -232,6 +232,75 @@ router.get('/admin/disputes/filter/:status', authorizeUser, authorizeAdmin, asyn
   res.status(200).json(grabs)
 }))
 
+router.post('/admin/disputes/actions/update', authorizeUser, authorizeAdmin, asyncHandler(async (req, res) => {
+  const { props } = req.body
+
+  const { data: grab, ref: { value: { id }}} = await client.query(
+    q.Get(q.Ref(q.Collection('grabs'), props.grab_id))
+  )
+
+  const { data: buyer } = await client.query(
+    q.Get(
+      q.Match(q.Index('user_by_sub'), grab.buyer.sub)
+    )
+  )
+
+  const { data: traveler } = await client.query(
+    q.Get(
+      q.Match(q.Index('user_by_sub'), grab.traveler.sub)
+    )
+  )
+
+  let buyerEmailContent
+  switch (buyer.locale) {
+    case 'en':
+      buyerEmailContent = en.emailDisputeUpdated(buyer.locale, id, buyer.username)
+    case 'es':
+      buyerEmailContent = es.emailDisputeUpdated(buyer.locale, id, buyer.username)
+    case 'pt':
+      buyerEmailContent = pt.emailDisputeUpdated(buyer.locale, id, buyer.username)
+    case 'ru':
+      buyerEmailContent = ru.emailDisputeUpdated(buyer.locale, id, buyer.username)
+    default:
+      buyerEmailContent = en.emailDisputeUpdated('en', id, buyer.username)
+  }
+
+  await transporter.sendMail({
+    to: buyer.email,
+    subject: buyerEmailContent.subject,
+    text: buyerEmailContent.content,
+  }) 
+
+  let travelerEmailContent
+  switch (buyer.locale) {
+    case 'en':
+      travelerEmailContent = en.emailDisputeUpdated(traveler.locale, id, traveler.username)
+    case 'es':
+      travelerEmailContent = es.emailDisputeUpdated(traveler.locale, id, traveler.username)
+    case 'pt':
+      travelerEmailContent = pt.emailDisputeUpdated(traveler.locale, id, traveler.username)
+    case 'ru':
+      travelerEmailContent = ru.emailDisputeUpdated(traveler.locale, id, traveler.username)
+    default:
+      travelerEmailContent = en.emailDisputeUpdated('en', id, traveler.username)
+  }
+
+  await transporter.sendMail({
+    to: traveler.email,
+    subject: travelerEmailContent.subject,
+    text: travelerEmailContent.content,
+  }) 
+
+  const response = await client.query(
+    q.Create(
+      q.Collection('messages'),
+      { data: props },
+    )
+  )
+
+  res.status(201).json(response)
+}))
+
 router.post('/admin/disputes/actions/release/:ref', authorizeUser, authorizeAdmin, authorizeDispute, asyncHandler(async (req, res) => {
   const { ref } = req.params
   const { jwt } = req.body

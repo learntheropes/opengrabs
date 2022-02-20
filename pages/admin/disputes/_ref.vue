@@ -263,7 +263,7 @@ export default {
                     user_sub: `admin|${this.$store.state.auth.user.sub}`
                 }
                 await this.$admin.grabs.attention(this.ref, this.attention)
-                await this.$db.messages.create({ props })
+                await this.$admin.grabs.update(props)
                 const messages = await this.$db.messages.filter(this.ref)
                 this.messages = messages
                 this.message = null

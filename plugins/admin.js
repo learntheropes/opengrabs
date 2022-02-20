@@ -21,6 +21,10 @@ export default ({ $axios, store }, inject) => {
                 const { data } = await $axios.get(`/api/admin/grabs/get/${ref}`)
                 return data
             },
+            update: async (props) => {
+                const { data } = await $axios.post('/admin/disputes/actions/update', { props })
+                return data                   
+            },
             attention: async (ref, hours) => {
                 const { data } = await $axios.post('/api/admin/grab/update-attention', {
                     ref, hours

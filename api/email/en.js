@@ -161,3 +161,20 @@ Opengrabs
 `
     } 
 };
+
+export const emailDisputeUpdated = (locale, grabId, username) => {
+    return {
+        subject: 'Your dispute has been update',
+        content:
+`
+Hi ${username},
+
+Your dispute has been updated by an admin.
+You can view more here:
+${baseUrl}/${locale}/account/grab/${grabId}
+
+Cheers,
+Opengrabs
+`
+    } 
+};
