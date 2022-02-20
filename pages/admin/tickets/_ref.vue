@@ -25,8 +25,6 @@
                         </p>
                     </b-field>
                 </div> 
-
-
                 <div v-for="(msg, index) in messages" :key="index" class="content">
                     <div v-if="msg.user.sub.split('|')[0] === 'admin'" class="notification has-text-right">
                         <p>
@@ -65,7 +63,6 @@
                         </div>
                     </div> 
                 </div>
-
             </div>
         </div>
     </section>
