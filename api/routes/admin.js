@@ -174,15 +174,15 @@ router.post('/admin/ticket/messages/create/:ref', authorizeUser, authorizeAdmin,
   let emailContent
   switch (ticket.language) {
     case 'en':
-      emailContent = en.emailTicketReplyed(ticket.language,ticket.user.username,id)
+      emailContent = en.emailTicketReplyed(ticket.language, id, ticket.user.username)
     case 'es':
-      emailContent = es.emailTicketReplyed(ticket.language,ticket.user.username,id)
+      emailContent = es.emailTicketReplyed(ticket.language, id, ticket.user.username)
     case 'pt':
-      emailContent = pt.emailTicketReplyed(ticket.language,ticket.user.username,id)
+      emailContent = pt.emailTicketReplyed(ticket.language, id, ticket.user.username)
     case 'ru':
-      emailContent = ru.emailTicketReplyed(ticket.language,ticket.user.username,id)
+      emailContent = ru.emailTicketReplyed(ticket.language, id, ticket.user.username)
     default:
-      emailContent = en.emailTicketReplyed('en',ticket.user.username,id)
+      emailContent = en.emailTicketReplyed('en', id, ticket.user.username)
   }
 
   await transporter.sendMail({

@@ -135,15 +135,15 @@ router.post('/grab/actions/order/:ref', authorizeUser, asyncHandler(async (req, 
     let emailContent
     switch (travelerUser.locale) {
         case 'en':
-            emailContent = en.emailOrder(travelerUser.locale,id)
+            emailContent = en.emailOrder(travelerUser.locale, id, travelerUser.username)
         case 'es':
-            emailContent = es.emailOrder(travelerUser.locale,id)
+            emailContent = es.emailOrder(travelerUser.locale, id, travelerUser.username)
         case 'pt':
-            emailContent = pt.emailOrder(travelerUser.locale,id)
+            emailContent = pt.emailOrder(travelerUser.locale, id, travelerUser.username)
         case 'ru':
-            emailContent = ru.emailOrder(travelerUser.locale,id)
+            emailContent = ru.emailOrder(travelerUser.locale, id, travelerUser.username)
         default:
-            emailContent = en.emailOrder('en',id)
+            emailContent = en.emailOrder('en',id, travelerUser.username)
     }
 
     await transporter.sendMail({
@@ -247,15 +247,15 @@ router.post('/grab/actions/book/:ref', authorizeUser, asyncHandler(async (req, r
     let emailContent
     switch (buyerUser.locale) {
         case 'en':
-            emailContent = en.emailBook(buyerUser.locale,ref)
+            emailContent = en.emailBooked(buyerUser.locale, ref, buyerUser.username)
         case 'es':
-            emailContent = es.emailBook(buyerUser.locale,ref)
+            emailContent = es.emailBooked(buyerUser.locale, ref, buyerUser.username)
         case 'pt':
-            emailContent = pt.emailBook(buyerUser.locale,ref)
+            emailContent = pt.emailBooked(buyerUser.locale, ref, buyerUser.username)
         case 'ru':travelerUser
-            emailContent = ru.emailBook(buyerUser.locale,ref)
+            emailContent = ru.emailBooked(buyerUser.locale, ref, buyerUser.username)
         default:
-            emailContent = en.emailBook('en',ref)
+            emailContent = en.emailBooked('en', ref, buyerUser.username)
     }
 
     await transporter.sendMail({
@@ -330,15 +330,15 @@ router.post('/grab/actions/dispute/:ref', authorizeUser, asyncHandler(async (req
     let emailContent
     switch (userNotifyObject.locale) {
         case 'en':
-            emailContent = en.emailDispute(userNotifyObject.locale,ref)
+            emailContent = en.emailDispute(userNotifyObject.locale, ref, userNotifyObject.username)
         case 'es':
-            emailContent = es.emailDispute(userNotifyObject.locale,ref)
+            emailContent = es.emailDispute(userNotifyObject.locale, ref, userNotifyObject.username)
         case 'pt':
-            emailContent = pt.emailDispute(userNotifyObject.locale,ref)
+            emailContent = pt.emailDispute(userNotifyObject.locale, ref, userNotifyObject.username)
         case 'ru':
-            emailContent = ru.emailDispute(userNotifyObject.locale,ref)
+            emailContent = ru.emailDispute(userNotifyObject.locale, ref, userNotifyObject.username)
         default:
-            emailContent = en.emailDispute('en',ref)
+            emailContent = en.emailDispute('en', ref, userNotifyObject.username)
     }
 
     await transporter.sendMail({
@@ -399,15 +399,15 @@ router.post('/grab/actions/bought/:ref', authorizeUser, asyncHandler(async (req,
     let emailContent
     switch (buyerUser.locale) {
         case 'en':
-            emailContent = en.emailBought(buyerUser.locale,ref)
+            emailContent = en.emailBought(buyerUser.locale, ref, buyerUser.username)
         case 'es':
-            emailContent = es.emailBought(buyerUser.locale,ref)
+            emailContent = es.emailBought(buyerUser.locale, ref, buyerUser.username)
         case 'pt':
-            emailContent = pt.emailBought(buyerUser.locale,ref)
+            emailContent = pt.emailBought(buyerUser.locale, ref, buyerUser.username)
         case 'ru':
-            emailContent = ru.emailBought(buyerUser.locale,ref)
+            emailContent = ru.emailBought(buyerUser.locale, ref, buyerUser.username)
         default:
-            emailContent = en.emailBought('en',ref)
+            emailContent = en.emailBought('en', ref, buyerUser.username)
     }
 
     await transporter.sendMail({
@@ -466,15 +466,15 @@ router.post('/grab/actions/delivered/:ref', authorizeUser, asyncHandler(async (r
     let emailContent
     switch (buyerUser.locale) {
         case 'en':
-            emailContent = en.emailDelivered(buyerUser.locale,ref)
+            emailContent = en.emailDelivered(buyerUser.locale, ref, buyerUser.username)
         case 'es':
-            emailContent = es.emailDelivered(buyerUser.locale,ref)
+            emailContent = es.emailDelivered(buyerUser.locale, ref, buyerUser.username)
         case 'pt':
-            emailContent = pt.emailDelivered(buyerUser.locale,ref)
+            emailContent = pt.emailDelivered(buyerUser.locale, ref, buyerUser.username)
         case 'ru':
-            emailContent = ru.emailDelivered(buyerUser.locale,ref)
+            emailContent = ru.emailDelivered(buyerUser.locale, ref, buyerUser.username)
         default:
-            emailContent = en.emailDelivered('en',ref)
+            emailContent = en.emailDelivered('en', ref, buyerUser.username)
     }
 
     await transporter.sendMail({
@@ -534,15 +534,15 @@ router.post('/grab/actions/release/:ref', authorizeUser, asyncHandler(async (req
     let emailContent
     switch (travelerUser.locale) {
         case 'en':
-            emailContent = en.emailReleased(travelerUser.locale,ref)
+            emailContent = en.emailReleased(travelerUser.locale, ref, travelerUser.username)
         case 'es':
-            emailContent = es.emailReleased(travelerUser.locale,ref)
+            emailContent = es.emailReleased(travelerUser.locale, ref, travelerUser.username)
         case 'pt':
-            emailContent = pt.emailReleased(travelerUser.locale,ref)
+            emailContent = pt.emailReleased(travelerUser.locale, ref, travelerUser.username)
         case 'ru':
-            emailContent = ru.emailReleased(travelerUser.locale,ref)
+            emailContent = ru.emailReleased(travelerUser.locale, ref, travelerUser.username)
         default:
-            emailContent = en.emailReleased('en',ref)
+            emailContent = en.emailReleased('en', ref, travelerUser.username)
     }
 
     await transporter.sendMail({

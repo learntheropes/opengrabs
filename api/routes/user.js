@@ -159,15 +159,15 @@ router.post('/db/user/update/email', authorizeUser, asyncHandler(async (req,res)
   let emailContent
   switch (props.locale) {
     case 'en':
-      emailContent = en.emailConfirmationCode(props.code)
+      emailContent = en.emailConfirmationCode(props.code, user.username)
     case 'es':
-      emailContent = es.emailConfirmationCode(props.code)
+      emailContent = es.emailConfirmationCode(props.code, user.username)
     case 'pt':
-      emailContent = pt.emailConfirmationCode(props.code)
+      emailContent = pt.emailConfirmationCode(props.code, user.username)
     case 'ru':
-      emailContent = ru.emailConfirmationCode(props.code)
+      emailContent = ru.emailConfirmationCode(props.code, user.username)
     default:
-      emailContent = en.emailConfirmationCode(props.code)
+      emailContent = en.emailConfirmationCode(props.code, user.username)
   }
 
   await transporter.sendMail({

@@ -125,15 +125,15 @@ router.post('/btc/charge/webhook', asyncHandler(async (req, res) => {
       let emailContent
       switch (traveler.locale) {
         case 'en':
-          emailContent = en.emailPaid(traveler.locale,req.body.order_id)
+          emailContent = en.emailPaid(traveler.locale, req.body.order_id, traveler.username)
         case 'es':
-          emailContent = es.emailPaid(traveler.locale,req.body.order_id)
+          emailContent = es.emailPaid(traveler.locale, req.body.order_id, traveler.username)
         case 'pt':
-          emailContent = pt.emailPaid(traveler.locale,req.body.order_id)
+          emailContent = pt.emailPaid(traveler.locale, req.body.order_id, traveler.username)
         case 'ru':travelerUser
-          emailContent = ru.emailPaid(traveler.locale,req.body.order_id)
+          emailContent = ru.emailPaid(traveler.locale, req.body.order_id, traveler.username)
         default:
-          emailContent = en.emailPaid(traveler.locale,req.body.order_id)
+          emailContent = en.emailPaid(traveler.locale, req.body.order_id, traveler.username)
       }
   
       await transporter.sendMail({
