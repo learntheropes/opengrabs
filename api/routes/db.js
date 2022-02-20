@@ -152,11 +152,11 @@ router.get('/db/messages/filter/grab/:ref', authorizeUser, asyncHandler(async (r
   const { jwt } = req.body
   const { ref } = req.params
 
-  const grab = await client.query(
+  const { data: grab } = await client.query(
     q.Get(q.Ref(q.Collection('grabs'), ref))
   )
 
-  if (jwt.sub !== grab.data.buyer.sub && jwt.sub !== grab.data.traveler.sub) {
+  if (jwt.sub !== grab.buyer.sub && jwt.sub !== grab.traveler.sub) {
     res.status(401).send('unauthorized')
     return
   }

@@ -25,11 +25,11 @@ router.post('/btc/create-charge/:ref', authorizeUser, asyncHandler(async (req, r
   const { amount, order_id, description, callback_url, auto_settle, exchange_rate } = req.body
   const { ref } = req.params
 
-  const grab = await client.query(
+  const { data: grab } = await client.query(
     q.Get(q.Ref(q.Collection('grabs'), ref))
   )
 
-  if (jwt.sub !== grab.data.buyer.sub) {
+  if (jwt.sub !== grab.buyer.sub) {
     res.status(401).send('unauthorized')
     return
   }
