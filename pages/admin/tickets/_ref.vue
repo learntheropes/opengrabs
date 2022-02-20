@@ -10,7 +10,7 @@
                 <div class="block">
                     <b-field label="Change language" grouped>
                         <b-select v-model="ticket.language">
-                            <option v-for="language in languages" :value="language" :key="language">{{ language }}</option>
+                            <option v-for="language in languages" :key="language.value" :value="language.value">{{ language.name }}</option>
                         </b-select>
                         <p class="control">
                             <b-button label="Update language" @click="updateTicketLanguage" />
@@ -78,6 +78,38 @@
 </template>
 
 <script>
+const getDefaultEmailText = (ticket) => {
+    switch (ticket.language) {
+        case 'en':
+return `Hi ${ticket.user.username},
+
+
+
+Cheers,
+Opengrabs`
+        case 'es':
+return `Hola ${ticket.user.username},
+
+
+
+Saludos,
+Opengrabs`
+        case 'pt':
+return `Oi ${ticket.user.username},
+
+
+
+Saúde,
+Opengrabs`
+        case 'ru':
+return `Привет ${ticket.user.username},
+
+
+
+Ваше здоровье,
+Opengrabs`        
+    }
+}
 export default {
     nuxtI18n: false,
     layout: 'admin',
@@ -88,20 +120,15 @@ export default {
             app.$admin.tickets.get(ref),
             app.$admin.tickets.messages.filter(ref)
         ])
-        const content = `Hi ${ticket.user.username},
-
-
-
-Best Regards,
-Opengrabs`
+        const content = getDefaultEmailText(ticket)
         return { isAdmin, ref, ticket, messages, content }
     },
     data: () => ({
         languages: [
-            'en',
-            'es',
-            'pt',
-            'ru'
+            { name: 'English', value: 'en'},
+            { name: 'Spanish', value: 'es'},
+            { name: 'Portuguese', value: 'pt'},
+            { name: 'Russian', value: 'ru'}
         ],
         messageButtonClass: 'button',
         attachments: [],
@@ -150,6 +177,7 @@ Opengrabs`
         async updateTicketLanguage() {
             await this.$axios.post(`/api/admin/tickets/update-language/${this.ref}/${this.ticket.language}`)
             this.ticket = await this.$admin.tickets.get(this.ref)
+            this.content = getDefaultEmailText(this.ticket)
         },
         activateModal (attachment) {
             this.isAttachmentModalActive = true
