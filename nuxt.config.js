@@ -12,12 +12,13 @@ export default {
     AUTH0_TENANT: process.env.AUTH0_TENANT
   },
 
+  head () {
+    return this.$nuxtI18nHead({ addSeoAttributes: true })
+  },
+
   // Global page headers: https://go.nuxtjs.dev/config-headproducts
   head: {
     title: 'OpenGrabs',
-    htmlAttrs: {
-      lang: 'en',
-    },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -95,6 +96,7 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxtjs/sitemap',
     '@nuxtjs/i18n',
     'nuxt-buefy',
     '@nuxtjs/axios',
@@ -195,6 +197,7 @@ export default {
   },
 
   i18n: {
+    baseUrl: process.env.URL,
     locales: [
       {
         code: 'en',
@@ -204,7 +207,7 @@ export default {
       },
       {
         code: 'es',
-        iso: 'es-ES',
+        iso: 'es-AR',
         file: 'es.js',
         name: 'Español'
       }

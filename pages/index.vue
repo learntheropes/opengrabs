@@ -58,6 +58,17 @@ export default {
   data: () =>({
     heroClass: (window.innerWidth < 769) ? 'hero is-fullheight-with-navbar' : 'hero is-medium'
   }),
+  head() {
+    return {
+      link: [
+        {
+          hid: 'canonical',
+          rel: 'canonical',
+          href: `https://${process.env.URL}/`,
+        },
+      ],
+    }
+  },
   computed: {
     authenticated() {
       return this.$store.state.auth.loggedIn

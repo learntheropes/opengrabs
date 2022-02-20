@@ -58,6 +58,17 @@ export default {
       store.commit('orders/setInitiated', true)
     }
   },
+  head() {
+    return {
+      link: [
+        {
+          hid: 'canonical',
+          rel: 'canonical',
+          href: `https://${process.env.URL}/${this.$i18n.locale}/orders`,
+        },
+      ],
+    }
+  },
   computed: {
     ...mapState({
       orders: (state) => state.orders.list,

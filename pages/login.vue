@@ -10,6 +10,17 @@ export default {
     asyncData({ from }) {
         return { fullPath: from.fullPath, path: from.path }
     },
+    head() {
+        return {
+            link: [
+                {
+                    hid: 'canonical',
+                    rel: 'canonical',
+                    href: `https://${process.env.URL}/${this.$i18n.locale}/login`,
+                },
+            ],
+        }
+    },
     created() {
         if (this.path !== '/cb' && this.path !== `${this.$i18n.locale}/orders` && this.path !== `${this.$i18n.locale}/travels`) {
             this.$auth.$storage.setUniversal('redirect', this.fullPath)

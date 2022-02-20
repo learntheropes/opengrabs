@@ -15,6 +15,17 @@
 export default {
     name: "Help",
     auth: false,
+    head() {
+        return {
+            link: [
+                {
+                    hid: 'canonical',
+                    rel: 'canonical',
+                    href: `https://${process.env.URL}/${this.$i18n.locale}/help`,
+                },
+            ],
+        }
+    },
     computed: {
         authenticated() {
             return this.$store.state.auth.loggedIn

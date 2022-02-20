@@ -68,6 +68,17 @@ export default {
             store.commit('travels/setInitiated', true)
         }
     },
+    head() {
+        return {
+            link: [
+                {
+                    hid: 'canonical',
+                    rel: 'canonical',
+                    href: `https://${process.env.URL}/${this.$i18n.locale}/travels`,
+                },
+            ],
+        }
+    },
     computed: {
         ...mapState({
             travels: (state) => state.travels.list,

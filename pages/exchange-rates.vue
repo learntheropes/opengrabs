@@ -27,6 +27,17 @@ export default {
     async asyncData({ app }) {
         const { data } = await app.$axios.get('/api/btc/rates/USD,EUR,GBP')
         return { data }
-    }
+    },
+    head() {
+        return {
+            link: [
+                {
+                    hid: 'canonical',
+                    rel: 'canonical',
+                    href: `https://${process.env.URL}/${this.$i18n.locale}/exchange-rates`,
+                },
+            ],
+        }
+    },    
 }
 </script>
