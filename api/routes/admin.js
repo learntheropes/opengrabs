@@ -1,6 +1,11 @@
 import asyncHandler from 'express-async-handler'
 import { q, client } from '../db'
 import opennode from '../btc'
+import { transporter } from '../email'
+import * as en from '../email/en'
+import * as es from '../email/es'
+import * as pt from '../email/pt'
+import * as ru from '../email/ru'
 import { Router } from 'express'
 import { authorizeUser, authorizeAdmin, authorizeDispute, authorizeRefund } from '../auth'
 const router = Router()
@@ -137,7 +142,7 @@ router.post('/admin/ticket/messages/create/:ref', authorizeUser, authorizeAdmin,
   const { message, jwt } = req.body
   const { ref } = req.params
 
-  await client.query(
+  const { data: ticket, ref: { value: { id }}} = await client.query(
       q.Update(
           q.Ref(q.Collection('tickets'), ref),
           {
@@ -164,7 +169,30 @@ router.post('/admin/ticket/messages/create/:ref', authorizeUser, authorizeAdmin,
               }
           },
       )
-  )    
+  )
+
+  console.log('ticket', ticket)
+  console.log('language', ticket.language)
+
+  let emailContent
+  switch (ticket.language) {
+    case 'en':
+      emailContent = en.emailTicketReplyed(ticket.language,ticket.user.username,id)
+    case 'es':
+      emailContent = es.emailTicketReplyed(ticket.language,ticket.user.username,id)
+    case 'pt':
+      emailContent = pt.emailTicketReplyed(ticket.language,ticket.user.username,id)
+    case 'ru':
+      emailContent = ru.emailTicketReplyed(ticket.language,ticket.user.username,id)
+    default:
+      emailContent = en.emailTicketReplyed('en',ticket.user.username,id)
+  }
+
+  await transporter.sendMail({
+    to: ticket.user.email,
+    subject: emailContent.subject,
+    text: emailContent.content,
+  }) 
 
   res.status(201).json({}) 
 }))

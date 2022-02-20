@@ -58,3 +58,19 @@ export const emailReleased = (locale, grabId) => {
     } 
 };
 
+export const emailTicketReplyed = (locale, username, ticketId) => {
+    return {
+        subject: 'Your ticket has been replied',
+        content:
+`
+Hi ${username},
+
+Your ticket has been replied.
+You can view more here:
+${baseUrl}/${locale}/account/tickets/${ticketId}
+
+Cheers,
+Opengrabs
+`
+    } 
+};
