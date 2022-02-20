@@ -23,12 +23,12 @@
         <div v-for="(msg, index) in messages" :key="index" class="content">
             <div v-if="msg.user.sub === me" class="notification has-text-right">
                 <p>
-                    <span class="has-text-weight-semibold has-text-grey-light">{{ $t('me') }} </span><br>
+                    <span class="has-text-weight-semibold has-text-grey-light">{{ $t('me') }}</span><br>
                     <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
                 </p>
                 <p class="has-new-line">{{ msg.content }}</p>
                 <div v-if="msg.attachments && msg.attachments.length" class="columns is-multiline is-mobile">
-                    <div v-for="(attachment, i) in msg.attachments" :key="'me'+i"  class="column is-narrow">
+                    <div v-for="(attachment, i) in msg.attachments" :key="msg.user.sub+i"  class="column is-narrow">
                         <figure class="image is-128x128">
                             <img
                                 :src="'https://res.cloudinary.com/opengrabs/image/upload/w_400/'+attachment"
@@ -41,12 +41,12 @@
             </div> 
             <div v-else class="notification">
                 <p>
-                    <span class="has-text-weight-semibold has-text-grey-light">{{ $t('admin') }} </span><br>
+                    <span class="has-text-weight-semibold has-text-grey-light">{{ $t('admin') }}</span><br>
                     <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
                 </p>
                 <p class="has-new-line">{{ msg.content }}</p>
                 <div v-if="msg.attachments && msg.attachments.length" class="columns is-multiline is-mobile">
-                    <div v-for="(attachment, i) in msg.attachments" :key="'me'+i"  class="column is-narrow">
+                    <div v-for="(attachment, i) in msg.attachments" :key="msg.user.sub+i"  class="column is-narrow">
                         <figure class="image is-128x128">
                             <img
                                 :src="'https://res.cloudinary.com/opengrabs/image/upload/w_400/'+attachment"

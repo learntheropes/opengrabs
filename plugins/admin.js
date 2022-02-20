@@ -34,6 +34,26 @@ export default ({ $axios, store }, inject) => {
                 return data
             }
         },
+        tickets: {
+            filter: async (status, language) => {
+                const { data } = await $axios.get(`/api/admin/tickets/filter/${status}/${language}`)
+                return data
+            },
+            get: async (ref) => {
+                const { data } = await $axios.get(`/api/admin/tickets/get/${ref}`)
+                return data                
+            },
+            messages: {
+                filter: async (ref) => {
+                    const { data } = await $axios.get(`/api/admin/ticket/messages/filter/${ref}`)
+                    return data                      
+                },
+                create: async (ref, message) => {
+                    const { data } = await $axios.post(`/api/admin/ticket/messages/create/${ref}`, { message })
+                    return data  
+                }
+            }
+        },
         disputes: {
             filter: async (status) => {
                 const { data } = await $axios.get(`/api/admin/disputes/filter/${status}`)

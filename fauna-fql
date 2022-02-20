@@ -500,3 +500,25 @@ CreateIndex({
   ]
 })
 
+CreateIndex({
+  name: "tickets_by_status_by_language",
+  source: {
+    collection: Collection("tickets")
+  },
+  terms: [
+    {
+      field: ["data", "status"]
+    },
+    {
+      field: ["data", "language"]
+    },
+  ],
+  values: [
+    {
+       field: ["data", "updated_at"]
+    },
+    {
+      field: ["ref"]
+    }
+  ]
+})

@@ -6,8 +6,8 @@ import { authorizeUser, authorizeAdmin, authorizeDispute, authorizeRefund } from
 const router = Router()
 
 Date.prototype.addHours = function(h) {
-  this.setTime(this.getTime() + (h*60*60*1000));
-  return this;
+  this.setTime(this.getTime() + (h*60*60*1000))
+  return this
 }
 
 router.get('/admin/is-admin', authorizeUser, asyncHandler(async (req,res) => {
@@ -49,7 +49,6 @@ router.get('/admin/grabs/list', authorizeUser, authorizeAdmin, asyncHandler(asyn
 }))
 
 router.get('/admin/grabs/get/:ref', authorizeUser, authorizeAdmin, asyncHandler(async (req,res) => {
-
   const { ref } = req.params
 
   let grab = await client.query(
@@ -62,7 +61,6 @@ router.get('/admin/grabs/get/:ref', authorizeUser, authorizeAdmin, asyncHandler(
 }))
 
 router.get('/admin/messages/list/:ref', authorizeUser, authorizeAdmin, asyncHandler(async (req,res) => {
-
   const { ref } = req.params
 
   let { data: messages } = await client.query(
@@ -83,8 +81,95 @@ router.get('/admin/messages/list/:ref', authorizeUser, authorizeAdmin, asyncHand
   res.status(200).json(messages)
 }))
 
-router.get('/admin/disputes/filter/:status', authorizeUser, authorizeAdmin, asyncHandler(async (req,res) => {
+router.get('/admin/tickets/filter/:status/:language', authorizeUser, authorizeAdmin, asyncHandler(async (req,res) => {
+  const { status, language } = req.params
 
+  const { data } = await client.query(
+    q.Map(
+      q.Paginate(
+        q.Match(q.Index('tickets_by_status_by_language'), status, language),
+        { size: 100000 }
+      ),
+      q.Lambda(["updated_at", "ref"], q.Get(q.Var("ref")))
+    )
+  )
+
+  const tickets = data.map(({ data, ref: { value: { id }}}) => {
+    data.ref = id
+    return data
+  })
+
+  res.status(200).json(tickets)
+}))
+
+router.get('/admin/tickets/get/:ref', authorizeUser, authorizeAdmin, asyncHandler(async (req,res) => {
+  const { ref } = req.params
+
+  let { data: ticket } = await client.query(
+    q.Get(q.Ref(q.Collection('tickets'), ref))
+  )
+
+  res.status(200).json(ticket)
+}))
+
+router.get('/admin/ticket/messages/filter/:ref', authorizeUser, authorizeAdmin, asyncHandler(async (req,res) => {
+  const { ref } = req.params
+
+  const { data } = await client.query(
+    q.Map(
+      q.Paginate(
+        q.Match(q.Index('ticket_messages_search_by_ticket_ref_sort_by_posted_at_desc'), ref),
+        { size: 100000 }
+      ),
+      q.Lambda(["posted_at", "ref"], q.Get(q.Var("ref")))
+    )
+  )
+
+  const messages = data.map(({ data, ref: { value: { id }}}) => {
+    data.ref = id
+    return data
+  })
+
+  res.status(200).json(messages)
+}))
+
+router.post('/admin/ticket/messages/create/:ref', authorizeUser, authorizeAdmin, asyncHandler(async (req, res) => {
+  const { message, jwt } = req.body
+  const { ref } = req.params
+
+  await client.query(
+      q.Update(
+          q.Ref(q.Collection('tickets'), ref),
+          {
+              data: {
+                  status: 'close',
+                  updated_at: new Date().toISOString(),
+              }
+          },
+      )
+  )
+
+  await client.query(
+      q.Create(
+          q.Collection('ticket_messages'),
+          {
+              data: {
+                  ticket: ref,
+                  posted_at: new Date().toISOString(),
+                  content: message.content,
+                  attachments: message.attachments,
+                  user: {
+                      sub: `admin|${jwt.sub}`,
+                  }
+              }
+          },
+      )
+  )    
+
+  res.status(201).json({}) 
+}))
+
+router.get('/admin/disputes/filter/:status', authorizeUser, authorizeAdmin, asyncHandler(async (req,res) => {
   const { status } = req.params
 
   const { data } = await client.query(

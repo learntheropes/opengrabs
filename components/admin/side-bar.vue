@@ -4,16 +4,19 @@
         <li><nuxt-link :to="localePath({ name: 'index' })">Website homepage</nuxt-link></li>
         <li><nuxt-link to="/admin">Admin homepage</nuxt-link></li>
     </ul>
-    <p class="menu-label">Tawk.to</p>
+    <p class="menu-label">Open Tickets</p>
     <ul class="menu-list">
-        <li><a href="https://dashboard.tawk.to" target="_blank">Dashboard</a></li>
+        <li><nuxt-link to="/admin/tickets/open/en">English</nuxt-link></li>
+        <li><nuxt-link to="/admin/tickets/open/es">Spanish</nuxt-link></li>
+        <li><nuxt-link to="/admin/tickets/open/pt">Portuguese</nuxt-link></li>
+        <li><nuxt-link to="/admin/tickets/open/ru">Russina</nuxt-link></li>
     </ul>
-    <p class="menu-label">Knowledge Base</p>
+    <p class="menu-label">Close Tickets</p>
     <ul class="menu-list">
-        <li><a href="https://opengrabs.tawk.help/" target="_blank">English</a></li>
-        <li><a href="https://opengrabs.tawk.help/es" target="_blank">Spanish</a></li>
-        <li><a href="https://opengrabs.tawk.help/pt" target="_blank">Portuguese</a></li>
-        <li><a href="https://opengrabs.tawk.help/ru" target="_blank">Russina</a></li>
+        <li><nuxt-link to="/admin/tickets/close/en">English</nuxt-link></li>
+        <li><nuxt-link to="/admin/tickets/close/es">Spanish</nuxt-link></li>
+        <li><nuxt-link to="/admin/tickets/close/pt">Portuguese</nuxt-link></li>
+        <li><nuxt-link to="/admin/tickets/close/ru">Russina</nuxt-link></li>
     </ul>
     <p class="menu-label">Grabs</p>
     <ul class="menu-list">
