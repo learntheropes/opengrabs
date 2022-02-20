@@ -2,14 +2,16 @@ import nodemailer from "nodemailer"
 import dotenv from 'dotenv'
 dotenv.config()
 
+const domain = (process.env.URL) ? process.env.url : 'testnet.opengrabs.com'
+
 export let transporter = nodemailer.createTransport({
     host: "smtp.migadu.com",
     port: 465,
     secure: true,
     auth: {
-      user: 'no-reply@opengrabs.com',
+      user: `no-reply@${domain}`,
       pass: process.env.MIGADU_PASSWORD,
     }
   }, {
-    from: '"OpenGrabs" <no-reply@opengrabs.com>',
+    from: `"OpenGrabs" <no-reply@${domain}>`,
   })
