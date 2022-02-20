@@ -6,7 +6,8 @@
             </div>
             <div class="column">
                 <h1 class="title">Ticket {{ ref }}</h1>
-                <h2 class="subtitle">{{ ticket.subject }}</h2>
+                <h2 class="subtitle">Username: {{ ticket.user.username }}</h2>
+                <h2 class="subtitle">Title: {{ ticket.subject }}</h2>
                 <div class="block">
                     <b-field :type="messageType" :message="messageMessage">
                         <b-input v-model="content" maxlength="400" type="textarea"></b-input>

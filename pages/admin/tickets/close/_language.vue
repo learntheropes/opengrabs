@@ -17,7 +17,7 @@
                         <b-table-column v-slot="props" label="User" field="user.username" searchable>
                             {{ props.row.user.username }}
                         </b-table-column>
-                        <b-table-column v-slot="props" label="Subject">
+                        <b-table-column v-slot="props" label="Title">
                             {{ props.row.subject }}
                         </b-table-column>
                         <b-table-column v-slot="props" label="Created At">
