@@ -178,3 +178,20 @@ ${process.env.URL}
 `
     } 
 };
+
+export const emailDisputeResolved = (locale, grabId, username) => {
+    return {
+        subject: 'Your dispute has been resolved',
+        content:
+`
+Hi ${username},
+
+Your dispute has been resolved by an admin.
+You can view more here:
+${baseUrl}/${locale}/account/grab/${grabId}
+
+Cheers,
+${process.env.URL}
+`
+    } 
+};

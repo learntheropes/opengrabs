@@ -305,7 +305,7 @@ router.post('/admin/disputes/actions/release/:ref', authorizeUser, authorizeAdmi
   const { ref } = req.params
   const { jwt } = req.body
 
-  const { data: grab } = await client.query(
+  const { data: grab, ref: { value: { id }} } = await client.query(
     q.Get(q.Ref(q.Collection('grabs'), ref))
   )
 
@@ -344,6 +344,58 @@ router.post('/admin/disputes/actions/release/:ref', authorizeUser, authorizeAdmi
     )
   )
 
+  const { data: buyer } = await client.query(
+    q.Get(
+      q.Match(q.Index('user_by_sub'), grab.buyer.sub)
+    )
+  )
+
+  const { data: traveler } = await client.query(
+    q.Get(
+      q.Match(q.Index('user_by_sub'), grab.traveler.sub)
+    )
+  )
+
+  let buyerEmailContent
+  switch (buyer.locale) {
+    case 'en':
+      buyerEmailContent = en.emailDisputeResolved(buyer.locale, id, buyer.username)
+    case 'es':
+      buyerEmailContent = es.emailDisputeResolved(buyer.locale, id, buyer.username)
+    case 'pt':
+      buyerEmailContent = pt.emailDisputeResolved(buyer.locale, id, buyer.username)
+    case 'ru':
+      buyerEmailContent = ru.emailDisputeResolved(buyer.locale, id, buyer.username)
+    default:
+      buyerEmailContent = en.emailDisputeResolved('en', id, buyer.username)
+  }
+
+  await transporter.sendMail({
+    to: buyer.email,
+    subject: buyerEmailContent.subject,
+    text: buyerEmailContent.content,
+  }) 
+
+  let travelerEmailContent
+  switch (buyer.locale) {
+    case 'en':
+      travelerEmailContent = en.emailDisputeResolved(traveler.locale, id, traveler.username)
+    case 'es':
+      travelerEmailContent = es.emailDisputeResolved(traveler.locale, id, traveler.username)
+    case 'pt':
+      travelerEmailContent = pt.emailDisputeResolved(traveler.locale, id, traveler.username)
+    case 'ru':
+      travelerEmailContent = ru.emailDisputeResolved(traveler.locale, id, traveler.username)
+    default:
+      travelerEmailContent = en.emailDisputeResolved('en', id, traveler.username)
+  }
+
+  await transporter.sendMail({
+    to: traveler.email,
+    subject: travelerEmailContent.subject,
+    text: travelerEmailContent.content,
+  }) 
+
   res.status(201).json(response)
 }))
 
@@ -351,7 +403,7 @@ router.post('/admin/disputes/actions/refund/:ref', authorizeUser, authorizeAdmin
   const { ref } = req.params
   const { jwt } = req.body
 
-  const { data: grab } = await client.query(
+  const { data: grab, ref: { value: { id }} } = await client.query(
     q.Get(q.Ref(q.Collection('grabs'), ref))
   )
 
@@ -389,6 +441,58 @@ router.post('/admin/disputes/actions/refund/:ref', authorizeUser, authorizeAdmin
       }}
     )
   )
+
+  const { data: buyer } = await client.query(
+    q.Get(
+      q.Match(q.Index('user_by_sub'), grab.buyer.sub)
+    )
+  )
+
+  const { data: traveler } = await client.query(
+    q.Get(
+      q.Match(q.Index('user_by_sub'), grab.traveler.sub)
+    )
+  )
+
+  let buyerEmailContent
+  switch (buyer.locale) {
+    case 'en':
+      buyerEmailContent = en.emailDisputeResolved(buyer.locale, id, buyer.username)
+    case 'es':
+      buyerEmailContent = es.emailDisputeResolved(buyer.locale, id, buyer.username)
+    case 'pt':
+      buyerEmailContent = pt.emailDisputeResolved(buyer.locale, id, buyer.username)
+    case 'ru':
+      buyerEmailContent = ru.emailDisputeResolved(buyer.locale, id, buyer.username)
+    default:
+      buyerEmailContent = en.emailDisputeResolved('en', id, buyer.username)
+  }
+
+  await transporter.sendMail({
+    to: buyer.email,
+    subject: buyerEmailContent.subject,
+    text: buyerEmailContent.content,
+  }) 
+
+  let travelerEmailContent
+  switch (buyer.locale) {
+    case 'en':
+      travelerEmailContent = en.emailDisputeResolved(traveler.locale, id, traveler.username)
+    case 'es':
+      travelerEmailContent = es.emailDisputeResolved(traveler.locale, id, traveler.username)
+    case 'pt':
+      travelerEmailContent = pt.emailDisputeResolved(traveler.locale, id, traveler.username)
+    case 'ru':
+      travelerEmailContent = ru.emailDisputeResolved(traveler.locale, id, traveler.username)
+    default:
+      travelerEmailContent = en.emailDisputeResolved('en', id, traveler.username)
+  }
+
+  await transporter.sendMail({
+    to: traveler.email,
+    subject: travelerEmailContent.subject,
+    text: travelerEmailContent.content,
+  }) 
 
   res.status(201).json(response)
 }))
