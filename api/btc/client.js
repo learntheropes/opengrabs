@@ -8,10 +8,10 @@ const httpsAgent = new HttpsProxyAgent({host: `${process.env.FIXIE_SUBDOMAIN}.us
 
 class OpenNodeClient {
     constructor() {
-        this.version = (process.env.BTC_CHAIN === 'test3') ? 'testnet.opengrabs.com' : 'opengrabs.com'
+        this.version = (process.env.BTC_CHAIN === 'testnet') ? 'testnet.opengrabs.com' : 'opengrabs.com'
         this.api_key_invoice = process.env.OPENNODE_API_KEY_INVOICE
         this.api_key_withdrawal = process.env.OPENNODE_API_KEY_WITHDRAWAL
-        this.baseUrl = (process.env.BTC_CHAIN === 'test3') ? 'https://dev-api.opennode.com' : 'https://api.opennode.com'
+        this.baseUrl = (process.env.BTC_CHAIN === 'testnet') ? 'https://dev-api.opennode.com' : 'https://api.opennode.com'
         this.instance = axios.create()
         this.instance.defaults.baseURL = this.baseUrl
         this.instance.defaults.timeout = 15000

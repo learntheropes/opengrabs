@@ -16,6 +16,7 @@ import admin from './routes/admin'
 import user from './routes/user'
 import feedback from './routes/feedback'
 import ticket from './routes/ticket'
+import image from './routes/image'
 
 app.use(amazon)
 app.use(db)
@@ -27,6 +28,7 @@ app.use(admin)
 app.use(user)
 app.use(feedback)
 app.use(ticket)
+app.use(image)
 
 module.exports = {
   path: '/api',
