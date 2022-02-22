@@ -61,7 +61,7 @@ export default {
   name: 'OrdersPublished',
   middleware: 'auth',
   props: {
-    porders: {
+    orders: {
       type: Array,
       default: () => [],
     },
@@ -87,6 +87,6 @@ export default {
         type: 'is-primary'
       })
     },
-  },
+  }
 }
 </script>

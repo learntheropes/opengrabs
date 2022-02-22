@@ -145,6 +145,6 @@ export default {
         this.$store.commit('account/orders/setActiveTab', tab)
       },
     }
-  }
+  },
 }
 </script>
