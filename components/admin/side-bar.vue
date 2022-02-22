@@ -4,19 +4,33 @@
         <li><nuxt-link :to="localePath({ name: 'index' })">Website homepage</nuxt-link></li>
         <li><nuxt-link to="/admin">Admin homepage</nuxt-link></li>
     </ul>
+    <p class="menu-label">Open Emails</p>
+    <ul class="menu-list">
+        <li><nuxt-link to="/admin/emails/open/en">English</nuxt-link></li>
+        <li><nuxt-link to="/admin/emails/open/es">Spanish</nuxt-link></li>
+        <li><nuxt-link to="/admin/emails/open/pt">Portuguese</nuxt-link></li>
+        <li><nuxt-link to="/admin/emails/open/ru">Russian</nuxt-link></li>
+    </ul>
+    <p class="menu-label">Close Emails</p>
+    <ul class="menu-list">
+        <li><nuxt-link to="/admin/emails/close/en">English</nuxt-link></li>
+        <li><nuxt-link to="/admin/emails/close/es">Spanish</nuxt-link></li>
+        <li><nuxt-link to="/admin/emails/close/pt">Portuguese</nuxt-link></li>
+        <li><nuxt-link to="/admin/emails/close/ru">Russian</nuxt-link></li>
+    </ul>
     <p class="menu-label">Open Tickets</p>
     <ul class="menu-list">
         <li><nuxt-link to="/admin/tickets/open/en">English</nuxt-link></li>
         <li><nuxt-link to="/admin/tickets/open/es">Spanish</nuxt-link></li>
         <li><nuxt-link to="/admin/tickets/open/pt">Portuguese</nuxt-link></li>
-        <li><nuxt-link to="/admin/tickets/open/ru">Russina</nuxt-link></li>
+        <li><nuxt-link to="/admin/tickets/open/ru">Russian</nuxt-link></li>
     </ul>
     <p class="menu-label">Close Tickets</p>
     <ul class="menu-list">
         <li><nuxt-link to="/admin/tickets/close/en">English</nuxt-link></li>
         <li><nuxt-link to="/admin/tickets/close/es">Spanish</nuxt-link></li>
         <li><nuxt-link to="/admin/tickets/close/pt">Portuguese</nuxt-link></li>
-        <li><nuxt-link to="/admin/tickets/close/ru">Russina</nuxt-link></li>
+        <li><nuxt-link to="/admin/tickets/close/ru">Russian</nuxt-link></li>
     </ul>
     <p class="menu-label">Grabs</p>
     <ul class="menu-list">

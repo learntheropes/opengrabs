@@ -8,6 +8,8 @@ CreateCollection({ name: "travels" })
 CreateCollection({ name: "feedback" })
 CreateCollection({ name: "tickets" })
 CreateCollection({ name: "ticket_messages" })
+CreateCollection({ name: "email_tickets" })
+CreateCollection({ name: "email_ticket_messages" })
 
 CreateIndex({
   name: "travels_search_by_traveler_sub_and_date",
@@ -516,6 +518,49 @@ CreateIndex({
   values: [
     {
        field: ["data", "updated_at"]
+    },
+    {
+      field: ["ref"]
+    }
+  ]
+})
+
+CreateIndex({
+  name: "email_ticket_messages_search_by_ticket_ref_sort_by_posted_at_desc",
+  source: {
+    collection: Collection("email_ticket_messages")
+  },
+  terms: [
+    {
+      field: ["data", "ticket"]
+    },
+  ],
+  values: [
+    {
+       field: ["data", "posted_at"], reverse: true
+    },
+    {
+      field: ["ref"]
+    }
+  ]
+})
+
+CreateIndex({
+  name: "email_tickets_by_status_by_language",
+  source: {
+    collection: Collection("email_tickets")
+  },
+  terms: [
+    {
+      field: ["data", "status"]
+    },
+    {
+      field: ["data", "language"]
+    }
+  ],
+  values: [
+    {
+      field: ["data", "updated_at"]
     },
     {
       field: ["ref"]

@@ -30,11 +30,10 @@ export default {
     myOrders: "My Orders",
     myDeliveries: "My Deliveries",
     myTravels: "My Travels",
-    support: "Support",
     login: "Sign in",
     logout: "Sign out",
     // components/layout/footer
-    help: "Ayuda",
+    support: "Support",
     privacyPolicy: "Politica de privacidad",
     termsOfService: "Terminos de servicio",
     changeCookieSetting: "Change cookies setting",
@@ -63,12 +62,12 @@ export default {
     weDontChargeFeeBecauseAmazon: "We don't charge service fee because Amazon may pay us a referral fee.",
     thanksToBitcoin: "Thanks to Bitcoin lightning network we don't charge any payment processor fee.",
     viewComparisionFees: "View comparision fees",
-    // pages/help
-    visitThe: "Visit the",
+    // pages/support
     page: "page",
-    loginAndOpenA: "Please sign in and visit the",
-    ifYouCantLoginWriteUsAn: "If you can't sign in, write us an",
-    email: "email",
+    loginAndOpenA: "For a more accurate attention, please",
+    ifYouCantLogin: "If you can't sign in, fill the form below and we will reply by email.",
+    emailPlaceholder: "Provide your email",
+    contentPlaceholder: "Type a message",
     // pages/orders
     byCountry: "Por pais",
     byCity: "Por ciudad",
@@ -243,7 +242,6 @@ export default {
     usernameAlphaNumericBetween5and15Caracters: "Choose an alphanumberic username between 5 and 15 caracters",
     // pages/account/tickets/index
     subjectPlaceholder: "Ticket title",
-    subjectMessage: "Choose a title for your ticket",
     tickets: "Tickets",
     ticketTopic: "Ticket topic",
     openNewTicket: "Open new ticket",

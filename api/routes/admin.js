@@ -107,6 +107,8 @@ router.get('/admin/tickets/filter/:status/:language', authorizeUser, authorizeAd
   res.status(200).json(tickets)
 }))
 
+
+
 router.get('/admin/tickets/get/:ref', authorizeUser, authorizeAdmin, asyncHandler(async (req,res) => {
   const { ref } = req.params
 
@@ -143,32 +145,32 @@ router.post('/admin/ticket/messages/create/:ref', authorizeUser, authorizeAdmin,
   const { ref } = req.params
 
   const { data: ticket, ref: { value: { id }}} = await client.query(
-      q.Update(
-          q.Ref(q.Collection('tickets'), ref),
-          {
-              data: {
-                  status: 'close',
-                  updated_at: new Date().toISOString(),
-              }
-          },
-      )
+    q.Update(
+      q.Ref(q.Collection('tickets'), ref),
+      {
+        data: {
+          status: 'close',
+          updated_at: new Date().toISOString(),
+        }
+      },
+    )
   )
 
   await client.query(
-      q.Create(
-          q.Collection('ticket_messages'),
-          {
-              data: {
-                  ticket: ref,
-                  posted_at: new Date().toISOString(),
-                  content: message.content,
-                  attachments: message.attachments,
-                  user: {
-                      sub: `admin|${jwt.sub}`,
-                  }
-              }
-          },
-      )
+    q.Create(
+      q.Collection('ticket_messages'),
+      {
+        data: {
+          ticket: ref,
+          posted_at: new Date().toISOString(),
+          content: message.content,
+          attachments: message.attachments,
+          user: {
+            sub: `admin|${jwt.sub}`,
+          }
+        }
+      },
+    )
   )
 
   let emailContent
@@ -198,14 +200,132 @@ router.post('/admin/tickets/update-language/:ref/:language', authorizeUser, auth
   const { ref, language } = req.params
 
   await client.query(
-      q.Update(
-          q.Ref(q.Collection('tickets'), ref),
-          {
-            data: {
-              language,
-            }
-          },
+    q.Update(
+      q.Ref(q.Collection('tickets'), ref),
+      {
+        data: {
+          language,
+        }
+      },
+    )
+  )
+
+  res.status(201).json({}) 
+}))
+
+router.get('/admin/tickets/email/get/:ref', authorizeUser, authorizeAdmin, asyncHandler(async (req, res) => {
+  const { ref } = req.params
+
+  const { data: ticket } = await client.query(
+      q.Get(q.Ref(q.Collection('email_tickets'), ref))
+  )
+
+  res.status(200).json(ticket)
+}))
+
+router.get('/admin/tickets/email/filter/:status/:language', authorizeUser, authorizeAdmin, asyncHandler(async (req, res) => {
+  const { status, language } = req.params
+  const { data } = await client.query(
+      q.Map(
+          q.Paginate(
+              q.Match(q.Index('email_tickets_by_status_by_language'), status, language),
+              { size: 100000 }
+          ),
+          q.Lambda(["updated_at", "ref"], q.Get(q.Var("ref")))
       )
+  )
+  
+  const tickets = data.map(({ data, ref: { value: { id }}}) => {
+      data.ref = id
+      return data
+  })
+
+  res.status(200).json(tickets)
+}))
+
+router.get('/admin/ticket/email/messages/filter/:ref', authorizeUser, authorizeAdmin, asyncHandler(async (req,res) => {
+  const { ref } = req.params
+
+  const { data } = await client.query(
+    q.Map(
+      q.Paginate(
+        q.Match(q.Index('email_ticket_messages_search_by_ticket_ref_sort_by_posted_at_desc'), ref),
+        { size: 100000 }
+      ),
+      q.Lambda(["posted_at", "ref"], q.Get(q.Var("ref")))
+    )
+  )
+
+  const messages = data.map(({ data, ref: { value: { id }}}) => {
+    data.ref = id
+    return data
+  })
+
+  res.status(200).json(messages)
+}))
+
+router.post('/admin/ticket/email/messages/create/:ref', authorizeUser, authorizeAdmin, asyncHandler(async (req, res) => {
+  const { jwt, message } = req.body
+  const { ref } = req.params
+
+  const { data: ticket } = await client.query(
+    q.Update(
+      q.Ref(q.Collection('email_tickets'), ref),
+      {
+        data: {
+          status: 'close',
+          updated_at: new Date().toISOString(),
+        }
+      },
+    )
+  )
+
+  await client.query(
+    q.Create(
+      q.Collection('email_ticket_messages'),
+      {
+        data: {
+          ticket: ref,
+          posted_at: new Date().toISOString(),
+          content: message.content,
+          attachments: message.attachments,
+          is_admin: true,
+          user: {
+            sub: `admin|${jwt.sub}`
+          }
+        }
+      },
+    )
+  )
+
+  const paths = message.attachments.map(attachment => {
+    return { path: `https://res.cloudinary.com/opengrabs/image/upload/${attachment}.png`}
+  })
+
+  console.log(paths)
+  
+  await transporter.sendMail({
+    to: ticket.email,
+    subject: ticket.subject,
+    text: message.content,
+    attachments: paths
+  })
+
+  res.status(201).json({}) 
+}))
+
+router.post('/admin/tickets/email/update-language/:ref/:language', authorizeUser, authorizeAdmin, asyncHandler(async (req, res) => {
+  const { ref, language } = req.params
+
+  await client.query(
+    q.Update(
+      q.Ref(q.Collection('email_tickets'), ref),
+      {
+        data: {
+          language,
+        }
+      },
+    )
   )
 
   res.status(201).json({}) 

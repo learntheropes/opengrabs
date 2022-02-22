@@ -152,4 +152,48 @@ router.post('/ticket/messages/create/:ref', authorizeUser, asyncHandler(async (r
     res.status(201).json({}) 
 }))
 
+router.post('/tickets/email/create', asyncHandler(async (req, res) => {
+    const { ticket } = req.body
+
+    const { ref: { value: { id }}} = await client.query(
+        q.Create(
+            q.Collection('email_tickets'),
+            {
+                data: {
+                    status: 'open',
+                    language: ticket.language,
+                    email: ticket.email,
+                    subject: ticket.subject,
+                    created_at: new Date().toISOString(),
+                    updated_at: new Date().toISOString()
+                }
+            },
+        )
+    )    
+
+    res.status(201).json({ id }) 
+}))
+
+router.post('/ticket/email/messages/create/:ref', asyncHandler(async (req, res) => {
+    const { message } = req.body
+    const { ref } = req.params
+
+    await client.query(
+        q.Create(
+            q.Collection('email_ticket_messages'),
+            {
+                data: {
+                    ticket: ref,
+                    posted_at: new Date().toISOString(),
+                    content: message.content,
+                    attachments: message.attachments,
+                    is_admin: false
+                }
+            },
+        )
+    )    
+
+    res.status(201).json({}) 
+}))
+
 module.exports = router

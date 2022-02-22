@@ -6,7 +6,7 @@
             </div>
             <div class="column">
                 <h1 class="title">Ticket {{ ref }}</h1>
-                <h2 class="subtitle">Username: {{ ticket.user.username }} | Title: {{ ticket.subject }}</h2>
+                <h2 class="subtitle">Email: {{ ticket.email }} | Summary: {{ ticket.subject }}</h2>
                 <div class="block">
                     <b-field label="Change language" grouped>
                         <b-select v-model="ticket.language">
@@ -31,7 +31,7 @@
                             <button class="button is-text" @click="fileReset">Reset attachments</button>
                         </p>
                         <p class="control">
-                            <input ref="fileInput" style="display:none" type="file" multiple="multiple" accept="image/jpeg,image/jpg,image/png,application/pdf" @change="onFileSelected">
+                            <input ref="fileInput" style="display:none" type="file" multiple="multiple" accept="image/png" @change="onFileSelected">
                             <a class="button" @click="$refs.fileInput.click()">Upload attachments</a>
                         </p>
                         <p class="control">
@@ -40,7 +40,7 @@
                     </b-field>
                 </div> 
                 <div v-for="(msg, index) in messages" :key="index" class="content">
-                    <div v-if="msg.user.sub.split('|')[0] === 'admin'" class="notification has-text-right">
+                    <div v-if="msg.is_admin" class="notification has-text-right">
                         <p>
                             <span class="has-text-weight-semibold has-text-grey-light">{{ msg.user.sub }}</span><br>
                             <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
@@ -67,12 +67,12 @@
                     </div> 
                     <div v-else class="notification">
                         <p>
-                            <span class="has-text-weight-semibold has-text-grey-light">{{ msg.user.username }}</span><br>
+                            <span class="has-text-weight-semibold has-text-grey-light">{{ ticket.email }}</span><br>
                             <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
                         </p>
                         <p class="has-new-line">{{ msg.content }}</p>
                         <div v-if="msg.attachments && msg.attachments.length" class="columns is-multiline is-mobile">
-                            <div v-for="(attachment, i) in msg.attachments" :key="msg.user.username+i"  class="column is-narrow">
+                            <div v-for="(attachment, i) in msg.attachments" :key="ticket.email+i"  class="column is-narrow">
                                 <figure class="image is-128x128">
                                     <img
                                         :src="'https://res.cloudinary.com/opengrabs/image/upload/w_400/'+attachment"
@@ -100,28 +100,28 @@ import axios from 'axios'
 const getDefaultEmailText = (ticket) => {
     switch (ticket.language) {
         case 'en':
-return `Hi ${ticket.user.username},
+return `Hi,
 
 
 
 Cheers,
 Opengrabs`
         case 'es':
-return `Hola ${ticket.user.username},
+return `Hola,
 
 
 
 Saludos,
 Opengrabs`
         case 'pt':
-return `Oi ${ticket.user.username},
+return `Oi,
 
 
 
 Saúde,
 Opengrabs`
         case 'ru':
-return `Привет ${ticket.user.username},
+return `Привет,
 
 
 
@@ -136,8 +136,8 @@ export default {
     async asyncData({ app, params: { ref }}) {
         const [isAdmin, ticket, messages] = await Promise.all([
             app.$admin.isAdmin(),
-            app.$admin.tickets.get(ref),
-            app.$admin.tickets.messages.filter(ref)
+            app.$admin.tickets.email.get(ref),
+            app.$admin.tickets.email.messages.filter(ref)
         ])
         const content = getDefaultEmailText(ticket)
         return { isAdmin, ref, ticket, messages, content }
@@ -201,8 +201,8 @@ export default {
                     content : this.content,
                     attachments: this.public_ids,
                 } 
-                await this.$admin.tickets.messages.create(this.ref, message)
-                this.messages = await this.$admin.tickets.messages.filter(this.ref) 
+                await this.$admin.tickets.email.messages.create(this.ref, message)
+                this.messages = await this.$admin.tickets.email.messages.filter(this.ref) 
                 this.content = getDefaultEmailText(this.ticket)
                 this.attachments = []
                 this.public_ids = []
@@ -210,8 +210,8 @@ export default {
             }         
         },
         async updateTicketLanguage() {
-            await this.$axios.post(`/api/admin/tickets/update-language/${this.ref}/${this.ticket.language}`)
-            this.ticket = await this.$admin.tickets.get(this.ref)
+            await this.$axios.post(`/api/admin/tickets/email/update-language/${this.ref}/${this.ticket.language}`)
+            this.ticket = await this.$admin.tickets.email.get(this.ref)
             this.content = getDefaultEmailText(this.ticket)
         },
         activateModal (attachment) {

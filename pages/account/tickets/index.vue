@@ -1,13 +1,13 @@
 <template>
     <section class="section container">
         <h1 class="title">{{ $t('tickets') }}</h1>
-        <b-field grouped group-multiline :message="$t('subjectMessage')">
+        <b-field grouped group-multiline :type="subjectType" :message="subjectMessage">
             <b-input v-model="subject" :placeholder="$t('subjectPlaceholder')" expanded></b-input>
             <p class="control">
                 <b-button :label="$t('openNewTicket')" type="is-primary is-outlined" @click="openNewTicket" />
             </p>
         </b-field>
-        <b-table :data="tickets">
+        <b-table v-if="tickets.length" :data="tickets">
             <template>
                 <b-table-column v-slot="props" :label="$t('subject')">
                     {{ props.row.subject }}
@@ -17,9 +17,6 @@
                 </b-table-column>
                 <b-table-column v-slot="props" :label="$t('updatedAt')">
                     {{ $moment(props.row.updated_at).fromNow() }}
-                </b-table-column>
-                <b-table-column v-slot="props" :label="$t('status')">
-                    {{ props.row.status }}
                 </b-table-column>
                 <b-table-column v-slot="props">
                     <nuxt-link :to="localePath({ name: 'account-tickets-ref', params: { ref: props.row.ref }})">
@@ -48,7 +45,7 @@ export default {
     computed: {
         subjectMessage() {
             if (this.subjectError === 'Field required') return this.$t('requiredField')
-            else return this.$t('ticketTopic') 
+            else return null 
         }
     },
     methods: {
