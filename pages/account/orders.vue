@@ -74,7 +74,9 @@
         </template>
         <account-orders-delivered :orders="delivered" />
       </b-tab-item>
-
+  created() {
+    console.log('expired', this.expired)
+  }
       <b-tab-item v-if="released.length">
         <template #header>
           <span>{{ $t('released') }}<b-tag rounded>{{ released.length }}</b-tag></span>
