@@ -46,17 +46,24 @@
                             <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
                         </p>
                         <p class="has-new-line">{{ msg.content }}</p>
-                        <div v-if="msg.attachments && msg.attachments.length" class="columns is-multiline is-mobile">
-                            <div v-for="(attachment, i) in msg.attachments" :key="msg.user.sub+i"  class="column is-narrow">
-                                <figure class="image is-128x128">
-                                    <img
-                                        :src="'https://res.cloudinary.com/opengrabs/image/upload/w_400/'+attachment"
-                                        :alt="attachment.name"
-                                        @click="activateModal(attachment)"
-                                    >
-                                </figure> 
+                        <nav v-if="msg.attachments && msg.attachments.length" class="level">
+                            <div class="level-left"></div>
+                                <div class="level-right">
+                                <div class="level-item">
+                                    <div v-if="msg.attachments && msg.attachments.length" class="columns is-multiline is-mobile">
+                                        <div v-for="(attachment, i) in msg.attachments" :key="msg.user.sub+i"  class="column is-narrow">
+                                            <figure class="image is-128x128">
+                                                <img
+                                                    :src="'https://res.cloudinary.com/opengrabs/image/upload/w_400/'+attachment"
+                                                    :alt="attachment.name"
+                                                    @click="activateModal(attachment)"
+                                                >
+                                            </figure> 
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        </nav>
                     </div> 
                     <div v-else class="notification">
                         <p>

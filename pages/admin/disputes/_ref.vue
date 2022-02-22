@@ -80,7 +80,7 @@
                                     <span class="has-text-weight-semibold has-text-grey-light">{{msg.user_sub}}</span><br>
                                     <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
                                     <p class="has-new-line">{{ msg.content }}</p>
-                                    <div v-if="msg.attachments && msg.attachments.length" class="columns is-multiline is-mobile">
+                                    <div v-if="msg.attachments && msg.attachments.length" class="columns is-multiline is-mobile is-centered">
                                         <div v-for="(attachment, i) in msg.attachments" :key="'a'+i"  class="column is-narrow">
                                         <figure class="image is-128x128">
                                             <img
@@ -98,13 +98,13 @@
                                     <p class="has-new-line">{{ msg.content }}</p>
                                     <div v-if="msg.attachments && msg.attachments.length" class="columns is-multiline is-mobile">
                                         <div v-for="(attachment, i) in msg.attachments" :key="'b'+i"  class="column is-narrow">
-                                        <figure class="image is-128x128">
-                                            <img
-                                                :src="'https://res.cloudinary.com/opengrabs/image/upload/w_400/'+attachment"
-                                                :alt="attachment.name"
-                                                @click="activateModal(attachment)"
-                                            >
-                                        </figure> 
+                                            <figure class="image is-128x128">
+                                                <img
+                                                    :src="'https://res.cloudinary.com/opengrabs/image/upload/w_400/'+attachment"
+                                                    :alt="attachment.name"
+                                                    @click="activateModal(attachment)"
+                                                >
+                                            </figure> 
                                         </div>
                                     </div>
                                 </div>
@@ -114,17 +114,24 @@
                                         <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
                                     </p>
                                     <p class="has-new-line">{{ msg.content }}</p>
-                                    <div v-if="msg.attachments && msg.attachments.length" class="columns is-multiline is-mobile">
-                                        <div v-for="(attachment, i) in msg.attachments" :key="'c'+i"  class="column is-narrow">
-                                        <figure class="image is-128x128">
-                                            <img
-                                                :src="'https://res.cloudinary.com/opengrabs/image/upload/w_400/'+attachment"
-                                                :alt="attachment.name"
-                                                @click="activateModal(attachment)"
-                                            >
-                                        </figure> 
+                                    <nav v-if="msg.attachments && msg.attachments.length" class="level">
+                                        <div class="level-left"></div>
+                                            <div class="level-right">
+                                            <div class="level-item">
+                                                <div class="columns is-multiline is-mobile">
+                                                    <div v-for="(attachment, i) in msg.attachments" :key="'c'+i"  class="column is-narrow">
+                                                        <figure class="image is-128x128">
+                                                            <img
+                                                                :src="'https://res.cloudinary.com/opengrabs/image/upload/w_400/'+attachment"
+                                                                :alt="attachment.name"
+                                                                @click="activateModal(attachment)"
+                                                            >
+                                                        </figure> 
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </nav>
                                 </div>
                             </div>
                         </div>
