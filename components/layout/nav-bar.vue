@@ -37,7 +37,7 @@ export default {
       return this.$store.state.auth.loggedIn
     },
     network() {
-      return (process.env.BTC_CHAIN === 'test3') ? 'testnet': 'mainnet'
+      return (process.env.BTC_CHAIN === 'testnet') ? 'testnet': 'mainnet'
     }
   },
   methods: {

@@ -128,6 +128,9 @@ export default {
                 this.messageButtonClass = 'button is-primary is-outlined is-loading'
                 if (this.attachments.length) {
                     for (const attachment of this.attachments) {
+                        // const expire = Math.floor(Date.now() / 1000 + 60)
+                        // const token = uniqueString()
+                        // const { data: { signature }} = this.$axios.post('/api/image/signature', { expire, token })
                         const fd = new FormData()
                         fd.append('file', attachment)
                         fd.append('upload_preset','tickets')
@@ -135,7 +138,17 @@ export default {
                         fd.append('tags', this.me)
                         const { data: { public_id }} = await axios.post('https://api.cloudinary.com/v1_1/opengrabs/image/upload', fd) 
                         this.public_ids.push(public_id)
-                    }      
+                        // fd.append('publicKey',process.env.IMAGEKIT_PUBLIC_KEY)
+                        // fd.append('expire', expire)
+                        // fd.append('token', token)
+                        // fd.append('fileName', token)
+                        // fd.append('folder', 'tickets')
+                        // fd.append('overwriteFile', false)
+                        // fd.append('tags', `${this.ref},${this.ticket.user.sub}`)
+                        // fd.append('signature', signature)
+                        // const { data: { filePath }} = await axios.post('https://upload.imagekit.io/api/v1/files/upload', fd) 
+                        this.public_ids.push(filePath)
+                    } 
                 }
                 const message = {
                     content : this.content,

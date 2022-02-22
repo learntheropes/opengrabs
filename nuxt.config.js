@@ -9,7 +9,8 @@ export default {
   env: {
     BTC_CHAIN: process.env.BTC_CHAIN,
     URL: process.env.URL,
-    AUTH0_TENANT: process.env.AUTH0_TENANT
+    AUTH0_TENANT: process.env.AUTH0_TENANT,
+    IMAGEKIT_PUBLIC_KEY: process.env.IMAGEKIT_PUBLIC_KEY
   },
 
   head () {
