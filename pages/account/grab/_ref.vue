@@ -53,11 +53,11 @@
             </div>
           </div>
           <b-field grouped group-multiline>
-            <p class="control">
+            <p v-if="attachments.length" class="control">
               <button class="button is-text" @click="fileReset">{{$t('resetAttachments')}}</button>
             </p>
             <p class="control">
-              <input ref="fileInput" style="display:none" type="file" multiple="multiple" @change="onFileSelected">
+              <input ref="fileInput" style="display:none" type="file" multiple="multiple" accept="image/jpeg,image/jpg,image/png,application/pdf" @change="onFileSelected">
               <a class="button" @click="$refs.fileInput.click()">{{$t('uploadAttachments')}}</a>
             </p>
             <p class="control">
@@ -165,7 +165,7 @@ export default {
     chatButtonClass: 'button is-primary is-outlined',
     feedbackButtonClass: 'button is-primary is-outlined',
     message: null,
-    attachments: null,
+    attachments: [],
     public_ids: [],
     postType: null,
     postError: false,
@@ -242,7 +242,8 @@ export default {
       return true
     },
     fileReset() {
-      this.attachments = null
+      this.$refs.fileInput.value = ""
+      this.attachments = []
     },    
     onFileSelected(event) {
       this.attachments = Array.from(event.target.files)
@@ -253,7 +254,7 @@ export default {
       const validPost = this.validatePost()
       if (validPost) {
         this.chatButtonClass = 'button is-primary is-outlined is-loading'
-        if (this.attachments) {
+        if (this.attachments.length) {
           for (const attachment of this.attachments) {
             const fd = new FormData()
             fd.append('file', attachment)
@@ -274,10 +275,9 @@ export default {
         }
         await this.$db.messages.create({ props })
         this.chatButtonClass = 'button is-primary is-outlined'
-        const messages = await this.$db.messages.filter(this.ref)
-        this.messages = messages
+        this.messages = await this.$db.messages.filter(this.ref)
         this.message = null
-        this.attachments = null
+        this.attachments = []
         this.public_ids = []
       }
     },

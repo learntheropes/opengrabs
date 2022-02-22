@@ -6,12 +6,17 @@
             <b-field :type="messageType" :message="messageMessage">
                 <b-input v-model="content" maxlength="400" type="textarea"></b-input>
             </b-field>
+            <div v-if="attachments && attachments.length" class="columns is-multiline is-mobile">
+                <div v-for="(attachment, i) in attachments" :key="i"  class="column is-narrow">
+                    {{attachment.name}}
+                </div>
+            </div>
             <b-field grouped group-multiline>
-                <p class="control">
+                <p v-if="attachments.length" class="control">
                     <button class="button is-text" @click="fileReset">{{$t('resetAttachments')}}</button>
                 </p>
                 <p class="control">
-                    <input ref="fileInput" style="display:none" type="file" multiple="multiple" @change="onFileSelected">
+                    <input ref="fileInput" style="display:none" type="file" multiple="multiple" accept="image/jpeg,image/jpg,image/png,application/pdf" @change="onFileSelected">
                     <a class="button" @click="$refs.fileInput.click()">{{$t('uploadAttachments')}}</a>
                 </p>
                 <p class="control">
@@ -67,6 +72,8 @@
 </template>
 
 <script>
+import uniqueString from 'unique-string'
+import axios from 'axios'
 export default {
     name: 'Ticket',
     middleware: 'auth',
@@ -81,6 +88,7 @@ export default {
         messageButtonClass: 'button is-primary is-outlined',
         content: null,
         attachments: [],
+        public_ids: [],
         messageType: null,
         messageError: false,
         isAttachmentModalActive: false,
@@ -98,7 +106,8 @@ export default {
     },
     methods: {
         fileReset() {
-            this.attachments = null
+            this.$refs.fileInput.value = ""
+            this.attachments = []
         },    
         onFileSelected(event) {
             this.attachments = Array.from(event.target.files)
@@ -117,12 +126,26 @@ export default {
             const validMessage = this.validateMessage()
             if (validMessage) {
                 this.messageButtonClass = 'button is-primary is-outlined is-loading'
+                if (this.attachments.length) {
+                    for (const attachment of this.attachments) {
+                        const fd = new FormData()
+                        fd.append('file', attachment)
+                        fd.append('upload_preset','tickets')
+                        fd.append('public_id', uniqueString())
+                        fd.append('tags', this.me)
+                        const { data: { public_id }} = await axios.post('https://api.cloudinary.com/v1_1/opengrabs/image/upload', fd) 
+                        this.public_ids.push(public_id)
+                    }      
+                }
                 const message = {
                     content : this.content,
-                    attachements: this.attachments,
+                    attachments: this.public_ids,
                 } 
                 await this.$tickets.messages.create(this.ref, message)
-                this.messages = await this.$tickets.messages.filter(this.ref) 
+                this.messages = await this.$tickets.messages.filter(this.ref)
+                this.content = null
+                this.attachments = []
+                this.public_ids = []
                 this.messageButtonClass = 'button is-primary is-outlined' 
             }         
         },

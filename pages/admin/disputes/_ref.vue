@@ -36,7 +36,7 @@
                     <div class="column is-half">
                         <div v-if="isChatable" class="box">
                             <b-field label="Message" :type="postType" :message="postMessage">
-                                <b-input v-model="message" maxlength="400" type="textarea"></b-input>
+                                <b-input v-model="content" maxlength="400" type="textarea"></b-input>
                             </b-field>
                             <b-field label="Attention required" :type="attentionType" :message="attentionMessage">
                                 <b-select v-model="attention" expanded>
@@ -51,11 +51,11 @@
                                 </div>
                             </div>
                             <b-field grouped group-multiline>
-                                <p class="control">
+                                <p v-if="attachments.length" class="control">
                                     <button class="button is-text" @click="fileReset">Reset files</button>
                                 </p>
                                 <p class="control">
-                                    <input ref="fileInput" style="display:none" type="file" multiple="multiple" @change="onFileSelected">
+                                    <input ref="fileInput" style="display:none" type="file" multiple="multiple" accept="image/jpeg,image/jpg,image/png,application/pdf" @change="onFileSelected">
                                     <a class="button" @click="$refs.fileInput.click()">Upload files</a>
                                 </p>
                                 <p class="control">
@@ -158,8 +158,8 @@ export default {
         return { isAdmin, ref, isResolveDispute, grab, messages }
     },
     data: () => ({
-        message: null,
-        attachments: null,
+        content: null,
+        attachments: [],
         public_ids: [],
         isAttachmentModalActive: false,
         modalAttachment: null,
@@ -215,7 +215,7 @@ export default {
     },
     methods: {
         validatePost() {
-            if (!this.message && !this.attachment) {
+            if (!this.content && !this.attachment) {
                 this.postType = 'is-danger'
                 this.postError = 'Field required'
                 return false
@@ -231,7 +231,8 @@ export default {
             return true
         },
         fileReset() {
-            this.attachments = null
+            this.$refs.fileInput.value = ""
+            this.attachments = []
         },    
         onFileSelected(event) {
             this.attachments = Array.from(event.target.files)
@@ -244,7 +245,7 @@ export default {
             const validPost = this.validatePost()
             const validAttention = this.validateAttention()
             if (validPost && validAttention) {
-                if (this.attachments) {
+                if (this.attachments.length) {
                     for (const attachment of this.attachments) {
                         const fd = new FormData()
                         fd.append('file', attachment)
@@ -257,17 +258,16 @@ export default {
                 }
                 const props = {
                     posted_at: new Date().toISOString(),
-                    content: this.message,
+                    content: this.content,
                     attachments: (this.attachments) ? this.public_ids : [],
                     grab_id: this.ref,
                     user_sub: `admin|${this.$store.state.auth.user.sub}`
                 }
                 await this.$admin.grabs.attention(this.ref, this.attention)
                 await this.$admin.grabs.update(props)
-                const messages = await this.$db.messages.filter(this.ref)
-                this.messages = messages
-                this.message = null
-                this.attachments = null
+                this.messages = await this.$db.messages.filter(this.ref)
+                this.content = null
+                this.attachments = []
                 this.public_ids = []
             }
         },
