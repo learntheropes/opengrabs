@@ -241,7 +241,9 @@ export default {
   },
 
   router: {
-    middleware: ['auth']
+    middleware: [
+      'auth'
+    ]
   },
   // https://stackoverflow.com/questions/55856117/using-timezones-with-nuxtjs-moment/57022505
   moment: {

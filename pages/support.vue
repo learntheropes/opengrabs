@@ -42,6 +42,11 @@ import axios from 'axios'
 export default {
     name: "Help",
     auth: false,
+    middleware ({ store, app, redirect }) {
+        if(store.state.auth.loggedIn) {
+            return redirect('/' + app.i18n.locale + '/account/tickets')
+        }
+    },
     data: () => ({
         ticketButtonClass: 'button is-primary is-outlined',
         email: null,
@@ -56,11 +61,6 @@ export default {
         attachments: [],
         public_ids: [],
     }),
-    fetch() {
-        if (this.$store.state.auth.loggedIn) {
-            this.$router.push(`/${this.$i18n.locale}/account/tickets`) 
-        }
-    },
     head() {
         return {
             link: [
