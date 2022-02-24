@@ -183,7 +183,12 @@ export default {
                 this.$refs.fileInput.value = ""
                 this.attachments = []
                 this.ticketButtonClass = 'button is-primary is-outlined'
-
+                this.$buefy.toast.open({
+                    duration: 3000,
+                    message: this.$t('toastTicketCreated'),
+                    position: 'is-bottom',
+                    type: 'is-primary'
+                })
             }
         }
 

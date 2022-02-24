@@ -68,6 +68,7 @@ export default {
     ifYouCantLogin: "If you can't sign in, fill the form below and we will reply by email.",
     emailPlaceholder: "Provide your email",
     contentPlaceholder: "Type a message",
+    toastTicketCreated: "Ticket created. We will reply as soon as possible.",
     // pages/orders
     byCountry: "Por pais",
     byCity: "Por ciudad",
