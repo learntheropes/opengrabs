@@ -78,6 +78,7 @@ export default {
         },
         emailMessage() {
             if (this.emailError === 'Field required') return this.$t('requiredField')
+            else if (this.emailError === 'Invalid email') return this.$t('invalidEmail')
             else return null 
         },
         subjectMessage() {
@@ -106,6 +107,14 @@ export default {
                 this.emailType = 'is-danger'
                 this.emailError = 'Field required'
                 return false
+            }  else {
+                const regex = /\S+@\S+\.\S+/
+                const isValidFormat = regex.test(this.email)
+                if (!isValidFormat) {
+                    this.emailType = 'is-danger'
+                    this.emailError = 'Invalid email'              
+                }
+                return isValidFormat                
             }
             return true
         }, 
