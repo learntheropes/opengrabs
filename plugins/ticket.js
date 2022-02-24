@@ -5,7 +5,7 @@ export default ({ $axios }, inject) => {
             return data
         },
         filter: async () => {
-            const { data } = await $axios.get('/api/tickets/filter')
+            const { data } = await $axios.get(`/api/tickets/filter`)
             return data
         },
         create: async (ticket) => {
@@ -13,8 +13,8 @@ export default ({ $axios }, inject) => {
             return data            
         },
         messages: {
-            filter: async (ref) => {
-                const { data } = await $axios.get(`/api/ticket/messages/filter/${ref}`)
+            filter: async (ref, width) => {
+                const { data } = await $axios.get(`/api/ticket/messages/filter/${ref}/${width}`)
                 return data                
             },
             create: async (ref, message) => {

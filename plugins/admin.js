@@ -33,8 +33,8 @@ export default ({ $axios, store }, inject) => {
             }
         },
         messages: {
-            list: async (ref) => {
-                const { data } = await $axios.get(`/api/admin/messages/list/${ref}`)
+            filter: async (ref, width) => {
+                const { data } = await $axios.get(`/api/admin/messages/list/${ref}/${width}`)
                 return data
             }
         },
@@ -48,8 +48,8 @@ export default ({ $axios, store }, inject) => {
                 return data                
             },
             messages: {
-                filter: async (ref) => {
-                    const { data } = await $axios.get(`/api/admin/ticket/messages/filter/${ref}`)
+                filter: async (ref, width) => {
+                    const { data } = await $axios.get(`/api/admin/ticket/messages/filter/${ref}/${width}`)
                     return data                      
                 },
                 create: async (ref, message) => {
@@ -67,8 +67,8 @@ export default ({ $axios, store }, inject) => {
                     return data
                 },
                 messages: {
-                    filter: async (ref) => {
-                        const { data } = await $axios.get(`/api/admin/ticket/email/messages/filter/${ref}`)
+                    filter: async (ref, width) => {
+                        const { data } = await $axios.get(`/api/admin/ticket/email/messages/filter/${ref}/${width}`)
                         return data                      
                     },
                     create: async (ref, message) => {

@@ -2,6 +2,7 @@ import asyncHandler from 'express-async-handler'
 import { authorizeUser } from '../auth'
 import { allowOrigin } from '../lambda'
 import { q, client } from '../db'
+import { getImageKitPreview, getImageKitModal } from '../image'
 import getTravelPhoto from '../places' 
 import { Router } from 'express'
 const router = Router()
@@ -148,9 +149,9 @@ router.get('/db/account/deliveries/:status/:withdrawn', authorizeUser, asyncHand
   res.status(200).json(grabs)
 }))
 
-router.get('/db/messages/filter/grab/:ref', authorizeUser, asyncHandler(async (req, res) => {
+router.get('/db/messages/filter/grab/:ref/:width', authorizeUser, asyncHandler(async (req, res) => {
   const { jwt } = req.body
-  const { ref } = req.params
+  const { ref, width } = req.params
 
   const { data: grab } = await client.query(
     q.Get(q.Ref(q.Collection('grabs'), ref))
@@ -173,6 +174,11 @@ router.get('/db/messages/filter/grab/:ref', authorizeUser, asyncHandler(async (r
 
   messages = messages.map(({ data, ref: { value: { id }}}) => {
     data.ref = id
+    data.attachments.map(attachment => {
+      attachment.preview = getImageKitPreview(attachment.path)
+      attachment.modal = getImageKitModal(attachment.path, width)
+      return attachment
+    })
     return data
   })
 

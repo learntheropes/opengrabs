@@ -87,11 +87,7 @@
               <div v-if="msg.attachments && msg.attachments.length" class="columns is-multiline is-mobile is-centered">
                 <div v-for="(attachment, i) in msg.attachments" :key="'a'+i"  class="column is-narrow">
                   <figure class="image is-128x128">
-                    <img
-                      :src="'https://res.cloudinary.com/opengrabs/image/upload/w_400/'+attachment"
-                      :alt="attachment.name"
-                      @click="activateModal(attachment)"
-                    >
+                    <img :src="attachment.preview" @click="activateModal(attachment.modal)">
                   </figure> 
                 </div>
               </div>
@@ -109,11 +105,7 @@
                     <div class="columns is-multiline is-mobile">
                       <div v-for="(attachment, i) in msg.attachments" :key="'b'+i"  class="column is-narrow">
                         <figure class="image is-128x128">
-                          <img
-                            :src="'https://res.cloudinary.com/opengrabs/image/upload/w_400/'+attachment"
-                            :alt="attachment.name"
-                            @click="activateModal(attachment)"
-                          >
+                          <img :src="attachment.preview" @click="activateModal(attachment.modal)">
                         </figure> 
                       </div>
                     </div>
@@ -130,11 +122,7 @@
               <div v-if="msg.attachments && msg.attachments.length" class="columns is-multiline is-mobile">
                 <div v-for="(attachment, i) in msg.attachments" :key="'c'+i"  class="column is-narrow">
                   <figure class="image is-128x128">
-                    <img
-                      :src="'https://res.cloudinary.com/opengrabs/image/upload/w_400/'+attachment"
-                      :alt="attachment.name"
-                      @click="activateModal(attachment)"
-                    >
+                    <img :src="attachment.preview" @click="activateModal(attachment.modal)">
                   </figure> 
                 </div>
               </div>
@@ -143,9 +131,9 @@
         </div>
       </div>
     </div>
-    <b-modal :width="width" :active.sync="isAttachmentModalActive">
+    <b-modal :active.sync="isAttachmentModalActive">
       <p class="image">
-        <img :src="'https://res.cloudinary.com/opengrabs/image/upload/w_'+width+'/'+modalAttachment">
+        <img :src="modalAttachment">
       </p>
     </b-modal>
   </section>
@@ -156,13 +144,13 @@ import uniqueString from 'unique-string'
 import axios from "axios"
 export default {
   name: 'GrabRef',
-  async asyncData({ app, params: { ref }}) {
+  async asyncData({ app, modalWidth, params: { ref }}) {
     const [isBuyerOrTraveler, grab, messages] = await Promise.all([
       app.$db.isBuyerOrTraveler(ref),
       app.$db.grabs.get(ref),
-      app.$db.messages.filter(ref)
+      app.$db.messages.filter(ref, modalWidth)
     ])
-    return { ref, isBuyerOrTraveler, grab, messages }
+    return { ref, isBuyerOrTraveler, modalWidth, grab, messages }
   },
   data: () => ({
     disputeButtonClass: 'button is-primary is-outlined',
@@ -180,7 +168,6 @@ export default {
     feedback: null,
     isAttachmentModalActive: false,
     modalAttachment: null,
-    width: (process.client) ? parseInt(window.innerWidth*0.7) : 300
   }),
   computed: {
     postMessage() {
@@ -264,28 +251,37 @@ export default {
         if (this.attachments.length) {
           for (const attachment of this.attachments) {
             const fd = new FormData()
+            const name = uniqueString()
+            const extension = attachment.name.split('.')[1]
+            fd.append('fileName', `${name}.${extension}`)
             fd.append('file', attachment)
-            fd.append('upload_preset','clvrfqxc')
-            fd.append('public_id', uniqueString())
-            fd.append('tags', this.ref)
-            const { data: { public_id }} = await axios.post('https://api.cloudinary.com/v1_1/opengrabs/image/upload', fd) 
-            this.public_ids.push(public_id)
+            fd.append('publicKey',process.env.IMAGEKIT_PUBLIC_KEY)
+            fd.append('folder', `${process.env.BTC_CHAIN}/tickets`)
+            fd.append('overwriteFile', false)
+            fd.append('tags', `${this.ref},${this.me}`)
+            fd.append('isPrivateFile', true)
+            const { data: { signature, expire, token }} = await this.$axios.post('/api/image/signature', {})
+            fd.append('expire', expire)
+            fd.append('token', token)
+            fd.append('signature', signature)
+            const { data: { filePath }} = await axios.post('https://upload.imagekit.io/api/v1/files/upload', fd) 
+            this.public_ids.push({ path: filePath })
           }      
         }
         const props = {
           posted_at: new Date().toISOString(),
           content: this.message,
-          attachments: (this.attachments) ? this.public_ids : [],
+          attachments: this.public_ids,
           grab_id: this.ref,
-          user_sub: this.$store.state.auth.user.sub,
+          user_sub: this.me,
           user_username: this.getUsername(),
         }
         await this.$db.messages.create({ props })
-        this.chatButtonClass = 'button is-primary is-outlined'
-        this.messages = await this.$db.messages.filter(this.ref)
+        this.messages = await this.$db.messages.filter(this.ref, this.modalWidth)
         this.message = null
         this.attachments = []
         this.public_ids = []
+        this.chatButtonClass = 'button is-primary is-outlined'
       }
     },
     activateModal (attachment) {

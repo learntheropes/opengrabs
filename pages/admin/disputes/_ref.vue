@@ -83,11 +83,7 @@
                                     <div v-if="msg.attachments && msg.attachments.length" class="columns is-multiline is-mobile is-centered">
                                         <div v-for="(attachment, i) in msg.attachments" :key="'a'+i"  class="column is-narrow">
                                         <figure class="image is-128x128">
-                                            <img
-                                                :src="'https://res.cloudinary.com/opengrabs/image/upload/w_400/'+attachment"
-                                                :alt="attachment.name"
-                                                @click="activateModal(attachment)"
-                                            >
+                                            <img :src="attachment.preview" @click="activateModal(attachment.modal)">
                                         </figure> 
                                         </div>
                                     </div>
@@ -99,11 +95,7 @@
                                     <div v-if="msg.attachments && msg.attachments.length" class="columns is-multiline is-mobile">
                                         <div v-for="(attachment, i) in msg.attachments" :key="'b'+i"  class="column is-narrow">
                                             <figure class="image is-128x128">
-                                                <img
-                                                    :src="'https://res.cloudinary.com/opengrabs/image/upload/w_400/'+attachment"
-                                                    :alt="attachment.name"
-                                                    @click="activateModal(attachment)"
-                                                >
+                                                <img :src="attachment.preview" @click="activateModal(attachment.modal)">
                                             </figure> 
                                         </div>
                                     </div>
@@ -121,11 +113,7 @@
                                                 <div class="columns is-multiline is-mobile">
                                                     <div v-for="(attachment, i) in msg.attachments" :key="'c'+i"  class="column is-narrow">
                                                         <figure class="image is-128x128">
-                                                            <img
-                                                                :src="'https://res.cloudinary.com/opengrabs/image/upload/w_400/'+attachment"
-                                                                :alt="attachment.name"
-                                                                @click="activateModal(attachment)"
-                                                            >
+                                                            <img :src="attachment.preview" @click="activateModal(attachment.modal)">
                                                         </figure> 
                                                     </div>
                                                 </div>
@@ -139,9 +127,9 @@
                 </div>
             </div>
         </div>
-        <b-modal :width="width" :active.sync="isAttachmentModalActive">
+        <b-modal :active.sync="isAttachmentModalActive">
             <p class="image">
-                <img :src="'https://res.cloudinary.com/opengrabs/image/upload/w_'+width+'/'+modalAttachment">
+                <img :src="modalAttachment">
             </p>
         </b-modal>
     </section>
@@ -155,14 +143,14 @@ export default {
     nuxtI18n: false,
     layout: 'admin',
     middleware: 'auth',
-    async asyncData({ app, params: { ref }}) {
+    async asyncData({ app, modalWidth, params: { ref }}) {
         const [isAdmin, isResolveDispute, grab, messages] = await Promise.all([
             app.$admin.isAdmin(),
             app.$admin.isResolveDispute(),
             app.$admin.grabs.get(ref),
-            app.$admin.messages.list(ref)           
+            app.$admin.messages.filter(ref, modalWidth)           
         ])
-        return { isAdmin, ref, isResolveDispute, grab, messages }
+        return { isAdmin, ref, isResolveDispute, modalWidth, grab, messages }
     },
     data: () => ({
         content: null,
@@ -204,6 +192,9 @@ export default {
         attentionError: false,
     }),
     computed: {
+        me() {
+            return this.$store.state.auth.user.sub
+        },
         postMessage() {
             if (this.postError === 'Field required') return 'Field required'
             else return null 
@@ -255,24 +246,33 @@ export default {
                 if (this.attachments.length) {
                     for (const attachment of this.attachments) {
                         const fd = new FormData()
+                        const name = uniqueString()
+                        const extension = attachment.name.split('.')[1]
+                        fd.append('fileName', `${name}.${extension}`)
                         fd.append('file', attachment)
-                        fd.append('upload_preset','clvrfqxc')
-                        fd.append('public_id', uniqueString())
-                        fd.append('tags', this.ref)
-                        const { data: { public_id }} = await axios.post('https://api.cloudinary.com/v1_1/opengrabs/image/upload', fd) 
-                        this.public_ids.push(public_id)
+                        fd.append('publicKey',process.env.IMAGEKIT_PUBLIC_KEY)
+                        fd.append('folder', 'tickets')
+                        fd.append('overwriteFile', false)
+                        fd.append('tags', `${this.ref},${this.me}`)
+                        fd.append('isPrivateFile', true)
+                        const { data: { signature, expire, token }} = await this.$axios.post('/api/image/signature', {})
+                        fd.append('expire', expire)
+                        fd.append('token', token)
+                        fd.append('signature', signature)
+                        const { data: { filePath }} = await axios.post('https://upload.imagekit.io/api/v1/files/upload', fd) 
+                        this.public_ids.push({ path: filePath })
                     }      
                 }
                 const props = {
                     posted_at: new Date().toISOString(),
                     content: this.content,
-                    attachments: (this.attachments) ? this.public_ids : [],
+                    attachments: this.public_ids,
                     grab_id: this.ref,
                     user_sub: `admin|${this.$store.state.auth.user.sub}`
                 }
                 await this.$admin.grabs.attention(this.ref, this.attention)
                 await this.$admin.grabs.update(props)
-                this.messages = await this.$db.messages.filter(this.ref)
+                this.messages = await this.$admin.messages.filter(this.ref, this.modalWidth)
                 this.content = null
                 this.attachments = []
                 this.public_ids = []
@@ -286,14 +286,14 @@ export default {
             await this.$admin.disputes.refund(this.ref)
             const grab = await this.$admin.grabs.get(this.ref)
             this.grab = grab
-            const messages = await this.$admin.messages.list(this.ref)
+            const messages = await this.$admin.messages.filter(this.ref, this.modalWidth)
             this.messages = messages
         },
         async resolveToTheTraveler() {
             await this.$admin.disputes.release(this.ref)
             const grab = await this.$admin.grabs.get(this.ref)
             this.grab = grab
-            const messages = await this.$admin.messages.list(this.ref)
+            const messages = await this.$admin.messages.filter(this.ref, this.modalWidth)
             this.messages = messages
         },        
     },

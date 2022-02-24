@@ -6,6 +6,7 @@ import * as en from '../email/en'
 import * as es from '../email/es'
 import * as pt from '../email/pt'
 import * as ru from '../email/ru'
+import { getImageKitOriginal, getImageKitPreview, getImageKitModal } from '../image'
 import { Router } from 'express'
 import { authorizeUser, authorizeAdmin, authorizeDispute, authorizeRefund } from '../auth'
 const router = Router()
@@ -119,8 +120,8 @@ router.get('/admin/tickets/get/:ref', authorizeUser, authorizeAdmin, asyncHandle
   res.status(200).json(ticket)
 }))
 
-router.get('/admin/ticket/messages/filter/:ref', authorizeUser, authorizeAdmin, asyncHandler(async (req,res) => {
-  const { ref } = req.params
+router.get('/admin/ticket/messages/filter/:ref/:width', authorizeUser, authorizeAdmin, asyncHandler(async (req,res) => {
+  const { ref, width } = req.params
 
   const { data } = await client.query(
     q.Map(
@@ -134,6 +135,11 @@ router.get('/admin/ticket/messages/filter/:ref', authorizeUser, authorizeAdmin, 
 
   const messages = data.map(({ data, ref: { value: { id }}}) => {
     data.ref = id
+    data.attachments.map(attachment => {
+      attachment.preview = getImageKitPreview(attachment.path)
+      attachment.modal = getImageKitModal(attachment.path, width)
+      return attachment
+    })
     return data
   })
 
@@ -243,8 +249,8 @@ router.get('/admin/tickets/email/filter/:status/:language', authorizeUser, autho
   res.status(200).json(tickets)
 }))
 
-router.get('/admin/ticket/email/messages/filter/:ref', authorizeUser, authorizeAdmin, asyncHandler(async (req,res) => {
-  const { ref } = req.params
+router.get('/admin/ticket/email/messages/filter/:ref/:width', authorizeUser, authorizeAdmin, asyncHandler(async (req,res) => {
+  const { ref, width } = req.params
 
   const { data } = await client.query(
     q.Map(
@@ -258,6 +264,11 @@ router.get('/admin/ticket/email/messages/filter/:ref', authorizeUser, authorizeA
 
   const messages = data.map(({ data, ref: { value: { id }}}) => {
     data.ref = id
+    data.attachments.map(attachment => {
+      attachment.preview = getImageKitPreview(attachment.path)
+      attachment.modal = getImageKitModal(attachment.path, width)
+      return attachment
+    })
     return data
   })
 
@@ -299,7 +310,7 @@ router.post('/admin/ticket/email/messages/create/:ref', authorizeUser, authorize
   )
 
   const paths = message.attachments.map(attachment => {
-    return { path: `https://res.cloudinary.com/opengrabs/image/upload/${attachment}.png`}
+    return { path: getImageKitOriginal(attachment.path) } // `https://ik.imagekit.io/opengrabs${attachment.path}`
   })
 
   console.log(paths)

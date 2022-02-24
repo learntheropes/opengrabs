@@ -1,5 +1,6 @@
 import asyncHandler from 'express-async-handler'
 import { q, client } from '../db'
+import { getImageKitPreview, getImageKitModal } from '../image'
 import { Router } from 'express'
 import { authorizeUser } from '../auth'
 const router = Router()
@@ -67,8 +68,8 @@ router.post('/tickets/create', authorizeUser, asyncHandler(async (req, res) => {
     res.status(201).json({ id }) 
 }))
 
-router.get('/ticket/messages/filter/:ref', authorizeUser, asyncHandler(async (req, res) => {
-    const { ref } = req.params
+router.get('/ticket/messages/filter/:ref/:width', authorizeUser, asyncHandler(async (req, res) => {
+    const { ref, width } = req.params
     const { jwt } = req.body
 
     const { data: ticket } = await client.query(
@@ -92,6 +93,11 @@ router.get('/ticket/messages/filter/:ref', authorizeUser, asyncHandler(async (re
     
     const messages = data.map(({ data, ref: { value: { id }}}) => {
         data.ref = id
+        data.attachments.map(attachment => {
+            attachment.preview = getImageKitPreview(attachment.path)
+            attachment.modal = getImageKitModal(attachment.path, width)
+            return attachment
+        })
         return data
     })
 

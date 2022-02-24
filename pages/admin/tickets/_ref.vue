@@ -53,11 +53,7 @@
                                     <div v-if="msg.attachments && msg.attachments.length" class="columns is-multiline is-mobile">
                                         <div v-for="(attachment, i) in msg.attachments" :key="msg.user.sub+i"  class="column is-narrow">
                                             <figure class="image is-128x128">
-                                                <img
-                                                    :src="'https://res.cloudinary.com/opengrabs/image/upload/w_400/'+attachment"
-                                                    :alt="attachment.name"
-                                                    @click="activateModal(attachment)"
-                                                >
+                                                <img :src="attachment.preview" @click="activateModal(attachment.modal)">
                                             </figure> 
                                         </div>
                                     </div>
@@ -74,11 +70,7 @@
                         <div v-if="msg.attachments && msg.attachments.length" class="columns is-multiline is-mobile">
                             <div v-for="(attachment, i) in msg.attachments" :key="msg.user.username+i"  class="column is-narrow">
                                 <figure class="image is-128x128">
-                                    <img
-                                        :src="'https://res.cloudinary.com/opengrabs/image/upload/w_400/'+attachment"
-                                        :alt="attachment.name"
-                                        @click="activateModal(attachment)"
-                                    >
+                                    <img :src="attachment.preview" @click="activateModal(attachment.modal)">
                                 </figure> 
                             </div>
                         </div>
@@ -86,9 +78,9 @@
                 </div>
             </div>
         </div>
-        <b-modal :width="width" :active.sync="isAttachmentModalActive">
+        <b-modal :active.sync="isAttachmentModalActive">
             <p class="image">
-                <img :src="'https://res.cloudinary.com/opengrabs/image/upload/w_'+width+'/'+modalAttachment">
+                <img :src="modalAttachment">
             </p>
         </b-modal>
     </section>
@@ -105,42 +97,42 @@ return `Hi ${ticket.user.username},
 
 
 Cheers,
-Opengrabs`
+${process.env.URL||'testnet.opengrabs.com'}`
         case 'es':
 return `Hola ${ticket.user.username},
 
 
 
 Saludos,
-Opengrabs`
+${process.env.URL||'testnet.opengrabs.com'}`
         case 'pt':
 return `Oi ${ticket.user.username},
 
 
 
 Saúde,
-Opengrabs`
+${process.env.URL||'testnet.opengrabs.com'}`
         case 'ru':
 return `Привет ${ticket.user.username},
 
 
 
 Ваше здоровье,
-Opengrabs`        
+${process.env.URL||'testnet.opengrabs.com'}`        
     }
 }
 export default {
     nuxtI18n: false,
     layout: 'admin',
     middleware: 'auth',
-    async asyncData({ app, params: { ref }}) {
+    async asyncData({ app, modalWidth, params: { ref }}) {
         const [isAdmin, ticket, messages] = await Promise.all([
             app.$admin.isAdmin(),
             app.$admin.tickets.get(ref),
-            app.$admin.tickets.messages.filter(ref)
+            app.$admin.tickets.messages.filter(ref, modalWidth)
         ])
         const content = getDefaultEmailText(ticket)
-        return { isAdmin, ref, ticket, messages, content }
+        return { isAdmin, modalWidth, ref, ticket, messages, content }
     },
     data: () => ({
         languages: [
@@ -156,12 +148,14 @@ export default {
         messageError: false,
         isAttachmentModalActive: false,
         modalAttachment: null,
-        width: (process.client) ? parseInt(window.innerWidth*0.7) : 300
     }),
     computed: {
         messageMessage() {
             if (this.postError === 'Field required') return 'Required field'
             else return null 
+        },
+        me() {
+            return this.$store.state.auth.user.sub
         },
     },
     methods: {
@@ -189,12 +183,21 @@ export default {
                 if (this.attachments.length) {
                     for (const attachment of this.attachments) {
                         const fd = new FormData()
+                        const name = uniqueString()
+                        const extension = attachment.name.split('.')[1]
+                        fd.append('fileName', `${name}.${extension}`)
                         fd.append('file', attachment)
-                        fd.append('upload_preset','tickets')
-                        fd.append('public_id', uniqueString())
-                        fd.append('tags', 'admin')
-                        const { data: { public_id }} = await axios.post('https://api.cloudinary.com/v1_1/opengrabs/image/upload', fd) 
-                        this.public_ids.push(public_id)
+                        fd.append('publicKey',process.env.IMAGEKIT_PUBLIC_KEY)
+                        fd.append('folder', 'tickets')
+                        fd.append('overwriteFile', false)
+                        fd.append('tags', `${this.ref},${this.me}`)
+                        fd.append('isPrivateFile', true)
+                        const { data: { signature, expire, token }} = await this.$axios.post('/api/image/signature', {})
+                        fd.append('expire', expire)
+                        fd.append('token', token)
+                        fd.append('signature', signature)
+                        const { data: { filePath }} = await axios.post('https://upload.imagekit.io/api/v1/files/upload', fd) 
+                        this.public_ids.push({ path: filePath })
                     } 
                 }  
                 const message = {
@@ -202,7 +205,7 @@ export default {
                     attachments: this.public_ids,
                 } 
                 await this.$admin.tickets.messages.create(this.ref, message)
-                this.messages = await this.$admin.tickets.messages.filter(this.ref) 
+                this.messages = await this.$admin.tickets.messages.filter(this.ref, this.modalWidth) 
                 this.content = getDefaultEmailText(this.ticket)
                 this.attachments = []
                 this.public_ids = []

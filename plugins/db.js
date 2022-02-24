@@ -61,8 +61,8 @@ export default ({ $axios }, inject) => {
       }
     },
     messages: {
-      filter: async (ref) => {
-        const { data } = await $axios.get(`/api/db/messages/filter/grab/${ref}`)
+      filter: async (ref, width) => {
+        const { data } = await $axios.get(`/api/db/messages/filter/grab/${ref}/${width}`)
         return data
       },
       create: async ({ props }) => {

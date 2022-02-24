@@ -137,34 +137,44 @@ export default {
             const validContent = this.validateContent()
             if (validEmail && validSubject && validContent) {
                 this.ticketButtonClass = 'button is-primary is-outlined is-loading'
-                if (this.attachments.length) {
-                    for (const attachment of this.attachments) {
-                        const fd = new FormData()
-                        fd.append('file', attachment)
-                        fd.append('upload_preset','email_tickets')
-                        fd.append('public_id', uniqueString())
-                        fd.append('tags', this.email)
-                        const { data: { public_id }} = await axios.post('https://api.cloudinary.com/v1_1/opengrabs/image/upload', fd) 
-                        this.public_ids.push(public_id)
-                    } 
-                }
                 const ticket = {
                     language: this.$i18n.locale,
                     email: this.email,
                     subject: this.subject,
                 }
+                const { id } = await this.$tickets.email.create(ticket)
+                if (this.attachments.length) {
+                    for (const attachment of this.attachments) {
+                        const fd = new FormData()
+                        const name = uniqueString()
+                        const extension = attachment.name.split('.')[1]
+                        fd.append('fileName', `${name}.${extension}`)
+                        fd.append('file', attachment)
+                        fd.append('publicKey',process.env.IMAGEKIT_PUBLIC_KEY)
+                        fd.append('folder', `${process.env.BTC_CHAIN}/tickets`)
+                        fd.append('overwriteFile', false)
+                        fd.append('tags', `${id},${this.email}`)
+                        fd.append('isPrivateFile', true)
+                        const { data: { signature, expire, token }} = await this.$axios.post('/api/image/signature', {})
+                        fd.append('expire', expire)
+                        fd.append('token', token)
+                        fd.append('signature', signature)
+                        const { data: { filePath }} = await axios.post('https://upload.imagekit.io/api/v1/files/upload', fd) 
+                        this.public_ids.push({ path: filePath })
+                    } 
+                }
                 const message = {
                     content: this.content,
                     attachments: this.public_ids,
                 }
+                await this.$tickets.email.messages.create(id, message)
                 this.email = null
                 this.subject = null
                 this.content = null
                 this.$refs.fileInput.value = ""
                 this.attachments = []
-                const { id } = await this.$tickets.email.create(ticket)
-                await this.$tickets.email.messages.create(id, message)
                 this.ticketButtonClass = 'button is-primary is-outlined'
+
             }
         }
 

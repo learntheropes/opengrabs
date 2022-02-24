@@ -39,11 +39,7 @@
                             <div class="columns is-multiline is-mobile">
                                 <div v-for="(attachment, i) in msg.attachments" :key="msg.user.sub+i"  class="column is-narrow">
                                     <figure class="image is-128x128">
-                                        <img
-                                            :src="'https://res.cloudinary.com/opengrabs/image/upload/w_400/'+attachment"
-                                            :alt="attachment.name"
-                                            @click="activateModal(attachment)"
-                                        />
+                                        <img :src="attachment.preview" @click="activateModal(attachment.modal)">
                                     </figure> 
                                 </div>
                             </div>
@@ -60,19 +56,15 @@
                 <div v-if="msg.attachments && msg.attachments.length" class="columns is-multiline is-mobile">
                     <div v-for="(attachment, i) in msg.attachments" :key="msg.user.sub+i"  class="column is-narrow">
                         <figure class="image is-128x128">
-                            <img
-                                :src="'https://res.cloudinary.com/opengrabs/image/upload/w_400/'+attachment"
-                                :alt="attachment.name"
-                                @click="activateModal(attachment)"
-                            >
+                            <img :src="attachment.preview" @click="activateModal(attachment.modal)">
                         </figure> 
                     </div>
                 </div>
             </div> 
         </div>
-        <b-modal :width="width" :active.sync="isAttachmentModalActive">
+        <b-modal :active.sync="isAttachmentModalActive">
             <p class="image">
-                <img :src="'https://res.cloudinary.com/opengrabs/image/upload/w_'+width+'/'+modalAttachment">
+                <img :src="modalAttachment">
             </p>
         </b-modal>
     </section>
@@ -84,12 +76,12 @@ import axios from 'axios'
 export default {
     name: 'Ticket',
     middleware: 'auth',
-    async asyncData({ app, params: { ref }}) {
+    async asyncData({ app, modalWidth, params: { ref }}) {
         const [ticket, messages] = await Promise.all([
             app.$tickets.get(ref),
-            app.$tickets.messages.filter(ref)
+            app.$tickets.messages.filter(ref, modalWidth)
         ])
-        return { ref, ticket, messages }
+        return { ref, modalWidth, ticket, messages }
     },
     data: () => ({
         messageButtonClass: 'button is-primary is-outlined',
@@ -100,7 +92,6 @@ export default {
         messageError: false,
         isAttachmentModalActive: false,
         modalAttachment: null,
-        width: (process.client) ? parseInt(window.innerWidth*0.7) : 300
     }),
     computed: {
         messageMessage() {
@@ -135,26 +126,22 @@ export default {
                 this.messageButtonClass = 'button is-primary is-outlined is-loading'
                 if (this.attachments.length) {
                     for (const attachment of this.attachments) {
-                        // const expire = Math.floor(Date.now() / 1000 + 60)
-                        // const token = uniqueString()
-                        // const { data: { signature }} = this.$axios.post('/api/image/signature', { expire, token })
                         const fd = new FormData()
+                        const name = uniqueString()
+                        const extension = attachment.name.split('.')[1]
+                        fd.append('fileName', `${name}.${extension}`)
                         fd.append('file', attachment)
-                        fd.append('upload_preset','tickets')
-                        fd.append('public_id', uniqueString())
-                        fd.append('tags', this.me)
-                        const { data: { public_id }} = await axios.post('https://api.cloudinary.com/v1_1/opengrabs/image/upload', fd) 
-                        this.public_ids.push(public_id)
-                        // fd.append('publicKey',process.env.IMAGEKIT_PUBLIC_KEY)
-                        // fd.append('expire', expire)
-                        // fd.append('token', token)
-                        // fd.append('fileName', token)
-                        // fd.append('folder', 'tickets')
-                        // fd.append('overwriteFile', false)
-                        // fd.append('tags', `${this.ref},${this.ticket.user.sub}`)
-                        // fd.append('signature', signature)
-                        // const { data: { filePath }} = await axios.post('https://upload.imagekit.io/api/v1/files/upload', fd) 
-                        // this.public_ids.push(filePath)
+                        fd.append('publicKey',process.env.IMAGEKIT_PUBLIC_KEY)
+                        fd.append('folder', `${process.env.BTC_CHAIN}/tickets`)
+                        fd.append('overwriteFile', false)
+                        fd.append('tags', `${this.ref},${this.me}`)
+                        fd.append('isPrivateFile', true)
+                        const { data: { signature, expire, token }} = await this.$axios.post('/api/image/signature', {})
+                        fd.append('expire', expire)
+                        fd.append('token', token)
+                        fd.append('signature', signature)
+                        const { data: { filePath }} = await axios.post('https://upload.imagekit.io/api/v1/files/upload', fd) 
+                        this.public_ids.push({ path: filePath })
                     } 
                 }
                 const message = {
@@ -162,7 +149,7 @@ export default {
                     attachments: this.public_ids,
                 } 
                 await this.$tickets.messages.create(this.ref, message)
-                this.messages = await this.$tickets.messages.filter(this.ref)
+                this.messages = await this.$tickets.messages.filter(this.ref, this.modalWidth)
                 this.content = null
                 this.attachments = []
                 this.public_ids = []
