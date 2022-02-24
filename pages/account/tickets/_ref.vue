@@ -38,7 +38,7 @@
                         <div class="level-item">
                             <div class="columns is-multiline is-mobile">
                                 <div v-for="(attachment, i) in msg.attachments" :key="msg.user.sub+i"  class="column is-narrow">
-                                    <figure class="image is-128x128">
+                                    <figure class="image" style="width: 128px;">
                                         <img :src="attachment.preview" @click="activateModal(attachment.modal)">
                                     </figure> 
                                 </div>
@@ -55,7 +55,7 @@
                 <p class="has-new-line">{{ msg.content }}</p>
                 <div v-if="msg.attachments && msg.attachments.length" class="columns is-multiline is-mobile">
                     <div v-for="(attachment, i) in msg.attachments" :key="msg.user.sub+i"  class="column is-narrow">
-                        <figure class="image is-128x128">
+                        <figure class="image" style="width: 128px;">
                             <img :src="attachment.preview" @click="activateModal(attachment.modal)">
                         </figure> 
                     </div>

@@ -126,6 +126,7 @@ export default {
     rating: "Rating",
     feedback: "Feedback",
     postFeedback: "Post rating and feedback",
+    attachmentExpired: "For security reason this attachment has expired. Please reload the page to view it",
     toastGrabRemoved: "Grab removed",
     toastGrabDisputed: "Grab disputed",
     toastGrabBought: "Grab marked as bought",
@@ -242,7 +243,7 @@ export default {
     youCantChangeUsername: "You can't change username",
     usernameAlphaNumericBetween5and15Caracters: "Choose an alphanumberic username between 5 and 15 caracters",
     // pages/account/tickets/index
-    subjectPlaceholder: "Ticket title",
+    subjectPlaceholder: "Type a summary",
     tickets: "Tickets",
     ticketTopic: "Ticket topic",
     openNewTicket: "Open new ticket",
