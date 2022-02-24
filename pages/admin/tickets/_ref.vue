@@ -76,7 +76,7 @@
         </div>
         <b-modal :active.sync="isAttachmentModalActive">
             <p class="image">
-                <img :src="modalAttachment">
+                <img :alt="$t('attachmentExpired')" :src="modalAttachment">
             </p>
         </b-modal>
     </section>
