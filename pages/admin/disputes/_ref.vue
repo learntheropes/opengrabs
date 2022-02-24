@@ -82,9 +82,7 @@
                                     <p class="has-new-line">{{ msg.content }}</p>
                                     <div v-if="msg.attachments && msg.attachments.length" class="columns is-multiline is-mobile is-centered">
                                         <div v-for="(attachment, i) in msg.attachments" :key="'a'+i"  class="column is-narrow">
-                                        <figure class="image" style="width: 128px;">
-                                            <img :src="attachment.preview" @click="activateModal(attachment.modal)">
-                                        </figure> 
+                                        <img style="width: 128px;" :src="attachment.preview" @click="activateModal(attachment.modal)">
                                         </div>
                                     </div>
                                 </div>
@@ -94,9 +92,7 @@
                                     <p class="has-new-line">{{ msg.content }}</p>
                                     <div v-if="msg.attachments && msg.attachments.length" class="columns is-multiline is-mobile">
                                         <div v-for="(attachment, i) in msg.attachments" :key="'b'+i"  class="column is-narrow">
-                                            <figure class="image" style="width: 128px;">
-                                                <img :src="attachment.preview" @click="activateModal(attachment.modal)">
-                                            </figure> 
+                                            <img style="width: 128px;" :src="attachment.preview" @click="activateModal(attachment.modal)">
                                         </div>
                                     </div>
                                 </div>
@@ -112,9 +108,7 @@
                                             <div class="level-item">
                                                 <div class="columns is-multiline is-mobile">
                                                     <div v-for="(attachment, i) in msg.attachments" :key="'c'+i"  class="column is-narrow">
-                                                        <figure class="image" style="width: 128px;">
-                                                            <img :src="attachment.preview" @click="activateModal(attachment.modal)">
-                                                        </figure> 
+                                                        <img style="width: 128px;" :src="attachment.preview" @click="activateModal(attachment.modal)">
                                                     </div>
                                                 </div>
                                             </div>
