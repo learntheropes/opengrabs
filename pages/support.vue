@@ -116,7 +116,6 @@ export default {
                 }
                 return isValidFormat                
             }
-            return true
         }, 
         validateSubject() {
             if (!this.subject) {
