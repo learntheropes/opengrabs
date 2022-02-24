@@ -55,6 +55,7 @@
 </template>
 
 <script>
+import { amazonUrl } from '~/assets/js/image'
 export default {
   name: 'OrderssDisputed',
   middleware: 'auth',
@@ -66,7 +67,7 @@ export default {
   },
   methods: {
     getImage(order) {
-      return order.shop.image.replace('https://m.media-amazon.com/images/I/', 'https://res.cloudinary.com/opengrabs/image/upload/h_210/amazon/')
+      return order.shop.image.replace('https://m.media-amazon.com/images/I/', amazonUrl)
     }
   }
 }

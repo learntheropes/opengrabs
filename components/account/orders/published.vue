@@ -58,6 +58,7 @@
 <script>
 import orderBy from 'lodash.orderby'
 import filter from 'lodash.filter'
+import { amazonUrl } from '~/assets/js/image'
 export default {
   name: 'OrdersPublished',
   middleware: 'auth',
@@ -72,7 +73,7 @@ export default {
   }),
   methods: {
     getImage(order) {
-      return order.shop.image.replace('https://m.media-amazon.com/images/I/', 'https://res.cloudinary.com/opengrabs/image/upload/h_210/amazon/')
+      return order.shop.image.replace('https://m.media-amazon.com/images/I/', amazonUrl)
     },
     async remove(ref) {
       this.removeButtonClass = 'card-footer-item disabled'

@@ -63,6 +63,7 @@
 </template>
 
 <script>
+import { amazonUrl } from '~/assets/js/image'
 export default {
   name: 'DeliveriesBooked',
   middleware: 'auth',
@@ -77,7 +78,7 @@ export default {
   }),
   methods: {
     getImage(delivery) {
-      return delivery.shop.image.replace('https://m.media-amazon.com/images/I/', 'https://res.cloudinary.com/opengrabs/image/upload/h_210/amazon/')
+      return delivery.shop.image.replace('https://m.media-amazon.com/images/I/', amazonUrl)
     },
     async dispute(ref) {
       this.disputeButtonClass = 'card-footer-item disabled'

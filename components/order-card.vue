@@ -53,6 +53,7 @@
 
 
 <script>
+import { amazonUrl } from '~/assets/js/image'
 export default {
     name: 'OrderCard',
     props: {
@@ -69,14 +70,14 @@ export default {
             return this.$store.state.auth.loggedIn ? this.$store.state.auth.user.sub : false
         },
         getImage() {
-            return this.order.shop.image.replace('https://m.media-amazon.com/images/I/', 'https://res.cloudinary.com/opengrabs/image/upload/h_210/amazon/')
+            return this.order.shop.image.replace('https://m.media-amazon.com/images/I/', amazonUrl)
         }
     },
     methods: {
         login() {
             this.$auth.$storage.setUniversal('redirect', this.$route.path)
             this.$auth.loginWith('auth0')
-        },
+        }
     }
 }
 </script>

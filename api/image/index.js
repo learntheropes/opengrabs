@@ -10,7 +10,7 @@ export const imagekit = new ImageKit({
 
 export const getImageKitPreview = (path) => {
     return imagekit.url({
-        path: path,
+        path,
         transformation : [{
             "height": "200"
         }],
@@ -21,7 +21,7 @@ export const getImageKitPreview = (path) => {
 
 export const getImageKitModal = (path, width) => {
     return imagekit.url({
-        path: path,
+        path,
         transformation : [{
             "width": width
         }],
@@ -32,7 +32,7 @@ export const getImageKitModal = (path, width) => {
 
 export const getImageKitOriginal = (path) => {
     return imagekit.url({
-        path: path,
+        path,
         signed: true,
         expireSeconds: 60
     }) 

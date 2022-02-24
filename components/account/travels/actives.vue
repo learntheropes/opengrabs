@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import { placesUrl } from '~/assets/js/image'
 export default {
     name: 'TravelsActives',
     props: {
@@ -49,7 +50,7 @@ export default {
     }),
     methods: {
         getImage(travel) {
-            return travel.destination_photo.replace('https://lh3.googleusercontent.com/places/', 'https://res.cloudinary.com/opengrabs/image/upload/h_210/places/')
+            return travel.destination_photo.replace('https://lh3.googleusercontent.com/places/', placesUrl)
         },
         async remove(ref) {
             this.removeButtonClass = 'card-footer-item disabled'

@@ -1,4 +1,3 @@
-import asyncHandler from 'express-async-handler'
 import { imagekit } from '../image'
 import { Router } from 'express'
 const router = Router()
