@@ -34,13 +34,6 @@ export default {
     'vue-json-pretty/lib/styles.css'
   ],
 
-  // https://nuxtjs.org/docs/configuration-glossary/configuration-vue-config/
-  // vue: {
-  //   config: {
-  //     devtools: true
-  //   }
-  // },
-
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     '~/plugins/width.client.js',
