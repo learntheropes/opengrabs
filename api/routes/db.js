@@ -162,7 +162,7 @@ router.get('/db/messages/filter/grab/:ref/:width', authorizeUser, asyncHandler(a
     return
   }
 
-  let { data: messages } = await client.query(
+  const { data } = await client.query(
     q.Map(
       q.Paginate(
         q.Match(q.Index('messages_by_grab_id'), ref),
@@ -172,7 +172,18 @@ router.get('/db/messages/filter/grab/:ref/:width', authorizeUser, asyncHandler(a
     )
   )
 
-  messages = messages.map(({ data, ref: { value: { id }}}) => {
+  // const messages = await Promise.all(data.map(async ({ data, ref: { value: { id }}}) => {
+  //   data.ref = id
+  //   await Promise.all(data.attachments.map(async attachment => {
+  //     attachment.preview = getImageKitPreview(attachment.path)
+  //     attachment.modal = await getImageKitModal(attachment.path, width)
+  //     return attachment
+  //   }))
+  //   return data
+  // }))
+
+
+  const messages = data.map(({ data, ref: { value: { id }}}) => {
     data.ref = id
     data.attachments.map(attachment => {
       attachment.preview = getImageKitPreview(attachment.path)
