@@ -6,6 +6,8 @@ export default {
   ssr: false,
   target: 'server',
 
+  loading: { color: '#7957d5' },
+
   env: {
     BTC_CHAIN: process.env.BTC_CHAIN,
     URL: process.env.URL,
