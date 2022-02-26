@@ -245,7 +245,7 @@ export default {
                         fd.append('fileName', `${name}.${extension}`)
                         fd.append('file', attachment)
                         fd.append('publicKey',process.env.IMAGEKIT_PUBLIC_KEY)
-                        fd.append('folder', 'tickets')
+                        fd.append('folder', `${process.env.BTC_CHAIN}/grabs`)
                         fd.append('overwriteFile', false)
                         fd.append('tags', `${this.ref},${this.me}`)
                         fd.append('isPrivateFile', true)
