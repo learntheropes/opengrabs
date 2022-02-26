@@ -248,9 +248,9 @@ export default {
     ticketTopic: "Ticket topic",
     openNewTicket: "Open new ticket",
     view: "View", 
-    subject: "Subject",
-    createdAt: "Created at", 
-    updatedAt: "Updated at", 
+    summary: "Summary",
+    created: "Created",
+    updated: "Updated", 
     status: "Status",
     // pages/account/tickets/_ref
     ticket: "Ticket",

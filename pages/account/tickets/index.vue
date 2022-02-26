@@ -26,7 +26,7 @@
         </b-field>
         <b-table v-if="tickets.length" :data="tickets">
             <template>
-                <b-table-column v-slot="props" :label="$t('subject')">
+                <b-table-column v-slot="props" :label="$t('summary')">
                     {{ props.row.subject }}
                 </b-table-column>
                 <b-table-column v-slot="props" :label="$t('createdAt')">
