@@ -21,9 +21,12 @@ export const getImageKitPreview = (path) => {
 
 export const getImageKitModal = (path, width) => {
 
-    const text = process.env.URL ? encodeURIComponent(process.env.URL) : encodeURIComponent('testnet.opengrabs.com')
+    const text = process.env.URL || 'testnet.opengrabs.com'
     const buff = new Buffer.from(text)
     const base64text = buff.toString('base64')
+    console.log('text', text)
+    console.log('buff', buff)
+    console.log('base64text', base64text)
 
     // const data = await imagekit.listFiles({
     //     limit: 1,
