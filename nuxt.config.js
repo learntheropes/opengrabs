@@ -165,7 +165,7 @@ export default {
   },
 
   i18n: {
-    seo: false,
+    seo: true,
     baseUrl: process.env.URL,
     locales: [
       {

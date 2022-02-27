@@ -74,7 +74,7 @@ export default {
         {
           hid: 'og:image',
           property: 'og:image',
-          content: `https://${process.env.URL}/shopping.jpg`,
+          content: `https://${process.env.URL}/shopping.png`,
         },
         {
           hid: 'og:url',
