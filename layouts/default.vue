@@ -34,26 +34,26 @@ export default {
         {
           hid: 'description',
           name: 'description',
-          content: `${this.$t('description')}`
+          content: this.$t('seo.description')
         },
         {
           hid: 'keywords',
           name: 'keywords',
           content: [
-            this.$t('keywords1'),
-            this.$t('keywords2'),
-            this.$t('keywords3'),
-            this.$t('keywords4'),
-            this.$t('keywords5'),
-            this.$t('keywords6'),
-            this.$t('keywords7'),
-            this.$t('keywords8'),
-            this.$t('keywords9'),
-            this.$t('keywords10'),
-            this.$t('keywords11'),
-            this.$t('keywords12'),
-            this.$t('keywords13'),
-            this.$t('keywords14'),
+            this.$t('seo.keywords1'),
+            this.$t('seo.keywords2'),
+            this.$t('seo.keywords3'),
+            this.$t('seo.keywords4'),
+            this.$t('seo.keywords5'),
+            this.$t('seo.keywords6'),
+            this.$t('seo.keywords7'),
+            this.$t('seo.keywords8'),
+            this.$t('seo.keywords9'),
+            this.$t('seo.keywords10'),
+            this.$t('seo.keywords11'),
+            this.$t('seo.keywords12'),
+            this.$t('seo.keywords13'),
+            this.$t('seo.keywords14'),
           ]
         },
         {
