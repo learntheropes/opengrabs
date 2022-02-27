@@ -50,7 +50,9 @@ export default {
             this.$t('keywords8'),
             this.$t('keywords9'),
             this.$t('keywords10'),
-            this.$t('keywords11')
+            this.$t('keywords11'),
+            this.$t('keywords12'),
+            this.$t('keywords13'),
           ]
         },
         {
