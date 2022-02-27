@@ -15,9 +15,9 @@ export default {
     IMAGEKIT_PUBLIC_KEY: process.env.IMAGEKIT_PUBLIC_KEY
   },
 
-  // head() {
-  //   return this.$nuxtI18nHead({ addSeoAttributes: true })
-  // },
+  head() {
+    return this.$nuxtI18nHead({ addSeoAttributes: true })
+  },
 
   // Global page headers: https://go.nuxtjs.dev/config-headproducts
   head: {
@@ -165,7 +165,6 @@ export default {
   },
 
   i18n: {
-    seo: false,
     baseUrl: process.env.URL,
     locales: [
       {

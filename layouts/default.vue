@@ -30,6 +30,7 @@ export default {
       htmlAttrs: {
         lang: this.$i18n.locale,
       },
+      
       meta: [
         {
           hid: 'description',
