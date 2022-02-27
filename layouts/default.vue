@@ -34,7 +34,7 @@ export default {
         {
           hid: 'description',
           name: 'description',
-          content: this.$t('description')
+          content: `${this.$t('description')}`
         },
         {
           hid: 'keywords',
