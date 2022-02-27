@@ -64,7 +64,7 @@ export default {
         {
           hid: 'og:description',
           property: 'og:description',
-          content: this.$t('description')
+          content: this.$t('seo.description')
         },
         {
           hid: 'og:type',
