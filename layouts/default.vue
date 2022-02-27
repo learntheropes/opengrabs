@@ -53,6 +53,7 @@ export default {
             this.$t('keywords11'),
             this.$t('keywords12'),
             this.$t('keywords13'),
+            this.$t('keywords14'),
           ]
         },
         {

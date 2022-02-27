@@ -293,5 +293,19 @@ export default {
         myDeliveries: "My deliveries",
         myTravel: "My travel",
         description: "Shop cheaper internationally - Get paid to travel - Without fees",
+        keywords1: "shop cheaper internationally",
+        keywords2: "get paid to travel",
+        keywords3: "shop on Amazon from Argentina",
+        keywords4: "shop on Amazon from Brazil",
+        keywords5: "shop on Amazon from Russia",  
+        keywords6: "shop on Ebay from Argentina",
+        keywords7: "shop on Ebay from Brazil",
+        keywords8: "shop on Ebay from Russia",
+        keywords9: "shopping without importation taxes",
+        keywords10: "shopping without custom",
+        keywords11: "grabr.io alternatives",
+        keywords12: "shop with bitcoin",
+        keywords13: "get paid in bitcoin",
+        keywords14: "travel with bitcoin"
     }
 }
