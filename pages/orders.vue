@@ -60,6 +60,7 @@ export default {
   },
   head() {
     return {
+      title: this.$t('seo.orders'),
       link: [
         {
           hid: 'canonical',

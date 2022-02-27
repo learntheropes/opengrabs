@@ -70,6 +70,7 @@ export default {
     },
     head() {
         return {
+            title: this.$t('seo.travels'),
             link: [
                 {
                     hid: 'canonical',

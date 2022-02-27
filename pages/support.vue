@@ -63,6 +63,7 @@ export default {
     }),
     head() {
         return {
+            title: this.$t('seo.support'),
             link: [
                 {
                     hid: 'canonical',

@@ -51,6 +51,11 @@ export default {
     addressError: false,
     withdrawButtonClass: 'button is-primary is-outlined'
   }),
+  head() {
+    return {
+      title: `${this.$t('seo.withdraw')} ${this.ref}`
+    }
+  },
   computed: {
     invoiceMessage() {
       if (this.invoiceError === 'Field required') return this.$t('requiredField')

@@ -66,6 +66,11 @@ export default {
         attachments: [],
         public_ids: [],
     }),
+    head() {
+        return {
+            title: `${this.$t('seo.tickets')} ${this.ref}`
+        }
+    },
     computed: {
         subjectMessage() {
             if (this.subjectError === 'Field required') return this.$t('requiredField')

@@ -163,6 +163,11 @@ export default {
     isAttachmentModalActive: false,
     modalAttachment: null,
   }),
+  head() {
+    return {
+      title: `${this.$t('seo.grab')} ${this.ref}`
+    }
+  },
   computed: {
     postMessage() {
       if (this.postError === 'Field required') return this.$t('requiredField')

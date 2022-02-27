@@ -12,6 +12,7 @@ export default {
     auth: false,
     head() {
         return {
+            title: this.$t('seo.fees'),
             link: [
                 {
                     hid: 'canonical',

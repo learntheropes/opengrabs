@@ -122,6 +122,11 @@ export default {
       store.commit('account/orders/setInitiated', true)
     }
   },
+  head() {
+    return {
+      title: this.$t('seo.myOrders')
+    }
+  },
   computed: {
     ...mapState({
       expired: (state) => state.account.orders.expired,

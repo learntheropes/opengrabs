@@ -89,6 +89,11 @@ export default {
         isAttachmentModalActive: false,
         modalAttachment: null,
     }),
+    head() {
+        return {
+            title: `${this.$t('seo.ticket')} ${this.ref}`
+        }
+    },
     computed: {
         messageMessage() {
             if (this.postError === 'Field required') return this.$t('requiredField')

@@ -126,6 +126,11 @@ export default {
         amazonUrlType: null,
         quantityType: null,
     }),
+    head() {
+        return {
+            title: `${this.$t('seo.order')} ${this.ref}`
+        }
+    },
     computed: {
         amazonUrlMessage() {
             if (this.amazonUrlError === 'Field required') return this.$t('requiredField')

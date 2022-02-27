@@ -97,6 +97,11 @@ export default {
     paymentConfirmed: false,
     paymentExpired: false
   }),
+  head() {
+    return {
+      title: `${this.$t('seo.payment')} ${this.ref}`
+    }
+  },
   computed: {
     activeTab: {
       get () {

@@ -266,5 +266,32 @@ export default {
         defaultDescription: "Used for cookie control, authentication and language setting.",
         gaName: "Google Analytics",
         gaDescription: "Google Analytics is a web analytics service offered by Google that tracks and reports website traffic."
+    },
+    // seo
+    seo: {
+        home: "Home Page",
+        orders: "Orders",
+        order: "Order",
+        deliveries: "Deliveries",
+        travels: "Travels",
+        exchangeRates: "Exchange Rates",
+        support: "Support",
+        privacyPolicy: "Politica de privacidad",
+        termsOfService: "Terminos de servicios",
+        login: "Sign in",
+        fees: "Fees",
+        user: "User",
+        book: "Book",
+        grab: "Grab",
+        newAdv: "New advertisement",
+        payment: "Payment",
+        underPayment: "Underpayment",
+        ticket: "Ticket",
+        tickets: "Tickets",
+        withdraw: "Withdraw",
+        myOrders: "My orders",
+        myDeliveries: "My deliveries",
+        myTravel: "My travel",
+        description: "Shop cheaper internationally - Get paid to travel - Without fees",
     }
 }

@@ -86,6 +86,11 @@ export default {
       store.commit('account/deliveries/setInitiated', true)
     }
   },
+  head() {
+    return {
+      title: this.$t('seo.myDeliveries')
+    }
+  },
   computed: {
     ...mapState({
       booked: (state) => state.account.deliveries.booked,

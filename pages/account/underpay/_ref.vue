@@ -74,6 +74,11 @@ export default {
     paymentConfirmed: false,
     paymentExpired: false
   }),
+  head() {
+    return {
+      title: `${this.$t('seo.underPayment')} ${this.ref}`
+    }
+  },
   computed: {
     activeTab: {
       get () {
@@ -87,7 +92,7 @@ export default {
       return this.$moment.utc(this.countdown).format('mm:ss')
     }
   },
-  async created () {
+  created () {
     const checkConfirmations = () => {
       this.countdown = this.countdown -1000
       if (this.countdown % 5000 === 0) {

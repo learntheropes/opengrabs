@@ -34,13 +34,18 @@ export default {
     dateError: false,
     bookButtonClass: 'button is-primary is-outlined'
   }),
+  head() {
+    return {
+      title: `${this.$t('seo.book')} ${this.ref}`
+    }
+  },
   computed: {
     dateMessage() {
       if (this.dateError === 'Field required') return this.$t('requiredField')
       else return this.$t('dateMessage')
     }
   },
-  async created() {
+  created() {
     this.$nuxt.$on('updateUser', ($event) => this.updateUser($event))
   },
   methods: {

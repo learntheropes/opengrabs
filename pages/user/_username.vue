@@ -22,6 +22,18 @@ export default {
         }, 0)
         const average = sum / feedback.length
         return { username, average, feedback }
-    }
+    },
+    head() {
+        return {
+            title: `${this.$t('seo.user')} ${this.username}`,
+            link: [
+                {
+                    hid: 'canonical',
+                    rel: 'canonical',
+                    href: `https://${process.env.URL}/${this.$i18n.locale}/user/${this.username}`,
+                },
+            ],
+        }
+    },
 }
 </script>

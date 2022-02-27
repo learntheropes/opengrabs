@@ -10,7 +10,11 @@ export default {
     async asyncData ({ app, params: { code }}) {
         const { data: { status }} = await app.$axios.get(`/api/facebook/get/status/${code}`)
         return { status }
-
+    },
+    head() {
+        return {
+            title: `Facebook`,
+        }
     }
 }
 </script>

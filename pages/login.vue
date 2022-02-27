@@ -12,6 +12,7 @@ export default {
     },
     head() {
         return {
+        title: this.$t('seo.login'),
             link: [
                 {
                     hid: 'canonical',

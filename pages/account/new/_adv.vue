@@ -21,6 +21,11 @@ export default {
       store.commit('account/new/setActiveTab', 1)
     }
   },
+  head() {
+    return {
+      title: `${this.$t('seo.newAdv')}`
+    }
+  },
   computed: {
     activeTab: {
       get() {

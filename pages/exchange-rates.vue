@@ -30,6 +30,7 @@ export default {
     },
     head() {
         return {
+            title: this.$t('seo.exchangeRates'),
             link: [
                 {
                     hid: 'canonical',

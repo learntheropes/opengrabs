@@ -38,6 +38,11 @@ export default {
             store.commit('account/travels/setInitiated', true)
         } 
     },
+    head() {
+        return {
+            title: this.$t('seo.myTravels')
+        }
+    },
     computed: {
         ...mapState({
             expired: (state) => state.account.travels.expired,
