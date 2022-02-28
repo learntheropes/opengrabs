@@ -9,14 +9,7 @@ export default {
     auth: false,
     head() {
         return {
-            title: this.$t('seo.privacyPolicy'),
-            link: [
-                {
-                    hid: 'canonical',
-                    rel: 'canonical',
-                    href: `https://${process.env.URL}/${this.$i18n.locale}/legal/privacy-policy`,
-                },
-            ],
+            title: this.$t('seo.privacyPolicy')
         }
     },
 }
