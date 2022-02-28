@@ -10,8 +10,8 @@
             {{ $t('findAProductThatYouLikeOnAmazon') }} {{ $t('thatATravelerCanBringToYou') }}
           </p>
           <div class="buttons is-right">
-            <a v-if="!authenticated" class="button is-primary" @click="loginNewOrder">{{ $t('loginToAddOrder') }}</a >
-            <a v-if="authenticated" class="button is-primary" @click="addOrder">{{ $t('addOrder') }}</a>
+            <button v-if="!authenticated" class="button is-primary" @click="loginNewOrder">{{ $t('loginToAddOrder') }}</button>
+            <button v-if="authenticated" class="button is-primary" @click="addOrder">{{ $t('addOrder') }}</button>
             <nuxt-link :to="localePath({ name: 'travels' })" class="button is-primary">{{ $t('viewTravels') }}</nuxt-link >
           </div>
         </div>
@@ -27,8 +27,8 @@
             {{ $t('gainRewardToBringAmazonProduct') }} {{ $t('duringYourNextTravel') }}
           </p>
           <div class="buttons">
-            <a v-if="!authenticated" href="#" class="button is-primary" @click="loginNewTravel">{{ $t('loginToAddTravel') }}</a>
-            <a v-if="authenticated" class="button is-primary" @click="addTravel">{{ $t('addTravel') }}</a>
+            <button v-if="!authenticated" href="#" class="button is-primary" @click="loginNewTravel">{{ $t('loginToAddTravel') }}</button>
+            <button v-if="authenticated" class="button is-primary" @click="addTravel">{{ $t('addTravel') }}</button>
             <nuxt-link :to="localePath({ name: 'orders'})" class="button is-primary">{{ $t('viewOrders') }}</nuxt-link>
           </div>
         </div>
