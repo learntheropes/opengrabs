@@ -69,6 +69,8 @@ export default {
             this.$t('seo.keywords12'),
             this.$t('seo.keywords13'),
             this.$t('seo.keywords14'),
+            this.$t('seo.keywords15'),
+            this.$t('seo.keywords16'),
           ]
         },
         {

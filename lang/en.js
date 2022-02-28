@@ -306,6 +306,8 @@ export default {
         keywords11: "grabr.io alternatives",
         keywords12: "shop with bitcoin",
         keywords13: "get paid in bitcoin",
-        keywords14: "travel with bitcoin"
+        keywords14: "travel with bitcoin",
+        keywords15: "p2p delivery",
+        keywords16: "p2p shopping"
     }
 }
