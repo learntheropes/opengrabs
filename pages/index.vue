@@ -65,7 +65,7 @@ export default {
         {
           hid: 'canonical',
           rel: 'canonical',
-          href: `https://${process.env.URL}/`,
+          href: `https://${process.env.URL||'testnet.opengrabs.com'}/`,
         },
       ],
     }

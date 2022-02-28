@@ -23,6 +23,20 @@ const getOgLocale = (locale) => {
     return 'ru-RU'
   }
 }
+const getOgLocaleAlternate = ($i18n) => {
+  for (const locale of $i18n.locales) {
+    if (locale.code !== $i18n.locale) {
+      return {
+        hid: 'og:locale:alternate',
+        name: 'og:locale:alternate',
+        property: 'og:locale:alternate',
+        content: locale.iso,
+        hreflang: locale.code,
+        href: `https://${process.env.URL||'testnet.opengrbas.com'}/${locale.code}`
+      }
+    }
+  }
+}
 export default {
   name: 'DefaultLayout',
   head() {
@@ -75,17 +89,18 @@ export default {
         {
           hid: 'og:image',
           property: 'og:image',
-          content: `https://${process.env.URL}/shopping.png`,
+          content: `https://${process.env.URL||'testnet.opengrabs.com'}/shopping.png`,
         },
         {
           hid: 'og:url',
           property: 'og:url',
-          content: `https://${process.env.URL}/`
+          content: `https://${process.env.URL||'testnet.opengrabs.com'}/`
         },
         {
           property: 'og:locale',
           content: getOgLocale(this.$i18n.locale),
         },
+        getOgLocaleAlternate(this.$i18n)
       ],
     }
   },
