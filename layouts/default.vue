@@ -38,14 +38,16 @@ const getOgLocaleAlternate = ($i18n) => {
   }
 }
 const getAlternateHreflang = ($i18n) => {
+  $i18n.locales.push({
+    iso: 'x-default',
+    code: 'en' 
+  })
   for (const locale of $i18n.locales) {
-    if (locale.code !== $i18n.locale) {
-      return {
-        hid: `alternate-hreflang-${locale.iso}`,
-        rel: 'alternate',
-        hreflang: locale.code,
-        href: `https://${process.env.URL||'testnet.opengrbas.com'}/${locale.code}`
-      }
+    return {
+      // hid: `alternate-hreflang-${locale.iso}`,
+      rel: 'alternate',
+      hreflang: locale.iso,
+      href: `https://${process.env.URL||'testnet.opengrbas.com'}/${locale.code}`
     }
   } 
 }
