@@ -1,4 +1,6 @@
 export default {
+    // layouts/error
+    homePage: "Home Page",
     // forms
     requiredField: "Field required",
     invalidUrl: "Invalid url",
