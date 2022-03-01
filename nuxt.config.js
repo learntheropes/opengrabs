@@ -192,8 +192,13 @@ export default {
   },
 
   sitemap: {
-    hostname: `https://${process.env.URL}`,
+    hostname: `https://${process.env.URL||'testnet.opengrabs.com'}`,
     i18n: true,
+    exclude: [
+      '/cb',
+      '/admin',
+      '/admin/**'
+    ]
   },
 
   // https://stackoverflow.com/questions/56966137/how-to-run-nuxt-npm-run-dev-with-https-in-localhost
