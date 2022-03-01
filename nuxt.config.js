@@ -161,7 +161,8 @@ export default {
   },
 
   sitemap: {
-    hostname: `https://${process.env.URL}`
+    hostname: `https://${process.env.URL}`,
+    i18n: true,
   },
 
   i18n: {
