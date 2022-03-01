@@ -90,8 +90,8 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    '@nuxtjs/sitemap',
     '@nuxtjs/i18n',
+    '@nuxtjs/sitemap',
     'nuxt-buefy',
     '@nuxtjs/axios',
     '@nuxtjs/dotenv',
@@ -160,11 +160,6 @@ export default {
     ]
   },
 
-  sitemap: {
-    hostname: `https://${process.env.URL}`,
-    i18n: true,
-  },
-
   i18n: {
     baseUrl: process.env.URL,
     locales: [
@@ -194,6 +189,11 @@ export default {
     lazy: true,
     langDir: 'lang/',
     seo: false
+  },
+
+  sitemap: {
+    hostname: `https://${process.env.URL}`,
+    i18n: true,
   },
 
   // https://stackoverflow.com/questions/56966137/how-to-run-nuxt-npm-run-dev-with-https-in-localhost
