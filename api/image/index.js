@@ -23,9 +23,8 @@ export const getImageKitModal = (path, width) => {
 
     const text = process.env.URL || 'testnet.opengrabs.com'
     const buff = new Buffer.from(text)
-    // Remove == from the base64 watermark text
-    // otherwise the image url will return not found as explained by Imagekit support.
-    const base64text = buff.toString('base64').replace(/==/g, '')
+    const base64text = buff.toString('base64')
+    const urlEncodedBase64Text = encodeURIComponent(base64text)
 
     // const data = await imagekit.listFiles({
     //     limit: 1,
@@ -35,9 +34,9 @@ export const getImageKitModal = (path, width) => {
     return imagekit.url({
         path,
         transformation : [{
-            width: width,
+            width,
             ofo: "center",
-            ote: base64text,
+            ote: urlEncodedBase64Text,
             otc: "00000066",
             otbg: "62616066", // 7957d5
             or: "10"
