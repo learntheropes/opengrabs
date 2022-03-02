@@ -109,6 +109,22 @@ export default {
       },
       controlButton: false,
       locales: ['en', 'es', 'pt', 'ru'],
+      text: {
+        locale: {
+          en: {
+            barDescription: 'We use our own cookies and third-party cookies so that we can show you this website and better understand how you use it, with a view to improving the services we offer.',
+          },
+          es: {
+            barDescription: 'Utilizamos cookies propias y de terceros para poder mostrarle una página web y comprender cómo la utiliza, con el fin de mejorar los servicios que ofrecemos.',
+          },
+          pt: {
+            barDescription: 'Nós utilizamos os nossos próprios cookies e de terceiros para que possamos lhe mostrar este site e compreender a forma como o utiliza, de forma a melhorarmos os serviços que oferecemos.'
+          },
+          ru: {
+            barDescription: 'Мы используем наши собственные файлы cookie и сторонние файлы cookie, чтобы мы могли показать вам этот веб-сайт и лучше понять, как вы его используете, с целью улучшения предлагаемых нами услуг.'
+          }
+        }
+      }
     }]
   ],
 
