@@ -14,7 +14,7 @@
           </b-field>
           <b-field :label="cityLabel" :type="cityType" :message="cityMessage">
             <b-select v-model="city" :placeholder="cityPlaceholder" expanded>
-              <option v-for="(oneCity, index) in cities" :key="index" :value="oneCity.name">
+              <option v-for="oneCity in cities" :key="oneCity.name" :value="oneCity.name">
                 {{ oneCity.name }}
               </option>
             </b-select>
