@@ -33,13 +33,13 @@
 
         <div v-if="filteredTravels" class="columns is-multiline">
             <div v-for="travel of filteredTravels" :key="travel.ref" class="column is-full-mobile is-one-third-tablet is-one-third-desktop is-one-quarter-widescreen is-one-quarter-fullhd">
-                <travel-card :travel="travel" />
+                <travels-card :travel="travel" />
             </div>
         </div>
 
         <div v-else class="columns is-multiline">
             <div v-for="travel of travels" :key="travel.ref" class="column is-full-mobile is-one-third-tablet is-one-third-desktop is-one-quarter-widescreen is-one-quarter-fullhd">
-                <travel-card :travel="travel" />
+                <travels-card :travel="travel" />
             </div>
         </div>
 

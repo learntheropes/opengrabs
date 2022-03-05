@@ -25,13 +25,13 @@
 
     <div v-if="filteredOrders" class="columns is-multiline">
       <div v-for="order of filteredOrders" :key="order.ref" class="column is-full-mobile is-one-third-tablet is-one-third-desktop is-one-quarter-widescreen is-one-quarter-fullhd">
-        <order-card :order="order" />
+        <orders-card :order="order" />
       </div>
     </div>
 
     <div v-else class="columns is-multiline">
       <div v-for="order of orders" :key="order.ref" class="column is-full-mobile is-one-third-tablet is-one-third-desktop is-one-quarter-widescreen is-one-quarter-fullhd">
-        <order-card :order="order" />
+        <orders-card :order="order" />
       </div>
     </div>
   </section>

@@ -41,13 +41,13 @@ export default {
     privacyPolicy: "Politica de privacidad",
     termsOfService: "Terminos de servicio",
     changeCookieSetting: "Change cookies setting",
-    // components/order-card
+    // components/orders/card
     book: "Book",
     loginToBook: "Sign in to book",
     reward: "Reward",
     total: "Total",
     deliveryTo: "Delivery to",
-    // components/travel-card
+    // components/travels/card
     loginToOrder: "Sign in to order",  
     // pages/index
     shopCheaperInternationally: "Shop cheaper internationally", 
