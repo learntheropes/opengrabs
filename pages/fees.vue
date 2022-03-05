@@ -2,8 +2,9 @@
     <section class="section container">
         <h1 class="title">{{ $t('fees.title') }}</h1>
         <h2 class="subtitle">{{ $t('fees.subtitle') }}</h2>
-        <div class="content"></div>
-        <content-article-image src="sample.jpg" alt="Image of grabr.io product price" title="Image of grabr.io product price" loading="lazy" />
+        <div class="content">
+            
+        </div>
     </section>
 </template>
 
