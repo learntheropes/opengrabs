@@ -64,18 +64,19 @@ export default {
   middleware: 'auth',
   async fetch({ app, store }) {
     if (!store.state.account.deliveries.initiated) {    
-      const [booked, disputed, refunded, paid, bought, delivered, released, withdrawn] =
+      const [booked, disputed, refunded, underpaid, paid, bought, delivered, released, withdrawn] =
         await Promise.all([
           app.$db.account.deliveries.filter('booked'),
           app.$db.account.deliveries.filter('disputed'),
           app.$db.account.deliveries.filter('refunded'),
+          app.$db.account.deliveries.filter('underpaid'),
           app.$db.account.deliveries.filter('paid'),
           app.$db.account.deliveries.filter('bought'),
           app.$db.account.deliveries.filter('delivered'),
           app.$db.account.deliveries.withdrawn('released', false),
           app.$db.account.deliveries.withdrawn('released', true),
         ])
-      store.commit('account/deliveries/setBooked', booked)
+      store.commit('account/deliveries/setBooked', [].concat(booked,underpaid))
       store.commit('account/deliveries/setDisputed', disputed)
       store.commit('account/deliveries/setRefunded', refunded)
       store.commit('account/deliveries/setPaid', paid)
