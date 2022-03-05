@@ -172,17 +172,6 @@ router.get('/db/messages/filter/grab/:ref/:width', authorizeUser, asyncHandler(a
     )
   )
 
-  // const messages = await Promise.all(data.map(async ({ data, ref: { value: { id }}}) => {
-  //   data.ref = id
-  //   await Promise.all(data.attachments.map(async attachment => {
-  //     attachment.preview = getImageKitPreview(attachment.path)
-  //     attachment.modal = await getImageKitModal(attachment.path, width)
-  //     return attachment
-  //   }))
-  //   return data
-  // }))
-
-
   const messages = data.map(({ data, ref: { value: { id }}}) => {
     data.ref = id
     data.attachments.map(attachment => {

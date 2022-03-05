@@ -75,6 +75,10 @@ export default {
         prefix: 'AccountDeliveries'
       },
       {
+        path  : '~/components/account/travels',
+        prefix: 'AccountTravels'
+      },
+      {
         path  : '~/components/admin',
         prefix: 'Admin'
       }

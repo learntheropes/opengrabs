@@ -12,6 +12,8 @@ export default {
     // generic
     publishedBy: "Published by",
     bookedBy: "Booked by",
+    disputedBy: "Disputed by",
+    underpaidBy: "Underpaid by",
     paidBy: "Paid by",
     boughtBy: "Bought by",
     deliveredBy: "Delivered by",
@@ -96,6 +98,7 @@ export default {
     publishedAt: "Published",
     expiredAt: "Expired",
     bookedAt: "Booked",
+    underpaidAt: "Underpaid",
     paidAt: "Paid",
     boughtAt: "Bought",
     deliveredAt: "Delivered",
