@@ -53,7 +53,6 @@
 
 
 <script>
-import { amazonUrl } from '~/assets/js/image'
 export default {
     name: 'OrderCard',
     props: {
@@ -70,7 +69,7 @@ export default {
             return this.$store.state.auth.loggedIn ? this.$store.state.auth.user.sub : false
         },
         getImage() {
-            return this.order.shop.image.replace('https://m.media-amazon.com/images/I/', amazonUrl)
+            return this.order.shop.image.replace('https://m.media-amazon.com/images/I/', 'https://ik.imagekit.io/opengrabs/amazon/tr:h-210/')
         }
     },
     methods: {

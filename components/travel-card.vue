@@ -35,7 +35,6 @@
 </template>
 
 <script>
-import { placesUrl } from '~/assets/js/image'
 export default {
     name: 'TravelCard',
     props: {
@@ -52,7 +51,7 @@ export default {
             return this.$store.state.auth.loggedIn ? this.$store.state.auth.user.sub : false
         },
         getImage() {
-            return this.travel.destination_photo.replace('https://lh3.googleusercontent.com/places/', placesUrl)
+            return this.travel.destination_photo.replace('https://lh3.googleusercontent.com/places/', 'https://ik.imagekit.io/opengrabs/places/tr:h-210/')
         }
     },
     methods: {
