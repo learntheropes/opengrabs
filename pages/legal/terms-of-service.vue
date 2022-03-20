@@ -74,9 +74,7 @@ If the buyer and the traveler can reach an agreement about the meeting place, a 
 Any different situation will be evaluated and handled case by case.
 </div>
 <h4 class="title is-4">Ban of User Account</h4>
-<div class="content has-new-line">
-We reserve the right to ban an User account at our own discretion
-</div>
+<div class="content has-new-line">We reserve the right to ban an User account at our own discretion.</div>
 <h4 class="title is-4">Payment methods and fees</h4>
 <div class="content has-new-line">Opengrabs only suppor Bitcoin as incoming and outgoing payment method. Opengrabs supports on-chain and lightning network transactions.    
 
