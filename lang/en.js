@@ -263,7 +263,7 @@ export default {
     // pages/fees
     fees: {
         title: "Fees comparision",
-        subtitle: "Fees comparision betweek opengrabs.com and grabr.io",
+        subtitle: "Fees comparision between opengrabs.com and grabr.io",
     },
     // nuxt-cookie-control
     cookieControl: {
