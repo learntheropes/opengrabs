@@ -6,7 +6,7 @@
 by and between
 
 you, as a user of the Opengrabs service
-<ul><li>the business -</li></ul>and
+<ul><li>the Business -</li></ul>and
 
 Opengrabs LLC
 United States of America
