@@ -1,6 +1,5 @@
 <template>
     <section class="section container">
-        <div class="content">
         <h1 class="title is-1">Privacy Policy of Opengrabs</h1>
         <h5 class="subtitle is-5">Latest update: March 20, 2022</h5>
 <div class="content has-new-line">Opengrabs collects some Personal Data from its Users.
@@ -246,7 +245,6 @@ We do not charge a fee to process or respond to your verifiable request unless s
 <div class="content has-new-line">This privacy statement has been prepared based on provisions of multiple legislations, including Art. 13/14 of Regulation (EU) 2016/679 (General Data Protection Regulation).
 This privacy policy relates solely to Opengrabs, if not stated otherwise within this document.
 </div>
-        </div>
     </section>
 </template>
 
