@@ -7,10 +7,10 @@
                         <b-table-column v-slot="props" :label="$t('currency')">
                             {{ props.row.currency }}
                         </b-table-column>
-                        <b-table-column  v-slot="props" :label="$t('buy')" numeric>
+                        <b-table-column  v-slot="props" :label="$t('payIn')" numeric>
                             {{ props.row.buy.toFixed(2) }}
                         </b-table-column>
-                        <b-table-column v-slot="props" :label="$t('sell')" numeric>
+                        <b-table-column v-slot="props" :label="$t('payOut')" numeric>
                             {{ props.row.sell.toFixed(2) }}
                         </b-table-column>
                     </template>

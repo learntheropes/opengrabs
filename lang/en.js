@@ -87,8 +87,8 @@ export default {
     feedbackBy: "Feedback by",
     // pages/exchange-rates
     currency: "CURRENCY",
-    buy: "BUY",
-    sell: "SELL",
+    payIn: "INCOMING PAYMENT",
+    payOut: "OUTGOING PAYMENT",
     // pages/account/grab/_ref
     grab: "Grab",
     buyer: "Buyer",

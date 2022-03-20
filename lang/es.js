@@ -87,8 +87,8 @@ export default {
     feedbackBy: "Feedback by",
     // pages/exchange-rates
     currency: "DIVISA",
-    buy: "COMPRA",
-    sell: "VENTA",
+    payIn: "PAGO ENTRANTE",
+    payOut: "PAGO SALIENTE",
     // pages/account/grab/_ref
     grab: "Grab",
     buyer: "Buyer",
