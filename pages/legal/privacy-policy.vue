@@ -158,6 +158,26 @@ To determine whether any of the third-party services it uses honor the “Do Not
 <div class="content has-new-line">The Owner reserves the right to make changes to this privacy policy at any time by notifying its Users on this page and possibly within Opengrabs and/or - as far as technically and legally feasible - sending a notice to Users via any contact information available to the Owner. It is strongly recommended to check this page often, referring to the date of the last modification listed at the top.
 Should the changes affect processing activities performed on the basis of the User's consent, the Owner shall collect new consent from the User, where required.
 </div>
+<h4 class="title is-4">Cookie Policy</h4>
+<h6 class="title is-6">What are cookies</h6>
+<div class="content has-new-line">As is common practice with almost all professional websites, this site uses cookies, which are tiny files that are saved to your web browser, to improve your experience and to enable certain features, such as authentication. This page describes what information they gather, how we use it and why we sometimes need to store these cookies. We will also share how you can prevent these cookies from being stored, however this may downgrade or 'break' certain elements of the site’s functionality.
+Cookies may be either "persistent" cookies or "session" cookies: a persistent cookie will be stored by a web browser and will remain valid until its set expiry date, unless deleted by the user before the expiry date; a session cookie, on the other hand, will expire at the end of the user session, when the web browser is closed.
+Cookies do not typically contain any information that personally identifies a user, but personal information that we store about you may be linked to the information stored in and obtained from cookies.
+For more general information on cookies, see the <a href="https://en.wikipedia.org/wiki/HTTP_cookie">Wikipedia article on HTTP Cookies</a>
+</div>
+<h6 class="title is-6">Cookies that we use</h6>
+<div class="content has-new-line">If you create an account with us then we will use cookies for the management of the signup process, for general administration and for preventing abuse and misuse of our services.
+We use cookies when you are logged in so that we can remember this fact. This prevents you from having to log in every single time you visit a new page. These cookies are typically removed or cleared when you log out to ensure that you can only access restricted features and areas when logged in.
+When you submit data through a form such as those found on contact pages or comment forms, cookies may be set to remember your user details for future correspondence. In order to provide you with a great experience on this site, we provide the functionality to set your preferences for how this site runs when you use it. In order to remember your preferences, we need to set cookies so that this information can be called whenever you interact with a page that is affected by your preferences.
+</div>
+<h6 class="title is-6">Opt-in cookies used by our service providers</h6>
+<div class="content has-new-line">By default, Google Analytics is not active on our website.
+If you opt-in at our cookies consent banner, we use Google Analytics to analyse the use of our website. Google Analytics gathers information about website use by means of cookies. The information gathered relating to our website is used to create reports about the use of our website and how we might improve your experience. These cookies may track things such as how long you spend on the site and the pages that you visit.
+</div>
+<h6 class="title is-6">Managing cookies</h6>
+<div class="content has-new-line">Our default mandatory cookies are listed in the cookies consent banner.
+You can prevent the setting of these cookies by adjusting the settings on your browser (see your browser Help for how to do this). Disabling cookies may result in some functionality and features of this site being disabled or not working as expected.
+</div>
 <h4 class="title is-4">Information for Californian consumers</h4>
 <div class="content has-new-line">This part of the document integrates with and supplements the information contained in the rest of the privacy policy and is provided by the business running Opengrabs and, if the case may be, its parent, subsidiaries and affiliates (for the purposes of this section referred to collectively as “we”, “us”, “our”).
 The provisions contained in this section apply to all Users who are consumers residing in the state of California, United States of America, according to "The California Consumer Privacy Act of 2018" (Users are referred to below, simply as “you”, “your”, “yours”), and, for such consumers, these provisions supersede any other possibly divergent or conflicting provisions contained in the privacy policy.
