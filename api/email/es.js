@@ -4,23 +4,23 @@ const baseUrl = process.env.URL ? `https://${process.env.URL}` : 'https://localh
 
 export const emailConfirmationCode = (code, username) => {
     return {
-        subject: 'Email confirmation code',
+        subject: 'Código de verificación de correo electrónico',
         content: (username) ?
 `
-Hi ${username},
+Hola ${username},
 
-Your email confirmation code is ${code}
+Tu código de verificación es ${code}
 
-Cheers,
+Saludos,
 ${process.env.URL}
 `
 :
 `
-Hi,
+Hola,
 
-Your email confirmation code is ${code}
+Tu código de verificación es ${code}
 
-Cheers,
+Saludos,
 ${process.env.URL}
 `
     }
@@ -28,16 +28,16 @@ ${process.env.URL}
 
 export const emailOrder = (locale, grabId, username) => {
     return {
-        subject: 'New order for your travel',
+        subject: 'Nuevo pedido para tu viaje',
         content:
 `
-Hi ${username},
+Hola ${username},
 
-A new grab has been ordered for your next travel.
-You can view it here:
+Un nuevo grab ha sido ordenado para tu próximo viaje.
+Puedes verlo aquí:
 ${baseUrl}/${locale}/account/grab/${grabId}
 
-Cheers,
+Saludos,
 ${process.env.URL}
 `
     }
@@ -45,16 +45,16 @@ ${process.env.URL}
 
 export const emailBooked = (locale, grabId, username) => {
     return {
-        subject: 'Your order has been booked',
+        subject: 'Tu orden ha sido reservada',
         content:
 `
 Hi ${username},
 
-Your order has been booked.
-You can view more here:
+Tu orden ha sido reservada.
+Puedes ver mas aquí:
 ${baseUrl}/${locale}/account/grab/${grabId}
 
-Cheers,
+Saludos,
 ${process.env.URL}
 `
     }
@@ -62,16 +62,16 @@ ${process.env.URL}
 
 export const emailPaid = (locale, grabId, username) => {
     return {
-        subject: 'Your grab has been paid',
+        subject: 'Tu grab ha sido pagado',
         content:
 `
-Hi ${username},
+Hola ${username},
 
-Your grab has been paid.
-You can view more here:
+Tu grab ha sido pagado.
+Puedes ver mas aquí:
 ${baseUrl}/${locale}/account/grab/${grabId}
 
-Cheers,
+Saludos,
 ${process.env.URL}
 `
     }
@@ -79,16 +79,16 @@ ${process.env.URL}
 
 export const emailDispute = (locale, grabId, username) => {
     return {
-        subject: 'Your grab has been disputed',
+        subject: 'Tu grab está bajo disputa',
         content:
 `
-Hi ${username},
+Hola ${username},
 
-Your grab has been disputed.
-You can view more here:
+Tu grab está bajo disputa.
+Puedes ver mas aquí:
 ${baseUrl}/${locale}/account/grab/${grabId}
 
-Cheers,
+Saludos,
 ${process.env.URL}
 `
     } 
@@ -96,16 +96,16 @@ ${process.env.URL}
 
 export const emailBought = (locale, grabId, username) => {
     return {
-        subject: 'Your grab has been bought',
+        subject: 'Tu grab ha sido comprado',
         content:
 `
-Hi ${username},
+Hola ${username},
 
-Your grab has been bought.
-You can view more here:
+Tu grab ha sido comprado.
+Puedes ver mas aquí:
 ${baseUrl}/${locale}/account/grab/${grabId}
 
-Cheers,
+Saludos,
 ${process.env.URL}
 `
     } 
@@ -113,16 +113,16 @@ ${process.env.URL}
 
 export const emailDelivered = (locale, grabId, username) => {
     return {
-        subject: 'Your grab has been delivered',
+        subject: 'Tu grab ha sido entregado',
         content:
 `
-Hi ${username},
+Hola ${username},
 
-Your grab has been delivered.
-You can view more here:
+Tu grab ha sido entregado.
+Puedes ver mas aquí:
 ${baseUrl}/${locale}/account/grab/${grabId}
 
-Cheers,
+Saludos,
 ${process.env.URL}
 `
     } 
@@ -130,16 +130,16 @@ ${process.env.URL}
 
 export const emailReleased = (locale, grabId, username) => {
     return {
-        subject: 'Your grab has been released',
+        subject: 'Tu grab ha sido liberado',
         content:
 `
-Hi ${username},
+Hola ${username},
 
-Your grab has been released.
-You can view more here:
+Tu grab ha sido liberado.
+Puedes ver mas aquí:
 ${baseUrl}/${locale}/account/grab/${grabId}
 
-Cheers,
+Saludos,
 ${process.env.URL}
 `
     } 
@@ -147,16 +147,16 @@ ${process.env.URL}
 
 export const emailTicketReplyed = (locale, ticketId, username) => {
     return {
-        subject: 'Your ticket has been replied',
+        subject: 'Tu ticket ha sido respondido',
         content:
 `
-Hi ${username},
+Hola ${username},
 
-Your ticket has been replied.
-You can view more here:
+Tu ticket ha sido respondido.
+Puedes ver mas aquí:
 ${baseUrl}/${locale}/account/tickets/${ticketId}
 
-Cheers,
+Saludos,
 ${process.env.URL}
 `
     } 
@@ -164,16 +164,16 @@ ${process.env.URL}
 
 export const emailDisputeUpdated = (locale, grabId, username) => {
     return {
-        subject: 'Your dispute has been update',
+        subject: 'Tu disputa ha sido actualizada',
         content:
 `
-Hi ${username},
+Hola ${username},
 
-Your dispute has been updated by an admin.
-You can view more here:
+Tu disputa ha sido actualizada por un administrador.
+Puedes ver mas aquí:
 ${baseUrl}/${locale}/account/grab/${grabId}
 
-Cheers,
+Saludos,
 ${process.env.URL}
 `
     } 
@@ -181,16 +181,16 @@ ${process.env.URL}
 
 export const emailDisputeResolved = (locale, grabId, username) => {
     return {
-        subject: 'Your dispute has been resolved',
+        subject: 'Tu disputa ha sido resuleta',
         content:
 `
-Hi ${username},
+Hola ${username},
 
-Your dispute has been resolved by an admin.
-You can view more here:
+Tu disputa ha sido resuelta por un administrador.
+Puedes ver mas aquí:
 ${baseUrl}/${locale}/account/grab/${grabId}
 
-Cheers,
+Saludos,
 ${process.env.URL}
 `
     } 
