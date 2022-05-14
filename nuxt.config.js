@@ -224,8 +224,8 @@ export default {
   // https://stackoverflow.com/questions/56966137/how-to-run-nuxt-npm-run-dev-with-https-in-localhost
   axios: {
     debug: (process.env.URL) ? false : true,
-    baseURL: (process.env.URL) ? `https://${process.env.URL}` : 'https://localhost:3000',
-    https: true,
+    baseURL: (process.env.URL) ? `https://${process.env.URL}` : 'http://localhost:3000',
+    https: (process.env.URL) ? true : false,
     proxyHeaders: true
   },
 
@@ -272,7 +272,7 @@ export default {
 
   serverMiddleware: [
     // https://stackoverflow.com/questions/56629722/redirect-all-routes-to-https-in-nuxt-project-hosted-in-heroku
-    'redirect-ssl',
+    // 'redirect-ssl',
     { path: '/api', handler: '~/api/index.js' }
   ],
 
@@ -296,11 +296,13 @@ export default {
 
   // To use https on localhost:3000
   // https://stackoverflow.com/questions/56966137/how-to-run-nuxt-npm-run-dev-with-https-in-localhost
-  server: process.env.NODE_ENV !== 'production' ? {
-    https: {
-      key: fs.readFileSync(path.resolve(__dirname, 'server.key')),
-      cert: fs.readFileSync(path.resolve(__dirname, 'server.crt'))
-    }
-  } : {}
+  // server: process.env.NODE_ENV !== 'production' ? {
+  //   https: {
+  //     key: fs.readFileSync(path.resolve(__dirname, 'server.key')),
+  //     cert: fs.readFileSync(path.resolve(__dirname, 'server.crt'))
+  //   }
+  // } : {}
+  server: {
+  }
 }
 
