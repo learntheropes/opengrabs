@@ -3,6 +3,6 @@ export default ({ app }) => {
   $moment.locale(i18n.locale)
 
   app.i18n.onLanguageSwitched = (_oldLocale, newLocale) => {
-    $moment.locale(newLocale)
+  $moment.locale(newLocale)
   }
 }

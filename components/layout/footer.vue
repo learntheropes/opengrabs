@@ -29,7 +29,8 @@
                 v-for="locale in availableLocales"
                 :key="locale.code"
                 :to="switchLocalePath(locale.code)"
-                class="button is-white">
+                class="button is-text"
+              >
                 {{ locale.name }}
               </nuxt-link>
             </div>
@@ -45,7 +46,7 @@ export default {
   name: 'Footer',
   computed: {
     availableLocales() {
-      return this.$i18n.locales.filter((i) => i.code !== this.$i18n.locale)
+      return this.$i18n.locales.filter((i) => i.code !== this.$i18n.locale && i.iso !== 'x-default')
     }
   },
   methods:{

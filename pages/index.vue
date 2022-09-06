@@ -1,6 +1,6 @@
 <template>
   <section class="section">
-    <div :class="heroClass">
+    <div class="hero is-medium">
       <div class="hero-body">
         <div class="container has-text-right">
           <p class="title">
@@ -17,7 +17,7 @@
         </div>
       </div>
     </div>
-    <div :class="heroClass">
+    <div class="hero is-medium">
       <div class="hero-body">
         <div class="container">
           <p class="title">
@@ -34,7 +34,7 @@
         </div>
       </div>
     </div>
-    <div :class="heroClass">
+    <div class="hero is-medium">
       <div class="hero-body">
         <div class="container has-text-right">
           <p class="title">
@@ -55,9 +55,6 @@
 export default {
   name: 'Index',
   auth: false,
-  data: () =>({
-    heroClass: (window.innerWidth < 769) ? 'hero is-fullheight-with-navbar' : 'hero is-medium'
-  }),
   head() {
     return {
       title: this.$t('seo.home'),

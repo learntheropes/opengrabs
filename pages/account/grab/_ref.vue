@@ -21,14 +21,14 @@
             <p v-if="grab.refunded_at">{{ $t('refundedAt') }} {{ $moment(grab.refunded_at).fromNow() }}</p>
           </div>
           <b-field>
-            <div class="buttons">
-              <nuxt-link v-if="isBookedAndBuyer" class="button is-primary is-outlined" :to="localePath({ name: 'account-pay-ref', params: { ref }})">{{ $t('pay') }}</nuxt-link>
-              <button v-if="isDisputable" :class="disputeButtonClass" @click="dispute">{{ $t('dispute') }}</button>
-              <button v-if="isPaidAndTraveler" :class="boughtButtonClass" @click="bought">{{ $t('markAsBought') }}</button>
-              <button v-if="isBoughtAndTraveler" :class="deliveredButtonClass" @click="delivered">{{ $t('markAsDelivered') }}</button>
-              <button v-if="isDeliveredAndBuyer" :class="releaseButtonClass" @click="release">{{ $t('release') }}</button>
-              <nuxt-link v-if="isReleasedAndTraveler" class="button is-primary is-outlined" :to="localePath({ name: 'account-withdraw-ref', params: { ref }})">{{ $t('withdraw') }}</nuxt-link>
-            </div>
+          <div class="buttons">
+            <nuxt-link v-if="isBookedAndBuyer" class="button is-primary is-outlined" :to="localePath({ name: 'account-pay-ref', params: { ref }})">{{ $t('pay') }}</nuxt-link>
+            <button v-if="isDisputable" :class="disputeButtonClass" @click="dispute">{{ $t('dispute') }}</button>
+            <button v-if="isPaidAndTraveler" :class="boughtButtonClass" @click="bought">{{ $t('markAsBought') }}</button>
+            <button v-if="isBoughtAndTraveler" :class="deliveredButtonClass" @click="delivered">{{ $t('markAsDelivered') }}</button>
+            <button v-if="isDeliveredAndBuyer" :class="releaseButtonClass" @click="release">{{ $t('release') }}</button>
+            <nuxt-link v-if="isReleasedAndTraveler" class="button is-primary is-outlined" :to="localePath({ name: 'account-withdraw-ref', params: { ref }})">{{ $t('withdraw') }}</nuxt-link>
+          </div>
           </b-field>
           <div v-if="isRatingPossible">
             <h5 class="title is-5">{{ $t('leaveFeedbackFor') }} {{ partnerUsername }}</h5>
@@ -76,49 +76,49 @@
               <p v-if="msg.content === 'delivered'">{{ $t('statusDelivered') }}</p>
               <p v-if="msg.content === 'released'">{{ $t('statusReleased') }}</p>
               <p v-if="msg.content === 'withdrawn'">{{ $t('statusWithdrawn') }}</p>
-              <p v-if="msg.content === 'refunded'">{{ $t('statusRefunded') }}</p>       
+              <p v-if="msg.content === 'refunded'">{{ $t('statusRefunded') }}</p>     
             </div>
             <div v-if="msg.user_sub.split('|')[0] === 'admin' && msg.user_sub.split('|')[1] !== '0'" class="notification has-text-centered is-primary is-light">
               <p>
-                <span class="has-text-weight-semibold has-text-grey-light">{{ $t('admin') }} </span><br>
-                <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
+              <span class="has-text-weight-semibold has-text-grey-light">{{ $t('admin') }} </span><br>
+              <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
               </p>
               <p class="has-new-line">{{ msg.content }}</p>
               <div v-if="msg.attachments && msg.attachments.length" class="columns is-multiline is-mobile is-centered">
-                <div v-for="(attachment, i) in msg.attachments" :key="'a'+i"  class="column is-narrow">
-                  <img style="width: 128px;" :src="attachment.preview" @click="activateModal(attachment.modal)">
-                </div>
+              <div v-for="(attachment, i) in msg.attachments" :key="'a'+i"  class="column is-narrow">
+                <img style="width: 128px;" :src="attachment.preview" @click="activateModal(attachment.modal)">
+              </div>
               </div>
             </div>
             <div v-if="msg.user_sub === me" class="notification has-text-right">
               <p>
-                <span class="has-text-weight-semibold has-text-grey-light">{{ $t('me') }} </span><br>
-                <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
+              <span class="has-text-weight-semibold has-text-grey-light">{{ $t('me') }} </span><br>
+              <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
               </p>
               <p class="has-new-line">{{ msg.content }}</p>
               <nav v-if="msg.attachments && msg.attachments.length" class="level">
-                <div class="level-left"></div>
-                <div class="level-right">
-                  <div class="level-item">
-                    <div class="columns is-multiline is-mobile">
-                      <div v-for="(attachment, i) in msg.attachments" :key="'b'+i"  class="column is-narrow">
-                        <img style="width: 128px;" :src="attachment.preview" @click="activateModal(attachment.modal)">
-                      </div>
-                    </div>
+              <div class="level-left"></div>
+              <div class="level-right">
+                <div class="level-item">
+                <div class="columns is-multiline is-mobile">
+                  <div v-for="(attachment, i) in msg.attachments" :key="'b'+i"  class="column is-narrow">
+                  <img style="width: 128px;" :src="attachment.preview" @click="activateModal(attachment.modal)">
                   </div>
                 </div>
+                </div>
+              </div>
               </nav>
             </div>
             <div v-if="msg.user_sub !== me && msg.user_sub.split('|')[0] !== 'admin'" class="notification">
               <p>
-                <span class="has-text-weight-semibold has-text-grey-light">{{ msg.user_username }} </span><br>
-                <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
+              <span class="has-text-weight-semibold has-text-grey-light">{{ msg.user_username }} </span><br>
+              <span class="is-italic has-text-grey-light">{{ $moment(msg.posted_at).fromNow() }}</span>
               </p>
               <p class="has-new-line">{{ msg.content }}</p>
               <div v-if="msg.attachments && msg.attachments.length" class="columns is-multiline is-mobile">
-                <div v-for="(attachment, i) in msg.attachments" :key="'c'+i"  class="column is-narrow">
-                  <img style="width: 128px;" :src="attachment.preview" @click="activateModal(attachment.modal)">
-                </div>
+              <div v-for="(attachment, i) in msg.attachments" :key="'c'+i"  class="column is-narrow">
+                <img style="width: 128px;" :src="attachment.preview" @click="activateModal(attachment.modal)">
+              </div>
               </div>
             </div>
           </div>
@@ -127,7 +127,7 @@
     </div>
     <b-modal :active.sync="isAttachmentModalActive">
       <p class="image">
-        <img :alt="$t('attachmentExpired')" :src="modalAttachment">
+      <img :alt="$t('attachmentExpired')" :src="modalAttachment">
       </p>
     </b-modal>
   </section>
@@ -164,9 +164,9 @@ export default {
     modalAttachment: null,
   }),
   head() {
-    return {
-      title: `${this.$t('seo.grab')} ${this.ref}`
-    }
+  return {
+    title: `${this.$t('seo.grab')} ${this.ref}`
+  }
   },
   computed: {
     postMessage() {
@@ -178,17 +178,17 @@ export default {
     },
     isChatable() {
       return (
-        this.grab.status !== 'published' &&
-        this.grab.status !== 'released' &&
-        this.grab.status !== 'withdrawn'
+      this.grab.status !== 'published' &&
+      this.grab.status !== 'released' &&
+      this.grab.status !== 'withdrawn'
       )
     },
     isDisputable() {
       return (
-        this.grab.status !== 'published' &&
-        this.grab.status !== 'released' &&
-        this.grab.status !== 'withdrawn' &&
-        this.grab.status !== 'disputed'
+      this.grab.status !== 'published' &&
+      this.grab.status !== 'released' &&
+      this.grab.status !== 'withdrawn' &&
+      this.grab.status !== 'disputed'
       )
     },
     isBookedAndBuyer() {
@@ -212,7 +212,7 @@ export default {
     partnerUsername() {
       if (this.$store.state.auth.user.sub === this.grab.buyer.sub) return this.grab.traveler.username
       else if (this.$store.state.auth.user.sub === this.grab.traveler.sub) return this.grab.buyer.username
-      else return null    
+      else return null  
     }
   },
   created() {
@@ -222,138 +222,138 @@ export default {
     }, 1000 * 60 * 1)
   },
   methods: {
-    getUsername() {
-      if (this.$store.state.auth.user.sub === this.grab.buyer.sub) return this.grab.buyer.username
-      else if (this.$store.state.auth.user.sub === this.grab.traveler.sub) return this.grab.traveler.username
-    },
-    validatePost() {
-      if (!this.message && !this.attachments.length) {
-        this.postType = 'is-danger'
-        this.postError = 'Field required'
-        return false
-      }
-      return true
-    },
-    fileReset() {
-      this.$refs.fileInput.value = ""
-      this.attachments = []
-    },    
-    onFileSelected(event) {
-      this.attachments = Array.from(event.target.files)
-    },
-    async postChatMessage() {
-      this.postType = null
-      this.postError = false
-      const validPost = this.validatePost()
-      if (validPost) {
-        this.chatButtonClass = 'button is-primary is-outlined is-loading'
-        if (this.attachments.length) {
-          for (const attachment of this.attachments) {
-            const fd = new FormData()
-            const name = uniqueString()
-            const extension = attachment.name.split('.')[1]
-            fd.append('fileName', `${name}.${extension}`)
-            fd.append('file', attachment)
-            fd.append('publicKey',process.env.IMAGEKIT_PUBLIC_KEY)
-            fd.append('folder', `${process.env.BTC_CHAIN}/grabs`)
-            fd.append('overwriteFile', false)
-            fd.append('tags', `${this.ref},${this.me}`)
-            fd.append('isPrivateFile', true)
-            const { data: { signature, expire, token }} = await this.$axios.post('/api/image/signature', {})
-            fd.append('expire', expire)
-            fd.append('token', token)
-            fd.append('signature', signature)
-            const { data: { filePath }} = await axios.post('https://upload.imagekit.io/api/v1/files/upload', fd) 
-            this.public_ids.push({ path: filePath })
-          }      
-        }
-        const props = {
-          posted_at: new Date().toISOString(),
-          content: this.message,
-          attachments: this.public_ids,
-          grab_id: this.ref,
-          user_sub: this.me,
-          user_username: this.getUsername(),
-        }
-        await this.$db.messages.create({ props })
-        this.messages = await this.$db.messages.filter(this.ref, this.modalWidth)
-        this.message = null
-        this.attachments = []
-        this.public_ids = []
-        this.chatButtonClass = 'button is-primary is-outlined'
-      }
-    },
-    activateModal (attachment) {
-      this.isAttachmentModalActive = true
-      this.modalAttachment = attachment
-    },
-    async dispute() {
-      this.disputeButtonClass = 'button is-primary is-outlined is-loading'
-      await this.$grab.dispute({ ref: this.ref })
-      this.disputeButtonClass = 'button is-primary is-outlined'
-      this.$buefy.toast.open({
-        duration: 3000,
-        message: this.$t('toastGrabDisputed'),
-        position: 'is-bottom',
-        type: 'is-primary'
-      })
-      this.grab = await this.$db.grabs.get(this.ref)
-    },
-    async bought() {
-      this.boughtButtonClass = 'button is-primary is-outlined is-loading'
-      await this.$grab.bought({ ref: this.ref })
-      this.boughtButtonClass = 'button is-primary is-outlined'
-      this.$buefy.toast.open({
-        duration: 3000,
-        message: this.$t('toastGrabBought'),
-        position: 'is-bottom',
-        type: 'is-primary'
-      })
-      this.grab = await this.$db.grabs.get(this.ref)
-    },
-    async delivered() {
-      this.deliveredButtonClass = 'button is-primary is-outlined is-loading'
-      await this.$grab.delivered({ ref: this.ref })
-      this.deliveredButtonClass = 'button is-primary is-outlined'
-      this.$buefy.toast.open({
-        duration: 3000,
-        message: this.$t('toastGrabDelivered'),
-        position: 'is-bottom',
-        type: 'is-primary'
-      })
-      this.grab = await this.$db.grabs.get(this.ref)
-    },
-    async release() {
-      this.releaseButtonClass = 'button is-primary is-outlined is-loading'
-      await this.$grab.release({ ref: this.ref })
-      this.releaseButtonClass = 'button is-primary is-outlined'
-      this.$buefy.toast.open({
-        duration: 3000,
-        message: this.$t('toastGrabReleased'),
-        position: 'is-bottom',
-        type: 'is-primary'
-      })
-      this.grab = await this.$db.grabs.get(this.ref)
-    },
-    async postFeedback() {
-      this.feedbackButtonClass = 'button is-primary is-outlined is-loading'
-      const props = {
-        posted_at: new Date().toISOString(),
-        grab_id: this.ref,
-        username: this.partnerUsername,
-        autor: this.getUsername(),
-        rate: this.rate,
-        content: this.feedback
-      }
-      await this.$feedback.create({ props })
-      this.feedbackButtonClass = 'button is-primary is-outlined'
-      this.$buefy.toast.open({
-        duration: 3000,
-        message: this.$t('toastFeedbackPosted'),
-        position: 'is-bottom',
-        type: 'is-primary'
-      })
+  getUsername() {
+    if (this.$store.state.auth.user.sub === this.grab.buyer.sub) return this.grab.buyer.username
+    else if (this.$store.state.auth.user.sub === this.grab.traveler.sub) return this.grab.traveler.username
+  },
+  validatePost() {
+    if (!this.message && !this.attachments.length) {
+    this.postType = 'is-danger'
+    this.postError = 'Field required'
+    return false
     }
+    return true
+  },
+  fileReset() {
+    this.$refs.fileInput.value = ""
+    this.attachments = []
+  },  
+  onFileSelected(event) {
+    this.attachments = Array.from(event.target.files)
+  },
+  async postChatMessage() {
+    this.postType = null
+    this.postError = false
+    const validPost = this.validatePost()
+    if (validPost) {
+    this.chatButtonClass = 'button is-primary is-outlined is-loading'
+    if (this.attachments.length) {
+      for (const attachment of this.attachments) {
+      const fd = new FormData()
+      const name = uniqueString()
+      const extension = attachment.name.split('.')[1]
+      fd.append('fileName', `${name}.${extension}`)
+      fd.append('file', attachment)
+      fd.append('publicKey',process.env.IMAGEKIT_PUBLIC_KEY)
+      fd.append('folder', `${process.env.BTC_CHAIN}/grabs`)
+      fd.append('overwriteFile', false)
+      fd.append('tags', `${this.ref},${this.me}`)
+      fd.append('isPrivateFile', true)
+      const { data: { signature, expire, token }} = await this.$axios.post('/api/image/signature', {})
+      fd.append('expire', expire)
+      fd.append('token', token)
+      fd.append('signature', signature)
+      const { data: { filePath }} = await axios.post('https://upload.imagekit.io/api/v1/files/upload', fd) 
+      this.public_ids.push({ path: filePath })
+      }    
+    }
+    const props = {
+      posted_at: new Date().toISOString(),
+      content: this.message,
+      attachments: this.public_ids,
+      grab_id: this.ref,
+      user_sub: this.me,
+      user_username: this.getUsername(),
+    }
+    await this.$db.messages.create({ props })
+    this.messages = await this.$db.messages.filter(this.ref, this.modalWidth)
+    this.message = null
+    this.attachments = []
+    this.public_ids = []
+    this.chatButtonClass = 'button is-primary is-outlined'
+    }
+  },
+  activateModal (attachment) {
+    this.isAttachmentModalActive = true
+    this.modalAttachment = attachment
+  },
+  async dispute() {
+    this.disputeButtonClass = 'button is-primary is-outlined is-loading'
+    await this.$grab.dispute({ ref: this.ref })
+    this.disputeButtonClass = 'button is-primary is-outlined'
+    this.$buefy.toast.open({
+    duration: 3000,
+    message: this.$t('toastGrabDisputed'),
+    position: 'is-bottom',
+    type: 'is-primary'
+    })
+    this.grab = await this.$db.grabs.get(this.ref)
+  },
+  async bought() {
+    this.boughtButtonClass = 'button is-primary is-outlined is-loading'
+    await this.$grab.bought({ ref: this.ref })
+    this.boughtButtonClass = 'button is-primary is-outlined'
+    this.$buefy.toast.open({
+    duration: 3000,
+    message: this.$t('toastGrabBought'),
+    position: 'is-bottom',
+    type: 'is-primary'
+    })
+    this.grab = await this.$db.grabs.get(this.ref)
+  },
+  async delivered() {
+    this.deliveredButtonClass = 'button is-primary is-outlined is-loading'
+    await this.$grab.delivered({ ref: this.ref })
+    this.deliveredButtonClass = 'button is-primary is-outlined'
+    this.$buefy.toast.open({
+    duration: 3000,
+    message: this.$t('toastGrabDelivered'),
+    position: 'is-bottom',
+    type: 'is-primary'
+    })
+    this.grab = await this.$db.grabs.get(this.ref)
+  },
+  async release() {
+    this.releaseButtonClass = 'button is-primary is-outlined is-loading'
+    await this.$grab.release({ ref: this.ref })
+    this.releaseButtonClass = 'button is-primary is-outlined'
+    this.$buefy.toast.open({
+    duration: 3000,
+    message: this.$t('toastGrabReleased'),
+    position: 'is-bottom',
+    type: 'is-primary'
+    })
+    this.grab = await this.$db.grabs.get(this.ref)
+  },
+  async postFeedback() {
+    this.feedbackButtonClass = 'button is-primary is-outlined is-loading'
+    const props = {
+    posted_at: new Date().toISOString(),
+    grab_id: this.ref,
+    username: this.partnerUsername,
+    autor: this.getUsername(),
+    rate: this.rate,
+    content: this.feedback
+    }
+    await this.$feedback.create({ props })
+    this.feedbackButtonClass = 'button is-primary is-outlined'
+    this.$buefy.toast.open({
+    duration: 3000,
+    message: this.$t('toastFeedbackPosted'),
+    position: 'is-bottom',
+    type: 'is-primary'
+    })
+  }
   },
 }
 </script>

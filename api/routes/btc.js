@@ -1,4 +1,5 @@
 import asyncHandler from 'express-async-handler'
+import { allowOrigin } from '../utils'
 import { authorizeUser, authorizeAdmin } from '../auth'
 import { q, client } from '../db'
 import opennode from '../btc'
@@ -14,13 +15,13 @@ dotenv.config()
 
 opennode.setCredentials()
 
-router.get('/btc/charge-info/:id', asyncHandler(async (req, res) => {
+router.get('/btc/charge-info/:id', allowOrigin, asyncHandler(async (req, res) => {
   const { id } = req.params
   const response = await opennode.chargeInfo(id)
-  res.status(200).json(response)
+  return res.status(200).json(response)
 }))
 
-router.post('/btc/create-charge/:ref', authorizeUser, asyncHandler(async (req, res) => {
+router.post('/btc/create-charge/:ref', allowOrigin, authorizeUser, asyncHandler(async (req, res) => {
   const { jwt } = req.body
   const { amount, order_id, description, callback_url, auto_settle, exchange_rate } = req.body
   const { ref } = req.params
@@ -30,8 +31,7 @@ router.post('/btc/create-charge/:ref', authorizeUser, asyncHandler(async (req, r
   )
 
   if (jwt.sub !== grab.buyer.sub) {
-    res.status(401).send('unauthorized')
-    return
+    return res.status(401).send('unauthorized')
   }
 
   const response = await opennode.createCharge({
@@ -56,7 +56,7 @@ router.post('/btc/create-charge/:ref', authorizeUser, asyncHandler(async (req, r
     )
   )
 
-  res.status(201).json(response)
+  return res.status(201).json(response)
 }))
 
 router.post('/btc/charge/webhook', asyncHandler(async (req, res) => {
@@ -73,33 +73,33 @@ router.post('/btc/charge/webhook', asyncHandler(async (req, res) => {
     
     if (req.body.status === 'underpaid') {
       await client.query(
-        q.Update(
-          q.Ref(q.Collection('grabs'), req.body.order_id),
-          { data: {
-            status: req.body.status,
-            charge: req.body,
-            underpaid_at: new Date().toISOString()
-          }},
-        )
+      q.Update(
+        q.Ref(q.Collection('grabs'), req.body.order_id),
+        { data: {
+          status: req.body.status,
+          charge: req.body,
+          underpaid_at: new Date().toISOString()
+        }},
+      )
       )
     }
 
     if (req.body.status === 'paid') {
       await client.query(
-        q.Update(
-          q.Ref(q.Collection('grabs'), req.body.order_id),
-          { data: {
-            status: req.body.status,
-            charge: req.body,
-            paid_at: new Date().toISOString()
-          }},
-        )
+      q.Update(
+        q.Ref(q.Collection('grabs'), req.body.order_id),
+        { data: {
+          status: req.body.status,
+          charge: req.body,
+          paid_at: new Date().toISOString()
+        }},
+      )
       )
 
       await client.query(
         q.Create(
           q.Collection('messages'),
-          {
+            {
             data: {
               posted_at: new Date().toISOString(),
               content: 'paid',
@@ -115,13 +115,13 @@ router.post('/btc/charge/webhook', asyncHandler(async (req, res) => {
       const { data: grab } = await client.query(
         q.Get(q.Ref(q.Collection('grabs'), ref))
       )
-  
+    
       const { data: traveler } = await client.query(
         q.Get(
           q.Match(q.Index('user_by_sub'), grab.traveler.sub)
         )
       )
-  
+    
       let emailContent
       switch (traveler.locale) {
         case 'en':
@@ -135,7 +135,7 @@ router.post('/btc/charge/webhook', asyncHandler(async (req, res) => {
         default:
           emailContent = en.emailPaid(traveler.locale, req.body.order_id, traveler.username)
       }
-  
+    
       await transporter.sendMail({
         to: traveler.email,
         subject: emailContent.subject,
@@ -143,12 +143,9 @@ router.post('/btc/charge/webhook', asyncHandler(async (req, res) => {
       })
     }
 
-    res.status(200).json({})
-    return
-    
+    return res.status(200).json({})  
   } else {
-    res.status(401).send('unauthorized')
-    return
+    return res.status(401).send('unauthorized')
   }
 }))
 
@@ -171,7 +168,7 @@ router.post('/btc/withdrawal/webhook', asyncHandler(async (req, res) => {
         { data: { 
           withdrawn: withdraw_status,
           withdraw: {
-            webhook: req.body
+          webhook: req.body
           },
         }}
       )
@@ -179,25 +176,23 @@ router.post('/btc/withdrawal/webhook', asyncHandler(async (req, res) => {
 
     await client.query(
       q.Create(
-          q.Collection('messages'),
-          { data: {
-              posted_at: new Date().toISOString(),
-              content: 'withdrawn',
-              grab_id: id,
-              user_sub: 'admin|0',
-          }}
+        q.Collection('messages'),
+        { data: {
+          posted_at: new Date().toISOString(),
+          content: 'withdrawn',
+          grab_id: id,
+          user_sub: 'admin|0',
+        }}
       )
-  )
+    )
 
-    res.status(200).json({})
-    return
+    return res.status(200).json({})
   } else {
-    res.status(401).send('unauthorized')
-    return
+    return res.status(401).send('unauthorized')
   }
 }))
 
-router.get('/btc/rates', asyncHandler(async (req, res) => {
+router.get('/btc/rates', allowOrigin, asyncHandler(async (req, res) => {
   let rates = {}
   let response = await opennode.listExchangeRates()
   Object.keys(response).forEach(pair => {
@@ -210,10 +205,10 @@ router.get('/btc/rates', asyncHandler(async (req, res) => {
       }
     })
   })
-  res.status(200).json(rates)
+  return res.status(200).json(rates)
 }))
 
-router.get('/btc/rate/:currency', asyncHandler(async (req, res) => {
+router.get('/btc/rate/:currency', allowOrigin, asyncHandler(async (req, res) => {
   const { currency } = req.params
   let rates = {}
   let response = await opennode.listExchangeRates()
@@ -228,10 +223,10 @@ router.get('/btc/rate/:currency', asyncHandler(async (req, res) => {
     })
   })
   const rate = rates[currency]
-  res.status(200).json(rate)
+  return res.status(200).json(rate)
 }))
 
-router.get('/btc/rates/:currencies', asyncHandler(async (req, res) => {
+router.get('/btc/rates/:currencies', allowOrigin, asyncHandler(async (req, res) => {
   const { currencies } = req.params
   const currenciesArray = currencies.split(',')
   let rates = {}
@@ -253,56 +248,53 @@ router.get('/btc/rates/:currencies', asyncHandler(async (req, res) => {
     final.push(temp)
   })
 
-  res.status(200).json(final)
+  return res.status(200).json(final)
 }))
 
-router.get('/btc/account-balance',  authorizeUser, authorizeAdmin, asyncHandler(async (req, res) => {
+router.get('/btc/account-balance',  allowOrigin, authorizeUser, authorizeAdmin, asyncHandler(async (req, res) => {
   const response = await opennode.accountBalance()
-  res.status(200).json(response)
+  return res.status(200).json(response)
 }))
 
-router.get('/btc/list-activity',  authorizeUser, authorizeAdmin, asyncHandler(async (req, res) => {
+router.get('/btc/list-activity',  allowOrigin, authorizeUser, authorizeAdmin, asyncHandler(async (req, res) => {
   const response = await opennode.listActivity(req.query)
-  res.status(200).json(response)
+  return res.status(200).json(response)
 }))
 
-router.post('/btc/initiate-exchange', authorizeUser, asyncHandler(async (req, res) => {
+router.post('/btc/initiate-exchange', allowOrigin, authorizeUser, asyncHandler(async (req, res) => {
   const { to, btc_amount, grab_id, user_id } = req.body
   const grab = await client.query(
     q.Get(q.Ref(q.Collection(collection), grab_id))
   )
   if (grab.status !== 'released' || user_id !== grab.traveler.id) {
-    res.status(401).send('unauthorized')
-    return
+    return res.status(401).send('unauthorized')
   }
   const response = await opennode.initiateExchange({ to, btc_amount })
-  res.status(200).json(response)
+  return res.status(200).json(response)
 }))
 
-router.post('/btc/initiate-withdrawal', authorizeUser, asyncHandler(async (req, res) => {
+router.post('/btc/initiate-withdrawal', allowOrigin, authorizeUser, asyncHandler(async (req, res) => {
   const { type, amount, address, callback_url, grab_id, user_id } = req.body
   const grab = await client.query(
     q.Get(q.Ref(q.Collection(collection), grab_id))
   )
   if (grab.status !== 'released' || user_id !== grab.traveler.id) {
-    res.status(401).send('unauthorized')
-    return
+    return res.status(401).send('unauthorized')
   }
   const response = await opennode.initiateWithdrawalAsync({ type, amount, address, callback_url })
   res.status(200).json(response)
 }))
 
-router.post('/btc/initiate-lnuri-withdrawal', authorizeUser, asyncHandler(async (req, res) => {
+router.post('/btc/initiate-lnuri-withdrawal', allowOrigin, authorizeUser, asyncHandler(async (req, res) => {
   const { min_amt, max_amt, callback_url, external_id, expiry_date, grab_id, user_id } = req.body
   const grab = await client.query(
     q.Get(q.Ref(q.Collection(collection), grab_id))
   )
   if (grab.status !== 'released' || user_id !== grab.traveler.id) {
-    res.status(401).send('unauthorized')
-    return
+    return res.status(401).send('unauthorized')
   }
   const response = await opennode.initiateLnUrlWithdrawal({ min_amt, max_amt, callback_url, external_id, expiry_date })
-  res.status(200).json(response)
+  return res.status(200).json(response)
 }))
 
-module.exports = router
+export default router

@@ -30,7 +30,7 @@ app.use(feedback)
 app.use(ticket)
 app.use(image)
 
-module.exports = {
+export default {
   path: '/api',
   handler: app
 }

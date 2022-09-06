@@ -1,20 +1,20 @@
 <template>
-    <section class="section container">
-        {{ status }}
-    </section>
+  <section class="section container">
+    {{ status }}
+  </section>
 </template>
 
 <script>
 export default {
-    auth: false,
-    async asyncData ({ app, params: { code }}) {
-        const { data: { status }} = await app.$axios.get(`/api/facebook/get/status/${code}`)
-        return { status }
-    },
-    head() {
-        return {
-            title: `Facebook`,
-        }
+  auth: false,
+  async asyncData ({ app, params: { code }}) {
+    const { data: { status }} = await app.$axios.get(`/api/facebook/get/status/${code}`)
+    return { status }
+  },
+  head() {
+    return {
+      title: `Facebook`,
     }
+  }
 }
 </script>

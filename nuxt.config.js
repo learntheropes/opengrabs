@@ -87,8 +87,6 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
-    // https://go.nuxtjs.dev/eslint
-    '@nuxtjs/eslint-module',
     '@nuxtjs/moment'
   ],
 
@@ -101,6 +99,7 @@ export default {
     '@nuxtjs/dotenv',
     '@nuxtjs/auth-next',
     '@nuxtjs/google-analytics',
+    '@nuxtjs/proxy',
     ['nuxt-cookie-control', {
       colors:{
         barBackground: '#7957d5',
@@ -225,7 +224,7 @@ export default {
   axios: {
     debug: (process.env.URL) ? false : true,
     baseURL: (process.env.URL) ? `https://${process.env.URL}` : 'https://localhost:3000',
-    https: true,
+    https: (process.env.URL) ? true : false,
     proxyHeaders: true
   },
 
@@ -259,15 +258,23 @@ export default {
     disabled: true,
   },
 
+  proxy: {
+    '/img': {
+      target: 'https://ik.imagekit.io/opengrabs',
+      pathRewrite: {'^/img' : ''},
+    }
+  },
+
+  // https://stackoverflow.com/questions/55856117/using-timezones-with-nuxtjs-moment/57022505
+  moment: {
+    timezone: true,
+    locales: ['es']
+  },
+
   router: {
     middleware: [
       'auth'
     ]
-  },
-  // https://stackoverflow.com/questions/55856117/using-timezones-with-nuxtjs-moment/57022505
-  moment: {
-    timezone: true,
-    locales: ['es', 'pt', 'ru']
   },
 
   serverMiddleware: [
@@ -296,7 +303,7 @@ export default {
 
   // To use https on localhost:3000
   // https://stackoverflow.com/questions/56966137/how-to-run-nuxt-npm-run-dev-with-https-in-localhost
-  server: process.env.NODE_ENV !== 'production' ? {
+  server: (!process.env.URL) ? {
     https: {
       key: fs.readFileSync(path.resolve(__dirname, 'server.key')),
       cert: fs.readFileSync(path.resolve(__dirname, 'server.crt'))

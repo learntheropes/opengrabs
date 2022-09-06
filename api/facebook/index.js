@@ -4,11 +4,11 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 export default function parseSignedRequest (req, res, next) {
-    const signedRequest = getSignedRequest(req)
-    const [signature, payload] = getSignatureAndPayloadFromSignedRequest(signedRequest)
-    validateSignature(signature, payload)
-    replaceBodyWithDecodedPayload(req, payload)
-    next()
+  const signedRequest = getSignedRequest(req)
+  const [signature, payload] = getSignatureAndPayloadFromSignedRequest(signedRequest)
+  validateSignature(signature, payload)
+  replaceBodyWithDecodedPayload(req, payload)
+  next()
 }
 
 function getSignedRequest (req) {
@@ -18,9 +18,9 @@ function getSignedRequest (req) {
 function getSignatureAndPayloadFromSignedRequest (signedRequest) {
   const [encodedSignature, payload] = signedRequest.split('.', 2)
   if (encodedSignature == null || payload == null) {
-    const error = new Error('Signed request has invalid format')
-    error.code = 400
-    throw error;
+  const error = new Error('Signed request has invalid format')
+  error.code = 400
+  throw error;
   }
   const signature = decodeSignature(encodedSignature)
   return [signature, payload]
@@ -36,9 +36,9 @@ function validateSignature (actualSignature, payload) {
   // For some reason, the actual signature always has a '=' appended
   const actualSignatureWithEqualsSign = actualSignature + '='
   if (actualSignatureWithEqualsSign !== expectedSignature) {
-    const error = new Error('Invalid signature')
-    error.code = 401
-    throw error;
+  const error = new Error('Invalid signature')
+  error.code = 401
+  throw error;
   }
 }
 
@@ -49,10 +49,10 @@ function decodeSignature (encodedSignature) {
 function decodePayload (payload) {
   const bodyJson = base64url.decode(urlDecode(payload))
   try {
-    return JSON.parse(bodyJson)
+  return JSON.parse(bodyJson)
   } catch (error) {
-    error.code = 400
-    throw error
+  error.code = 400
+  throw error
   }
 }
 
@@ -68,25 +68,25 @@ function getExpectedSignature (payload) {
 
 function getOrThrowClientError (req, type, key) {
   const getError = () => {
-    throw new Error(`Missing ${type} parameter '${key}'`)
+  throw new Error(`Missing ${type} parameter '${key}'`)
   }
   let array
   switch (type) {
-    case 'query':
-      array = req.query
-      break
-    case 'body':
-      array = req.body
-      break
-    default:
-      throw new Error(`Unknown type: ${type}`)
+  case 'query':
+    array = req.query
+    break
+  case 'body':
+    array = req.body
+    break
+  default:
+    throw new Error(`Unknown type: ${type}`)
   }
   if (!(key in array)) {
-    throw getError()
+  throw getError()
   }
   const value = array[key]
   if (value == null) {
-    throw getError()
+  throw getError()
   }
   return value
 }

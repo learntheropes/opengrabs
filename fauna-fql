@@ -14,38 +14,38 @@ CreateCollection({ name: "email_ticket_messages" })
 CreateIndex({
   name: "travels_search_by_traveler_sub_and_date",
   source: {
-    collection: Collection("travels"),
-    fields: {
-      date_time: Query(
-        Lambda(
-          "doc",
-          Time(Select(["data", "date"], Var('doc')))
-        )
-      )
-    }
+  collection: Collection("travels"),
+  fields: {
+    date_time: Query(
+    Lambda(
+      "doc",
+      Time(Select(["data", "date"], Var('doc')))
+    )
+    )
+  }
   },
   terms: [
-    {
-      field: ["data", "traveler", "sub"]
-    }
+  {
+    field: ["data", "traveler", "sub"]
+  }
   ],
   values: [
-    {
-      binding: "date_time"
-    },
-    {
-      field: ["ref"]
-    }
+  {
+    binding: "date_time"
+  },
+  {
+    field: ["ref"]
+  }
   ]
 })
 
 Map(
   Paginate(
-    Range(
-      Match(Index("travels_search_by_traveler_sub_and_date"), jwt.sub),
-      [], [Now()]
-    ),
-    { size: 100000 }
+  Range(
+    Match(Index("travels_search_by_traveler_sub_and_date"), jwt.sub),
+    [], [Now()]
+  ),
+  { size: 100000 }
   ),
   Lambda(["date_time", "ref"], Get(Var("ref")))
 )
@@ -53,37 +53,37 @@ Map(
 CreateIndex({
   name: "travels_search_by_status_active_and_not_expired_range_published_at",
   source: {
-    collection: Collection("travels"),
-    fields: {
-      date_time: Query(
-        Lambda(
-          "doc",
-          Time(Select(["data", "date"], Var('doc')))
-        )
-      ),
-      published_at_time: Query(
-        Lambda(
-          "doc",
-          Time(Select(["data", "published_at"], Var('doc')))
-        )
-      )
-    }
+  collection: Collection("travels"),
+  fields: {
+    date_time: Query(
+    Lambda(
+      "doc",
+      Time(Select(["data", "date"], Var('doc')))
+    )
+    ),
+    published_at_time: Query(
+    Lambda(
+      "doc",
+      Time(Select(["data", "published_at"], Var('doc')))
+    )
+    )
+  }
   },
   terms: [
-    {
-      field: ["data", "status"]
-    }
+  {
+    field: ["data", "status"]
+  }
   ],
   values: [
-    {
-      binding: "date_time"
-    },
-    {
-      binding: "published_at_time", reverse: true
-    },
-    {
-      field: ["ref"]
-    }
+  {
+    binding: "date_time"
+  },
+  {
+    binding: "published_at_time", reverse: true
+  },
+  {
+    field: ["ref"]
+  }
   ]
 })
 
@@ -92,40 +92,40 @@ Paginate(Range(Match(Index("travels_search_by_status_active_and_not_expired_rang
 CreateIndex({
   name: "grabs_serch_by_adv_status_range_published_at",
   source: {
-    collection: Collection("grabs"),
-    fields: {
-      max_delivery_date_time: Query(
-        Lambda(
-          "doc",
-          Time(Select(["data", "destination", "max_delivery_date"], Var('doc')))
-        )
-      ),
-      published_at_time: Query(
-        Lambda(
-          "doc",
-          Time(Select(["data", "published_at"], Var('doc')))
-        )
-      )
-    }
+  collection: Collection("grabs"),
+  fields: {
+    max_delivery_date_time: Query(
+    Lambda(
+      "doc",
+      Time(Select(["data", "destination", "max_delivery_date"], Var('doc')))
+    )
+    ),
+    published_at_time: Query(
+    Lambda(
+      "doc",
+      Time(Select(["data", "published_at"], Var('doc')))
+    )
+    )
+  }
   },
   terms: [
-    {
-      field: ["data", "adv"]
-    },
-    {
-      field: ["data", "status"]
-    }
+  {
+    field: ["data", "adv"]
+  },
+  {
+    field: ["data", "status"]
+  }
   ],
   values: [
-    {
-      binding: "max_delivery_date_time"
-    },
-    {
-      binding: "published_at_time", reverse: true
-    },
-    {
-      field: ["ref"]
-    }
+  {
+    binding: "max_delivery_date_time"
+  },
+  {
+    binding: "published_at_time", reverse: true
+  },
+  {
+    field: ["ref"]
+  }
   ]
 })
 
@@ -135,327 +135,327 @@ Paginate(Range(Match(Index("grabs_serch_by_adv_status_range_published_at"), "pro
 CreateIndex({
   name: "grabs_search_by_buyer_sub_status_sort_by_updated_at_desc",
   source: {
-    collection: Collection("grabs")
+  collection: Collection("grabs")
   },
   terms: [
-    {
-      field: ["data", "buyer", "sub"]
-    },
-    {
-      field: ["data", "status"]
-    }
+  {
+    field: ["data", "buyer", "sub"]
+  },
+  {
+    field: ["data", "status"]
+  }
   ],
   values: [
-    {
-       field: ["data", "updated_at"], reverse: true
-    },
-    {
-      field: ["ref"]
-    }
+  {
+     field: ["data", "updated_at"], reverse: true
+  },
+  {
+    field: ["ref"]
+  }
   ]
 })
 
 CreateIndex({
   name: "grabs_search_by_buyer_sub_status_withdrawn_sort_by_updated_at_desc",
   source: {
-    collection: Collection("grabs")
+  collection: Collection("grabs")
   },
   terms: [
-    {
-      field: ["data", "buyer", "sub"]
-    },
-    {
-      field: ["data", "status"]
-    },
-    {
-      field: ["data", "withdrawn"]
-    }
+  {
+    field: ["data", "buyer", "sub"]
+  },
+  {
+    field: ["data", "status"]
+  },
+  {
+    field: ["data", "withdrawn"]
+  }
   ],
   values: [
-    {
-       field: ["data", "updated_at"], reverse: true
-    },
-    {
-      field: ["ref"]
-    }
+  {
+     field: ["data", "updated_at"], reverse: true
+  },
+  {
+    field: ["ref"]
+  }
   ]
 })
 
 CreateIndex({
   name: "grabs_search_by_traveler_sub_status_sort_by_updated_at_desc",
   source: {
-    collection: Collection("grabs")
+  collection: Collection("grabs")
   },
   terms: [
-    {
-      field: ["data", "traveler", "sub"]
-    },
-    {
-      field: ["data", "status"]
-    }
+  {
+    field: ["data", "traveler", "sub"]
+  },
+  {
+    field: ["data", "status"]
+  }
   ],
   values: [
-    {
-       field: ["data", "updated_at"], reverse: true
-    },
-    {
-      field: ["ref"]
-    }
+  {
+     field: ["data", "updated_at"], reverse: true
+  },
+  {
+    field: ["ref"]
+  }
   ]
 })
 
 CreateIndex({
   name: "grabs_search_by_traveler_sub_status_withdrawn_sort_by_updated_at_desc",
   source: {
-    collection: Collection("grabs")
+  collection: Collection("grabs")
   },
   terms: [
-    {
-      field: ["data", "traveler", "sub"]
-    },
-    {
-      field: ["data", "status"]
-    },
-    {
-      field: ["data", "withdrawn"]
-    }
+  {
+    field: ["data", "traveler", "sub"]
+  },
+  {
+    field: ["data", "status"]
+  },
+  {
+    field: ["data", "withdrawn"]
+  }
   ],
   values: [
-    {
-       field: ["data", "updated_at"], reverse: true
-    },
-    {
-      field: ["ref"]
-    }
+  {
+     field: ["data", "updated_at"], reverse: true
+  },
+  {
+    field: ["ref"]
+  }
   ]
 })
 
 CreateIndex({
   name: "admin_disputes_status",
   source: {
-    collection: Collection("grabs"),
+  collection: Collection("grabs"),
   },
   terms: [
-    {
-      field: ["data", "dispute", "status"]
-    }
+  {
+    field: ["data", "dispute", "status"]
+  }
   ],
   values: [
-    {
-      field: ["data", "disputed_at"], reverse: true
-    },
-    {
-      field: ["ref"]
-    }
+  {
+    field: ["data", "disputed_at"], reverse: true
+  },
+  {
+    field: ["ref"]
+  }
   ]
 })
 
 CreateIndex({
   name: "facebook_deletion_status_by_code",
   source: {
-    collection: Collection("facebook_deletion_requests"),
+  collection: Collection("facebook_deletion_requests"),
   },
   terms: [
-    {
-      field: ["data", "dispute", "confirmationCode"]
-    }
+  {
+    field: ["data", "dispute", "confirmationCode"]
+  }
   ],
   values: [
-    {
-      field: ["ref"]
-    }
+  {
+    field: ["ref"]
+  }
   ]
 })
 
 CreateIndex({
   name: "messages_by_grab_id",
   source: {
-    collection: Collection("messages"),
+  collection: Collection("messages"),
   },
   terms: [
-    {
-      field: ["data", "grab_id"]
-    }
+  {
+    field: ["data", "grab_id"]
+  }
   ],
   values: [
-    {
-      field: ["data", "posted_at"], reverse: true
-    },
-    {
-      field: ["ref"]
-    }
+  {
+    field: ["data", "posted_at"], reverse: true
+  },
+  {
+    field: ["ref"]
+  }
   ]
 })
 
 CreateIndex({
   name: "user_by_sub",
   source: {
-    collection: Collection("users"),
+  collection: Collection("users"),
   },
   terms: [
-    {
-      field: ["data", "sub"]
-    }
+  {
+    field: ["data", "sub"]
+  }
   ],
   values: [
-    {
-      field: ["ref"]
-    }
+  {
+    field: ["ref"]
+  }
   ]
 })
 
 CreateIndex({
   name: "user_by_username",
   source: {
-    collection: Collection("users"),
+  collection: Collection("users"),
   },
   terms: [
-    {
-      field: ["data", "username"]
-    }
+  {
+    field: ["data", "username"]
+  }
   ],
   values: [
-    {
-      field: ["ref"]
-    }
+  {
+    field: ["ref"]
+  }
   ]
 })
 
 CreateIndex({
   name: "charge_webhook_by_status",
   source: {
-    collection: Collection("charge_webhooks"),
+  collection: Collection("charge_webhooks"),
   },
   terms: [
-    {
-      field: ["data", "status"]
-    }
+  {
+    field: ["data", "status"]
+  }
   ],
   values: [
-    {
-      field: ["ref"]
-    }
+  {
+    field: ["ref"]
+  }
   ]
 })
 
 CreateIndex({
   name: "charge_webhook_by_order_id",
   source: {
-    collection: Collection("charge_webhooks"),
+  collection: Collection("charge_webhooks"),
   },
   terms: [
-    {
-      field: ["data", "order_id"]
-    }
+  {
+    field: ["data", "order_id"]
+  }
   ],
   values: [
-    {
-      field: ["ref"]
-    }
+  {
+    field: ["ref"]
+  }
   ]
 })
 
 CreateIndex({
   name: "grab_by_withdraw_id",
   source: {
-    collection: Collection("grabs"),
+  collection: Collection("grabs"),
   },
   terms: [
-    {
-      field: ["data", "withdraw", "id"]
-    }
+  {
+    field: ["data", "withdraw", "id"]
+  }
   ],
   values: [
-    {
-      field: ["ref"]
-    }
+  {
+    field: ["ref"]
+  }
   ]
 })
 
 CreateIndex({
-    name: "disputes_by_status_by_attention_required",
-    source: {
-      collection: Collection("grabs")
+  name: "disputes_by_status_by_attention_required",
+  source: {
+    collection: Collection("grabs")
+  },
+  terms: [
+    {
+    field: ["data", "dispute", "status"]
+    }
+  ],
+  values: [
+    {
+     field: ["data", "dispute", "attention_required"]
     },
-    terms: [
-      {
-        field: ["data", "dispute", "status"]
-      }
-    ],
-    values: [
-      {
-         field: ["data", "dispute", "attention_required"]
-      },
-      {
-        field: ["ref"]
-      }
-    ]
+    {
+    field: ["ref"]
+    }
+  ]
  })
 
 CreateIndex({
   name: "feedback_by_username",
   source: {
-    collection: Collection("feedback"),
+  collection: Collection("feedback"),
   },
   terms: [
-    {
-      field: ["data", "username"]
-    }
+  {
+    field: ["data", "username"]
+  }
   ],
   values: [
-    {
-      field: ["data", "posted_at"], reverse: true
-    },
-    {
-      field: ["ref"]
-    }
+  {
+    field: ["data", "posted_at"], reverse: true
+  },
+  {
+    field: ["ref"]
+  }
   ]
 })
 
 CreateIndex({
   name: "grabs_containing_withdraw_webhook",
   source: [{
-    collection: Collection("grabs"),
-    fields: {
-      contains_withdraw_webhook: Query(
-        Lambda(
-          "doc",
-          ContainsPath( ["data", "withdraw", "webhook"], Var('doc'))
-        )
-      )
-    }
+  collection: Collection("grabs"),
+  fields: {
+    contains_withdraw_webhook: Query(
+    Lambda(
+      "doc",
+      ContainsPath( ["data", "withdraw", "webhook"], Var('doc'))
+    )
+    )
+  }
   }],
   terms: [
-    {
-      binding: 'contains_withdraw_webhook'
-    }
+  {
+    binding: 'contains_withdraw_webhook'
+  }
   ]
 })
 
 CreateIndex({
   name: "grabs_containing_charge",
   source: [{
-    collection: Collection("grabs"),
-    fields: {
-      contains_charge: Query(
-        Lambda(
-          "doc",
-          ContainsPath( ["data", "charge"], Var('doc'))
-        )
-      )
-    }
+  collection: Collection("grabs"),
+  fields: {
+    contains_charge: Query(
+    Lambda(
+      "doc",
+      ContainsPath( ["data", "charge"], Var('doc'))
+    )
+    )
+  }
   }],
   terms: [
-    {
-      binding: 'contains_charge'
-    }
+  {
+    binding: 'contains_charge'
+  }
   ]
 })
 
 Map(
   Paginate(
-      Match(Index("grabs_containing_charge"), true),
-    { size: 100000 }
+    Match(Index("grabs_containing_charge"), true),
+  { size: 100000 }
   ),
   Lambda("ref", Get(Var("ref")))
 )
@@ -465,105 +465,105 @@ Count(Match(Index("grabs_containing_charge"), true))
 CreateIndex({
   name: "tickets_search_by_buyer_sub_sort_by_created_at_desc",
   source: {
-    collection: Collection("tickets")
+  collection: Collection("tickets")
   },
   terms: [
-    {
-      field: ["data", "user", "sub"]
-    },
+  {
+    field: ["data", "user", "sub"]
+  },
   ],
   values: [
-    {
-       field: ["data", "created_at"], reverse: true
-    },
-    {
-      field: ["ref"]
-    }
+  {
+     field: ["data", "created_at"], reverse: true
+  },
+  {
+    field: ["ref"]
+  }
   ]
 })
 
 CreateIndex({
   name: "ticket_messages_search_by_ticket_ref_sort_by_posted_at_desc",
   source: {
-    collection: Collection("ticket_messages")
+  collection: Collection("ticket_messages")
   },
   terms: [
-    {
-      field: ["data", "ticket"]
-    },
+  {
+    field: ["data", "ticket"]
+  },
   ],
   values: [
-    {
-       field: ["data", "posted_at"], reverse: true
-    },
-    {
-      field: ["ref"]
-    }
+  {
+     field: ["data", "posted_at"], reverse: true
+  },
+  {
+    field: ["ref"]
+  }
   ]
 })
 
 CreateIndex({
   name: "tickets_by_status_by_language",
   source: {
-    collection: Collection("tickets")
+  collection: Collection("tickets")
   },
   terms: [
-    {
-      field: ["data", "status"]
-    },
-    {
-      field: ["data", "language"]
-    },
+  {
+    field: ["data", "status"]
+  },
+  {
+    field: ["data", "language"]
+  },
   ],
   values: [
-    {
-       field: ["data", "updated_at"]
-    },
-    {
-      field: ["ref"]
-    }
+  {
+     field: ["data", "updated_at"]
+  },
+  {
+    field: ["ref"]
+  }
   ]
 })
 
 CreateIndex({
   name: "email_ticket_messages_search_by_ticket_ref_sort_by_posted_at_desc",
   source: {
-    collection: Collection("email_ticket_messages")
+  collection: Collection("email_ticket_messages")
   },
   terms: [
-    {
-      field: ["data", "ticket"]
-    },
+  {
+    field: ["data", "ticket"]
+  },
   ],
   values: [
-    {
-       field: ["data", "posted_at"], reverse: true
-    },
-    {
-      field: ["ref"]
-    }
+  {
+     field: ["data", "posted_at"], reverse: true
+  },
+  {
+    field: ["ref"]
+  }
   ]
 })
 
 CreateIndex({
   name: "email_tickets_by_status_by_language",
   source: {
-    collection: Collection("email_tickets")
+  collection: Collection("email_tickets")
   },
   terms: [
-    {
-      field: ["data", "status"]
-    },
-    {
-      field: ["data", "language"]
-    }
+  {
+    field: ["data", "status"]
+  },
+  {
+    field: ["data", "language"]
+  }
   ],
   values: [
-    {
-      field: ["data", "updated_at"]
-    },
-    {
-      field: ["ref"]
-    }
+  {
+    field: ["data", "updated_at"]
+  },
+  {
+    field: ["ref"]
+  }
   ]
 })

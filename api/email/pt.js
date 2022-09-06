@@ -3,9 +3,9 @@ dotenv.config()
 const baseUrl = process.env.URL ? `https://${process.env.URL}` : 'https://localhost:3000'
 
 export const emailConfirmationCode = (code, username) => {
-    return {
-        subject: 'Email confirmation code',
-        content: (username) ?
+  return {
+    subject: 'Email confirmation code',
+    content: (username) ?
 `
 Hi ${username},
 
@@ -23,13 +23,13 @@ Your email confirmation code is ${code}
 Cheers,
 ${process.env.URL}
 `
-    }
+  }
 };
 
 export const emailOrder = (locale, grabId, username) => {
-    return {
-        subject: 'New order for your travel',
-        content:
+  return {
+    subject: 'New order for your travel',
+    content:
 `
 Hi ${username},
 
@@ -40,13 +40,13 @@ ${baseUrl}/${locale}/account/grab/${grabId}
 Cheers,
 ${process.env.URL}
 `
-    }
+  }
 };
 
 export const emailBooked = (locale, grabId, username) => {
-    return {
-        subject: 'Your order has been booked',
-        content:
+  return {
+    subject: 'Your order has been booked',
+    content:
 `
 Hi ${username},
 
@@ -57,13 +57,13 @@ ${baseUrl}/${locale}/account/grab/${grabId}
 Cheers,
 ${process.env.URL}
 `
-    }
+  }
 };
 
 export const emailPaid = (locale, grabId, username) => {
-    return {
-        subject: 'Your grab has been paid',
-        content:
+  return {
+    subject: 'Your grab has been paid',
+    content:
 `
 Hi ${username},
 
@@ -74,13 +74,13 @@ ${baseUrl}/${locale}/account/grab/${grabId}
 Cheers,
 ${process.env.URL}
 `
-    }
+  }
 };
 
 export const emailDispute = (locale, grabId, username) => {
-    return {
-        subject: 'Your grab has been disputed',
-        content:
+  return {
+    subject: 'Your grab has been disputed',
+    content:
 `
 Hi ${username},
 
@@ -91,13 +91,13 @@ ${baseUrl}/${locale}/account/grab/${grabId}
 Cheers,
 ${process.env.URL}
 `
-    } 
+  } 
 };
 
 export const emailBought = (locale, grabId, username) => {
-    return {
-        subject: 'Your grab has been bought',
-        content:
+  return {
+    subject: 'Your grab has been bought',
+    content:
 `
 Hi ${username},
 
@@ -108,13 +108,13 @@ ${baseUrl}/${locale}/account/grab/${grabId}
 Cheers,
 ${process.env.URL}
 `
-    } 
+  } 
 };
 
 export const emailDelivered = (locale, grabId, username) => {
-    return {
-        subject: 'Your grab has been delivered',
-        content:
+  return {
+    subject: 'Your grab has been delivered',
+    content:
 `
 Hi ${username},
 
@@ -125,13 +125,13 @@ ${baseUrl}/${locale}/account/grab/${grabId}
 Cheers,
 ${process.env.URL}
 `
-    } 
+  } 
 };
 
 export const emailReleased = (locale, grabId, username) => {
-    return {
-        subject: 'Your grab has been released',
-        content:
+  return {
+    subject: 'Your grab has been released',
+    content:
 `
 Hi ${username},
 
@@ -142,13 +142,13 @@ ${baseUrl}/${locale}/account/grab/${grabId}
 Cheers,
 ${process.env.URL}
 `
-    } 
+  } 
 };
 
 export const emailTicketReplyed = (locale, ticketId, username) => {
-    return {
-        subject: 'Your ticket has been replied',
-        content:
+  return {
+    subject: 'Your ticket has been replied',
+    content:
 `
 Hi ${username},
 
@@ -159,13 +159,13 @@ ${baseUrl}/${locale}/account/tickets/${ticketId}
 Cheers,
 ${process.env.URL}
 `
-    } 
+  } 
 };
 
 export const emailDisputeUpdated = (locale, grabId, username) => {
-    return {
-        subject: 'Your dispute has been update',
-        content:
+  return {
+    subject: 'Your dispute has been update',
+    content:
 `
 Hi ${username},
 
@@ -176,13 +176,13 @@ ${baseUrl}/${locale}/account/grab/${grabId}
 Cheers,
 ${process.env.URL}
 `
-    } 
+  } 
 };
 
 export const emailDisputeResolved = (locale, grabId, username) => {
-    return {
-        subject: 'Your dispute has been resolved',
-        content:
+  return {
+    subject: 'Your dispute has been resolved',
+    content:
 `
 Hi ${username},
 
@@ -193,5 +193,5 @@ ${baseUrl}/${locale}/account/grab/${grabId}
 Cheers,
 ${process.env.URL}
 `
-    } 
+  } 
 };

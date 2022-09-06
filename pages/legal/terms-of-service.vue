@@ -1,8 +1,8 @@
 <template>
-    <section class="section container">
-        <h1 class="title is-1">Terms of Service</h1>
-        <h5 class="subtitle is-5">Latest update: March 20, 2022</h5>
-        <br>
+  <section class="section container">
+    <h1 class="title is-1">Terms of Service</h1>
+    <h5 class="subtitle is-5">Latest update: March 20, 2022</h5>
+    <br>
 <h4 class="title is-4">Welcome to Opengrabs.com</h4>
 <div class="content has-new-line">Please read through these Terms of Service and our Privacy Policy (collectively as “Agreement”) carefully before you (“you”) start using the services. Privacy Policy includes our Cookie Policy.
 
@@ -76,7 +76,7 @@ Any different situation will be evaluated and handled case by case.
 <h4 class="title is-4">Ban of User Account</h4>
 <div class="content has-new-line">We reserve the right to ban an User account at our own discretion.</div>
 <h4 class="title is-4">Payment methods and fees</h4>
-<div class="content has-new-line">Opengrabs only suppor Bitcoin as incoming and outgoing payment method. Opengrabs supports on-chain and lightning network transactions.    
+<div class="content has-new-line">Opengrabs only suppor Bitcoin as incoming and outgoing payment method. Opengrabs supports on-chain and lightning network transactions.  
 
 The exchange rate from/to the product currency nad bitcoin is determinated at the moment of the payment as per the exchange rate listed on the <nuxt-link :to="localePath({ name: 'exchange-rates'})">Exchange rates</nuxt-link> page.
 
@@ -138,18 +138,18 @@ Our failure to enforce any right or provision in this Agreement will not constit
 
 You agree that this Agreement and any dispute between you and us arising out of or in connection with this Agreement shall be governed in all respects by the laws of United States of America, without regard to their choice-of-law provisions.
 </div>
-    </section>
+  </section>
 </template>
 
 <script>
 export default {
-    name: 'TermsOfService',
-    auth: false,
-    head() {
-        return {
-            title: this.$t('seo.termsOfService')
-        }
-    },
+  name: 'TermsOfService',
+  auth: false,
+  head() {
+    return {
+      title: this.$t('seo.termsOfService')
+    }
+  },
 }
 </script> 
 

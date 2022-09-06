@@ -1,5 +1,6 @@
 import axios from 'axios'
 import asyncHandler from 'express-async-handler'
+import { allowOrigin } from '../utils'
 import { authorizeUser } from '../auth'
 import { q, client } from '../db'
 import { transporter } from '../email'
@@ -14,19 +15,19 @@ const router = Router()
 
 const getManagmentAccessToken = async () => {
   const { data: { access_token }} = await axios.post(`https://${process.env.AUTH0_TENANT}.us.auth0.com/oauth/token`, {
-    client_id: process.env.AUTH0_MANAGEMENT_CLIENT_ID,
-    client_secret: process.env.AUTH0_MANAGEMENT_CLIENT_SECRET,
-    audience: `https://${process.env.AUTH0_TENANT}.us.auth0.com/api/v2/`,
-    grant_type: 'client_credentials'
+  client_id: process.env.AUTH0_MANAGEMENT_CLIENT_ID,
+  client_secret: process.env.AUTH0_MANAGEMENT_CLIENT_SECRET,
+  audience: `https://${process.env.AUTH0_TENANT}.us.auth0.com/api/v2/`,
+  grant_type: 'client_credentials'
   }, {
-    headers: {
-      'content-type': 'application/json'
-    }
+  headers: {
+    'content-type': 'application/json'
+  }
   })
   return access_token
 }
   
-router.get('/db/user/get', authorizeUser, asyncHandler(async (req, res) => {
+router.get('/db/user/get', allowOrigin, authorizeUser, asyncHandler(async (req, res) => {
   const { jwt } = req.body
   const sub = jwt.sub
 
@@ -35,21 +36,20 @@ router.get('/db/user/get', authorizeUser, asyncHandler(async (req, res) => {
       q.Match(q.Index('user_by_sub'), sub)
     )
   )
+
   if (exists) {
     const { data: user } = await client.query(
       q.Get(
-        q.Match(q.Index('user_by_sub'), sub)
+      q.Match(q.Index('user_by_sub'), sub)
       )
     )
-    res.status(200).json(user)
-    return
+    return res.status(200).json(user)
   } else {
-    res.status(200).json({})
-    return
+    return  res.status(200).json({})
   }
 }))
 
-router.post('/db/user/create', authorizeUser, asyncHandler(async (req, res) => {
+router.post('/db/user/create', allowOrigin, authorizeUser, asyncHandler(async (req, res) => {
   const { jwt, locale } = req.body
   const sub = jwt.sub
 
@@ -58,37 +58,37 @@ router.post('/db/user/create', authorizeUser, asyncHandler(async (req, res) => {
 
   let props, email_verified, email
   switch (strategy) {
-    case 'facebook':
-      email = jwt['https://opengrabs.com/email']
-      email_verified = jwt['https://opengrabs.com/verified']
-      props = {
-        sub: sub,
-        email: email,
-        email_verified: email_verified,
-        strategy: 'facebook',
-        locale: locale
-      }
-      break
-    case 'oauth2':
-      email = jwt['https://opengrabs.com/name']
-      props = {
-        sub: sub,
-        email: email,
-        email_verified: (email) ? true : false,
-        strategy: 'vkontakte',
-        locale: locale
-      }
-      break
-    case 'email':
-      email = jwt['https://opengrabs.com/name']
-      email_verified = jwt['https://opengrabs.com/verified']
-      props = {
-        sub: sub,
-        email: email,
-        email_verified: email_verified,
-        strategy: 'email',
-        locale: locale
-      }
+  case 'facebook':
+    email = jwt['https://opengrabs.com/email']
+    email_verified = jwt['https://opengrabs.com/verified']
+    props = {
+      sub: sub,
+      email: email,
+      email_verified: email_verified,
+      strategy: 'facebook',
+      locale: locale
+    }
+    break
+  case 'oauth2':
+    email = jwt['https://opengrabs.com/name']
+    props = {
+      sub: sub,
+      email: email,
+      email_verified: (email) ? true : false,
+      strategy: 'vkontakte',
+      locale: locale
+    }
+    break
+  case 'email':
+    email = jwt['https://opengrabs.com/name']
+    email_verified = jwt['https://opengrabs.com/verified']
+    props = {
+      sub: sub,
+      email: email,
+      email_verified: email_verified,
+      strategy: 'email',
+      locale: locale
+    }
   }
 
   const exists = await client.query(
@@ -104,8 +104,7 @@ router.post('/db/user/create', authorizeUser, asyncHandler(async (req, res) => {
         { data: props }
       )
     )
-    res.status(200).json(props)
-    return
+    return res.status(200).json(props)
   } else {
 
     const { data: user } = await client.query(
@@ -113,47 +112,46 @@ router.post('/db/user/create', authorizeUser, asyncHandler(async (req, res) => {
         q.Match(q.Index('user_by_sub'), sub)
       )
     )
-    res.status(200).json(user)
-    return
+    return res.status(200).json(user)
   }
 }))
 
-router.post('/db/user/update', authorizeUser, asyncHandler(async (req,res) => {
+router.post('/db/user/update', allowOrigin, authorizeUser, asyncHandler(async (req,res) => {
   const { jwt, props } = req.body
   
   const { ref: {value: { id }}} = await client.query(
-    q.Get(
-      q.Match(q.Index('user_by_sub'), jwt.sub)
-    )
+  q.Get(
+    q.Match(q.Index('user_by_sub'), jwt.sub)
+  )
   )
   
   const { data: user } = await client.query(
-    q.Update(
-      q.Ref(q.Collection('users'), id),
-      { data: props },
-    )
+  q.Update(
+    q.Ref(q.Collection('users'), id),
+    { data: props },
+  )
   )
 
-  res.status(200).json(user)
+  return res.status(200).json(user)
 }))
 
-router.post('/db/user/update/email', authorizeUser, asyncHandler(async (req,res) => {
+router.post('/db/user/update/email', allowOrigin, authorizeUser, asyncHandler(async (req,res) => {
   const { jwt, props } = req.body
 
   props.email_verified = false
   props.code = Math.floor(100000 + Math.random() * 900000);
   
   const { ref: {value: { id }}} = await client.query(
-    q.Get(
-      q.Match(q.Index('user_by_sub'), jwt.sub)
-    )
+  q.Get(
+    q.Match(q.Index('user_by_sub'), jwt.sub)
+  )
   )
   
   const { data: user } = await client.query(
-    q.Update(
-      q.Ref(q.Collection('users'), id),
-      { data: props },
-    )
+  q.Update(
+    q.Ref(q.Collection('users'), id),
+    { data: props },
+  )
   )
 
   let emailContent
@@ -176,10 +174,10 @@ router.post('/db/user/update/email', authorizeUser, asyncHandler(async (req,res)
     text: emailContent.content,
   })
 
-  res.status(200).json(user)
+  return res.status(200).json(user)
 }))
 
-router.post('/db/user/verify/:code', authorizeUser, asyncHandler(async (req,res) => {
+router.post('/db/user/verify/:code', allowOrigin, authorizeUser, asyncHandler(async (req,res) => {
   const { jwt } = req.body
   const { code } = req.params
   
@@ -192,18 +190,17 @@ router.post('/db/user/verify/:code', authorizeUser, asyncHandler(async (req,res)
   if (data.code === parseInt(code)) {
     const { data: user} = await client.query(
       q.Update(
-        q.Ref(q.Collection('users'), id),
-        { data: { email_verified: true } },
+      q.Ref(q.Collection('users'), id),
+      { data: { email_verified: true } },
       )
     )
-    res.status(200).json(user)
-    return
+    return res.status(200).json(user)
   } else {
-    res.status(200).json({ error: 'invalid code'})
+    return res.status(200).json({ error: 'invalid code'})
   }
 }))
 
-router.post('/db/user/update/username', authorizeUser, asyncHandler(async (req,res) => {
+router.post('/db/user/update/username', allowOrigin, authorizeUser, asyncHandler(async (req,res) => {
   const { jwt, props } = req.body
 
   const exists = await client.query(
@@ -213,8 +210,7 @@ router.post('/db/user/update/username', authorizeUser, asyncHandler(async (req,r
   )
 
   if (exists) {
-    res.status(200).json({ error: 'Username already in use'})
-    return
+    return res.status(200).json({ error: 'Username already in use'})
   }
 
   const { ref: {value: { id }}} = await client.query(
@@ -244,34 +240,33 @@ router.post('/db/user/update/username', authorizeUser, asyncHandler(async (req,r
       user_metadata: { username: props.username }
     }, {
       headers: {
-        'content-type': 'application/json',
-        'Authorization': `Bearer ${access_token}`
+      'content-type': 'application/json',
+      'Authorization': `Bearer ${access_token}`
       }
     })
   } else {
-    res.status(200).json({ error: "You can't change username"})
-    return
+    return res.status(200).json({ error: "You can't change username"})
   }
 
-  res.status(200).json(user)
+  return res.status(200).json(user)
 }))
 
-router.post('/user/management/lang', authorizeUser, asyncHandler(async (req,res) => {
+router.post('/user/management/lang', allowOrigin, authorizeUser, asyncHandler(async (req,res) => {
   const { jwt, lang } = req.body
 
   const access_token = await getManagmentAccessToken()
 
   const { data } = await axios.patch(`https://${process.env.AUTH0_TENANT}.us.auth0.com/api/v2/users/${jwt.sub}`, {
     user_metadata: { lang }
-  }, {
+    }, {
     headers: {
       'content-type': 'application/json',
       'Authorization': `Bearer ${access_token}`
     }
   })
 
-  res.status(200).json(data)
+  return res.status(200).json(data)
 }))
 
-module.exports = router
+export default router
   

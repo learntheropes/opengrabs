@@ -37,7 +37,7 @@ export default {
     login: "Iniciar sesión",
     logout: "Cerrar sesión",
     // components/layout/footer
-    support: "soporte",
+    support: "Soporte",
     privacyPolicy: "Política de privacidad",
     termsOfService: "Términos de servicio",
     changeCookieSetting: "Cambiar la configuraciones de las cookies",

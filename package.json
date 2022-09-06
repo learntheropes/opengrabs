@@ -5,22 +5,17 @@
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
-    "start": "nuxt start",
-    "heroku-postbuild": "nuxt build",
-    "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
-    "lint:prettier": "prettier --check .",
-    "lint": "npm run lint:js && npm run lint:prettier",
-    "lintfix": "prettier --write --list-different . && npm run lint:js -- --fix"
+    "start": "nuxt start"
   },
   "dependencies": {
     "@chenfengyuan/vue-qrcode": "^1.0.2",
     "@nuxtjs/auth-next": "^5.0.0-1642152945.3bb6b5f",
     "@nuxtjs/axios": "^5.13.6",
     "@nuxtjs/dotenv": "^1.4.1",
-    "@nuxtjs/eslint-module": "^3.0.2",
     "@nuxtjs/google-analytics": "^2.4.0",
     "@nuxtjs/i18n": "^7.2.0",
     "@nuxtjs/moment": "^1.6.1",
+    "@nuxtjs/proxy": "^2.1.0",
     "@nuxtjs/sitemap": "^2.4.0",
     "base64-url": "^2.3.3",
     "core-js": "^3.19.3",
@@ -31,6 +26,7 @@
     "fs": "0.0.1-security",
     "https-proxy-agent": "^5.0.0",
     "imagekit": "^3.2.5",
+    "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^3.1.2",
     "lodash.filter": "^4.6.0",
     "lodash.find": "^4.6.0",
@@ -53,16 +49,5 @@
     "vue-server-renderer": "^2.6.14",
     "vue-template-compiler": "^2.6.14",
     "webpack": "^4.46.0"
-  },
-  "devDependencies": {
-    "@babel/eslint-parser": "^7.16.3",
-    "@nuxtjs/eslint-config": "^8.0.0",
-    "eslint": "^8.4.1",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-nuxt": "^3.1.0",
-    "eslint-plugin-vue": "^8.2.0",
-    "install": "^0.13.0",
-    "prettier": "^2.5.1",
-    "remove": "^0.1.5"
   }
 }

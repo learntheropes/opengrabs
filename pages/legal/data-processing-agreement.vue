@@ -1,7 +1,7 @@
 <template>
-    <section class="section container">
-        <h1 class="title is-1">Data Processing Agreement</h1>
-        <h5 class="subtitle is-5">Latest update: March 20, 2022</h5>
+  <section class="section container">
+    <h1 class="title is-1">Data Processing Agreement</h1>
+    <h5 class="subtitle is-5">Latest update: March 20, 2022</h5>
 <div class="content has-new-line">
 by and between
 
@@ -15,27 +15,27 @@ legal representative, Giovanni La Perna
 </div>
 <h4 class="title is-4">1. Subject matter, main contract and term</h4>
 <div class="content has-new-line">The subject matter of the DPA results from the main contract signed by the parties for the provision of the Opengrabs service (“Contract”). The Processor shall carry out the processing activities described therein
-    <ul>
-        <li>with respect to the following categories of personal data:
-            <ul>
-                <li>key personal data, contact and communication data</li>
-                <li>payment-related data for invoicing purposes</li>
-                <li>data provided by the user when using the generator, including company details, personal data of key officers and employees</li>
-                <li>data provided for the purposes of Internal Privacy Management services</li>
-                <li>data referring to the use of the Opengrabs website such as data relating to support, analytics etc.</li>
-                <li>data referring to the client's users, including information about their interaction with Opengrabs tools on the client's website</li>
-            </ul>
-        </li>
-        <li>referring to the following categories of data subjects:
-            <ul>
-                <li>clients</li>
-                <li>clients' key officers, employees</li>
-                <li>third parties acting on the clients' behalf (such as web agencies)</li>
-                <li>clients' customers</li>
-                <li>The term of this DPA corresponds to the term of the main contract.</li>
-            </ul>
-        </li>
-    </ul>
+  <ul>
+    <li>with respect to the following categories of personal data:
+      <ul>
+        <li>key personal data, contact and communication data</li>
+        <li>payment-related data for invoicing purposes</li>
+        <li>data provided by the user when using the generator, including company details, personal data of key officers and employees</li>
+        <li>data provided for the purposes of Internal Privacy Management services</li>
+        <li>data referring to the use of the Opengrabs website such as data relating to support, analytics etc.</li>
+        <li>data referring to the client's users, including information about their interaction with Opengrabs tools on the client's website</li>
+      </ul>
+    </li>
+    <li>referring to the following categories of data subjects:
+      <ul>
+        <li>clients</li>
+        <li>clients' key officers, employees</li>
+        <li>third parties acting on the clients' behalf (such as web agencies)</li>
+        <li>clients' customers</li>
+        <li>The term of this DPA corresponds to the term of the main contract.</li>
+      </ul>
+    </li>
+  </ul>
 </div>
 <h4 class="title is-4">2. Processing on instruction</h4>
 <div class="content has-new-line">Processing activities shall take place only on documented instructions by the Controller. Such instructions are included in the Contract and in this Agreement. Data processing activities under this DPA shall be performed within the European Union (EU) or the European Economic Area (EEA). In case any transfer of data outside of the EU or EEA should take place, it shall be performed in accordance with the conditions set forth in art. 44 et seq. GDPR.</div>
@@ -82,18 +82,18 @@ Compliance with the obligations pursuant to art. 32-36 GDPR may also be proven t
 <h4 class="title is-4">10. Termination, deletion, and return of personal data</h4>
 <div class="content has-new-line">After the end of the provision of services, the Processor shall, at the choice of the controller, delete or return to the Controller all the personal data collected and processed under this agreement, unless any applicable legal provision which the Processor is subject to, requires storage of the personal data.
 In any case, the Processor may retain all information necessary to demonstrate orderly and compliant processing activities beyond termination of the Contract, in accordance with the statutory retention periods.</div>
-    </section>
+  </section>
 </template>
 
 <script>
 export default {
-    name: 'DataProcessingAgreement',
-    auth: false,
-    head() {
-        return {
-            title: 'Data Processing Agreement'
-        }
-    },
+  name: 'DataProcessingAgreement',
+  auth: false,
+  head() {
+    return {
+      title: 'Data Processing Agreement'
+    }
+  },
 }
 </script>
 
