@@ -652,10 +652,6 @@ export const allCities = [
     "country": "Argentina"
     },
     {
-    "name": "Mercedes",
-    "country": "Argentina"
-    },
-    {
     "name": "Mar del Plata",
     "country": "Argentina"
     },
@@ -872,10 +868,6 @@ export const allCities = [
     "country": "Argentina"
     },
     {
-    "name": "Santo Tomé",
-    "country": "Argentina"
-    },
-    {
     "name": "Santiago del Estero",
     "country": "Argentina"
     },
@@ -901,10 +893,6 @@ export const allCities = [
     },
     {
     "name": "San Rafael",
-    "country": "Argentina"
-    },
-    {
-    "name": "San Pedro",
     "country": "Argentina"
     },
     {

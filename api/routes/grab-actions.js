@@ -58,7 +58,7 @@ router.post('/grab/actions/publish', allowOrigin, authorizeUser, asyncHandler(as
     )
   )
 
-  return res.status(201).json({})
+  return res.status(201).json({}).end()
 }))
 
 router.post('/grab/actions/order/:ref', allowOrigin, authorizeUser, asyncHandler(async (req, res) => {
@@ -100,7 +100,7 @@ router.post('/grab/actions/order/:ref', allowOrigin, authorizeUser, asyncHandler
 
   const availableBudget = travel.budget - (shop.price.product+shop.price.shipping+shop.price.taxes)
   if (availableBudget < 0) {
-    return res.status(401).send('unauthorized')
+    return res.status(401).send('unauthorized').end()
   }
 
   await client.query(
@@ -152,7 +152,7 @@ router.post('/grab/actions/order/:ref', allowOrigin, authorizeUser, asyncHandler
     text: emailContent.content,
     })
 
-    return res.status(201)
+    return res.status(201).end()
 }))
 
 router.post('/grab/actions/remove/:ref', allowOrigin, authorizeUser, asyncHandler(async (req, res) => {
@@ -164,7 +164,7 @@ router.post('/grab/actions/remove/:ref', allowOrigin, authorizeUser, asyncHandle
   )
 
   if (grab.buyer.sub !== jwt.sub) {
-    return res.status(401).send('unauthorized')
+    return res.status(401).send('unauthorized').end()
   }
 
   await client.query(
@@ -183,7 +183,7 @@ router.post('/grab/actions/remove/:ref', allowOrigin, authorizeUser, asyncHandle
     q.Delete(q.Ref(q.Collection('grabs'), ref))
   )
 
-  return res.status(204)
+  return res.status(204).end()
 }))
 
 router.post('/grab/actions/book/:ref', allowOrigin, authorizeUser, asyncHandler(async (req, res) => {
@@ -262,7 +262,7 @@ router.post('/grab/actions/book/:ref', allowOrigin, authorizeUser, asyncHandler(
     text: emailContent.content,
   })
 
-  return res.status(201)
+  return res.status(201).end()
 }))
 
 router.post('/grab/actions/dispute/:ref', allowOrigin, authorizeUser, asyncHandler(async (req, res) => {
@@ -275,7 +275,7 @@ router.post('/grab/actions/dispute/:ref', allowOrigin, authorizeUser, asyncHandl
 
   if ((grab.buyer.sub !== jwt.sub && grab.traveler.sub !== jwt.sub) ||
   (grab.status === 'published' || grab.status === 'released' || grab.status === 'withdrawn')) {
-    return res.status(401).send('unauthorized')
+    return res.status(401).send('unauthorized').end()
   }
 
   const props = {
@@ -346,7 +346,7 @@ router.post('/grab/actions/dispute/:ref', allowOrigin, authorizeUser, asyncHandl
 
 
 
-  return res.status(201)
+  return res.status(201).end()
 }))
 
 router.post('/grab/actions/bought/:ref', allowOrigin, authorizeUser, asyncHandler(async (req, res) => {
@@ -413,7 +413,7 @@ router.post('/grab/actions/bought/:ref', allowOrigin, authorizeUser, asyncHandle
     text: emailContent.content,
   })
 
-  return res.status(201)
+  return res.status(201).end()
 }))
 
 router.post('/grab/actions/delivered/:ref', allowOrigin, authorizeUser, asyncHandler(async (req, res) => {
@@ -425,7 +425,7 @@ router.post('/grab/actions/delivered/:ref', allowOrigin, authorizeUser, asyncHan
   )
 
   if (grab.traveler.sub !== jwt.sub || grab.status !== 'bought') {
-    res.status(401).send('unauthorized')
+    res.status(401).send('unauthorized').end()
     return
   }
 
@@ -480,7 +480,7 @@ router.post('/grab/actions/delivered/:ref', allowOrigin, authorizeUser, asyncHan
     text: emailContent.content,
   })
 
-  return res.status(201)
+  return res.status(201).end()
 }))
 
 router.post('/grab/actions/release/:ref', allowOrigin, authorizeUser, asyncHandler(async (req, res) => {
@@ -492,7 +492,7 @@ router.post('/grab/actions/release/:ref', allowOrigin, authorizeUser, asyncHandl
   )
 
   if (grab.buyer.sub !== jwt.sub || grab.status !== 'delivered') {
-    res.status(401).send('unauthorized')
+    res.status(401).send('unauthorized').end()
     return
   }
 
@@ -548,7 +548,7 @@ router.post('/grab/actions/release/:ref', allowOrigin, authorizeUser, asyncHandl
     text: emailContent.content,
   })
 
-  return res.status(201)
+  return res.status(201).end()
 }))
 
 router.post('/grab/actions/withdraw/:ref', allowOrigin, authorizeUser, asyncHandler(async (req, res) => {
@@ -598,9 +598,9 @@ router.post('/grab/actions/withdraw/:ref', allowOrigin, authorizeUser, asyncHand
       )
     )
 
-    return res.status(200)
+    return res.status(200).end()
   }
-  return res.status(401).send('unauthorized')
+  return res.status(401).send('unauthorized').end()
 }))
 
 export default router

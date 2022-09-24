@@ -174,11 +174,13 @@ router.get('/db/messages/filter/grab/:ref/:width', allowOrigin, authorizeUser, a
 
   const messages = data.map(({ data, ref: { value: { id }}}) => {
     data.ref = id
-    data.attachments.map(attachment => {
-      attachment.preview = getImageKitPreview(attachment.path)
-      attachment.modal = getImageKitModal(attachment.path, width)
-      return attachment
-    })
+    if (data.attachments && data.attachments.length) {
+      data.attachments.map(attachment => {
+        attachment.preview = getImageKitPreview(attachment.path)
+        attachment.modal = getImageKitModal(attachment.path, width)
+        return attachment
+      })
+    }
     return data
   })
 
