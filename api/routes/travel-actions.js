@@ -25,7 +25,7 @@ router.post('/travels/actions/create', allowOrigin, authorizeUser, asyncHandler(
       { data: props },
     )
   )
-  return res.status(201)
+  return res.status(201).end()
   }))
 
   router.post('/travels/actions/remove/:ref', allowOrigin, authorizeUser, asyncHandler(async (req, res) => {
@@ -37,14 +37,14 @@ router.post('/travels/actions/create', allowOrigin, authorizeUser, asyncHandler(
   )
 
   if (travel.traveler.sub !== jwt.sub) {
-    return res.status(401).send('unauthorized')
+    return res.status(401).send('unauthorized'),end()
   }
 
   await client.query(
     q.Delete(q.Ref(q.Collection('travels'), ref))
   )
 
-  return res.status(204)
+  return res.status(204).end()
 }))
 
 export default router

@@ -29,7 +29,7 @@
 <script>
 export default {
   props: {
-    travle: {
+    travel: {
       type: Object,
       default: () => {},
     },
