@@ -279,7 +279,7 @@ export default {
 
   serverMiddleware: [
     // https://stackoverflow.com/questions/56629722/redirect-all-routes-to-https-in-nuxt-project-hosted-in-heroku
-    // 'redirect-ssl',
+    'redirect-ssl',
     { path: '/api', handler: '~/api/index.js' }
   ],
 
