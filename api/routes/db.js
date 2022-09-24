@@ -16,9 +16,9 @@ router.get('/db/isbuyerortraveler/:ref', allowOrigin, authorizeUser, asyncHandle
   )
 
   if (jwt.sub === grab.buyer.sub || jwt.sub === grab.traveler.sub) {
-    return res.status(200).send(true)
+    return res.status(200).send(true).end()
   } else {
-    return res.status(401).send('unauthorized')
+    return res.status(401).send('unauthorized').end()
   }
 }))
 
@@ -35,7 +35,7 @@ router.get('/db/grabs/get/:ref', allowOrigin, authorizeUser, asyncHandler(async 
       return res.status(401).send('unauthorized')
     }
   }
-  return res.status(200).json(grab)
+  return res.status(200).json(grab).end()
 }))
 
 router.get('/db/grabs/filter/:adv/:status', allowOrigin, asyncHandler(async (req, res) => {
@@ -59,7 +59,7 @@ router.get('/db/grabs/filter/:adv/:status', allowOrigin, asyncHandler(async (req
     return data
   })
 
-  return res.status(200).json(grabs)
+  return res.status(200).json(grabs).end()
 }))
 
 router.get('/db/account/orders/:status', allowOrigin, authorizeUser, asyncHandler(async (req, res) => {
@@ -81,7 +81,7 @@ router.get('/db/account/orders/:status', allowOrigin, authorizeUser, asyncHandle
     return data
   })
 
-  return res.status(200).json(grabs)
+  return res.status(200).json(grabs).end()
 }))
 
 router.get('/db/account/orders/:status/:withdrawn', allowOrigin, authorizeUser, asyncHandler(async (req, res) => {
@@ -103,7 +103,7 @@ router.get('/db/account/orders/:status/:withdrawn', allowOrigin, authorizeUser, 
     return data
   })
 
-  return res.status(200).json(grabs)
+  return res.status(200).json(grabs).end()
 }))
 
 router.get('/db/account/deliveries/:status', allowOrigin, authorizeUser, asyncHandler(async (req, res) => {
@@ -125,7 +125,7 @@ router.get('/db/account/deliveries/:status', allowOrigin, authorizeUser, asyncHa
     return data
   })
 
-  return res.status(200).json(grabs)
+  return res.status(200).json(grabs).end()
 }))
 
 router.get('/db/account/deliveries/:status/:withdrawn', allowOrigin, authorizeUser, asyncHandler(async (req, res) => {
@@ -147,7 +147,7 @@ router.get('/db/account/deliveries/:status/:withdrawn', allowOrigin, authorizeUs
     return data
   })
 
-  return res.status(200).json(grabs)
+  return res.status(200).json(grabs).end()
 }))
 
 router.get('/db/messages/filter/grab/:ref/:width', allowOrigin, authorizeUser, asyncHandler(async (req, res) => {
@@ -184,7 +184,7 @@ router.get('/db/messages/filter/grab/:ref/:width', allowOrigin, authorizeUser, a
     return data
   })
 
-  return res.status(200).json(messages)
+  return res.status(200).json(messages).end()
 }))
 
 router.post('/db/messages/create', allowOrigin, authorizeUser, asyncHandler(async (req, res) => {
@@ -252,7 +252,7 @@ router.get('/db/travels/filter/:status', allowOrigin, asyncHandler(async (req, r
     return data
   })
 
-  return res.status(200).json(travels)
+  return res.status(200).json(travels).end()
 }))
 
 router.get('/db/account/travels/filter/:status', allowOrigin, authorizeUser, asyncHandler(async (req,res) => {
@@ -293,7 +293,7 @@ router.get('/db/account/travels/filter/:status', allowOrigin, authorizeUser, asy
     return data
   })
   
-  return res.status(200).json(travels)
+  return res.status(200).json(travels).end()
 }))
 
 router.get('/db/travels/get/:ref', allowOrigin, asyncHandler(async (req,res) => {
@@ -303,14 +303,14 @@ router.get('/db/travels/get/:ref', allowOrigin, asyncHandler(async (req,res) => 
     q.Get(q.Ref(q.Collection('travels'), ref))
   )
   
-  return res.status(200).json(travel)
+  return res.status(200).json(travel).end()
 }))
 
 router.post('/travels/get-photo', allowOrigin, authorizeUser, asyncHandler(async (req,res) => {
   const { input } = req.body
 
   const photo = await getTravelPhoto(input) 
-  return res.status(200).send(photo)
+  return res.status(200).send(photo).end()
 }))
 
 export default router

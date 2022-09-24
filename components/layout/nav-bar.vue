@@ -47,7 +47,7 @@ export default {
     },
     logout() {
       this.$auth.logout()
-      this.$router.push('/')
+      this.$router.push(`/${this.$i18n.locale}`)
     },
   },
 }
