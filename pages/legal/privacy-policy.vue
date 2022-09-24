@@ -59,10 +59,10 @@ For specific information about the Personal Data used for each purpose, the User
 </div>
 <h4 class="title is-4">Detailed information on the processing of Personal Data</h4>
 <div class="content has-new-line">Personal Data is collected for the following purposes and using the following services:</div>
-<h6 class="title is-6">Heroku (Salesforce.com, inc.)</h6>
-<div class="content has-new-line">Heroku is a hosting and backend service provided by Salesforce.com, inc.
+<h6 class="title is-6">DigitalOcean (DigitalOcean, LLC)</h6>
+<div class="content has-new-line">DigitalOcean is a hosting and backend service provided by DigitalOcean LLC.
 Personal Data processed: various types of Data as specified in the privacy policy of the service.
-Place of processing: Europe - <a href="https://www.salesforce.com/company/privacy/">Privacy Policy</a>.
+Place of processing: Europe - <a href="https://www.digitalocean.com/legal/privacy-policy">Privacy Policy</a>.
 Category of personal information collected according to CCPA: Internet or other electronic network activity information.
 </div>
 <h6 class="title is-6">Auth0 (Auth0 Inc.)</h6>

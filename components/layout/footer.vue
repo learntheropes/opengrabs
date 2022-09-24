@@ -9,6 +9,9 @@
           <nuxt-link :to="localePath({ name: 'exchange-rates' })">{{ $t('exchangeRate') }}</nuxt-link>
         </div>
         <div class="level-item">
+          <nuxt-link :to="localePath({ name: 'blog'})">Blog</nuxt-link>
+        </div>
+        <div class="level-item">
           <nuxt-link :to="localePath({ name: 'support'})">{{ $t('support') }}</nuxt-link>
         </div>
         <div class="level-item">

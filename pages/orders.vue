@@ -46,61 +46,61 @@ export default {
   name: 'Orders',
   auth: false,
   data: () => ({
-  country: null,
-  city: null,
-  filteredOrders: null
+    country: null,
+    city: null,
+    filteredOrders: null
   }),
   async fetch({ app, store }) {
-  if (!store.state.orders.initiated) {
-    const data = await app.$db.orders.filter('published')
-    const orders = orderBy(data, ['data.published_at'], ['desc'])
-    store.commit('orders/setOrders', orders)
-    store.commit('orders/setInitiated', true)
-  }
+    if (!store.state.orders.initiated) {
+      const data = await app.$db.orders.filter('published')
+      const orders = orderBy(data, ['data.published_at'], ['desc'])
+      store.commit('orders/setOrders', orders)
+      store.commit('orders/setInitiated', true)
+    }
   },
   head() {
-  return {
-    title: this.$t('seo.orders'),
-    link: [
-    {
-      hid: 'canonical',
-      rel: 'canonical',
-      href: `https://${process.env.URL}/${this.$i18n.locale}/orders`,
-    },
-    ],
-  }
+    return {
+      title: this.$t('seo.orders'),
+      link: [
+      {
+        hid: 'canonical',
+        rel: 'canonical',
+        href: `https://${process.env.URL}/${this.$i18n.locale}/orders`,
+      },
+      ],
+    }
   },
   computed: {
-  ...mapState({
-    orders: (state) => state.orders.list,
-  }),
-  countriesSelection() {
-    return uniq(this.orders.map(order => order.destination.country))
-  },
-  citiesSelection() {
-    return uniq(this.orders.map(order => order.destination.city))
-  }
+    ...mapState({
+      orders: (state) => state.orders.list,
+    }),
+    countriesSelection() {
+      return uniq(this.orders.map(order => order.destination.country))
+    },
+    citiesSelection() {
+      return uniq(this.orders.map(order => order.destination.city))
+    }
   },
   methods: {
-  filterByDestination() {
-    if (this.country && this.city) {
-    const filteredOrders = filter(this.orders, (o) => o.destination.country === this.country && o.destination.city === this.city)
-    this.filteredOrders = filteredOrders
+    filterByDestination() {
+      if (this.country && this.city) {
+      const filteredOrders = filter(this.orders, (o) => o.destination.country === this.country && o.destination.city === this.city)
+      this.filteredOrders = filteredOrders
+      }
+      if (this.country && !this.city) {
+      const filteredOrders = filter(this.orders, (o) => o.destination.country === this.country)
+      this.filteredOrders = filteredOrders
+      }
+      if (!this.country && this.city) {
+      const filteredOrders = filter(this.orders, (o) => o.destination.city === this.city)
+      this.filteredOrders = filteredOrders
+      }
+    },
+    removeFilters() {
+      this.country = null
+      this.city = null
+      this.filteredOrders = null
     }
-    if (this.country && !this.city) {
-    const filteredOrders = filter(this.orders, (o) => o.destination.country === this.country)
-    this.filteredOrders = filteredOrders
-    }
-    if (!this.country && this.city) {
-    const filteredOrders = filter(this.orders, (o) => o.destination.city === this.city)
-    this.filteredOrders = filteredOrders
-    }
-  },
-  removeFilters() {
-    this.country = null
-    this.city = null
-    this.filteredOrders = null
-  }
   },
 }
 </script>
