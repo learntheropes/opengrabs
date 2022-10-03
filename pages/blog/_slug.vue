@@ -8,6 +8,7 @@
 
 <script>
 export default {
+  auth: false,
   name: 'BlogSlug',
   head() {
     return {

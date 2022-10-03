@@ -12,6 +12,7 @@
 
 <script>
 export default {
+  auth: false,
   data: () => ({
     posts: null,
   }),
